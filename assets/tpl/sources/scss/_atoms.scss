@@ -42,6 +42,11 @@
 		padding-top: rem(72) !important;
 	}
 	
+	.extended-with {
+    	margin-left: -#{$column-gutter / 2};
+    	margin-right: -#{$column-gutter / 2};
+	}
+	
 	
 	.hide-element {
 		display: none;
