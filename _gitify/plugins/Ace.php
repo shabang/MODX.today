@@ -4,7 +4,6 @@ description: 'Ace code editor plugin for MODx Revolution'
 properties: null
 static: 1
 static_file: ace/elements/plugins/ace.plugin.php
-content: ''
 
 -----
 

@@ -13,7 +13,7 @@ properties: 'a:0:{}'
 <head>
       
     <meta charset="utf-8">
-    <title>Antenne Bayern – Ihr Radio auch im Internet</title>
+    <title>[[+seoPro.title]]</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +21,7 @@ properties: 'a:0:{}'
     <meta name="application-name" content="[[++site_name]]">
     [[*description:notempty=`<meta name="description" content="[[*description]]">`]]
     
-    <!--[if lte IE 8]><meta http-equiv="refresh" content="0;url=http://www.whatbrowser.org/intl/de/" /><![endif]-->
+    <!--[if lte IE 8]><meta http-equiv="refresh" content="0;url=http://www.whatbrowser.org/intl/" /><![endif]-->
     
     <meta property="og:title" content="[[*longtitle:stripTags]]" />
     <meta property="og:description" content="[[*description]]" />
@@ -33,12 +33,9 @@ properties: 'a:0:{}'
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="fb:app_id" content="138646096154672" />
-    <meta name="google-site-verification" content="xKx_DBcICGqZ-TD_-tAxaKT2doLx_eMbZraQFO6PPsA" />
 
     [[- <link rel="prefetch" href="[[++svg_url]]"> ]]
     <link rel="dns-prefetch" href="//ajax.googleapis.com">
-    <link rel="radioepg" href="//www.antenne.de/radiodns/epg/XSI.xml">
     
     <style type="text/css" id="criticalcss">
         [[!includeFile? &file=`/assets/tpl/dist/critical.css`]]
@@ -136,7 +133,7 @@ properties: 'a:0:{}'
                 return f.status === 'loading';
             }
         }
-        loadFont('antenne-fonts', '/assets/tpl/dist/fonts-woff.css', '/assets/tpl/dist/fonts-woff2.css');
+        loadFont('modxtoday-fonts', '/assets/tpl/dist/fonts-woff.css', '/assets/tpl/dist/fonts-woff2.css');
 
 
         window.lazySizesConfig = {
