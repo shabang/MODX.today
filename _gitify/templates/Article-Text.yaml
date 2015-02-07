@@ -13,8 +13,11 @@ properties: 'a:0:{}'
             [[$tpl.pageheader]]
             
             <main role="main" itemprop="mainContentOfPage" class="pagecontent">
-                [[-$BreadCrumb]]
-                [[*content]]
+                <article>
+                    [[*content]]
+                </article>
+                
+                [[$tpl.articlefooter]]
             </main>
 
             [[$tpl.pagefooter]]

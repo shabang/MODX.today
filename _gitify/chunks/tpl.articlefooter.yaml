@@ -1,0 +1,14 @@
+id: 17
+source: 1
+name: tpl.articlefooter
+description: ''
+category: Template
+properties: 'a:0:{}'
+
+-----
+
+<footer>
+    <h3 id="comments">Comments</h3>
+    <div id="disqus_thread"></div>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+</footer>

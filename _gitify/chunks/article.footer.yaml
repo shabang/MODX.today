@@ -8,5 +8,5 @@ properties: null
 
         <footer class="row">
             <a href="[[~[[+id]]]]">Read more</a>
-            <a class="right" href="[[~[[+id]]]]#comments"><svg role="presentation" class="comment-icon" width="14" height="14"><use xlink:href="[[++svg_url]]#comment"></use></svg> 3 Comments</a>
+            <a class="right" href="[[~[[+id]]]]#comments"><svg role="presentation" class="comment-icon" width="14" height="14"><use xlink:href="[[++svg_url]]#comment"></use></svg> <span class="disqus-comment-count" data-disqus-url="[[~[[+id]]? &scheme=`full`]]">Comments</span></a>
         </footer>
