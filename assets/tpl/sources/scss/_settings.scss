@@ -110,9 +110,9 @@ $slick-next-character: '\25B8'; //'▸'
    $include-html-grid-classes: $include-html-classes;
    $include-xl-html-grid-classes: false;
 
-   $row-width: rem(1082);
+   $row-width: rem(9999);
    $total-columns: 12;
-   $column-gutter: rem(26);
+   $column-gutter: rem(100);
 
 
 // c. Global
@@ -120,7 +120,7 @@ $slick-next-character: '\25B8'; //'▸'
 
 
 // We use these to define default font stacks
-   $font-family-sans-serif: "open_sans", monospace; //"Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+   $font-family-sans-serif: "roboto_web", monospace; //"Open Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
    $font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
    $font-family-monospace: Consolas, "Liberation Mono", Courier, monospace;
    $font-family-script: "trashhand", "Trash Hand", "Hand of Sean Pro", "Hand of Sean", #{$font-family-sans-serif};
@@ -155,29 +155,23 @@ $slick-next-character: '\25B8'; //'▸'
 
 
 // Project corporate colors
-   $yellow: #ffe350;
-   $lightyellow: #fff3b3;
-   $blue: #009fe3;
-   $darkblue: #00487f;
-   $lightblue: #c8d7ee;
-   $aside-blue: #009fe3;
-   $blue-bg: #2a6bc5;
+   $blue: #1f4a7f;
+   $orange: #ff8f0d;
    $lightgray: #f0f0f0;
-   $blue-gradient: #0073b1;
    
 
 // We use these as default colors throughout
    $primary-color: $blue;
-   $secondary-color: $yellow;
+   $secondary-color: $orange;
    $alert-color: #e00000;
    $success-color: #43AC6A;
-   $warning-color: $yellow;
+   $warning-color: $orange;
    $info-color: #a0d3e8;
    $gray-color: #D6D6D6;
 
 
 // We use these to control various global styles
-   $body-bg: $blue-bg;
+   $body-bg: #fff;
    $body-font-color: #333;
    $body-font-family: $font-family-sans-serif;
    $body-font-weight: $font-weight-normal;
@@ -1514,13 +1508,13 @@ $slick-next-character: '\25B8'; //'▸'
 
 // These control the background color for the table and even rows
    $table-bg: $white;
-   $table-even-row-bg: desaturate($lightblue, 10);
+   $table-even-row-bg: desaturate($lightgray, 10);
 
 
 // These control the table cell border style
    $table-border-style: solid;
    $table-border-size: 0px;
-   $table-border-color: desaturate(darken($lightblue, 10), 25);
+   $table-border-color: desaturate(darken($lightgray, 10), 25);
 
 
 // These control the table head styles

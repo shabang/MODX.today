@@ -20,7 +20,7 @@
             a {
                 font-weight: $font-weight-normal;
                 font-size:r em(14);
-                color: $darkblue;
+                color: $body-font-color;
                 
                 &:hover {
                     color: $primary-color;
@@ -28,7 +28,7 @@
             }
             
             .breadcrumbs__icon-home {
-                fill: $darkblue;
+                fill: $body-font-color;
                 transition: fill .2s ease-in-out;
             }
             
