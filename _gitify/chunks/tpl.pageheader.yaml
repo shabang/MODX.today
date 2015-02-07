@@ -14,7 +14,7 @@ properties: 'a:0:{}'
         </a>
     </h1>
     
-    <a class="left-off-canvas-toggle" href="#" >Menu</a>
+    <a class="left-off-canvas-toggle off-canvas-toggle" href="#" ><svg role="presentation"><use xlink:href="[[++svg_url]]#fa-bars"></use></svg> <span>Menu</span></a>
 </header>
 
 
