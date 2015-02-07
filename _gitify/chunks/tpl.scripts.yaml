@@ -22,8 +22,17 @@ properties: 'a:0:{}'
         loadCSS( '/assets/tpl/dist/main.[[+site_version]].css');
         
         var element = document.createElement('script');
+        element.type = 'text/javascript'; element.async = true;
         element.src = '/assets/tpl/dist/main.[[+site_version]].js';
         document.body.appendChild(element);
+        
+        var disqus_shortname = 'modxtoday';
+        var disqus_identifier = 'thread-[[*id]]';
+        var disqus_url = '[[~[[*id]]? &scheme=`full`]]';
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/[[*parent:is=`2`:then=`embed`:else=`count`]].js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }
     
     if (window.addEventListener)
