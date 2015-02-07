@@ -1,0 +1,6 @@
+key: redactor.tabindex
+value: '0'
+xtype: numberfield
+namespace: redactor
+area: Editor
+editedon: '0000-00-00 00:00:00'

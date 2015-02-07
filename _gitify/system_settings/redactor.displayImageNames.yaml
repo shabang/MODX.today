@@ -1,0 +1,5 @@
+key: redactor.displayImageNames
+xtype: modx-combo-boolean
+namespace: redactor
+area: advanced
+editedon: '0000-00-00 00:00:00'

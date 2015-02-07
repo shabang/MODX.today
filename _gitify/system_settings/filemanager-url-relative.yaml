@@ -1,0 +1,5 @@
+key: filemanager_url_relative
+value: '1'
+xtype: combo-boolean
+area: file
+editedon: '0000-00-00 00:00:00'

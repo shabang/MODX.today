@@ -1,0 +1,5 @@
+key: redactor.prefetch_ttl
+value: '3600000'
+namespace: redactor
+area: 'Resource Typeahead'
+editedon: '0000-00-00 00:00:00'

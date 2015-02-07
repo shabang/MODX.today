@@ -1,0 +1,5 @@
+key: redactor.image_upload_path
+value: assets/uploads/
+namespace: redactor
+area: Media
+editedon: '0000-00-00 00:00:00'

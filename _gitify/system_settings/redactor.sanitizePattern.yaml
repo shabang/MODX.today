@@ -1,0 +1,5 @@
+key: redactor.sanitizePattern
+value: '/([[:alnum:]_\.-]*)/'
+namespace: redactor
+area: advanced
+editedon: '0000-00-00 00:00:00'

@@ -1,0 +1,74 @@
+id: 5
+source: 1
+name: tpl.pageheader
+description: ''
+category: Template
+properties: 'a:0:{}'
+
+-----
+
+<header class="pageheader">
+    <div class="row">
+        <ul class="icon-nav large-4 medium-7 columns large-push-8 medium-push-5">
+            <li class="icon webradio">
+                <a href="http://www.webradio.de/" target="_blank" title="Webradio">
+                    <svg role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="[[++svg_url]]#playbutton"></use></svg>
+                </a>
+            </li>
+            <li class="icon">
+                <a href="[[~26]]" title="Wetter">
+                    <svg role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="[[++svg_url]]#weather"></use></svg>
+                </a>
+            </li>
+            <li>
+                <a href="[[~65]]" title="Verkehr">
+                    <svg role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="[[++svg_url]]#traffic"></use></svg>
+                </a>
+            </li>
+            <li>
+                <a href="[[~8]]" title="Spiele">
+                    <svg role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="[[++svg_url]]#games"></use></svg>
+                </a>
+            </li>
+            <li>
+                <form class="searchform" method="get" action="/suche">
+                    <input type="search" placeholder="Suchbegriff" name="query">
+                    <button type="submit" aria-label="Suchen">
+                        <svg role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="[[++svg_url]]#search"></use></svg>
+                    </button>
+                </form>
+            </li>
+        </ul>
+        
+        <h1 id="logo" class="large-4 medium-5 columns large-pull-4 medium-pull-7">
+            <a href="/" title="zur Startseite">
+                <img src="/assets/tpl/img/logo-antenne-bayern.png" alt="Antenne Bayern">
+            </a>
+        </h1>
+        
+        <aside class="claim large-4 columns large-pull-4">
+            <p>Wir lieben Bayern.<br>Wir lieben die Hits.</p>
+        </aside>
+    </div>
+    
+    <div class="row nav-bar" data-magellan-expedition="fixed">
+        <nav class="mainnav" role="navigation" aria-label="Hauptnavigation">
+            <ul class="show-for-medium-up">
+                [[Wayfinder?
+                    &startId=`0`
+                    &outerTpl=`wayfinder.outerTpl`
+                    &innerTpl=`wayfinder.innerTpl`
+                    &rowTpl=`wayfinder.rowTpl`
+                    &scheme=`abs`
+                    &level=`2`
+                    &excludeDocs=`1,8,9,65`
+                ]]
+            </ul>
+            
+            <div class="hide-for-medium-up clearfix">
+                <a href="#" class="nav-bar-webradio"><svg role="presentation" width="28" height="32"><use xlink:href="[[++svg_url]]#playbutton"></svg> <span>Webradio</span></a>
+                <a href="#" class="right-off-canvas-toggle"><svg role="presentation" width="20" height="32"><use xlink:href="[[++svg_url]]#fa-bars"></svg> <span>Navigation</span></a>
+            </div>
+        </nav>
+    </div>
+</header>

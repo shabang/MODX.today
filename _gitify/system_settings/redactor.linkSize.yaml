@@ -1,0 +1,6 @@
+key: redactor.linkSize
+value: '50'
+xtype: numberfield
+namespace: redactor
+area: Editor
+editedon: '0000-00-00 00:00:00'

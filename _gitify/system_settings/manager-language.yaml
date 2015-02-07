@@ -1,0 +1,5 @@
+key: manager_language
+value: en
+xtype: modx-combo-language
+area: language
+editedon: '0000-00-00 00:00:00'

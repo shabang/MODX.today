@@ -1,0 +1,4 @@
+key: principal_targets
+value: 'modAccessContext,modAccessResourceGroup,modAccessCategory,sources.modAccessMediaSource'
+area: authentication
+editedon: '0000-00-00 00:00:00'

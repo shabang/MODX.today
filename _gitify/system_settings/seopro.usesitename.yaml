@@ -1,0 +1,6 @@
+key: seopro.usesitename
+value: '1'
+xtype: combo-boolean
+namespace: seopro
+area: general
+editedon: '0000-00-00 00:00:00'

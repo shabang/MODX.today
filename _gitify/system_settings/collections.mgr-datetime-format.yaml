@@ -1,0 +1,5 @@
+key: collections.mgr_datetime_format
+value: 'M d, g:i a'
+namespace: collections
+area: default
+editedon: '0000-00-00 00:00:00'

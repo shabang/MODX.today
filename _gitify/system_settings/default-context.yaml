@@ -1,0 +1,5 @@
+key: default_context
+value: web
+xtype: modx-combo-context
+area: site
+editedon: '0000-00-00 00:00:00'

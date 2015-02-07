@@ -1,0 +1,5 @@
+key: topmenu_show_descriptions
+value: '1'
+xtype: combo-boolean
+area: manager
+editedon: '0000-00-00 00:00:00'

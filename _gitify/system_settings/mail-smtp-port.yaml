@@ -1,0 +1,4 @@
+key: mail_smtp_port
+value: '587'
+area: mail
+editedon: '0000-00-00 00:00:00'

@@ -1,0 +1,6 @@
+key: contentblocks.image.source
+value: '1'
+xtype: modx-combo-source
+namespace: contentblocks
+area: 'Input: Image'
+editedon: '0000-00-00 00:00:00'

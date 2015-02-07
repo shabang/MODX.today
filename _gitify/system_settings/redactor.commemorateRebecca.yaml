@@ -1,0 +1,5 @@
+key: redactor.commemorateRebecca
+xtype: modx-combo-boolean
+namespace: redactor
+area: Toolbar
+editedon: '0000-00-00 00:00:00'

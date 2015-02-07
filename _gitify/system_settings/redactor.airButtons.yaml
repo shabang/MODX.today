@@ -1,0 +1,5 @@
+key: redactor.airButtons
+value: 'formatting,bold,italic,deleted,unorderedlist,orderedlist,outdent,indent'
+namespace: redactor
+area: Toolbar
+editedon: '0000-00-00 00:00:00'

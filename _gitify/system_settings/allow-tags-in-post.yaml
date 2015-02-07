@@ -1,0 +1,4 @@
+key: allow_tags_in_post
+xtype: combo-boolean
+area: system
+editedon: '0000-00-00 00:00:00'

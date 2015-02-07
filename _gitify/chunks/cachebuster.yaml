@@ -1,0 +1,9 @@
+id: 2
+name: cachebuster
+description: ''
+category: Template
+properties: null
+
+-----
+
+[[[[++cachebust:is=`0`:then=`++site_version`:else=`!cachebuster`]]:toPlaceholder=`site_version`]]

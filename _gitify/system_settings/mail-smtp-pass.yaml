@@ -1,0 +1,4 @@
+key: mail_smtp_pass
+xtype: text-password
+area: mail
+editedon: '0000-00-00 00:00:00'

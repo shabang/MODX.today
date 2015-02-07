@@ -1,0 +1,5 @@
+key: contentblocks.sanitize_pattern
+value: '/([[:alnum:]_\.-]*)/'
+namespace: contentblocks
+area: Sanitize
+editedon: '0000-00-00 00:00:00'

@@ -1,0 +1,167 @@
+id: 1
+name: tpl.head
+description: ''
+category: Template
+properties: 'a:0:{}'
+
+-----
+
+<!doctype html>
+<!--[if lte IE 9]><html class="ie9 no-js" lang="[[++cultureKey]]" > <![endif]-->
+<!--[if gte IE 10]><html class="ie no-js" lang="[[++cultureKey]]" > <![endif]-->
+<!--[if !(IE) ]><!--> <html class="no-js" lang="[[++cultureKey]]"> <!--<![endif]-->
+<head>
+      
+    <meta charset="utf-8">
+    <title>Antenne Bayern – Ihr Radio auch im Internet</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="[[+seoTab.robotsTag]]">
+    <meta name="application-name" content="[[++site_name]]">
+    [[*description:notempty=`<meta name="description" content="[[*description]]">`]]
+    
+    <!--[if lte IE 8]><meta http-equiv="refresh" content="0;url=http://www.whatbrowser.org/intl/de/" /><![endif]-->
+    
+    <meta property="og:title" content="[[*longtitle:stripTags]]" />
+    <meta property="og:description" content="[[*description]]" />
+    <meta property="og:site_name" content="[[++site_name]]" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="[[++locale]]" />
+    <meta property="og:url" content="[[~[[*id]]? &scheme=`full`]]" />
+    <meta property="og:image" content="[[*opengraph-image:empty=`/assets/tpl/img/open-graph/default.jpg`]]" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="fb:app_id" content="138646096154672" />
+    <meta name="google-site-verification" content="xKx_DBcICGqZ-TD_-tAxaKT2doLx_eMbZraQFO6PPsA" />
+
+    [[- <link rel="prefetch" href="[[++svg_url]]"> ]]
+    <link rel="dns-prefetch" href="//ajax.googleapis.com">
+    <link rel="radioepg" href="//www.antenne.de/radiodns/epg/XSI.xml">
+    
+    <style type="text/css" id="criticalcss">
+        [[!includeFile? &file=`/assets/tpl/dist/critical.css`]]
+        [[-!getCache?
+            &element=`includeFile`
+            &cacheKey=`template`
+            &cacheElementKey=`[[+site_version]]/critical.css`
+            
+            &file=`/assets/tpl/dist/critical.css`
+        ]]
+    </style>
+    
+    
+    <noscript>
+        <link rel="stylesheet" href="/assets/tpl/dist/fonts-woff.[[+site_version]].css">
+        <link rel="stylesheet" href="/assets/tpl/dist/main.[[+site_version]].css">
+    </noscript>
+
+    <script>
+        (function(h){h.className = h.className.replace('no-js', 'js')})(document.documentElement);
+
+
+        // https://github.com/bdadam/OptimizedWebfontLoading
+        function loadFont(fontName, woffUrl, woff2Url) {
+            // 0. Many unsupported browsers should stop here
+            var nua = navigator.userAgent;
+            var noSupport = !window.addEventListener // IE8 and below
+                    || (nua.match(/(Android (2|3|4.0|4.1|4.2|4.3))|(Opera (Mini|Mobi))/) && !nua.match(/Chrome/)) // Android Stock Browser below 4.4 and Opera Mini
+        
+            if (noSupport) { return; }
+        
+            // 1. Setting up localStorage
+            var loSto = {};
+            try {
+                // We set up a proxy variable to help with localStorage, e.g. when cookies are disabled
+                // and the browser prevents us accessing it.
+                // Otherwise some exceptions can be thrown which completely prevent font loading.
+                loSto = localStorage || {};
+            } catch(ex) {}
+        
+            var localStoragePrefix = 'x-font-' + fontName;
+            var localStorageUrlKey = localStoragePrefix + 'url';
+            var localStorageCssKey = localStoragePrefix + 'css';
+            var storedFontUrl = loSto[localStorageUrlKey];
+            var storedFontCss = loSto[localStorageCssKey];
+        
+        
+            // 2. Setting up the <style> element, that we are using to apply the base64 encoded font data
+            var styleElement = document.createElement('style');
+            styleElement.rel = 'stylesheet';
+            document.head.appendChild(styleElement);
+            // Setting styleElement.textContent must be after this line, because of IE9 errors
+        
+        
+            // 3. Checking whether the font data is already in localStorage and up-to-date
+            if (storedFontCss && (storedFontUrl === woffUrl || storedFontUrl === woff2Url)) {
+                // the css is still in the localStorage
+                // AND it was loaded from one of the current URLs
+                
+                // 4. Applying the font style sheet
+                styleElement.textContent = storedFontCss;
+            } else {
+                // The data was not present, or loaded from an obsolete URL
+                // So we have to load it again
+        
+                // 5. Checking for WOFF2 support to know which URL we should use
+                var url = (woff2Url && supportsWoff2())
+                    ? woff2Url // WOFF2 URL provided and supported
+                    : woffUrl; // only WOFF support
+        
+        
+                // 6. Fetching the font data from the server
+                var request = new XMLHttpRequest();
+                request.open('GET', url);
+                request.onload = function() {
+                    if (request.status >= 200 && request.status < 400) {
+                        
+                        // 7. Updating localStorage with the fresh data and applying the font data
+                        loSto[localStorageUrlKey] = url;
+                        loSto[localStorageCssKey] = styleElement.textContent = request.responseText;
+                    }
+                };
+                request.send();
+            }
+        
+            function supportsWoff2() {
+                // Source: https://github.com/filamentgroup/woff2-feature-test
+                if (!window.FontFace) {
+                    return false;
+                }
+        
+                var f = new FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
+                f.load();
+        
+                return f.status === 'loading';
+            }
+        }
+        loadFont('antenne-fonts', '/assets/tpl/dist/fonts-woff.css', '/assets/tpl/dist/fonts-woff2.css');
+
+
+        window.lazySizesConfig = {
+            addClasses: true
+        };
+    </script>
+
+    <script src="/assets/tpl/dist/images.[[+site_version]].js" async></script>    
+    
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#2a6bc5">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+</head>

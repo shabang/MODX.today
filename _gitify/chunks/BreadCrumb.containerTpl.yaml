@@ -1,0 +1,18 @@
+id: 8
+name: BreadCrumb.containerTpl
+description: ''
+category: BreadCrumb
+properties: 'a:0:{}'
+
+-----
+
+[[+crumbs:notempty=`
+<div class="row hide-for-small">
+    <div class="small-12 columns">
+        <ul class="breadcrumb" itemprop="breadcrumb">
+            <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="[[++site_url]]" itemprop="url" title="zur Startseite"><svg role="presentation" title="Antenne Bayern" class="breadcrumbs__icon-home"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="[[++svg_url]]#icon-home"></use></svg></a></li>
+            [[+crumbs]]
+        </ul>
+    </div>
+</div>
+`]]

@@ -1,0 +1,6 @@
+key: ace.fold_widgets
+value: '1'
+xtype: combo-boolean
+namespace: ace
+area: general
+editedon: '0000-00-00 00:00:00'

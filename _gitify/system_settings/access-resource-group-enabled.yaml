@@ -1,0 +1,5 @@
+key: access_resource_group_enabled
+value: '1'
+xtype: combo-boolean
+area: authentication
+editedon: '0000-00-00 00:00:00'

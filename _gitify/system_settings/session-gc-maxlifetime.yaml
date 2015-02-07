@@ -1,0 +1,4 @@
+key: session_gc_maxlifetime
+value: '604800'
+area: session
+editedon: '0000-00-00 00:00:00'

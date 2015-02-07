@@ -1,0 +1,5 @@
+key: contentblocks.image.prefix_time
+xtype: modx-combo-boolean
+namespace: contentblocks
+area: 'Input: Image'
+editedon: '0000-00-00 00:00:00'

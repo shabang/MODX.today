@@ -1,0 +1,6 @@
+key: redactor.cleanSpaces
+value: '1'
+xtype: modx-combo-boolean
+namespace: redactor
+area: Markup
+editedon: '0000-00-00 00:00:00'

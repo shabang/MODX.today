@@ -1,0 +1,5 @@
+key: cache_db_session
+value: '0'
+xtype: combo-boolean
+area: caching
+editedon: '0000-00-00 00:00:00'

@@ -1,0 +1,5 @@
+key: redactor.stylesJson
+xtype: textarea
+namespace: redactor
+area: Toolbar
+editedon: '0000-00-00 00:00:00'

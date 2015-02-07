@@ -1,0 +1,5 @@
+key: which_element_editor
+value: Ace
+xtype: modx-combo-rte
+area: editor
+editedon: '2015-02-07 12:24:27'

@@ -1,0 +1,115 @@
+id: 3
+source: 1
+name: tpl.pagefooter
+description: ''
+category: Template
+properties: 'a:0:{}'
+
+-----
+
+<footer class="pagefooter">
+    <div class="row">
+        <div class="hide-for-small medium-3 large-2 columns">
+            <p class="pagefooter__title"><a href="programm/" title="Programm">Programm</a></p>
+            <ul>
+               <li><a href="programm/aktionen/" title="Aktionen">Aktionen</a></li>
+               <li><a href="programm/sendungen/" title="Sendungen">Sendungen</a></li>
+               <li><a href="programm/moderatoren-and-team/" title="Moderatoren">Moderatoren</a></li>
+               <li><a href="programm/empfang/" title="Empfang">Empfang</a></li>
+               <li><a href="http://www.antenne.de/club" target="_blank" title="Club">Club</a></li>
+            </ul>
+            <p class="pagefooter__title"><a href="musik/" title="Musik">Musik</a></p>
+            <ul>
+                <li><a href="musik/song-suche.html" title="Songsuche">Songsuche</a></li>
+                <li><a href="unpluggeds/" title="Musik-Videos (unplugged)">Musik-Videos (unplugged)</a></li>
+                <li><a href="musik/leikis-hittipp/" title="Leikis Hit-Tipp">Leikis Hit-Tipp</a></li>
+                <li><a href="musik/antenne-bayern-songs/" title="ANTENNE BAYERN Songs">ANTENNE BAYERN Songs</a></li>
+                <li><a href="musik/feiern-mit-der-antenne-bayern-band.html" title="ANTENNE BAYERN Band">ANTENNE BAYERN Band</a></li>
+                <li><a href="musik/die-top-10-des-tages-immer-von-19-bis-20-uhr.html" title="Top 10">Top 10</a></li>
+                <li><a href="musik/musiktest.html" title="Musikquiz">Musikquiz</a></li>
+            </ul>
+        </div>
+        
+        <div class="hide-for-small medium-3 large-2 columns">
+            <p class="pagefooter__title"><a href="experten-tipps/wetter-uebersicht/" title="Wetter">Wetter</a></p>
+            <ul>
+                <li><a href="experten-tipps/wetter-uebersicht/" title="Pollen">Pollen</a></li>
+                <li><a href="experten-tipps/wetter-uebersicht/badeseen.html" title="Badetemperaturen">Badetemperaturen</a></li>
+            </ul>
+            <p class="pagefooter__title"><a href="nachrichten/" title="Nachrichten">Nachrichten</a></p>
+              <ul>
+                  <li><a href="nachrichten/bayern/" title="Bayern">Bayern</a></li>
+                  <li><a href="deutschland/" title="Deutschland">Deutschland</a></li>
+                  <li><a href="welt/" title="Welt">Welt</a></li>
+                  <li><a href="sport/" title="Sport">Sport</a></li>
+                  <li><a href="bayernreporter/" title="Bayernreporter">Bayernreporter</a></li>
+              </ul>
+        </div>
+        
+        <div class="hide-for-small medium-3 large-2 columns">
+            <p class="pagefooter__title"><a href="verkehrsuebersicht.html" title="Verkehr">Verkehr</a></p>
+            <ul>
+                <li><a href="verkehrsuebersicht.html" title="Verkehr und Blitzer">Verkehr und Blitzer</a></li>
+            </ul>
+          
+            <p class="pagefooter__title"><a href="experten-tipps/" title="Experten-Tipps">Experten-Tipps</a></p>
+            <ul>
+                <li><a href="experten-tipps/haus-garten/" title="Haus & Garten">Haus & Garten</a></li>
+                <li><a href="geld-and-recht/" title="Geld & Recht">Geld & Recht</a></li>
+                <li><a href="buntes/" title="Prominente und Buntes">Prominente und Buntes</a></li>
+                <li><a href="gesundheit/" title="Gesundheit">Gesundheit</a></li>
+                <li><a href="kino-experte/" title="Kinotipps">Kinotipps</a></li>
+                <li><a href="experten-tipps/lifestyle/" title="Lifestyle">Lifestyle</a></li>
+                <li><a href="experten-tipps/horoskop/" title="Horoskop">Horoskop</a></li>
+                <li><a href="http://www.antenne.de/anzeige/lotto/ihr-pers%C3%B6nlicher-lotto-gl%C3%BCckstipp.html" title="LOTTO-Glückstipp">LOTTO-Glückstipp</a></li>
+                <li><a href="experten-tipps/versicherungsvergleich/" title="Vergleichen und Sparen">Vergleichen und Sparen</a></li>
+            </ul>
+        </div>
+        
+        <div class="hide-for-small medium-3 large-2 columns">
+            <p class="pagefooter__title"><a href="" title="Comedy">Comedy</a></p>
+            <ul>
+                <li><a href="comedy/spitzen-ferienwitze-der-kleine-nils-bringt-kids-gross-raus.html" title="Der kleine Nils">Der kleine Nils</a></li>
+                <li><a href="comedy/nullingers-schrecklich-fette-familie.html" title="Die Nullingers">Die Nullingers</a></li>
+                <li><a href="comedy/metzgerei-boggnsagg.html" title="Metzgerei Boggnsagg">Metzgerei Boggnsagg</a></li>
+                <li><a href="comedy/franken-tanke.html" title="Die Franken-Tanke">Die Franken-Tanke</a></li>
+            </ul>
+        
+            <p class="pagefooter__title"><a href="events/uebersicht.html" title="EVENTS">EVENTS</a></p>
+            <ul>
+                <li><a href="events/konzerte.html" title="Konzerte">Konzerte</a></li>
+            </ul>
+          
+            <p class="pagefooter__title"><a href="experten-tipps/spiele/" title="SPIELE">SPIELE</a></p>
+        </div>
+        
+        <div class="small-12 medium-12 large-2 columns">
+            <p class="pagefooter__title"><a href="" title="ANTENNE BAYERN">ANTENNE BAYERN</a></p>
+            <ul>
+                <li><a href="antenne-bayern/kontakt.html" target="_blank" title="Kontakt">Kontakt</a></li>
+                <li><a href="antenne-bayern/impressum.html" title="Impressum">Impressum</a></li>
+                <li><a href="antenne-bayern/rechtliche-hinweise.html" title="Rechtliche Hinweise">Rechtliche Hinweise</a></li>
+            </ul>
+            <ul>
+                <li><a href="http://www.spotcom.de/" target="_blank" title="Werben">Werben</a></li>
+                <li><a href="http://unternehmensgruppe.antenne.de/" target="_blank" title="Unternehmensgruppe">Unternehmensgruppe</a></li>
+                <li><a href="/antenne-bayern/stiftung-antenne-bayern-hilft.html" title="Stiftung ANTENNE BAYERN hilft">Stiftung ANTENNE BAYERN hilft</a></li>
+                <li><a href="http://media.antenne-bayern.de/wordpress/forms/schulklassen-anmeldeformular/267/" target="_blank" title="ANTENNE BAYERN besuchen">ANTENNE BAYERN besuchen</a></li>
+            </ul>
+        </div>
+        
+        <ul class="social-list">
+            <li><a href="https://www.facebook.com/antennebayern" class="btn-social-fb" target="_blank" title="Facebook"> <svg role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="[[++svg_url]]#btn-fb"></use></svg></a></li>
+            <li><a href="http://google.com/+antennebayern" class="btn-social-gp" target="_blank" title="Google Plus"><svg role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="[[++svg_url]]#btn-gplus"></use></svg></a></a></li>
+            <li><a href="https://twitter.com/AntenneBayern" class="btn-social-tt" target="_blank" title="Twitter"><svg role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="[[++svg_url]]#btn-twitter"></use></svg></a></a></li>
+            <li><a href="https://www.youtube.com/AntenneBayern" class="btn-social-yt" target="_blank" title="YouTube"><svg role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="[[++svg_url]]#btn-youtube"></use></svg></a></a></li>
+            <li><a href="mailto:info@antenne.de" class="btn-social-mail" title="E-Mail"><svg role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="[[++svg_url]]#btn-mail"></use></svg></a></a></li>
+        </ul>
+    </div>
+    
+    <div class="row">
+        <div class="small-12 columns copyright">
+            <p>© [[CopyrightYear]] Antenne Bayern</p>
+        </div>
+    </div>
+</footer>

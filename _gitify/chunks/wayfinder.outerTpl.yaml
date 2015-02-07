@@ -1,0 +1,10 @@
+id: 9
+source: 1
+name: wayfinder.outerTpl
+description: ''
+category: Navigation
+properties: 'a:0:{}'
+
+-----
+
+[[+wf.wrapper]]

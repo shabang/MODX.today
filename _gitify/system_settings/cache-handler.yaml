@@ -1,0 +1,4 @@
+key: cache_handler
+value: xPDOFileCache
+area: caching
+editedon: '0000-00-00 00:00:00'

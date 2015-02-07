@@ -1,0 +1,14 @@
+id: 7
+name: Breadcrumb
+description: ''
+category: BreadCrumb
+properties: 'a:0:{}'
+
+-----
+
+[[BreadCrumb?
+    &showHomeCrumb=`0`
+    &containerTpl=`BreadCrumb.containerTpl`
+    &linkCrumbTpl=`@INLINE <li itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="[[+link]]" itemprop="url"><span itemprop="title">[[+pagetitle]]</span></a></li>`
+    &currentCrumbTpl=`@INLINE <li class="current" itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="[[+link]]" itemprop="url"><span itemprop="title">[[+pagetitle]]</span></a></li>`
+]]

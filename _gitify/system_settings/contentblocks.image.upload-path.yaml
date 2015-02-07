@@ -1,0 +1,5 @@
+key: contentblocks.image.upload_path
+value: assets/uploads/
+namespace: contentblocks
+area: 'Input: Image'
+editedon: '0000-00-00 00:00:00'

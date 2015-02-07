@@ -1,0 +1,5 @@
+key: redactor.mediasource
+xtype: modx-combo-source
+namespace: redactor
+area: Media
+editedon: '0000-00-00 00:00:00'

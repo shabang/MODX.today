@@ -1,0 +1,5 @@
+key: default_content_type
+value: '1'
+xtype: modx-combo-content-type
+area: site
+editedon: '0000-00-00 00:00:00'
