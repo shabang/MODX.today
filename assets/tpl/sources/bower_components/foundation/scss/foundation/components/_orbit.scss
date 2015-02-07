@@ -86,7 +86,7 @@ $orbit-timer-hide-for-small: true !default;
 
       .orbit-container { background-color: transparent;
 
-        // Show img when .orbit-container is loaded
+        // Show images when .orbit-container is loaded
         li { display: block;
 
           .orbit-caption { display: block; }
@@ -129,7 +129,7 @@ $orbit-timer-hide-for-small: true !default;
         padding: 0;
         position: relative;
 
-        // Prevents img (and captions) from disappearing after first rotation on Chrome for Android
+        // Prevents images (and captions) from disappearing after first rotation on Chrome for Android
         -webkit-transform: translateZ(0);
 
         img { display: block; max-width: 100%; }

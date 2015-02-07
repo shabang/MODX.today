@@ -8,23 +8,26 @@ properties: 'a:0:{}'
 -----
 
 <header class="pageheader">
-    <h1 id="logo" class="large-4 medium-5 columns large-pull-4 medium-pull-7">
+    <h1 id="logo">
         <a href="/" title="MODXtoday">
-            <svg role="image" title="[[++site_name]]"><use xlink:href="[[++svg_url]]#MODXtoday"></svg>
+            <svg role="image" title="[[++site_name]]"><use xlink:href="[[++svg_url]]#modxtoday"></svg>
         </a>
     </h1>
     
-    <nav class="mainnav" role="navigation" aria-label="Navigation">
-        <ul class="show-for-medium-up">
-            [[Wayfinder?
-                &startId=`0`
-                &outerTpl=`wayfinder.outerTpl`
-                &innerTpl=`wayfinder.innerTpl`
-                &rowTpl=`wayfinder.rowTpl`
-                &scheme=`abs`
-                &level=`1`
-                &excludeDocs=``
-            ]]
-        </ul>
-    </nav>
+    <a class="left-off-canvas-toggle" href="#" >Menu</a>
 </header>
+
+
+<nav class="left-off-canvas-menu mainnav" role="navigation" aria-label="Navigation">
+    <ul class="show-for-medium-up">
+        [[Wayfinder?
+            &startId=`0`
+            &outerTpl=`wayfinder.outerTpl`
+            &innerTpl=`wayfinder.innerTpl`
+            &rowTpl=`wayfinder.rowTpl`
+            &scheme=`abs`
+            &level=`1`
+            &excludeDocs=``
+        ]]
+    </ul>
+</nav>

@@ -25,14 +25,12 @@
     .pagewrapper {
         z-index: 1;
         width: 100%;
+        
+        @media #{$large-up} {
+            padding-left: rem(90);
+        }
     }
 
-    .pagecontent {
-        max-width: $row-width;
-        padding: 0 #{$column-gutter/2};
-        margin: 0 auto;
-        background: #fff;
-    }
 
 
 

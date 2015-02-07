@@ -19,16 +19,18 @@
 	/*jshint eqnull:true */
 	'use strict';
 	var config, extentLazySizes, parseWsrcset;
+
 	var regPicture = /^picture$/i;
-	if(!window.devicePixelRatio){return;}
+	var docElem = document.documentElement;
 
 	parseWsrcset = (function(){
 		var candidates;
-		var reg = /([^,\s].[^\s]+\s+(\d+)w)/g;
+		var reg = /(([^,\s].[^\s]+)\s+(\d+)w)/g;
 		var regHDesc = /\s+\d+h/g;
-		var addCandidate = function(match, candidate, wDescriptor){
+		var addCandidate = function(match, candidate, url, wDescriptor){
 			candidates.push({
 				c: candidate,
+				u: url,
 				w: wDescriptor * 1
 			});
 		};
@@ -52,17 +54,15 @@
 
 	if(typeof config.getOptimumX != 'function'){
 		config.getOptimumX = function(/*element*/){
-			var dpr = window.devicePixelRatio;
+			var dpr = window.devicePixelRatio || 1;
 			if(dpr > 2.4){
 				dpr *= 0.63; // returns 1.9 for 3
 			} else if(dpr > 1.9){
 				dpr *= 0.8; // returns 1.6 for 2
 			} else if(dpr > 1.4){
 				dpr *= 0.9; // returns 1.35 for 1.5
-			} else {
-				dpr *= 0.99; // returns 0.99 for 1 or 1.24 for 1.3
 			}
-			return Math.round(dpr * 100) / 100;
+			return Math.min(Math.round(dpr * 100) / 100, 2);
 		};
 	}
 
@@ -73,7 +73,10 @@
 	function parseSets(elem){
 		var lazyData = {srcset: elem.getAttribute(lazySizes.cfg.srcsetAttr)  || ''};
 		var cands = parseWsrcset(lazyData.srcset);
-		elem._lazyOptimumx = lazyData;
+		Object.defineProperty(elem, '_lazyOptimumx', {
+			value: lazyData,
+			writable: true
+		});
 
 		lazyData.cands = cands;
 
@@ -171,8 +174,15 @@
 	extentLazySizes = function(){
 		if(window.lazySizes && !window.lazySizes.getOptimumX){
 			lazySizes.getX = getOptimumX;
+			lazySizes.pWS = parseWsrcset;
+			docElem.removeEventListener('lazybeforeunveil', extentLazySizes);
 		}
 	};
+
+	docElem.addEventListener('lazybeforeunveil', extentLazySizes);
+	setTimeout(extentLazySizes);
+
+	if(!window.devicePixelRatio){return;}
 
 	addEventListener('lazybeforesizes', function(e){
 		var optimumx, lazyData, width, attr, parent, sources, i, len;
@@ -199,9 +209,12 @@
 
 			e.details.srcset = constrainSrces(e.target, width, attr);
 		}
-	}, false);
+	});
 
-	extentLazySizes();
-	setTimeout(extentLazySizes);
+	addEventListener('lazybeforeunveil', function(e){
+		if(e.target._lazyOptimumx){
+			e.target._lazyOptimumx = null;
+		}
+	});
 
 })(window, document);

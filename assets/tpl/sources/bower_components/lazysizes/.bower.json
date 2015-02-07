@@ -1,7 +1,7 @@
 {
   "name": "lazysizes",
   "repo": "afarkas/lazysizes",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "main": "lazysizes.js",
   "scripts": [
     "lazysizes.js",
@@ -46,11 +46,11 @@
     "plato-report"
   ],
   "homepage": "https://github.com/aFarkas/lazysizes",
-  "_release": "0.8.1",
+  "_release": "0.9.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.8.1",
-    "commit": "49f89a6e9c7b29fff7c295aea5187c03e0916cda"
+    "tag": "0.9.0",
+    "commit": "395e1aefc37ad5f78009022210aa8c74f402dd89"
   },
   "_source": "git://github.com/aFarkas/lazysizes.git",
   "_target": "0.x.x",
