@@ -102,7 +102,7 @@ class ResourceCreateManagerController extends ResourceManagerController {
                 'published' => $this->context->getOption('publish_default', 0, $this->modx->_userConfig),
                 'searchable' => $this->context->getOption('search_default', 1, $this->modx->_userConfig),
                 'cacheable' => $this->context->getOption('cache_default', 1, $this->modx->_userConfig),
-                'syncsite' => true,
+                'syncsite' => $this->context->getOption('syncsite_default', 1, $this->modx->_userConfig),
             ));
             $this->parent->fromArray($this->resourceArray);
             $this->parent->set('template',$defaultTemplate);
@@ -115,7 +115,11 @@ class ResourceCreateManagerController extends ResourceManagerController {
             $this->resourceArray = array_merge($this->resourceArray, $reloadData);
             $this->resourceArray['resourceGroups'] = array();
             $this->resourceArray['syncsite'] = true;
-            $this->resourceArray['resource_groups'] = is_array($this->resourceArray['resource_groups']) ? $this->resourceArray['resource_groups'] : $this->modx->fromJSON($this->resourceArray['resource_groups']);
+            $this->resourceArray['resource_groups'] = $this->modx->getOption('resource_groups',
+                $this->resourceArray, array());
+            $this->resourceArray['resource_groups'] = is_array($this->resourceArray['resource_groups']) ?
+                $this->resourceArray['resource_groups'] :
+                $this->modx->fromJSON($this->resourceArray['resource_groups']);
             if (is_array($this->resourceArray['resource_groups'])) {
                 foreach ($this->resourceArray['resource_groups'] as $resourceGroup) {
                     $this->resourceArray['resourceGroups'][] = array(

@@ -393,17 +393,19 @@ Ext.extend(MODx.grid.ElementProperties,MODx.grid.LocalProperty,{
             if (e == 'yes') {
                 var ri = this.menu.recordIndex;
                 var d = this.defaultProperties[ri];
-                var rec = this.getStore().getAt(ri);
-                rec.set('name',d[0]);
-                rec.set('desc',d[1]);
-                rec.set('desc_trans',d[1]);
-                rec.set('xtype',d[2]);
-                rec.set('options',d[3]);
-                rec.set('value',d[4]);
-                rec.set('overridden',0);
-                rec.set('area',d[5]);
-                rec.set('area_trans',d[5]);
-                rec.commit();
+                if (d) {
+                    var rec = this.getStore().getAt(ri);
+                    rec.set('name',d[0]);
+                    rec.set('desc',d[1]);
+                    rec.set('desc_trans',d[1]);
+                    rec.set('xtype',d[2]);
+                    rec.set('options',d[3]);
+                    rec.set('value',d[4]);
+                    rec.set('overridden',0);
+                    rec.set('area',d[5]);
+                    rec.set('area_trans',d[5]);
+                    rec.commit();
+                }
             }
         },this);
     }
@@ -500,7 +502,7 @@ Ext.extend(MODx.grid.ElementProperties,MODx.grid.LocalProperty,{
         var def = this.isDefaultPropSet();
 
         var r = this.menu.record;
-        var m = []
+        var m = [];
         m.push({
             text: _('property_update')
             ,scope: this
@@ -514,7 +516,7 @@ Ext.extend(MODx.grid.ElementProperties,MODx.grid.LocalProperty,{
                 ,handler: this.revert
             });
         }
-        if (r.overridden == 2 && !def) {
+        if ((r.overridden == 2 && !def) || (r.overridden != 1 && def) || (!r.overridden && !def)) {
             m.push({
                 text: _('property_remove')
                 ,scope: this
@@ -525,16 +527,6 @@ Ext.extend(MODx.grid.ElementProperties,MODx.grid.LocalProperty,{
             });
         }
 
-        if (r.overridden != 1 && def) {
-            m.push({
-                text: _('property_remove')
-                ,scope: this
-                ,handler: this.remove.createDelegate(this,[{
-                    title: _('warning')
-                    ,text: _('property_remove_confirm')
-                }])
-            });
-        }
         return m;
     }
 
@@ -1178,6 +1170,15 @@ MODx.window.ImportProperties = function(config) {
         }]
     });
     MODx.window.ImportProperties.superclass.constructor.call(this,config);
+
+    // Trigger "fileselected" event
+    var fp = Ext.getCmp('modx-impp-file');
+    var onFileUploadFieldFileSelected = function(fp, fakeFilePath) {
+        var fileApi = fp.fileInput.dom.files;
+        fp.el.dom.value = (typeof fileApi != 'undefined') ? fileApi[0].name : fakeFilePath.replace("C:\\fakepath\\", "");
+    };
+    fp.on('fileselected', onFileUploadFieldFileSelected);
+
 };
 Ext.extend(MODx.window.ImportProperties,MODx.Window);
 Ext.reg('modx-window-properties-import',MODx.window.ImportProperties);
