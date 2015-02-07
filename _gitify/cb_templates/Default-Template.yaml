@@ -1,0 +1,7 @@
+id: 1
+name: 'Default Template'
+description: ''
+icon: template_03
+icon_type: core
+content: '[{"layout":1,"content":{"col1":[{"value":"","lang":"html","field":1,"settings":{}}]},"settings":[],"parent":0}]'
+availability: '[{"field":"resource","value":"-1"}]'

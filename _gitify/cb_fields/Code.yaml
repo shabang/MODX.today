@@ -1,0 +1,13 @@
+id: 1
+input: code
+name: Code
+description: ''
+icon: code
+icon_type: core
+template: '[[+value]]'
+properties: '{"available_languages":"html=HTML","default_language":"html","entities":"0"}'
+availability: ''
+layouts: ''
+times_per_layout: 0
+times_per_page: 0
+settings: '[]'
