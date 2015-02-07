@@ -1,0 +1,35 @@
+id: 6
+templatename: 'Article - Podcast'
+properties: 'a:0:{}'
+
+-----
+
+[[$cachebuster]][[$tpl.head]]
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<div id="top" class="off-canvas-wrap" data-offcanvas>
+    <div class="inner-wrap">
+        <div class="pagewrapper">
+            [[$tpl.pageheader]]
+            
+            <main role="main" itemprop="mainContentOfPage" class="pagecontent">
+                <article>
+                    [[*content]]
+                </article>
+                
+                [[$tpl.articlefooter]]
+            </main>
+
+            [[$tpl.pagefooter]]
+        
+        
+        </div> <!-- .pagewrapper -->
+
+        
+        </div> <!-- .inner-wrap -->
+    </div> <!-- .off-canvas-wrap -->    
+
+    
+    [[$tpl.scripts]]
+</body>
+</html>
