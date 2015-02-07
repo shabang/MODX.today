@@ -2,9 +2,14 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: rem(90);
-    height: 100%;
+    width: 100%;
+    height: rem(90);
     background: $blue;
+    
+    @media #{$large-up} {
+        width: rem(90);
+        height: 100%;
+    }
 }
 
 h1#logo {

@@ -45,10 +45,7 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .flexgrid {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 100vw
+    display: block;
 }
 
 .flexgrid-item {
