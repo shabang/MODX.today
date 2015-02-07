@@ -1,0 +1,12 @@
+id: 2
+type: textarea
+name: home.embed
+caption: 'Summary Embed'
+category: 'Home View'
+elements: ''
+display: default
+default_text: ''
+properties: 'a:0:{}'
+input_properties: 'a:1:{s:10:"allowBlank";s:4:"true";}'
+output_properties: 'a:0:{}'
+content: ''

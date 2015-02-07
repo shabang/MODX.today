@@ -50,7 +50,7 @@ ContentBlocksComponent.combo.Fields = function(config) {
         baseParams: {
             action: 'mgr/fields/getlist',
             // this means this will only ever return text/richtext fields. Needed for proper default template selection.
-            inputs: 'textarea,richtext,code',
+            inputs: 'textarea,richtext',
             combo: true
         },
         autoload: false,

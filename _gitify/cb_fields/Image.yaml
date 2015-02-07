@@ -1,0 +1,13 @@
+id: 4
+input: image_with_title
+name: Image
+description: ''
+icon: image
+icon_type: core
+template: '<img src="[[+url]]" alt="[[+title]]">'
+properties: '{"source":"0","directory":"assets\/uploads\/[[+year]]\/[[+month]]\/","file_types":"png,gif,jpg,jpeg","use_tinyrte":"1"}'
+availability: ''
+layouts: ''
+times_per_layout: 0
+times_per_page: 0
+settings: '[]'

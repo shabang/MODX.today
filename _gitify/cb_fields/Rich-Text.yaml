@@ -1,0 +1,13 @@
+id: 2
+input: richtext
+name: 'Rich Text'
+description: ''
+icon: richtext
+icon_type: core
+template: '[[+value]]'
+properties: '[]'
+availability: ''
+layouts: ''
+times_per_layout: 0
+times_per_page: 0
+settings: '[]'

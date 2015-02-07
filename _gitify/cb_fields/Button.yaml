@@ -1,0 +1,13 @@
+id: 5
+input: link
+name: Button
+description: ''
+icon: code
+icon_type: core
+template: "<p>\n    <a href=\"[[+link]]\" class=\"large button\">[[+link]]</a>\n</p>"
+properties: '{"link_detection_pattern_override":""}'
+availability: ''
+layouts: ''
+times_per_layout: 0
+times_per_page: 0
+settings: '[]'

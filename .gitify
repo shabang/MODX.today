@@ -73,3 +73,14 @@ data:
   cb_defaults:
     class: cbDefault
     primary: id
+packages: 
+  modx.com:
+    service_url: http://rest.modx.com/extras/
+    packages:
+      - ace
+      - breadcrumbs
+      - collections
+      - getcache
+      - seopro
+      - translit
+      - wayfinder

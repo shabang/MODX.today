@@ -1,0 +1,38 @@
+id: 3
+templatename: 'Article - Video'
+properties: 'a:0:{}'
+
+-----
+
+[[$cachebuster]][[$tpl.head]]
+
+<body itemscope itemtype="http://schema.org/WebPage">
+<div id="top" class="off-canvas-wrap" data-offcanvas>
+    <div class="inner-wrap">
+        <div class="pagewrapper">
+            [[$tpl.pageheader]]
+            
+            <main role="main" itemprop="mainContentOfPage" class="pagecontent">
+                [[-$BreadCrumb]]
+
+<div class="flex-video">
+   <iframe width="560" height="315" src="[[*home.embed]]" frameborder="0" allowfullscreen></iframe>
+</div>
+<h1>[[*longtitle:default=`[[*pagetitle]]`]]
+
+                [[*content]]
+            </main>
+
+            [[$tpl.pagefooter]]
+        
+        
+        </div> <!-- .pagewrapper -->
+
+        
+        </div> <!-- .inner-wrap -->
+    </div> <!-- .off-canvas-wrap -->    
+
+    
+    [[$tpl.scripts]]
+</body>
+</html>
