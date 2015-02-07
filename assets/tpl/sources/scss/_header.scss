@@ -30,3 +30,35 @@ h1#logo {
         }
     }
 }
+
+.off-canvas-toggle {
+    display: block;
+    margin: rem(10) auto;
+    padding: rem(8 0);
+    transition: background-color #{$anchor-transition};
+    
+    svg {
+        display: block;
+        width: rem(30);
+        height: rem(30);
+        margin: 0 auto;
+        fill: rgba(#fff, .9);
+        transition: fill #{$anchor-transition};
+    }
+    
+    &:hover {
+        background: rgba(#fff,.05);
+        svg {
+            fill: $orange;
+        }
+    }
+    
+    span {
+        display: none;
+        color: #fff;
+        font-weight: $font-weight-normal;
+        text-align: center;
+        font-size: rem(10);
+        text-transform: uppercase;
+    }
+}

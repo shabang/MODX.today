@@ -22,11 +22,7 @@ window.log = function(){
 
 
 // init foundation js stuff
-$(document).foundation({
-	offcanvas: {
-		open_method: 'overlap_single'
-	}
-});
+$(document).foundation();
 
 
 // ready
