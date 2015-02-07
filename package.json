@@ -15,7 +15,6 @@
     "node-sass": "2.0.0-beta",
     "autoprefixer": "4.0.x",
     "svg-sprite": "1.0.x",
-    "http-server": "0.7.x",
     "live-reload": "0.2.x",
     "opener": "1.4.x",
     "optimist": "0.x.x",
