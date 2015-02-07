@@ -2,7 +2,7 @@
 /*
  * MODX Revolution
  *
- * Copyright 2006-2014 by MODX, LLC.
+ * Copyright 2006-2015 by MODX, LLC.
  * All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -142,9 +142,9 @@ class modOutputFilter {
                             /** @var $user modUser */
                             $user = $this->modx->getObject('modUser',$output);
                             if ($user && is_object($user) && $user instanceof modUser) {
-                                $condition[]= $user->isMember($grps);
+                                $condition[]= (int) $user->isMember($grps);
                             } else {
-                                $condition[] = false;
+                                $condition[] = 0;
                             }
                             break;
                         case 'or':

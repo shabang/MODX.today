@@ -2,6 +2,57 @@
 This file shows the changes in recent releases of MODX. The most current release is usually the
 development release, and is only shown to give an idea of what's currently in the pipeline.
 
+MODX Revolution 2.3.3-pl  (January 29, 2015)
+====================================
+- Add OnCacheUpdate event to refresh() method
+- Check for valid google.com DNS before trying to load feeds
+- Fix case of table_prefix and service_class in modX->_loadExtensionPackages()
+- Fixed showing RTE in all resource types
+- Fixed sorting in MODX browser
+- Fixed updating resources from recent resources in user's profile
+- Fixed duplicating user
+- Unset modx.user.userGroups in joinGroup()
+- Use window.location.search to populate MODx.request
+- Added option to delete property from Property Set using the UI
+- Fixed preserving locked attribute in elements after quick update
+- Allow copy&paste system information page
+- Fixed urlAbsolute path in media sources
+- Fixed column width grid head/content
+- Fixed connector's URL when getting media source list
+- Make syncsite checkbox a system setting
+- Added system setting for automatic/manual switching container property in resources
+- Fixed showing lock tree icon for locked resources
+- Fixed @INHERIT binding in TVs
+- Make FC profiles sortable by template
+- Removed limit to getnodes for menu items
+- Fixed error message and missed lexicon for create chunk
+- Fix timezone problem
+- Fix javascript error while revert to default new property
+- Hide Duplicate buttons from Resource panel when user don't have permissions
+- Fix Password tab visible in edit profile to users without permission
+- Remove C:\fakepath\ from filename when importing property sets
+- Fix unnecessary scrollbars in windows
+- Fix wrong error message for creating new namespace
+- Remove limit from modx-combo-category combobox
+- Improved generateContext method to be quicker
+- Fixed loading theme based styles on login screen
+- Fixed selecting the same file to upload again
+- Fixed removing plugin from an event via the Update plugin event window
+- Fixed autoredirect after creating user
+- Fix context settings remove and update from window
+- Fixed showing minLength and maxLength value in error msg for text TVs
+- Prevent $this->resourceArray['resource_groups'] from being undefined
+- Fixed disabling caching of a chunk's output
+- Fixed Duplicate resource button visibility
+- Updated memberof output filter to return integer
+- Fixed setting resource as it's own parent
+- Trim setting's key before saving
+- Sort plugin events by enabled
+- Restore permission for menu help
+- Fixed processor path in user panel
+- Move refreshURIs() call from clear cache to new menu item Refresh URIs
+- Fix uploading packages on Windows
+
 MODX Revolution 2.3.2-pl (October 21, 2014)
 ====================================
 - Fixed issue with S3 buckets containing dots

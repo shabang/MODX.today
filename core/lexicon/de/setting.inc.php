@@ -260,8 +260,8 @@ $_lang['setting_ext_debug_desc'] = 'Gibt an, ob ext-all-debug.js geladen werden 
 $_lang['setting_extension_packages'] = 'Erweiterungs-Packages';
 $_lang['setting_extension_packages_desc'] = 'Ein JSON-Array von Packages, die bei der MODX-Initialisierung geladen werden sollen, im Format [{"packagename":{"path":"pfad/zum/package"}},{"weitererpackagename":{"path":"pfad/zum/anderenpackage"}}]';
 
-$_lang['setting_enable_gravatar'] = 'Enable Gravatar';
-$_lang['setting_enable_gravatar_desc'] = 'If enabled, Gravatar will be used as a profile image (if user do not have profile photo uploaded).';
+$_lang['setting_enable_gravatar'] = 'Gravatar aktivieren';
+$_lang['setting_enable_gravatar_desc'] = 'Wenn diese Einstellung aktiviert ist, wird der der E-Mail-Adresse des Benutzers zugeordnete Gravatar als Profilbild verwendet (wenn der Benutzer kein Profilfoto hochgeladen hat).';
 
 $_lang['setting_failed_login_attempts'] = 'Fehlgeschlagene Login-Versuche';
 $_lang['setting_failed_login_attempts_desc'] = 'Geben Sie an, wie viele fehlgeschlagene Login-Versuche erlaubt sein sollen, bevor der Benutzer geblockt wird.';
@@ -675,6 +675,10 @@ $_lang['setting_strip_image_paths_desc'] = 'Wenn Sie diese Einstellung auf "Nein
 $_lang['setting_symlink_merge_fields'] = 'Ressourcen-Felder in Symlinks kombinieren';
 $_lang['setting_symlink_merge_fields_desc'] = 'Wenn diese Einstellung auf "Ja" gesetzt ist, werden nichtleere Felder automatisch mit denen der Ziel-Ressource kombiniert, wenn mit Hilfe von Symlinks weitergeleitet wird.';
 
+$_lang['setting_syncsite_default'] = 'Empty Cache default';
+$_lang['setting_syncsite_default_desc'] = 'Select \'Yes\' to empty the cache after you save a resource by default.';
+$_lang['setting_syncsite_default_err'] = 'Please state whether or not you want to empty the cache after saving a resource by default.';
+
 $_lang['setting_topmenu_show_descriptions'] = 'Beschreibungen im Hauptmenü anzeigen';
 $_lang['setting_topmenu_show_descriptions_desc'] = 'Wenn diese Einstellung auf "Nein" gesetzt wird, werden die Beschreibungen in den Menüpunkten des MODX-Manager-Hauptmenüs nicht angezeigt.';
 
@@ -760,3 +764,6 @@ $_lang['setting_xhtml_urls_desc'] = 'Wenn diese Einstellung auf "Ja" gesetzt wir
 
 $_lang['setting_default_context'] = 'Standard-Kontext';
 $_lang['setting_default_context_desc'] = 'Wählen Sie den Standard-Kontext, den Sie für neue Ressourcen verwenden möchten.';
+
+$_lang['setting_auto_isfolder'] = 'Container-Eigenschaft automatisch setzen';
+$_lang['setting_auto_isfolder_desc'] = 'Wenn diese Einstellung auf "Ja" gesetzt ist, wird die Container-Eigenschaft automatisch geändert.';

@@ -234,6 +234,10 @@ class modResourceUpdateProcessor extends modObjectUpdateProcessor {
                 }
             }
 
+            if ($this->object->get('id') == $parent) {
+                $this->addFieldError('parent-cmb', $this->modx->lexicon('resource_err_own_parent'));
+            }
+
             /* convert parent to int */
             $this->setProperty('parent',empty($parent) ? 0 : intval($parent));
         }
@@ -416,6 +420,12 @@ class modResourceUpdateProcessor extends modObjectUpdateProcessor {
             $this->setProperty('pub_date',$this->object->get('pub_date'));
             $this->setProperty('unpub_date',$this->object->get('unpub_date'));
         }
+
+        $canUnpublish = $this->modx->hasPermission('unpublish_document');
+        if (!$canUnpublish && !$this->getProperty('published')) {
+            $this->setProperty('published', $this->object->get('published'));
+        }
+
         return $canPublish;
     }
 
@@ -490,19 +500,23 @@ class modResourceUpdateProcessor extends modObjectUpdateProcessor {
     /**
      * Set the parents isfolder status based upon remaining children
      *
-     * @TODO Debate whether or not this should be default functionality
-     *
      * @return void
      */
     public function fixParents() {
-        if (!empty($this->oldParent) && !empty($this->newParent)) {
+        $autoIsFolder = $this->modx->getOption('auto_isfolder', null, true);
+        if (!$autoIsFolder) return;
+
+        if (!empty($this->oldParent)) {
             $oldParentChildrenCount = $this->modx->getCount('modResource', array('parent' => $this->oldParent->get('id')));
             if ($oldParentChildrenCount <= 0 || $oldParentChildrenCount == null) {
                 $this->oldParent->set('isfolder', false);
                 $this->oldParent->save();
             }
+        }
 
+        if (!empty($this->newParent)) {
             $this->newParent->set('isfolder', true);
+            $this->newParent->save();
         }
     }
 

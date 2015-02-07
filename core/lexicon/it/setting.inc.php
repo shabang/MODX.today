@@ -260,8 +260,8 @@ $_lang['setting_ext_debug_desc'] = 'Stabilisce se caricare o no ext-all-debug.js
 $_lang['setting_extension_packages'] = 'Pacchetti di Estensione';
 $_lang['setting_extension_packages_desc'] = 'Un elenco JSON di pacchetti da caricare durante l\'istanziazione di MODX (on MODX instantiation). Nel formato [{"packagename":{path":"path/to/package"},{"anotherpkg":{"path":"path/to/otherpackage"}}]';
 
-$_lang['setting_enable_gravatar'] = 'Enable Gravatar';
-$_lang['setting_enable_gravatar_desc'] = 'If enabled, Gravatar will be used as a profile image (if user do not have profile photo uploaded).';
+$_lang['setting_enable_gravatar'] = 'Abilitare Gravatar';
+$_lang['setting_enable_gravatar_desc'] = 'Se abilitata, l\'immagine Gravatar verrà utilizzata come immagine del profilo (qualora l\'utente non abbia specificatamente caricato una foto per il proprio profilo).';
 
 $_lang['setting_failed_login_attempts'] = 'Tentativi di Login Falliti';
 $_lang['setting_failed_login_attempts_desc'] = 'Il numero di tentativi errati di login concessi a un Utente prima che sia \'bloccato\'.';
@@ -675,6 +675,10 @@ $_lang['setting_strip_image_paths_desc'] = 'Se impostato su \'NO\', MODX scriver
 $_lang['setting_symlink_merge_fields'] = 'Unisci Campi Risorsa nei Symlinks';
 $_lang['setting_symlink_merge_fields_desc'] = 'Se impostato su Si, unirà automaticamente i campi non-vuoti con la risorsa target in caso di reindirizzamento con Symlinks.';
 
+$_lang['setting_syncsite_default'] = 'Empty Cache default';
+$_lang['setting_syncsite_default_desc'] = 'Select \'Yes\' to empty the cache after you save a resource by default.';
+$_lang['setting_syncsite_default_err'] = 'Please state whether or not you want to empty the cache after saving a resource by default.';
+
 $_lang['setting_topmenu_show_descriptions'] = 'Mostra Descrizioni Top Menu';
 $_lang['setting_topmenu_show_descriptions_desc'] = 'Se impostato su \'NO\', MODX nasconderà le descrizioni dagli oggetti del top menu del manager.';
 
@@ -760,3 +764,6 @@ $_lang['setting_xhtml_urls_desc'] = 'Se impostato su \'SI\', tutti gli URLs gene
 
 $_lang['setting_default_context'] = 'Contesto di Default';
 $_lang['setting_default_context_desc'] = 'Seleziona il Contesto di default che vuoi sia utilizzato per le nuove Risorse.';
+
+$_lang['setting_auto_isfolder'] = 'Imposta iil contenitore automaticamente';
+$_lang['setting_auto_isfolder_desc'] = 'Se attivato, la proprietà del contenitore verrà cambiata automaticamente.';
