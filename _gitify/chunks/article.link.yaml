@@ -9,5 +9,7 @@ properties: null
     <article class="flexgrid-item large-4 medium-6 small-12 columns">
         <h1><a href="[[~[[+id]]]]">[[+menutitle:default=`[[+longtitle:default=`[[+pagetitle]]`]]`]]</a></h1>
         <p>[[+introtext]]</p>
-        [[$article.footer? &id=`[[+id]]`]]
+        <footer class="row">
+            <a href="[[~[[+id]]]]">Read the full story</a>
+        </footer>
     </article>
