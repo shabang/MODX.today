@@ -45,13 +45,12 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .flexgrid {
-    display: block;
 }
 
 .flexgrid-item {
     float: none;
-    border-right: 1px solid $lightgray;
     border-bottom: 1px solid $lightgray;
+    border-left: 1px solid $lightgray;
     
     > *:first-child {
         margin-top: #{$column-gutter/2};
