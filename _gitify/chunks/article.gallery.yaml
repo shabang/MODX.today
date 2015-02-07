@@ -1,0 +1,16 @@
+id: 15
+name: article.gallery
+description: ''
+category: 'Home View'
+properties: null
+
+-----
+
+    <article class="flexgrid-item large-4 medium-6 small-12 columns">
+        <h1><a href="[[~[[+id]]]]">[[+menutitle:default=`[[+longtitle:default=`[[+pagetitle]]`]]`]]</a></h1>
+        <p>[[+introtext]]</p>
+        <div class="extended-with">
+            <img src="[[+tv.image]]" alt="[[+pagetitle]]">
+        </div>
+        [[$article.footer? &id=`[[+id]]`]]
+    </article>

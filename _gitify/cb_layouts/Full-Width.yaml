@@ -1,0 +1,12 @@
+id: 2
+name: 'Full Width'
+description: 'No markup, just the contents.'
+sortorder: 100
+icon: layout_1
+icon_type: core
+columns: '[{"reference":"col1","width":"100"}]'
+template: '[[+col1]]'
+availability: '[]'
+times_per_page: 0
+layout_only_nested: '0'
+settings: '[{"reference":"layout_attributes","title":"Layout Attributes","fieldtype":"textfield","default_value":"","fieldoptions":"","field_is_exposed":"modal"},{"reference":"layout_padding_top","title":"Padding top","fieldtype":"select","default_value":"","fieldoptions":"none= \nsmall=extra-small-padding-top\nmedium=extra-medium-padding-top\nlarge=extra-large-padding-top","field_is_exposed":"modal"},{"reference":"layout_padding_bottom","title":"Padding Bottom","fieldtype":"select","default_value":"","fieldoptions":"none= \nsmall=extra-small-padding-bottom\nmedium=extra-medium-padding-bottom\nlarge=extra-large-padding-bottom","field_is_exposed":"modal"},{"reference":"equalizer","title":"Equal Column Height","fieldtype":"select","default_value":"0","fieldoptions":"yes=1\nno=0","field_is_exposed":"modal"},{"reference":"layout_classes","title":"Layout CSS Classnames","fieldtype":"textfield","default_value":"row","fieldoptions":"","field_is_exposed":"modal"},{"reference":"col1_classes","title":"Column 1 Classnames","fieldtype":"textfield","default_value":"small-12","fieldoptions":"","field_is_exposed":"modal"}]'

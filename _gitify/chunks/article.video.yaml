@@ -1,0 +1,17 @@
+id: 14
+name: article.video
+description: ''
+category: 'Home View'
+properties: null
+
+-----
+
+    <article class="flexgrid-item large-4 medium-6 small-12 columns">
+        <h1><a href="[[~[[+id]]]]">[[+menutitle:default=`[[+longtitle:default=`[[+pagetitle]]`]]`]]</a></h1>
+        <div class="extended-with">
+            <div class="flex-video">
+                <iframe class="lazyload" data-src="[[+tv.home.embed]]?showinfo=0&theme=light&color=white&rel=0" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+        [[$article.footer? &id=`[[+id]]`]]
+    </article>

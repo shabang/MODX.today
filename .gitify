@@ -80,6 +80,7 @@ packages:
       - ace
       - breadcrumbs
       - collections
+      - getresources
       - getcache
       - seopro
       - translit
