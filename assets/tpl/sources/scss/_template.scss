@@ -1,0 +1,185 @@
+/**
+ *  _template.scss
+ *  Contains all basic elements of the templates
+ */
+
+
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+//  Basic Styles
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    html, body {
+        height: auto;
+        min-height: 100%;
+        max-width: 100%;
+    }
+    
+    body {
+        -webkit-font-smoothing: $font-smoothing;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: $paragraph-font-size;
+        background: $blue-bg top left no-repeat;
+        background-attachment: fixed;
+        
+        @media #{$medium-up} {
+            background-color: #fff;
+            background-image: url(#{$imagePath}/backgrounds/oberbayern.jpg);
+        }
+        
+        @media only screen and (min-width:1920px) {
+            background-size: 100% auto;
+        }
+    }
+    
+    .inner-wrap {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+                
+        @media #{$medium-up} {
+            margin: rem(0 7);
+        }
+    }
+    
+    .pagewrapper {
+        z-index: 1;
+        width: 100%;
+        max-width: $row-width;
+    }
+
+    .pagecontent {
+        max-width: $row-width;
+        padding: 0 #{$column-gutter/2};
+        margin: 0 auto;
+        background: #fff;
+    }
+
+
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+//  Ads
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    .reklame-outside {
+        display: none;
+        margin: rem(204 0 0 7);
+        
+        @media #{$xlarge-up}{
+            display: block;
+        }
+    }
+
+
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+//  Figure
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    figure {
+        margin: rem(0 0) $column-gutter; //override default figure margins
+        
+        img {
+            width: 100%;
+        }
+        
+        figcaption {
+            text-align: center;
+            
+            .figure__source {
+                display: block;
+                font-size: rem(11);
+                text-align:right;
+            }
+        }
+    }
+
+
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+//  Basic Sidebar component styles
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+    .component {
+        background-color: $lightgray;
+        margin-top: rem(20);
+        
+        .component__header {
+            background-color: $aside-blue;
+            background-image:  linear-gradient($aside-blue,lighten($aside-blue,20%));
+            border-radius: rem(0 0 5 5);
+            padding: rem(10 10 10 13);
+            text-transform: uppercase;
+            line-height: rem(20);
+            
+            @include clearfix();
+        }
+
+        .component__header-title {
+            float: left;
+            margin: 0;
+            color: $white;
+            font-size: rem(16);
+            font-weight: $paragraph-font-weight;
+            
+            a {
+                color: $white;
+                font-weight: $paragraph-font-weight;
+                &:hover {
+                    color: $white;
+                }
+            }
+            
+            svg {
+                fill: $white;
+                display: inline-block;
+                margin-left: rem(-1);
+                margin-right: rem(7);
+                vertical-align: bottom;
+            }
+
+        }
+        
+        .component__header-link {
+            float: right;
+            display: block;
+            color: $white;
+            font-size: rem(12);
+            
+            svg { //styles the chevron-right.svg
+                height: rem(14);
+                width: rem(14);
+                position: relative;
+                top: rem(3);
+                fill: #fff;
+                margin-left: rem(2);
+            }
+            
+            &:hover {
+                text-decoration:  underline;
+            }
+        
+        }
+
+        
+        .component__content {
+            
+            h3, h4 {
+                font-size: rem(15);
+                margin-top: 0;
+            }
+            
+            p {
+                font-size: rem(13);
+            }
+        }
+        
+        &:first-child {
+            margin-top: rem(40); // adds the extra margin for the first component on the page.  Aligns with the headline.
+        }
+    }

@@ -1,0 +1,75 @@
+name: antenne.de
+data_directory: _gitify/
+data:
+  contexts:
+    class: modContext
+    primary: key
+  context_settings:
+    class: modContextSetting
+    primary: [context_key, key]
+  content:
+    type: content
+    exclude_keys:
+      - createdby
+      - createdon
+      - editedby
+      - editedon
+  categories:
+    class: modCategory
+    primary: category
+  templates:
+    class: modTemplate
+    primary: templatename
+  template_variables:
+    class: modTemplateVar
+    primary: name
+  template_variables_access:
+    class: modTemplateVarTemplate
+    primary: [tmplvarid, templateid]
+  chunks:
+    class: modChunk
+    primary: name
+  snippets:
+    class: modSnippet
+    primary: name
+    extension: .php
+  plugins:
+    class: modPlugin
+    primary: name
+    extension: .php
+  plugin_events:
+    class: modPluginEvent
+    primary: [pluginid,event]
+  users:
+    class: modUser
+    primary: id
+  user_profiles:
+    class: modUserProfile
+    primary: internalKey
+
+  events:
+    class: modEvent
+    primary: name
+  namespaces:
+    class: modNamespace
+    primary: name
+  extension_packages:
+    class: modExtensionPackage
+    primary: namespace
+  system_settings:
+    class: modSystemSetting
+    primary: key
+
+  cb_fields:
+    class: cbField
+    primary: name
+    package: contentblocks
+  cb_layouts:
+    class: cbLayout
+    primary: name
+  cb_templates:
+    class: cbTemplate
+    primary: name
+  cb_defaults:
+    class: cbDefault
+    primary: id

@@ -1,0 +1,32 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *	Component: Form
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
+	div.formresult, p, span, small {
+		&.success, &.error {
+			border: 3px solid $success-color;
+			color: $success-color;
+			padding: rem(10) rem(16);
+			font-weight: 700;
+		}
+		&.error {
+			border-color: $alert-color;
+			color: $alert-color;
+		}
+	}
+	
+	textarea {
+		min-height: rem(150);
+	}
+	
+	label {
+		color: $body-font-color;
+	}
+	
+	label.inline {
+		margin-bottom: 0;
+	}
+	
+	label.error {
+		font-weight: $font-weight-bold;
+	}

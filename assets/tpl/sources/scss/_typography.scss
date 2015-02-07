@@ -1,0 +1,98 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *	Typography
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+	
+	h1,h2,h3,h4,h5,h6 {
+		small {
+			display: block;
+			margin-bottom: rem(8);
+			line-height: inherit;
+			font-size: 66.6666667%;
+			font-weight: $font-weight-bold;
+			color: $header-font-color;
+		}
+		
+		&.small-top-margin {
+			margin-top: rem(16);
+		}
+	}
+		
+	a {
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		transition: color .15s ease-in-out;
+		font-weight: $font-weight-semibold;
+		
+		&:hover, &:focus {
+			outline: none;
+		}
+
+		&::-moz-focus-inner {
+			border: 0 !important;
+		}
+	}
+	
+	small {
+		color: $small-font-color;
+		a {
+			color: scale-color($small-font-color, $lightness: -15%);
+		}
+	}
+	
+	.introtext {
+    	font-weight: $font-weight-bold;
+	}
+	
+	.large-font {
+		font-size: rem(24);
+		@media #{$medium-up} {
+			font-size: rem(32);
+		}
+	}
+	
+	.xxlarge-font {
+		font-size: rem(40);
+		@media #{$medium-up} {
+			font-size: rem(72);
+		}
+	}
+	
+	hr {
+		margin: rem(40 0 48);
+	}
+	
+	.bold {
+		font-weight: $font-weight-bold !important;
+	}
+	
+	.primarytext {
+		color: $primary-color !important;
+	}
+	
+	.secondarytext {
+		color: $secondary-color !important;
+	}
+	
+	.graytext {
+		color: $gray-color !important;
+	}
+	
+	.bodytext {
+		color: $body-font-color !important;
+	}
+	
+	.whitetext {
+		color: #fff !important;
+	}
+
+
+
+/*------------------------------------*\
+	#OVERRIDE STYLES
+\*------------------------------------*/
+
+
+
+
+h1{
+  margin-bottom:rem(20);//adds room between the H1 and Article Intro texts
+}

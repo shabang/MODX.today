@@ -1,0 +1,52 @@
+{
+  "name": "MODX.today",
+  "version": "0.0.1",
+  "description": "MODX.today Website",
+  "private": true,
+  "repository": "https://github.com/modmore/MODX.today",
+  
+  "dependencies": {
+    "bower": "1.x.x",
+    "watch": "0.x.x",
+    "rimraf": "2.2.x",
+    "parallelshell": "1.0.x",
+    "jshint": "latest",
+    "uglify-js": "2.4.x",
+    "node-sass": "2.0.0-beta",
+    "autoprefixer": "4.0.x",
+    "svg-sprite": "1.0.x",
+    "http-server": "0.7.x",
+    "live-reload": "0.2.x",
+    "opener": "1.4.x",
+    "optimist": "0.x.x",
+    "cli-color": "0.x.x"
+  },
+  
+  "scripts": {
+    "clean": "rimraf assets/tpl/dist/*",
+    
+    "lint": "jshint assets/tpl/sources/js",
+    
+    "build": "npm run build:js && npm run build:css && npm run build:svg",
+    "build:svg": "svg-sprite --symbol --symbol-dest assets/tpl/dist --symbol-sprite sprite.svg assets/tpl/sources/svg/*.svg",
+    
+    "build:js": "node_modules/build-all/buildAll.sh --path \"assets/tpl/sources/js/\" --ext \"js\" --outputDir \"assets/tpl/dist/\"",
+    "prebuild:js": "npm run lint",
+    
+    "build:css": "node_modules/build-all/buildAll.sh --path \"assets/tpl/sources/scss/\" --ext \"scss\" --outputDir \"assets/tpl/dist/\" --outputStyle \"compressed\"",
+    
+    "watch": "parallelshell \"npm run watch:css\" \"npm run watch:js\" \"npm run watch:svg\" \"npm run gitify\"",    
+    "watch:css": "watch \"npm run build:css\" assets/tpl/sources/scss",
+    "watch:js": "watch \"npm run build:js\" assets/tpl/sources/js",
+    "watch:svg": "watch \"npm run build:svg\" assets/tpl/sources/svg",
+    "gitify": "watch \"Gitify build\" _gitify",
+    
+    "open:prod": "opener http://modx.today",
+    "open:stage": "opener http://dev.modx.today",
+    "open:local": "opener http://localhost.modx.today:8888/",
+    
+    "live-reload": "live-reload --port 9091 assets/tpl/dist/",
+    
+    "start": "npm run open:local -s & npm run live-reload -s & npm run watch -s"
+  }
+}

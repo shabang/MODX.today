@@ -1,0 +1,25 @@
+{
+  "name": "MODXtoday",
+  "version": "0.0.1",
+  "homepage": "https://github.com/modmore/MODX.today",
+  "authors": [
+    "Christian Seel <cs@chsmedien.de>"
+  ],
+  "description": "front-end code for MODX.today",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+	"foundation": "5.x.x",
+    "slick.js": "1.x.x",
+    "respimage": "1.x.x",
+    "lazysizes": "0.x.x",
+    "modularized-normalize-scss": "3.x.x",
+    "svg4everybody": "1.x.x"
+  }
+}

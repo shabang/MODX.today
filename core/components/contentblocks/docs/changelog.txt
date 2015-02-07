@@ -1,0 +1,426 @@
+++ ContentBlocks 1.2.2-pl
+++ Released on 2015-01-30
+++++++++++++++++++++++++++
+- Fix missing "add content here" button between fields on nested layouts, if the nested layout is the last field in the row
+- Fix undefined error when the max number of files in a file input has been reached
+- Fix weird jump when editing a code input (#146)
+- Enable soft wrapping on code input for better overall editing experience
+
+++ ContentBlocks 1.2.1-pl
+++ Released on 2015-01-16
+++++++++++++++++++++++++++
+- On image-with-title input type, fix title field getting duplicated when adding an image
+- Fix some E_NOTICE errors in processing
+- Fix issue editing a field after duplicating it
+- Fix issue uploading images/files to an Amazon S3 media source
+- Add collapsibility to repeater fields and items
+- Fix problem with template settings: make fields, layouts, and templates into copies before working with them instead of treating them as references
+
+++ ContentBlocks 1.2.0-pl
+++ Released on 2014-11-26
+++++++++++++++++++++++++++
+- Fix icons on default fields added in rc2
+- Fix display issue with multiple link settings (missing clearfix, some extra padding, cleaner typeahead results)
+- Fix [[+link]] value being set to [[~]], instead of being empty when no link was added
+- Fix issue saving field data edited inline in a repeater group
+- Make windows that can potentially get really high open at the top of the screen
+- Fix issue with links causing certain links to be wiped on page reload
+- Fix issue uploading files/images in MODX 2.2.x
+- Improve file input delete button styling (thanks Luk!)
+- Improvement to icon handling for file input
+
+++ ContentBlocks 1.2.0-rc2
+++ Released on 2014-11-11
+++++++++++++++++++++++++++
+- Fix issue with default templates not working properly due to plugin event
+- Improve styling of nested repeater fields to better distinguish each instance
+- Fix issue with title field not getting a height with TinyRTE enabled
+- Ensure tabbing the list input retains the proper focus when using TinyRTE
+- Add some new input types to the default fields offered during setup
+- Fix modal positioning in older webkit browsers (thanks Luk!)
+- Add [[+parent_field_id]] placeholder within nested layout fields
+
+++ ContentBlocks 1.2.0-rc1
+++ Released on 2014-10-28
+++++++++++++++++++++++++++
+New Features:
+- New default templates feature which allows fine-grained control over the default canvas on new resources
+- New "file" input type for adding a list of files similar to the gallery input
+- New "repeater" input type, which shows grouped fields which can be repeated together
+- New "link" input, which includes typeahead search for resource links, plus URL and email address support
+- New "link" setting type for adding field/layout settings that need to link somewhere
+- New optional link field to gallery items
+- New link button added to TinyRTE to use the new link input functionality
+- New [[+unique_idx]] placeholder to layouts and fields with a really unique idx
+- New cbGetFieldContent snippet, which allows accessing specific fields from the ContentBlocks canvas
+- New settings to specify a custom icon url outside the ContentBlocks directory
+- New cbBaseInput->getDependantInputs method so composite input types can declare dependent input types
+
+Improvements:
+- Styling and functionality updates for modal windows (esc now closes them!)
+- Ensure that setting tags like [[++site_name]] aren't prematurely parsed by the ContentBlocks parser, enables better multi-context usage
+- Make sure hitting ctrl/cmd+s in a TinyRTE-enabled field properly triggers save on the resource
+- Include iframe transport library for better upload browser support
+- Include CSS and JS source maps into the package to prevent 404s when opening the console
+- Expose ContentBlocks->resource for use in input type processing
+- If input types are missing, fail politely with an error message instead of a fatal js error
+- Make sure contentblocks.debug setting also applies to what input type assets are loaded
+- When moving layouts the canvas now nicely scrolls to the new layout position so you keep your position
+- List items can now be drag/dropped for sorting
+- Improve sorting experience by setting the proper height on the placeholder
+- Layouts can be expanded and contracted to shorten long or confusing pages in the editor
+
+Bug fixes:
+- Fix TinyRTE so links are stored more reliably
+- Fix issue where a lot of properties could push the save buttons off screen when editing a field
+- Fix issue with the properties tab not being generated consistently
+- Fix missing label on Layout fields
+- Fix unsetting "Only allow as nested layout" checkbox on Layout > Availability
+- Fix issue with nested layouts, repeaters, and content duplicating itself
+
+++ ContentBlocks 1.1.3-pl
+++ Released on 2014-10-20
+++++++++++++++++++++++++++
+- Change error messages to use ExtJS-style alerts instead of browser-style
+- Fix undefined default template on chunk input
+- Make video modal more user friendly by always keeping the search in view, no double scrollbars
+- Setting max number of images on a gallery field to 0 now means there is no limit
+- Fix issue with settings on nested layout fields being copied to their children
+
+++ ContentBlocks 1.1.2-pl2
+++ Released on 2014-09-16
+++++++++++++++++++++++++++
+- Fix sporadic issue with inserting nested layouts on complex pages
+- Fix default code input template; should not have had htmlent output modifier
+- Fix issue with video previews not showing up on https
+- Add [[+layout_idx]] placeholder to fields
+- Fix placeholders for table input in pre-installed field set
+- Fix annoying popup when inserting a template that contains nested layouts
+- Fix issue where table input did not have width set properly when the canvas is first loaded
+
+++ ContentBlocks 1.1.1-pl
+++ Released on 2014-08-01
+++++++++++++++++++++++++++
+- Fix default layout fallback when the requested layout is not found
+- Fix validation issues when creating a template because of missing icon by setting a default
+- Fix issue instantiating Code inputs if the Ace package is installed, but not used
+- Fix endless loop when a stored snippet or chunk is no longer available but selected anyway
+- Fix opening MODX Browser for inserting images into galleries
+- Resolve some further issues with rebuilding content in 2.3 and downloading console output
+- Fix chunk input refusing to load in 2.3
+- Fix issue where Firefox would endlessly regenerate TinyRTE instances
+- Return a value in the plugin to make sure it doesn't log 1's in 2.3.0
+- Fix issue with list inputs repeating values
+- Resolve build issue affecting snippets, causing errors to be shown during upgrade
+- Fix issue where exposed settings would override resource fields of the same name on save
+- Fix issue where layout settings wouldn't be processed for tags, even if the box was checked
+- Fix issue where multiple settings would cause the template builder to not show any of them
+- Fix occasional issue where parser wasn't loaded in getObjectsForCanvas, so the template builder failed to load properly
+- Add some new icons
+
+++ ContentBlocks 1.1.0-pl
+++ Released on 2014-07-18
+++++++++++++++++++++++++++
+- Fix issue where the "Use ContentBlocks?" resource setting did not change to "No"
+- Add ability to process template tags in settings optionally
+- Fix issue with ContentBlocksExtraSelectors and 3PCs
+- Fix rebuilding content in 2.3. Also requires MODX 2.3.1.
+- Fix issue where the "Use ContentBlocks?" resource setting refreshed the page when creating new documents
+- Further design tweaks for 2.3 and the layout input type
+- Auto select snippet/chunk if there's only one result
+- Update default accepted_resource_types value to include all 3rd party custom resources that are known to be supported
+- Prevent generating transient layouts that causes issues with parsing
+
+++ ContentBlocks 1.1.0-rc2
+++ Released on 2014-07-08 (pre-release)
+++++++++++++++++++++++++++
+- Fix issue editing fields and layouts in the component when the Ace package is installed
+- Fix issue where installer did not create Templates table
+
+++ ContentBlocks 1.1.0-rc1
+++ Released on 2014-07-08 (pre-release)
+++++++++++++++++++++++++++
+
+New Features
+- Add ability to insert new content between existing blocks with new "+" buttons
+- Add optional description field to Gallery input
+- Add new Chunk Selector input type (allows the editor to choose from a list of chunks and adding properties)
+- Add Yellow Text inspired tiny RTE for list, heading and image with title input types
+- Improve compatibility with third party custom resource types by allowing a .contentblocks_replacement class to be defined as target, and setting a class on the wrapper with the class key for targeting styling tweaks and a .contentblocks_loaded class on the body for container styling tweaks.
+- Add button to repeat a layout for quick duplication.
+- Option to Expose field and layout settings so they appear right in the canvas instead of hidden behind a modal window
+- Nested layouts with a new "Layout" input type
+- Fields, layouts and settings are now translateable through Lexicons
+- Templates, a combination of layouts and fields for quick insertion, are now available
+
+Improvements:
+- Add German (thanks Christian Bartels!), French (thanks Julien Studer!), Dutch (thanks Bert Oost!) and Swedish (thanks Joakim Nyman!) translations, plus a start on Polish and Russian via https://crowdin.net/project/modmore-contentblocks
+- Fix several instances of hardcoded text, now uses lexicon strings as they should have.
+- Prevent page generation from marking the resource form as dirty
+- Make sure invalid content warnings in the rebuild content process show as error
+- Parser improvement (search & replace placeholders for speed and nested placeholders before using the parser)
+- Add [[+value]] as alias for [[+tag]] placeholder for chunk & snippet templates.
+- Add 2.3-specific styling to fit in with the new design
+- Pass field settings through to the chunk or snippet call in chunk and snippet inputs
+- Clear cache after rebuilding the content
+- Add titles and descriptions to the lexicon for system settings
+- Improved JavaScript performance (esp. on big pages) due to delegate event handling and deferred canvas generation
+- Improved upload filename sanitisation with support for Transliteration, and a new mechanism to prevent overwriting existing files.
+- Pass [[+layout_id]] and [[+layout_column]] through to all field templates
+- Pass [[+chunk_name]] and [[+snippet_name]] through to template on chunk, chunk selector, and snippet inputs
+- Add new getLexiconTopics() method to inputs to allow loading input-specific lexicon topics
+- Make local grid windows open as modal to prevent closing parent window prematurely
+- Add drag & drop sorting to grids in the component (fields, layouts, settings etc)
+- Add new confirmBeforeDelete input JS method and built-in data checking to prevent unnecessary confirm prompts when deleting fields
+- Add animation to moving layouts to clearly communicate what is happening
+- Automatically refresh page after changing the use_contentblocks setting
+
+Fixes:
+- Fix issue with images in image input not showing up properly.
+- Fix bug installing default bootstrap layout
+- Fix "image with title" input inheritance from "image" input
+- Fix incorrect default value on Code input encode entities property
+- Fix default icon on textfield input
+- Fix "layouts" field not having its value loaded when editing a field
+- Fix boolean property handling with new ContentBlocks.toBoolean method
+- Prevent JS error trying to add the "Use ContentBlocks" setting on custom resources
+- Only allow "save and close" on existing fields/layouts to prevent duplicate additions on subsequent saves
+- Fix using field settings in list input wrapper template
+- Don't allow spaces in setting keys
+- Disable upload-by-paste on image/gallery inputs
+- Fix issue in certain environments where subsequent uploads fail due to keep-alive header
+- Fix issue with CRCs where newly created resources would not properly register it using ContentBlocks
+- Change default heading level from installed field set from h6 to h2
+- Fix issue where removing the last layout did not unset the last content
+- Make sure Media Source combo works across 2.2 and 2.3
+- Fix the unicode cog not always showing up by replacing with an SVG and Font Awesome in 2.3
+- Fix TinyMCE breaking when sorting images
+- Fix repeated values in Table input cells, clean rows to make sure there isn't an extra row and column on the output. [BREAKING: change [[+value]] to [[+cell]] and [[+row]] in cell and row tpls, respectively]
+
+++ ContentBlocks 1.0.1
+++ Released on 2014-05-05
++++++++++++++++++++++++++
+- Fix CB being disabled unintentionally when using Quick Create/Update Resource
+- Add Rebuild Content button to CMP for rebuilding all resources on a site
+- Fix E_NOTICE error stemming from the ContentBlocks.summarizeContent function
+- Minor change to linear content summary to make it easier to use
+- Fix video preview pane showing up when it shouldn't (taking up a bunch of space)
+- Fix issue loading assets when compress_js is enabled
+- Fix field setting placeholders not being set in templates for chunk, gallery, list, snippet and table inputs
+- Fix issue with field settings not being loaded after a page refresh (x2)
+
+++ ContentBlocks 1.0.0
+++ Released on 2014-04-30
++++++++++++++++++++++++++
+- Dynamically add a resource setting to enable/disable ContentBlocks on the resource
+- Add ability to override system media source in image and gallery input types
+- Fix "Choose image" functionality in image and gallery input types refusing to load a second time
+- Fix issue with TinyMCE when drag/dropping a richtext field by reinitialising the editor after drop
+- Cachebust loaded assets based on ContentBlocks version.
+- Use minified + concatenated files unless contentblocks.debug is enabled.
+- (Finally) add tooltips to add content and add layout modals for user-defined descriptions.
+- Improve behavior of hitting enter in the List input
+- Add ability to import & export Fields & Layouts with an XML file
+
+++ ContentBlocks 0.11.0
+++ Released on 2014-04-26
++++++++++++++++++++++++++
+- Minor CSS tweaks, inspired by the oEmbed Input (installable separately).
+- Add [[+reference]] renderer to column and setting grids to show placeholder usage
+- Add field settings feature!
+- Instead of hardcoding common field actions (up to this point only "Delete Field") in each template, add it dynamically.
+
+++ ContentBlocks 0.10.3
+++ Released on 2014-04-22
++++++++++++++++++++++++++
+- Make sure adding a field sets default properties if no properties are set manually.
+- Fix parsing issue (manifesting with list fields) causing recursive funkyness.
+
+++ ContentBlocks 0.10.2
+++ Released on 2014-04-14
++++++++++++++++++++++++++
+- Fix loading custom parser class and restoring normal parser when non-core parsers are used (fastField, pdoTools)
+
+++ ContentBlocks 0.10.1
+++ Released on 2014-04-12
++++++++++++++++++++++++++
+- Fix database change in 0.10.0
+
+++ ContentBlocks 0.10.0
+++ Released on 2014-04-12
++++++++++++++++++++++++++
+- Add "Save" and "Save and Close" buttons to Field/Layout edit windows for better continues editing.
+- Add cbHasField utility snippet for conditionally doing stuff based on usage (or not) of a specific field.
+- When saving a resource, also prepare a linear content array and a field count summary.
+- Save the CB content data before generating the content HTML, just in case generating the HTML causes errors that could lead to lost content.
+- Prettify date on YouTube video results, formatted using the configured manager date format.
+- Add [[+idx]] placeholders to layouts and field templates.
+- Make sure manual input for snippet properties is possible if snippets have no defined properties
+- Improve the way templates are handled/parsed with a custom parser class.
+- Add ID to field/layout names in component.
+- Improve error handling in Chunk and Snippet input types
+- Add ability to restrict fields to specific layouts.
+- Add usergroup constraint to field and layout availability.
+- Sort snippets A-Z.
+- Add description to field availability
+- Add ability to add a custom preview to Chunk inputs
+- Make sure saving a field does not unset properties
+- Fix boolean selection for Code input (encode entities) and Snippet input (allow uncached) so they can be unset.
+- Fix typo in default heading field properties
+- In custom inputs allow custom lexicons to be used through cbInput.getName in field list
+
+++ ContentBlocks 0.9.1
+++ Released on 2014-04-04
++++++++++++++++++++++++++
+- Make cbInput.getFieldName public
+- Make sure 3rd party inputs do not get weird names in the component grid
+- Add note to setup about duplicates during upgrade
+- Add option to change the thumbnail size on Gallery inputs
+- Show error if no snippets are available for a specific Snippet field.
+- Enforce Gallery's max_images property with the new Choose feature
+- Make sure the field options box only shows up when the "select" fieldtype is chosen
+- Accept a single value (w/o separate display value) in the select field options for layout settings
+- Prevent removing last item in lists, causing the field to become unusable
+
+++ ContentBlocks 0.9.0
+++ Released on 2014-04-01
++++++++++++++++++++++++++
+# New Features & Improvements:
+- Layout Settings allow the editor to add classes
+- Adding conditions for when specific Fields & Layouts are available
+- Choose existing images to add to a Gallery input
+- Use Ace (separate MODX package) in editing Field and Layout templates when installed
+- Get rid of gray backgrounds on grids in the vertical tabs (Thx Bert Oost!)
+- Add Entities property to the Code input to make it easier to display code and MODX tags
+- Add chunk combo for choosing the Chunk to use in the Chunk input.
+
+# Bug fixes:
+- Fix z-index on ContentBlocks modals when Redactor is installed
+- Make sure deleting a field marks the resource as dirty
+- Fix icon on pre-installed Snippet field
+- Fix overzealous scroll bars on modals
+- Make sure column references can only contain alphanumeric and underscores
+
+++ ContentBlocks 0.8.3
+++ Released on 2014-03-28
++++++++++++++++++++++++++
+- Fixes for setup options
+
+++ ContentBlocks 0.8.2
+++ Released on 2014-03-28
++++++++++++++++++++++++++
+- Add quick set up options to install default sets of layouts and fields
+- Fix missing list styles in Redactor
+- Add ability to set snippets as uncached with the Snippet input type
+- Add chunk input type (Thx Jeroen Kenters) + properties.
+- Use minified snippet js
+
+++ ContentBlocks 0.8.1
+++ Released on 2014-03-25
++++++++++++++++++++++++++
+- Remove loud logging statement
+
+++ ContentBlocks 0.8.0
+++ Released on 2014-03-24
++++++++++++++++++++++++++
+- Attempt to catch parsing errors with a try/catch block
+- Enable/disable ContentBlocks based on the resource type, by default only enabled on modDocument and mgResource.
+- Add ability to move entire layouts up & down
+- [BC BREAK] Re-do table input based on HandsonTable (handsontable.com)
+- Fix MODX tags from being parsed in the content on the manager page
+- Pre-process templates and values to prevent parsing of chunks/snippets/etc during resource save
+- Add Snippets input type
+- Implement lexicons for i18n
+- Implement proper templating for table input
+- Allow customising of available languages and default language for Code inputs
+- Remove ID definitions in actual input templates, instead these are now set on the wrapping list item.
+- Fix E_NOTICE error in cbField class
+- [BC BREAK] Refactor to allow for more flexible/encapsulated input types (breaking change for custom inputs)
+- Fix weird bug because layout/field templates are loaded in the manager head
+- Disable maximising button on window with vertical tabs to preserve the layout
+- Prevent output from ContentBlocks_RegisterInputs plugins bubbling through to OnDocFormRender
+
+++ ContentBlocks 0.2.6
+++ Released on 2014-02-27
++++++++++++++++++++++++++
+- Fix critical error editing/duplicating layouts.
+
+++ ContentBlocks 0.2.5
+++ Released on 2014-02-27
++++++++++++++++++++++++++
+- Add icon for horizontal rule
+- Add tooltips to field properties to indicate usage and mention available placeholders for templates.
+- Add tab-aware Help button for more information about Layouts and Fields.
+- Improvements to the component:
+--- Show chosen icons in the grid
+--- Use a row expander to quickly view the description, if it's set
+--- Allow inline editing of the sort order for quicker reordering
+--- Provide a description of Layouts and Fields on their tabs
+- Fix lists and tables not properly adjusting the column heights on changes
+
+++ ContentBlocks 0.2.4
+++ Released on 2014-02-25
++++++++++++++++++++++++++
+Fix upgrade from pre 0.2
+
+++ ContentBlocks 0.2.3
+++ Released on 2014-02-24
++++++++++++++++++++++++++
+- Add max images property to the gallery input
+- Fix selecting videos beyond the first results
+- Make sure layout and field tiles are all the same height, while accounting for longer titles
+- Make Heading input configurable to allow customising available options and default level.
+- Add modEvent to the build
+- Improve managing columns in the component.
+
+++ ContentBlocks 0.2.2
+++ Released on 2014-02-21
++++++++++++++++++++++++++
+- Default the image browser to the media source as defined in the contentblocks.image.source setting.
+- Fix choosing images from media sources that have a different baseUrl than /
+- Fix issue deleting non-existent/default layout
+- Change "Content Blocks Admin" to "Content Blocks"
+- Fix icons on case-sensitive file systems
+
+++ ContentBlocks 0.2.1
+++ Released on 2014-02-19
++++++++++++++++++++++++++
+- Add description to inputs in the input combo box
+- Automatically pre-fill the default icon and template when creating a field and choosing an input
+- Change Field window to use vertical tabs for general and properties
+- Fix reordering of fields not enabling the save button
+- Make sure the video input is consistent by using the [[+value]] instead of [[+video_id]] placeholder
+- Fix issues with required layout being gone by assuming a simple single column
+- Prevent updates from updating modMenu/modAction record
+- Add default_layout and default_layout_part settings to build
+
+++ ContentBlocks 0.2.0
+++ Released on 2014-02-18
++++++++++++++++++++++++++
+- Inputs now have all their logic and definitions in one place.
+- Parsing content is now done by the input types, allowing handling of composite field templates.
+- Inputs can define input-specific properties, which are shown in the cmp edit input modal upon selection.
+- Custom inputs are now possible using the ContentBlocks_RegisterInputs plugin event.
+- Fix column height corrections in situations with multiple layouts.
+
+++ ContentBlocks 0.1.5
+++ Released on 2014-02-13
++++++++++++++++++++++++++
+- Make sure retina icons are used for a DPR of > 1.
+- Fix TinyMCE width rendering
+- Add ability to choose an existing image via the media browser for image and image_with_title inputs
+- Add contentblocks.disabled setting to disable ContentBlocks on specific contexts or system-wide
+- Improve select box styling
+
+++ ContentBlocks 0.1.4
+++ Released on 2014-02-10
++++++++++++++++++++++++++
+- Hide Layout Settings button as it's not yet used
+- Ensure the icons combo has the proper height because of loading images
+- Make sure changes to fields trigger a change in the resource form
+- Fix issue initialising when richtext or textarea inputs are not used
+
+++ ContentBlocks 0.1.3
+++ Released on 2014-02-10
++++++++++++++++++++++++++
+- Initial ALPHA release for distribution.

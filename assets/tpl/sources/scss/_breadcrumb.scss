@@ -1,0 +1,58 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+//  Breadcrumb
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    ul.breadcrumb {
+        z-index: 2;
+        position: relative;
+        margin: rem(15 0 -20 0);
+        padding: 0;
+        list-style: none;
+        
+        li{
+            display:inline-block;
+            padding-left: rem(22);
+            //64 base version of chevron-right.svg
+            background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjIxNnB4IiBoZWlnaHQ9IjE0NnB4IiB2aWV3Qm94PSIwIDAgMjE2IDE0NiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjE2IDE0NiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZmlsbD0iIzAwNDg3RiIgZD0iTTE0NC45ODgsNjUuNjY3TDkxLjg2OSwxMi42MjhjLTEuOTU2LTIuMDY0LTQuMzk5LTMuMDk2LTcuMzMzLTMuMDk2cy01LjM3NywxLjAzMy03LjMzMywzLjA5NmwtNi4xOTIsNi4xMTFjLTIuMDEsMi4wMS0zLjAxNSw0LjQ1My0zLjAxNSw3LjMzMmMwLDIuODI0LDEuMDA1LDUuMjk2LDMuMDE1LDcuNDE0TDExMC42MDcsNzNMNzEuMDEsMTEyLjU5NmMtMi4wMSwyLjAxLTMuMDE1LDQuNDU0LTMuMDE1LDcuMzM0YzAsMi44MjMsMS4wMDUsNS4yOTUsMy4wMTUsNy40MTRsNi4xOTIsNi4xMDljMi4wMSwyLjAxLDQuNDU1LDMuMDE2LDcuMzMzLDMuMDE2YzIuODc5LDAsNS4zMjQtMS4wMDYsNy4zMzMtMy4wMTZsNTMuMTItNTMuMDM5YzIuMDEtMi4xMTgsMy4wMTYtNC41OSwzLjAxNi03LjQxNEMxNDguMDA0LDcwLjEyMSwxNDYuOTk4LDY3LjY3NywxNDQuOTg4LDY1LjY2N3oiLz48L3N2Zz4=) no-repeat rem(2 6);
+            background-size: rem(18 8);
+            font-size: $small-font-size;
+            
+            a {
+                font-weight: $font-weight-normal;
+                font-size:r em(14);
+                color: $darkblue;
+                
+                &:hover {
+                    color: $primary-color;
+                }
+            }
+            
+            .breadcrumbs__icon-home {
+                fill: $darkblue;
+                transition: fill .2s ease-in-out;
+            }
+            
+            a:hover .breadcrumbs__icon-home {
+                fill: $primary-color;
+            }
+            
+            &.current{
+                a {
+                    color: $primary-color;
+                }
+            }
+        }
+        
+        li:first-child{
+            background: none;
+            padding: 0;
+        }
+        
+        .breadcrumbs__icon-home {
+            width: rem(20);
+            height: rem(15);
+            display: inline-block;
+            position: relative;
+            top: rem(2);
+        }
+    }
