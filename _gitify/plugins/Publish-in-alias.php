@@ -5,7 +5,7 @@ properties: 'a:0:{}'
 -----
 
 $parent = $resource->get('parent');
-if ($parent != 2) {
+if ($parent != 1) {
     return;
 }
 
