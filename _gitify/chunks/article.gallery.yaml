@@ -10,8 +10,8 @@ properties: 'a:0:{}'
         <h1><a href="[[~[[+id]]]]">[[+menutitle:default=`[[+longtitle:default=`[[+pagetitle]]`]]`]]</a></h1>
         <p>[[+introtext]]</p>
         <div class="extended-with">
-            <img src="[[+tv.image]]" alt="[[+pagetitle]]">
+            <a href="[[~[[+id]]]]"><img src="[[+tv.image]]" alt="[[+pagetitle]]"></a>
             [[!mgGetImages? &resource=`[[+id]]` &imageTpl=`article.gallery.image` &limit=`2` &offset=`1`]]
         </div>
-        [[$article.footer? &id=`[[+id]]`]]
+        [[$articleTeaser.footer? &id=`[[+id]]`]]
     </article>

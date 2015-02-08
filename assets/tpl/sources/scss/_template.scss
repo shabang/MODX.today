@@ -34,11 +34,6 @@
     }
 
 
-.off-canvas-meeeenu {
-    border-right: $off-canvas-link-border-bottom;
-    border-left: $off-canvas-link-border-bottom;
-}
-
 @media #{$medium-only} {
     a.exit-off-canvas {
         top: rem(90) !important;
