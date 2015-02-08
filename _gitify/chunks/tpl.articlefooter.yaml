@@ -9,6 +9,17 @@ properties: 'a:0:{}'
 
 <footer class="row">
     <div class="[[++default_article_column_classnames]]">
+    
+        <hr>
+        <div class="author-info" itemscope itemtype="http://schema.org/Person">
+            <h3>About the author</h3>    
+            <p>
+                <img data-src="//www.gravatar.com/avatar/[[*createdby:userinfo=`email`:md5]]?s=48&d=retro" width="48" height="48" class="lazyload left author-image">
+                <a itemprop="url" href="[[*createdby:userinfo=`website`]]"><strong itemprop="name">[[*createdby:userinfo=`fullname`]]</strong></a> [[*createdby:userinfo=`comment`]]
+            </p>
+            </div>
+        </div>
+        
         <hr>
         <h3>Liked? Share it!</h3>
         <ul class="social-sharing">
