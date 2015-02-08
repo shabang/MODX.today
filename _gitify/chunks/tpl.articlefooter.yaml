@@ -17,7 +17,6 @@ properties: 'a:0:{}'
                 <img data-src="//www.gravatar.com/avatar/[[*createdby:userinfo=`email`:md5]]?s=48&d=retro" width="48" height="48" class="lazyload left author-image">
                 <a itemprop="url" href="[[*createdby:userinfo=`website`]]"><strong itemprop="name">[[*createdby:userinfo=`fullname`]]</strong></a> [[*createdby:userinfo=`comment`]]
             </p>
-            </div>
         </div>
         
         <hr>
