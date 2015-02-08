@@ -2,4 +2,3 @@ key: contentblocks.link.link_detection_pattern
 value: '^(?:f|ht)tps?:\/\/'
 namespace: contentblocks
 area: 'Input: Link'
-editedon: '0000-00-00 00:00:00'

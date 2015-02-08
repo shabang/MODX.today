@@ -2,4 +2,3 @@ key: redactor.toolbarOverflow
 xtype: modx-combo-boolean
 namespace: redactor
 area: Toolbar
-editedon: '0000-00-00 00:00:00'

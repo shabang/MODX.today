@@ -2,4 +2,3 @@ key: redactor.plugin_zoom
 xtype: modx-combo-boolean
 namespace: redactor
 area: Plugin
-editedon: '0000-00-00 00:00:00'

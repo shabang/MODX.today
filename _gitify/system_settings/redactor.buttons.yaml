@@ -2,4 +2,3 @@ key: redactor.buttons
 value: 'html,|,formatting,|,bold,italic,deleted,|,unorderedlist,orderedlist,outdent,indent,|,image,video,file,table,link,|,alignment,|,horizontalrule'
 namespace: redactor
 area: Toolbar
-editedon: '0000-00-00 00:00:00'

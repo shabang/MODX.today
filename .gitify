@@ -62,6 +62,8 @@ data:
   system_settings:
     class: modSystemSetting
     primary: key
+    exclude_keys:
+      - editedon
 
   cb_fields:
     class: cbField

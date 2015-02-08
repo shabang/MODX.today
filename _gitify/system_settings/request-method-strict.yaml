@@ -2,4 +2,3 @@ key: request_method_strict
 value: '1'
 xtype: combo-boolean
 area: gateway
-editedon: '2015-02-07 12:45:43'
