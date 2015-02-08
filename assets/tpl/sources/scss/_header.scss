@@ -15,11 +15,21 @@
         width: rem(90);
         height: 100%;
     }
+    
+    @include clearfix();
+    
+    border-bottom: $off-canvas-link-border-bottom;
+    
+    @media #{$large-up} {
+        border-bottom: none;
+        border-left: $off-canvas-link-border-bottom;
+        border-right: $off-canvas-link-border-bottom;
+    }
 }
 
 h1#logo {
     display: inline-block;
-    width: rem(90);
+    width: rem(88);
     margin: 0;
     background: $blue;
     
@@ -29,8 +39,8 @@ h1#logo {
     
     svg {
         display: block;
-        width: rem(90);
-        height: rem(90);
+        width: rem(88);
+        height: rem(88);
         padding: rem(12);
         * {
             fill: #fff;
@@ -41,7 +51,7 @@ h1#logo {
 .off-canvas-toggle {
     display: inline-block;
     float: right;
-    width: rem(90);
+    width: rem(88);
     transition: background-color #{$anchor-transition};
     
     @media #{$large-up} {
@@ -50,8 +60,8 @@ h1#logo {
     
     svg {
         display: block;
-        width: rem(90);
-        height: rem(90);
+        width: rem(88);
+        height: rem(88);
         margin: 0 auto;
         padding: rem(30);
         fill: rgba(#fff, .9);
