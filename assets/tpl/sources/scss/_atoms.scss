@@ -47,6 +47,10 @@
     	margin-right: -#{$column-gutter / 2};
 	}
 	
+	.flex-video {
+    	background: $lightgray;
+	}
+	
 	
 	.hide-element {
 		display: none;

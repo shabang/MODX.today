@@ -14,20 +14,22 @@ properties: 'a:0:{}'
         </a>
     </h1>
     
-    <a class="left-off-canvas-toggle off-canvas-toggle" href="#" ><svg role="presentation"><use xlink:href="[[++svg_url]]#fa-bars"></use></svg> <span>Menu</span></a>
+    <a class="left-off-canvas-toggle off-canvas-toggle" href="#"><svg role="presentation"><use xlink:href="[[++svg_url]]#fa-bars"></use></svg> <span>Menu</span></a>
 </header>
 
 
-<nav class="left-off-canvas-menu mainnav" role="navigation" aria-label="Navigation">
-    <ul class="show-for-medium-up">
-        [[Wayfinder?
-            &startId=`0`
-            &outerTpl=`wayfinder.outerTpl`
-            &innerTpl=`wayfinder.innerTpl`
-            &rowTpl=`wayfinder.rowTpl`
-            &scheme=`abs`
-            &level=`1`
-            &excludeDocs=``
-        ]]
-    </ul>
+<nav class="left-off-canvas-menu off-canvas-menu" role="navigation" aria-label="Navigation">
+    <div class="content">
+        <ul class="off-canvas-list">
+            [[Wayfinder?
+                &startId=`0`
+                &outerTpl=`wayfinder.outerTpl`
+                &innerTpl=`wayfinder.innerTpl`
+                &rowTpl=`wayfinder.rowTpl`
+                &scheme=`abs`
+                &level=`1`
+                &excludeDocs=``
+            ]]
+        </ul>
+    </div>
 </nav>

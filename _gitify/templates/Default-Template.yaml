@@ -8,7 +8,7 @@ properties: 'a:0:{}'
 
 <body itemscope itemtype="http://schema.org/WebPage">
 <div id="top" class="off-canvas-wrap" data-offcanvas>
-    <div class="inner-wrap">
+    <div class="inner-wrap" id ="wrapper">
         <div class="pagewrapper">
             [[$tpl.pageheader]]
             

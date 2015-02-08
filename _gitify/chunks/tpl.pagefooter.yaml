@@ -15,4 +15,4 @@ properties: 'a:0:{}'
     </div>
 </footer>
 
-<a class="exit-off-canvas"></a>
+<a class="exit-off-canvas" href="#"></a>

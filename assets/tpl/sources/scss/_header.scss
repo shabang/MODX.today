@@ -1,10 +1,15 @@
 .pageheader {
-    position: fixed;
+    z-index: 10;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: rem(90);
     background: $blue;
+    
+    @media #{$medium-up} {
+        position: fixed;
+    }
     
     @media #{$large-up} {
         width: rem(90);
@@ -13,6 +18,8 @@
 }
 
 h1#logo {
+    display: inline-block;
+    width: rem(90);
     margin: 0;
     background: $blue;
     
@@ -32,16 +39,21 @@ h1#logo {
 }
 
 .off-canvas-toggle {
-    display: block;
-    margin: rem(10) auto;
-    padding: rem(8 0);
+    display: inline-block;
+    float: right;
+    width: rem(90);
     transition: background-color #{$anchor-transition};
+    
+    @media #{$large-up} {
+        float: none;
+    }
     
     svg {
         display: block;
-        width: rem(30);
-        height: rem(30);
+        width: rem(90);
+        height: rem(90);
         margin: 0 auto;
+        padding: rem(30);
         fill: rgba(#fff, .9);
         transition: fill #{$anchor-transition};
     }

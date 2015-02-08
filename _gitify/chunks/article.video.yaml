@@ -6,7 +6,7 @@ properties: 'a:0:{}'
 
 -----
 
-<article class="teaser large-4 medium-6 small-12 columns" itemprop="blogPosts" itemscope itemtype="http://schema.org/BlogPosting">
+<article class="teaser columns" itemprop="blogPosts" itemscope itemtype="http://schema.org/BlogPosting">
     [[$articleTeaser.header? &id=`[[+id]]`]]
     
     <div class="extended-with">

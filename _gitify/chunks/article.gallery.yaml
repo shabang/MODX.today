@@ -6,7 +6,7 @@ properties: null
 
 -----
 
-    <article class="teaser large-4 medium-6 small-12 columns">
+    <article class="teaser columns" itemprop="blogPosts" itemscope itemtype="http://schema.org/BlogPosting">
         <h1><a href="[[~[[+id]]]]">[[+menutitle:default=`[[+longtitle:default=`[[+pagetitle]]`]]`]]</a></h1>
         <p>[[+introtext]]</p>
         <div class="extended-with">

@@ -34,7 +34,16 @@
     }
 
 
+.off-canvas-menu {
+    border-right: $off-canvas-link-border-bottom;
+    border-left: $off-canvas-link-border-bottom;
+}
 
+@media #{$medium-up} {
+    a.exit-off-canvas {
+        left: rem(90) !important;
+    }
+}
 
 
 

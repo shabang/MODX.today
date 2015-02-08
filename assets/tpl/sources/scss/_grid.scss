@@ -48,10 +48,15 @@
     display: block;
     position: relative;
     width: 100%;
-    margin: rem(-1 0 16);
+    margin: rem(0 0 16);
     border-bottom: 1px solid $lightgray;
     
+    @media #{$large-up} {
+        margin-top: -1px;
+    }
+    
     > * {
+        width: 100%;
         float: none;
         border-top: 1px solid $lightgray;
         
@@ -64,9 +69,6 @@
     }
     
     > .fixed {
-        position: absolute;
-        top: 0;
-        right: 0;
         background: $blue;
         
         *, a {
@@ -76,6 +78,24 @@
         a:hover {
             color: $orange;
         }
+    }
+}
+
+html.js .flexgrid {
+    > *{
+        @media #{$medium-up} {
+            width: 50%;
+        }
+        
+        @media #{$large-up} {
+            width: 33.33333%;
+        }
+    }
+    
+    > .fixed {
+        position: absolute;
+        top: 0;
+        right: 0;
     }
     
     
