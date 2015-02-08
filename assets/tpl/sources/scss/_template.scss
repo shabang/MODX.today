@@ -39,7 +39,13 @@
     border-left: $off-canvas-link-border-bottom;
 }
 
-@media #{$medium-up} {
+@media #{$medium-only} {
+    a.exit-off-canvas {
+        top: rem(90) !important;
+    }
+}
+
+@media #{$large-up} {
     a.exit-off-canvas {
         left: rem(90) !important;
     }
