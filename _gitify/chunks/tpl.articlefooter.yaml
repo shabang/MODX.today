@@ -19,25 +19,19 @@ properties: 'a:0:{}'
                 </a>
             </li>
             <li class="twitter">
-                <a href="#">
+                <a href="https://twitter.com/home?status=[[*longtitle:default=`[[*pagetitle]]`:urlencode]]+[[~[[*id]]:urlencode? &scheme=`full`]]">
                     <svg title="Twitter" role="presentation"><use xlink:href="[[++svg_url]]#twitter"></use></svg>
                     <span>tweet</span>
                 </a>
             </li>
             <li class="googleplus">
-                <a href="#">
+                <a href="https://plus.google.com/share?url=[[~[[*id]]:urlencode? &scheme=`full`]]">
                     <svg title="Google+" role="presentation"><use xlink:href="[[++svg_url]]#googleplus"></use></svg>
                     <span>share</span>
                 </a>
             </li>
-            <li class="pinterest">
-                <a href="#">
-                    <svg title="Google+" role="presentation"><use xlink:href="[[++svg_url]]#pinterest"></use></svg>
-                    <span>pin</span>
-                </a>
-            </li>
             <li class="mail">
-                <a href="#">
+                <a href="mailto:?subject=[[*longtitle:default=`[[*pagetitle]]`:urlencode]]&body=[[~[[*id]]:urlencode? &scheme=`full`]]">
                     <svg title="E-Mail" role="presentation"><use xlink:href="[[++svg_url]]#mail"></use></svg>
                     <span>forward</span>
                 </a>
