@@ -15,3 +15,49 @@ a:hover .comment-icon {
 article footer {
     font-size: rem(14);
 }
+
+ul.social-sharing {
+    margin: 0;
+    
+    li {
+        display: inline-block;
+        background: #888;
+        
+        a {
+            display: block;
+            padding: rem(4 12);
+            color: #fff;
+            font-weight: $font-weight-bold;
+            transition: background-color $anchor-transition;
+            
+            &:hover {
+                background-color: rgba(#fff, .2);
+            }
+        }
+        
+        svg {
+            fill: #fff;
+            position: relative;
+            top: rem(4);
+            margin-right: rem(4);
+            width: rem(18);
+            height: rem(18);
+        }
+        
+        &.facebook {
+            background-color: $facebook;
+        }
+        
+        &.googleplus {
+            background-color: $googleplus;
+        }
+        
+        &.twitter {
+            background-color: $twitter;
+        }
+        
+        &.pinterest {
+            background-color: $pinterest;
+        }
+    }
+}

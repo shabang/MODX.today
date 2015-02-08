@@ -12,22 +12,34 @@ properties: 'a:0:{}'
         <hr>
         <h3>Liked? Share it!</h3>
         <ul class="social-sharing">
-            <li>
+            <li class="facebook">
                 <a href="https://www.facebook.com/sharer/sharer.php?u=[[~[[*id]]:urlencode? &scheme=`full`]]" target="_blank">
-                    <svg role="presentation" width="14" height="14"><use xlink:href="[[++svg_url]]#facebook"></use></svg>
-                    <span>Facebook</span>
+                    <svg title="Facebook" role="presentation"><use xlink:href="[[++svg_url]]#facebook"></use></svg>
+                    <span>share</span>
                 </a>
             </li>
-            <li>
+            <li class="twitter">
                 <a href="#">
-                    <svg role="presentation" width="14" height="14"><use xlink:href="[[++svg_url]]#twitter"></use></svg>
-                    <span>Twitter</span>
+                    <svg title="Twitter" role="presentation"><use xlink:href="[[++svg_url]]#twitter"></use></svg>
+                    <span>tweet</span>
                 </a>
             </li>
-            <li>
+            <li class="googleplus">
                 <a href="#">
-                    <svg role="presentation" width="14" height="14"><use xlink:href="[[++svg_url]]#googleplus"></use></svg>
-                    <span>Google+</span>
+                    <svg title="Google+" role="presentation"><use xlink:href="[[++svg_url]]#googleplus"></use></svg>
+                    <span>share</span>
+                </a>
+            </li>
+            <li class="pinterest">
+                <a href="#">
+                    <svg title="Google+" role="presentation"><use xlink:href="[[++svg_url]]#pinterest"></use></svg>
+                    <span>pin</span>
+                </a>
+            </li>
+            <li class="mail">
+                <a href="#">
+                    <svg title="E-Mail" role="presentation"><use xlink:href="[[++svg_url]]#mail"></use></svg>
+                    <span>forward</span>
                 </a>
             </li>
         </ul>

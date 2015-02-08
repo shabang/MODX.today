@@ -158,6 +158,14 @@ $slick-next-character: '\25B8'; //'▸'
    $blue: #1f4a7f;
    $orange: #ff8f0d;
    $lightgray: #f0f0f0;
+   $semiwhite: #f7f7f7;
+   
+// 3rd party colors
+    $facebook: #3b5998;
+    $googleplus: #d34836;
+    $twitter: #00aced;
+    $pinterest: #cb2027;
+    
    
 
 // We use these as default colors throughout
@@ -330,7 +338,7 @@ $slick-next-character: '\25B8'; //'▸'
    $hr-border-width: 1px;
    $hr-border-style: solid;
    $hr-border-color: $gray-color;
-   $hr-margin: rem(20);
+   $hr-margin: $column-gutter/2;
 
 
 // We use these to style lists
