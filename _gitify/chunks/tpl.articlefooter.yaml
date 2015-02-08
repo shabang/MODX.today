@@ -19,13 +19,13 @@ properties: 'a:0:{}'
                 </a>
             </li>
             <li class="twitter">
-                <a href="https://twitter.com/home?status=[[*longtitle:default=`[[*pagetitle]]`:urlencode]]+[[~[[*id]]:urlencode? &scheme=`full`]]">
+                <a href="https://twitter.com/home?status=[[*longtitle:default=`[[*pagetitle]]`:urlencode]]+[[~[[*id]]:urlencode? &scheme=`full`]]+via+%40MODXtoday+%23MODX" target="_blank">
                     <svg title="Twitter" role="presentation"><use xlink:href="[[++svg_url]]#twitter"></use></svg>
                     <span>tweet</span>
                 </a>
             </li>
             <li class="googleplus">
-                <a href="https://plus.google.com/share?url=[[~[[*id]]:urlencode? &scheme=`full`]]">
+                <a href="https://plus.google.com/share?url=[[~[[*id]]:urlencode? &scheme=`full`]]" target="_blank">
                     <svg title="Google+" role="presentation"><use xlink:href="[[++svg_url]]#googleplus"></use></svg>
                     <span>share</span>
                 </a>
