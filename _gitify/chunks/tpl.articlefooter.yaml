@@ -12,15 +12,15 @@ properties: 'a:0:{}'
     
         <hr>
         <div class="author-info" itemscope itemtype="http://schema.org/Person">
-            <h3>About the author</h3>    
-            <p>
+            <h4>About the author</h4>    
+            <p class="clearfix">
                 <a href="[[~[[*parent]]]]/author/[[*createdby:userinfo=`fullname`:urlencode]]"><img data-src="//www.gravatar.com/avatar/[[*createdby:userinfo=`email`:md5]]?s=96&d=retro" width="48" height="48" class="lazyload left author-image"></a>
-                <a itemprop="url" href="[[~[[*parent]]]]/author/[[*createdby:userinfo=`fullname`:urlencode]]"><strong itemprop="name">[[*createdby:userinfo=`fullname`]]</strong></a> [[*createdby:userinfo=`comment`]]
+                <a itemprop="url" href="[[~[[*parent]]]]author/[[*createdby:userinfo=`fullname`:urlencode]]"><strong itemprop="name">[[*createdby:userinfo=`fullname`]]</strong></a> [[*createdby:userinfo=`comment`]]
             </p>
         </div>
         
         <hr>
-        <h3>Liked? Share it!</h3>
+        <h3>Liked it? Share it!</h3>
         <ul class="social-sharing">
             <li class="facebook">
                 <a href="https://www.facebook.com/sharer/sharer.php?u=[[~[[*id]]:urlencode? &scheme=`full`]]" target="_blank">
