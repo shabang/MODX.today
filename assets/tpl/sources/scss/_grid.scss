@@ -45,6 +45,9 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .flexgrid {
+    display: block;
+    position: relative;
+    width: 100%;
     margin: rem(-1 0 16);
     border-bottom: 1px solid $lightgray;
     
