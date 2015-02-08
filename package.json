@@ -6,6 +6,7 @@
   "repository": "https://github.com/modmore/MODX.today",
   
   "dependencies": {
+    "osx-notifier": "0.2.x",
     "bower": "1.x.x",
     "watch": "0.x.x",
     "rimraf": "2.2.x",
