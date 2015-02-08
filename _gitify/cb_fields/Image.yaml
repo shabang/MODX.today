@@ -2,6 +2,7 @@ id: 4
 input: image_with_title
 name: Image
 description: ''
+sortorder: 3
 icon: image
 icon_type: core
 template: '<img src="[[+url]]" alt="[[+title]]">'

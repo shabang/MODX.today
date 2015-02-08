@@ -47,8 +47,11 @@
 .flexgrid {
     > * {
         float: none;
-        border-bottom: 1px solid $lightgray;
-        border-left: 1px solid $lightgray;
+        
+        @media #{$medium-up} {
+            border-bottom: 1px solid $lightgray;
+            border-left: 1px solid $lightgray;
+        }
         
         > *:first-child {
             margin-top: #{$column-gutter/2};

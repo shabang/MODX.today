@@ -2,11 +2,12 @@ id: 3
 input: heading
 name: Heading
 description: ''
+sortorder: 1
 icon: heading
 icon_type: core
 template: '<[[+level]]>[[+value]]</[[+level]]>'
 properties: '{"default_level":"h2","available_levels":"h1=heading_1,h2=heading_2,h3=heading_3,h4=heading_4,h5=heading_5","use_tinyrte":"1"}'
-availability: ''
+availability: '[]'
 layouts: ''
 times_per_layout: 0
 times_per_page: 0

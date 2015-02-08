@@ -12,19 +12,18 @@ properties: 'a:0:{}'
         <div class="pagewrapper">
             [[$tpl.pageheader]]
             
-            <main role="main" itemprop="mainContentOfPage" class="pagecontent">
-                [[-$BreadCrumb]]
-
-<div class="flex-video">
-   <iframe width="560" height="315" src="[[*home.embed]]" frameborder="0" allowfullscreen></iframe>
-</div>
-<h1>[[*longtitle:default=`[[*pagetitle]]`]]
-
-                [[*content]]
-            </main>
-
+            <div class="pagecontent">
+                <main role="main" itemprop="mainContentOfPage">
+                    [[$tpl.articleheader]]
+                    <div class="flex-video widescreen">
+                       <iframe class="lazyload" src="[[*home.embed]]?showinfo=0&theme=light&color=white&rel=0" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    [[*content]]
+                </main>
+                [[$tpl.articlefooter]]
+            </div>
+            
             [[$tpl.pagefooter]]
-        
         
         </div> <!-- .pagewrapper -->
 

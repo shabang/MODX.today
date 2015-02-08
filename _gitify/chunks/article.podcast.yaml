@@ -1,5 +1,5 @@
-id: 14
-name: article.video
+id: 19
+name: article.podcast
 description: ''
 category: 'Home View'
 properties: 'a:0:{}'
@@ -9,11 +9,7 @@ properties: 'a:0:{}'
 <article class="flexgrid-item large-4 medium-6 small-12 columns" itemprop="blogPosts" itemscope itemtype="http://schema.org/BlogPosting">
     [[$articleTeaser.header? &id=`[[+id]]`]]
     
-    <div class="extended-with">
-        <div class="flex-video">
-            <iframe class="lazyload" data-src="[[+tv.home.embed]]?showinfo=0&theme=light&color=white&rel=0" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
+    <div itemprop="description">[[+introtext]]</div>
 
     [[$articleTeaser.footer? &id=`[[+id]]`]]
 </article>

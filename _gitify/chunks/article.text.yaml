@@ -2,13 +2,14 @@ id: 13
 name: article.text
 description: ''
 category: 'Home View'
-properties: null
+properties: 'a:0:{}'
 
 -----
 
-<article class="flexgrid-item large-4 medium-6 small-12 columns">
-        <h1><a href="[[~[[+id]]]]">[[+menutitle:default=`[[+longtitle:default=`[[+pagetitle]]`]]`]]</a></h1>
-        <p>[[+introtext]]</p>
+<article class="flexgrid-item large-4 medium-6 small-12 columns" itemprop="blogPosts" itemscope itemtype="http://schema.org/BlogPosting">
+    [[$articleTeaser.header? &id=`[[+id]]`]]
+    
+    <div itemprop="description">[[+introtext]]</div>
 
-        [[$article.footer? &id=`[[+id]]`]]
-    </article>
+    [[$articleTeaser.footer? &id=`[[+id]]`]]
+</article>

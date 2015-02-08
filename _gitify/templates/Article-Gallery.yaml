@@ -12,13 +12,16 @@ properties: 'a:0:{}'
         <div class="pagewrapper">
             [[$tpl.pageheader]]
             
-            <main role="main" itemprop="mainContentOfPage" class="pagecontent">
-                [[-$BreadCrumb]]
-                [[*content]]
-            </main>
-
+            <div class="pagecontent">
+                <main role="main" itemprop="mainContentOfPage">
+                    [[$tpl.articleheader]]
+                    
+                    [[*content]]
+                </main>
+                [[$tpl.articlefooter]]
+            </div>
+            
             [[$tpl.pagefooter]]
-        
         
         </div> <!-- .pagewrapper -->
 

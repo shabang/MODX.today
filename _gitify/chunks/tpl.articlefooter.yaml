@@ -7,8 +7,35 @@ properties: 'a:0:{}'
 
 -----
 
-<footer>
-    <h3 id="comments">Comments</h3>
-    <div id="disqus_thread"></div>
-	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+<footer class="row">
+    <div class="[[++default_article_column_classnames]]">
+        <hr>
+        <h3>Liked? Share it!</h3>
+        <ul class="social-sharing">
+            <li>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[[~[[*id]]:urlencode? &scheme=`full`]]" target="_blank">
+                    <svg role="presentation" width="14" height="14"><use xlink:href="[[++svg_url]]#facebook"></use></svg>
+                    <span>Facebook</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg role="presentation" width="14" height="14"><use xlink:href="[[++svg_url]]#twitter"></use></svg>
+                    <span>Twitter</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg role="presentation" width="14" height="14"><use xlink:href="[[++svg_url]]#googleplus"></use></svg>
+                    <span>Google+</span>
+                </a>
+            </li>
+        </ul>
+        
+        <hr>
+    
+        <h3 id="comments" class="extra-margin-top">Comments</h3>
+        <div id="disqus_thread"></div>
+	    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+    </div>
 </footer>

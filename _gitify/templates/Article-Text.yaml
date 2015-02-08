@@ -12,16 +12,14 @@ properties: 'a:0:{}'
         <div class="pagewrapper">
             [[$tpl.pageheader]]
             
-            <main role="main" itemprop="mainContentOfPage" class="pagecontent">
-                <article>
+            <div class="pagecontent">
+                <main role="main" itemprop="mainContentOfPage">
                     [[*content]]
-                </article>
-                
+                </main>
                 [[$tpl.articlefooter]]
-            </main>
-
+            </div>
+            
             [[$tpl.pagefooter]]
-        
         
         </div> <!-- .pagewrapper -->
 

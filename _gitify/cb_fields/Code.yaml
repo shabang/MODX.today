@@ -2,6 +2,7 @@ id: 1
 input: code
 name: Code
 description: ''
+sortorder: 5
 icon: code
 icon_type: core
 template: '[[+value]]'

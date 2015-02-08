@@ -9,8 +9,8 @@ properties: 'a:0:{}'
 
 <footer class="pagefooter">
     <div class="row">
-        <div class="small-12 columns copyright">
-            <p>© [[CopyrightYear]] modmore</p>
+        <div class="small-12 columns">
+            <p class="text-right"><small>© [[CopyrightYear? &start=`2014`]] modmore</small></p>
         </div>
     </div>
 </footer>

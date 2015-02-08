@@ -1,0 +1,13 @@
+id: 6
+input: chunk
+name: 'Article Header'
+description: ''
+icon: heading
+icon_type: core
+template: '[[+tag]]'
+properties: '{"chunk":"20","custom_preview":"Date & Headline"}'
+availability: '[]'
+layouts: ''
+times_per_layout: 0
+times_per_page: 0
+settings: '[]'
