@@ -1,0 +1,249 @@
+++ MoreGallery 1.3.0-rc1
+++ Released on 2015-02-04
++++++++++++++++++++++++++
+New Features:
+- Add region of interest cropping for responsive images or better art direction (#5)
+- Add new visible/hidden state to images so you can hide an image from the front-end without removing it (#85)
+- Add typeahead to tags for much easier tag selection (#84)
+- On image upload, automatically extract image name from IPTC data if available (#91)
+- Add 5 plugin events to hook into various parts of the gallery interaction (#62)
+- Automatically rotate images to the right orientation on upload
+- Now context-aware, so all settings can be overridden on context level as well
+
+Improvements:
+- Add snippet properties to build (#72, #95)
+- Ensure transparent backgrounds remain transparent (instead of black) for thumbnails (#51)
+- Add &where property to mgGetImages and mgGetTags for generic filtering, accepts JSON formatted queries. (#83)
+- Add loading indicator for image tags (#57)
+- New [[+width]] and [[+height]] placeholders for images
+- Make sure settings have a lexicon and description (#96)
+- Improve image centering/cropping in back-end to be always centered and filling the area
+- Prevent conflicts with other phpthumb libraries that may be loaded (#73)
+- Change how EXIF data is loaded to make it easier to work with (no thumbnail, flat structure)
+- Attempt to increase the available memory on upload to make sure the extra processing is possible even with larger images
+
+Bugfixes:
+- Fix issue where editing image information causes data multiplication in the js (#97)
+
+++ MoreGallery 1.2.3-pl
+++ Released on 2015-01-29
++++++++++++++++++++++++++
+- Fix upload issue when image contained invalid EXIF data
+
+++ MoreGallery 1.2.2-pl
+++ Released on 2015-01-19
++++++++++++++++++++++++++
+- Fix image alignment issues with screens of exactly 1600px wide
+- Updated translations (see https://crowdin.com/project/modmore-moregallery)
+
+++ MoreGallery 1.2.1-pl
+++ Released on 2014-10-28
++++++++++++++++++++++++++
+- Fix potential issue on PHP 5.5/6 related to exif data
+- Change how the "Add Gallery" button in the toolbar is loaded so it also loads on components (thanks Wieger Sloot!)
+- Change "Add Gallery" button to use Font Awesome in 2.3.
+- Small speed optimization for large galleries (thanks Rico!)
+
+++ MoreGallery 1.2.0-pl
+++ Released on 2014-08-04
++++++++++++++++++++++++++
+- Fix issue filtering on non-existent tags
+- Fix icon in the resource tree in 2.3.? (depends on modxcms/revolution#11736)
+
+++ MoreGallery 1.2.0-rc1
+++ Released on 2014-07-18
++++++++++++++++++++++++++
+New Features:
+- By default set source, relative url and content position to "inherit" so they continue to inherit system defaults after save.
+- Allow dragging resources into the image URL field for quick insertion
+- Add ability to control placement of image IDs into image file name
+- Add ability to prevent the gallery ID from getting added to the file path
+- Add ability to use sortBy=`random` with mgGetImages to get random images from cached data
+
+Improvements:
+- Improve ContentBlocks compatibility with some styling tweaks and support for content-in-tab
+- Improve compatibility with Tagger (Thanks TheBoxer!)
+- Make sure TinyMCE is initialised when editing images
+- #65 Strip out unnecessary data from AJAX requests that could trigger mod_security errors
+- Adjust resource validation to allow for derivatives
+- Add [[+idx]] to the tpl in the mgGetTags snippet.
+- Added Swedish translation
+- Improve UX on adding tags to images by indicating you need to add it with a button or enter
+- Update styling to match Revolution 2.3
+
+Bugfixes
+- Fix z-index issue with fixed toolbar
+- Fix issue loading wrong media source when using import from file feature
+- Prevent "`[[+resource.id]]` is not a valid integer and may not be passed to makeUrl()" errors
+- Fix javascript issue causing gallery initialisation to fail when the resource tree is not available.
+- Make sure the total results is set when data is retrieved from cache
+- Fix TinyMCE rendering in image description
+
+++ MoreGallery 1.1.0-pl
+++ Released on 2014-01-25
++++++++++++++++++++++++++
+New Features:
+- Add Tagging functionality: back-end adding of tags, mgGetTags snippet to list tags and updates to mgGetImages to filter on tags and added [[+tags]] placeholder
+- Import file into the Gallery by selecting it using the MODX Browser
+- #55 Sanitise file names on upload
+
+Fixes:
+- Fix toolbar to top of the manager when it goes out of view due to scrolling
+- Fix broken images in back-end when using remote media sources (like S3)
+- #54 Make sure the container is resized upon opening a full image view modal
+- #56 Fix errors being logged due to caching check
+
+Improvements:
+- Gallery Toolbar now stays in view when scrolling past it
+- Change icon set to sprite-based icon set
+- Updated Danish translation.
+
+++ MoreGallery 1.0.2-pl
+++ Released on 2013-11-06
++++++++++++++++++++++++++
+- Add Danish translation
+
+++ MoreGallery 1.0.1-pl
+++ Released on 2013-11-06
++++++++++++++++++++++++++
+- Add getResourceFields and getResourceTVs properties to mgGetImages to include fields or TVs placeholders.
+- Only use the FileReader (for image previews during upload) when it is supported.
+- Fix small content field if there's no RTE in use.
+- Add French translation.
+
+++ MoreGallery 1.0.0-pl
+++ Released on 2013-10-30
++++++++++++++++++++++++++
+- Prevent toolbar icon from being duplicated after saving a resource.
+- Tiny fix to the CSS to prevent left box shadows from disappearing from the first image in each row.
+- Prevent annoying jump in image previews when the image completed upload.
+- Added Dutch, Czech, Russian and German translations.
+- Extract text into a lexicon file for translation.
+- Clear the MoreGallery cache when using the Site > Clear Cache menu option.
+
+++ MoreGallery 0.9.16-pl
+++ Released on 2013-10-15
++++++++++++++++++++++++++
+- Fix fatal error in snippet.
+- Fix issue with content location setting.
+
+++ MoreGallery 0.9.15-pl
+++ Released on 2013-10-12
++++++++++++++++++++++++++
+- Handle exotic image type errors without triggering E_* errors.
+- #25 Open full image in a modal instead of new tab
+- #23 Change mgResource's to modDocument's during uninstall
+- Add icon to create new gallery to the resource toolbar (can be disabled with add_icon_to_toolbar setting)
+- Add single_image_url_param setting to change the "iid" url param to something different.
+- Set the top position of the modal so it's within view.
+- Fix loading of relative_url setting on resource panel (introduced in 0.9.13)
+
+++ MoreGallery 0.9.14-pl
+++ Released on 2013-10-08
++++++++++++++++++++++++++
+- Implement better UI through usage of modal window for editing instead of weird sliding panel.
+- Refactored to use jQuery UI's sortable plugin, while bigger it provides a better drag experience.
+- #36 Check memory_limit on server and alert if file is probably to large to resize once uploaded.
+- Fix issue creating images with MySQL 5.6 (columns always need a value, default or accept null.)
+- Add feature to load RTEs into the edit panel (enabled by default, setting moregallery.use_rte_for_images)
+
+++ MoreGallery 0.9.13-pl
+++ Released on 2013-09-27
++++++++++++++++++++++++++
+- #38 Hide content field or move it below images or into a new tab
+- Add [[+image_count]] placeholder to wrapper tpl.
+- #40 Properly load default options (source, url) from system settings on creating a new gallery.
+- Fix weird issue with specific environments
+
+++ MoreGallery 0.9.12-pl
+++ Released on 2013-09-02
++++++++++++++++++++++++++
+- Add some indices for additional (uncached) performance.
+- Add "Resource" relation from mgImage to mgResource.
+- Fix mgResource>mgImage relation from one to many
+- Fix improper class_key setting.
+
+++ MoreGallery 0.9.11-pl
+++ Released on 2013-07-29
++++++++++++++++++++++++++
+- Add relative_url and source settings to Resource > Settings tab to manage properties.
+- Improve focus handling with auto save.
+- Set "name" field of the image to the filename without extension by default.
+- Improve error messages when upload fails.
+- Accept empty value for moregallery.source_relative_url setting (ie, root of media source)
+
+++ MoreGallery 0.9.10-pl
+++ Released on 2013-07-23
++++++++++++++++++++++++++
+- Add moregallery.source_relative_url and moregallery.source setting.
+- Add error (and remove uploading image) if upload failed.
+
+++ MoreGallery 0.9.9-pl
+++ Released on 2013-07-21
++++++++++++++++++++++++++
+- Fix annoying and broken reload when saving the resource
+
+++ MoreGallery 0.9.8-pl
+++ Released on 2013-07-19
++++++++++++++++++++++++++
+- Lots of CSS tweaks to make it integrate better with latest 2.2/2.3 design.
+- Add ability to link to resources by entering the resource ID.
+- Add proper uploading image for images > 700kb.
+- Fix loading RTEs.
+
+++ MoreGallery 0.9.7-pl
+++ Released on 2013-07-16
++++++++++++++++++++++++++
+- Fix E_WARN error on certain environments.
+
+++ MoreGallery 0.9.6-pl
+++ Released on 2013-07-16
++++++++++++++++++++++++++
+- Fix z-index conflicts with #modAB when editing images.
+- Auto focus on name field when opening edit panel.
+- Further improvements to performance of the manager, especially when uploading large images:
+- - Minimize re-renders of backbone templates
+- - Only show image previews for images that are smaller than 700kb to preserve the browser
+- - Use data URIs to prevent additional requests for first 20 images in list, and freshly uploaded images.
+- - Delay upload by 1s to let the browser do one thing at a time.
+- - Only load full size images when opening the edit pane
+
+++ MoreGallery 0.9.5-pl
+++ Released on 2013-07-15
++++++++++++++++++++++++++
+- Improve browser performance during upload.
+
+++ MoreGallery 0.9.4-pl
+++ Released on 2013-07-15
++++++++++++++++++++++++++
+- Fix LOG_LEVEL_WARN error "Could not load package metadata"
+- Fix prev/next when sortBy is not sortorder or with a descending sortDir
+- Add resolver to increase upload_maxsize from 1MB to 10MB on install.
+- More sensible (pretty) default chunks.
+- Add uploadedon, uploadedby, editedon and editedby fields to images.
+- Add ability to paginate through images with getPage
+- Add check to make sure chunks referenced are still the same. Removes need to disable &cache.
+- Remove dependency on phpthumbof for default chunks.
+
+++ MoreGallery 0.9.3-pl
+++ Released on 2013-07-14
++++++++++++++++++++++++++
+- Add helpful note to indicate you can drop images into the gallery.
+- Improve drag/dropping behavior between sorting and upload.
+- Fix issue with uploading images when exif_read_data is not available.
+- Make sure link_tag_scheme is used for generating of view_url.
+
+++ MoreGallery 0.9.2-pl
+++ Released on 2013-07-13
++++++++++++++++++++++++++
+- Fix issue with gallery not properly refreshing when saving a resource.
+
+++ MoreGallery 0.9.1-pl
+++ Released on 2013-07-10
++++++++++++++++++++++++++
+- Styling improvements.
+
+++ MoreGallery 0.9.0-pl
+++ Released on 2013-07-10
++++++++++++++++++++++++++
+- Initial beta release.

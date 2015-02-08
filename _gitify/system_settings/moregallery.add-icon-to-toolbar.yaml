@@ -1,0 +1,6 @@
+key: moregallery.add_icon_to_toolbar
+value: '1'
+xtype: modx-combo-boolean
+namespace: moregallery
+area: Advanced
+editedon: '0000-00-00 00:00:00'

@@ -1,4 +1,4 @@
 key: extension_packages
-value: '[{"collections":{"path":"[[++core_path]]components/collections/model/"}}]'
+value: '[{"collections":{"path":"[[++core_path]]components/collections/model/"}},{"moregallery":{"path":"[[++core_path]]components/moregallery/model/"}}]'
 area: system
-editedon: '0000-00-00 00:00:00'
+editedon: '2015-02-08 17:02:04'

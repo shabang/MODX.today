@@ -1,0 +1,5 @@
+key: moregallery.sanitize_pattern
+value: '/([[:alnum:]_\.-]*)/'
+namespace: moregallery
+area: Advanced
+editedon: '0000-00-00 00:00:00'
