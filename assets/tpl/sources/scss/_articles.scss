@@ -12,9 +12,18 @@ a:hover .comment-icon {
 }
 
 
-article footer {
-    font-size: rem(14);
+article.teaser {
+    h1 {
+        font-size: rem(30);
+    }
+    h2 {
+        font-size: rem(27);
+    }
+    footer {
+        font-size: rem(14);
+    }
 }
+
 
 ul.social-sharing {
     margin: 0;

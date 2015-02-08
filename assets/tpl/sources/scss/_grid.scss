@@ -78,6 +78,7 @@
     
     @media #{$medium-up} {
         &:before {
+            z-index: 1;
             content: "";
             display: block;
             background: $lightgray;
@@ -91,6 +92,7 @@
     
     @media #{$large-up} {
         &:before, &:after {
+            z-index: 1;
             content: "";
             display: block;
             background: $lightgray;

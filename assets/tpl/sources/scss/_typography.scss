@@ -20,6 +20,10 @@
     		font-weight: $font-weight-bold;
 		}
 	}
+	
+	h1 {
+    	margin-top: #{$column-gutter};
+	}
 		
 	a {
 		-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
