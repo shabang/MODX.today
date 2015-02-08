@@ -7,6 +7,9 @@ data:
   context_settings:
     class: modContextSetting
     primary: [context_key, key]
+  content_types:
+    class: modContentType
+    primary: name
   content:
     type: content
     exclude_keys:
