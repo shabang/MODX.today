@@ -1,0 +1,9 @@
+id: 21
+name: article.gallery.image
+description: ''
+category: 'Home View'
+properties: null
+
+-----
+
+<img src="[[+file_url]]" alt="[[+pagetitle]]">

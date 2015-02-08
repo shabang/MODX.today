@@ -2,7 +2,7 @@ id: 15
 name: article.gallery
 description: ''
 category: 'Home View'
-properties: null
+properties: 'a:0:{}'
 
 -----
 
@@ -11,6 +11,7 @@ properties: null
         <p>[[+introtext]]</p>
         <div class="extended-with">
             <img src="[[+tv.image]]" alt="[[+pagetitle]]">
+            [[!mgGetImages? &resource=`[[+id]]` &imageTpl=`article.gallery.image` &limit=`2` &offset=`1`]]
         </div>
         [[$article.footer? &id=`[[+id]]`]]
     </article>
