@@ -10,7 +10,7 @@ properties: 'a:0:{}'
     [[$articleTeaser.header? &id=`[[+id]]`]]
     <div class="extended-with">
         <a href="[[~[[+id]]]]"><img src="[[+tv.image]]" alt="[[+pagetitle]]"></a>
-        [[!mgGetImages? &resource=`[[+id]]` &imageTpl=`article.gallery.image` &limit=`3` &offset=`1`]]
+        [[mgGetImages? &resource=`[[+id]]` &imageTpl=`article.gallery.image` &limit=`2` &offset=`1`]]
     </div>
     [[$articleTeaser.footer? &id=`[[+id]]`]]
 </article>

@@ -8,7 +8,7 @@ menuindex: 2
 publishedon: 1423345800
 publishedby: 1
 uri: submit
-properties: '{"contentblocks":{"content":"[{\"layout\":1,\"content\":{\"col1\":[{\"value\":\"\",\"lang\":\"html\",\"field\":1,\"settings\":[]}]},\"settings\":[],\"parent\":0}]","linear":[{"value":"","lang":"html","field":1,"settings":[]}],"fieldcounts":{"1":1},"_isContentBlocks":true}}'
+properties: '{"contentblocks":{"content":"[{\"layout\":1,\"content\":{\"col1\":[{\"value\":\"[[!FormIt? \\n    &submitVar=`submit_form`\\n    \\n]]\\n\\n<p>Thank you for thinking about writing content for MODX.today! We hope that we will have many guest authors helping us write some great content about MODX, and we''re plased you want to help us out. <\/p>\\n\\n<p>Using the form below, you can submit a first draft of your post. You may use markdown in the body text. The post will then be added to MODX, and if necessary we will send you a manager login so you can make changes before it gets published.<\/p>\\n\\n\\n<form action=\\\"[[~[[*id]]]]\\\" method=\\\"post\\\">\\n    <input type=\\\"hidden\\\" name=\\\"submit_form\\\" value=\\\"[[+csrf_token]]\\\">\\n    \\n    <h3>About the Post<\/h3>\\n    <label>\\n        Post Title or Subject\\n        <input type=\\\"text\\\" name=\\\"title\\\">\\n    <\/label>\\n    <label>\\n        Short Summary (max 155 characters)\\n        <input type=\\\"text\\\" name=\\\"summary\\\">\\n    <\/label>\\n    <label>\\n        Type of Post\\n        <select name=\\\"post_type\\\">\\n            <option value=\\\"2\\\">Regular (Text)<\/option>\\n            <option value=\\\"3\\\">Video<\/option>\\n            <option value=\\\"4\\\">Image Gallery<\/option>\\n            <option value=\\\"5\\\">Link (external resource)<\/option>\\n            <option value=\\\"6\\\" disabled=\\\"disabled\\\">Podcast<\/option>\\n        <\/select>\\n    <\/label>\\n    \\n    <h3>About the Author<\/h3>\\n    \\n    <label>\\n        Your Name\\n        <input type=\\\"text\\\" name=\\\"author\\\" value=\\\"[[!+modx.user.id:userinfo=`fullname`]]\\\">\\n    <\/label>\\n    <label>\\n        Brief introduction (only for new authors)\\n        <textarea name=\\\"author_introduction\\\"><\/textarea>\\n    <\/label>\\n    \\n    <h3>Your Post<\/h3>\\n    \\n    <textarea name=\\\"body\\\"><\/textarea>\\n<\/form>\\n\",\"lang\":\"html\",\"field\":1,\"settings\":[]}]},\"settings\":[],\"parent\":0}]","linear":[{"value":"[[!FormIt? \n    &submitVar=`submit_form`\n    \n]]\n\n<p>Thank you for thinking about writing content for MODX.today! We hope that we will have many guest authors helping us write some great content about MODX, and we''re plased you want to help us out. <\/p>\n\n<p>Using the form below, you can submit a first draft of your post. You may use markdown in the body text. The post will then be added to MODX, and if necessary we will send you a manager login so you can make changes before it gets published.<\/p>\n\n\n<form action=\"[[~[[*id]]]]\" method=\"post\">\n    <input type=\"hidden\" name=\"submit_form\" value=\"[[+csrf_token]]\">\n    \n    <h3>About the Post<\/h3>\n    <label>\n        Post Title or Subject\n        <input type=\"text\" name=\"title\">\n    <\/label>\n    <label>\n        Short Summary (max 155 characters)\n        <input type=\"text\" name=\"summary\">\n    <\/label>\n    <label>\n        Type of Post\n        <select name=\"post_type\">\n            <option value=\"2\">Regular (Text)<\/option>\n            <option value=\"3\">Video<\/option>\n            <option value=\"4\">Image Gallery<\/option>\n            <option value=\"5\">Link (external resource)<\/option>\n            <option value=\"6\" disabled=\"disabled\">Podcast<\/option>\n        <\/select>\n    <\/label>\n    \n    <h3>About the Author<\/h3>\n    \n    <label>\n        Your Name\n        <input type=\"text\" name=\"author\" value=\"[[!+modx.user.id:userinfo=`fullname`]]\">\n    <\/label>\n    <label>\n        Brief introduction (only for new authors)\n        <textarea name=\"author_introduction\"><\/textarea>\n    <\/label>\n    \n    <h3>Your Post<\/h3>\n    \n    <textarea name=\"body\"><\/textarea>\n<\/form>\n","lang":"html","field":1,"settings":[]}],"fieldcounts":{"1":1},"_isContentBlocks":true}}'
 tvs:
     image: ''
 
@@ -16,6 +16,54 @@ tvs:
 
 <div class="row  "  >
     <div class="small-12 columns">
-        
+        [[!FormIt? 
+    &submitVar=`submit_form`
+    
+]]
+
+<p>Thank you for thinking about writing content for MODX.today! We hope that we will have many guest authors helping us write some great content about MODX, and we're plased you want to help us out. </p>
+
+<p>Using the form below, you can submit a first draft of your post. You may use markdown in the body text. The post will then be added to MODX, and if necessary we will send you a manager login so you can make changes before it gets published.</p>
+
+
+<form action="[[~[[*id]]]]" method="post">
+    <input type="hidden" name="submit_form" value="[[+csrf_token]]">
+    
+    <h3>About the Post</h3>
+    <label>
+        Post Title or Subject
+        <input type="text" name="title">
+    </label>
+    <label>
+        Short Summary (max 155 characters)
+        <input type="text" name="summary">
+    </label>
+    <label>
+        Type of Post
+        <select name="post_type">
+            <option value="2">Regular (Text)</option>
+            <option value="3">Video</option>
+            <option value="4">Image Gallery</option>
+            <option value="5">Link (external resource)</option>
+            <option value="6" disabled="disabled">Podcast</option>
+        </select>
+    </label>
+    
+    <h3>About the Author</h3>
+    
+    <label>
+        Your Name
+        <input type="text" name="author" value="[[!+modx.user.id:userinfo=`fullname`]]">
+    </label>
+    <label>
+        Brief introduction (only for new authors)
+        <textarea name="author_introduction"></textarea>
+    </label>
+    
+    <h3>Your Post</h3>
+    
+    <textarea name="body"></textarea>
+</form>
+
     </div>
 </div>
