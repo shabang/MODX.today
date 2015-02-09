@@ -2,8 +2,15 @@ id: 21
 name: article.gallery.image
 description: ''
 category: 'Home View'
-properties: null
+properties: 'a:0:{}'
 
 -----
 
-<img src="[[+file_url]]" alt="[[+pagetitle]]">
+<figure itemscope itemtype="http://schema.org/ImageObject">
+    <meta itemprop="contentUrl" content="[[+file_url]]">
+    <img alt="[[+pagetitle:escape]]" src="/assets/tpl/img/placeholder.gif" class="lazyload" data-src="[[+file_url]]">
+    <figcaption>
+        <span class="figure__source" itemprop="author">Foto: Name/Archiv</span>
+        <span itemprop="description">An example for an image description.</span>
+    </figcaption>
+</figure>

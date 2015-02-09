@@ -6,13 +6,13 @@ properties: 'a:0:{}'
 
 [[$cachebuster]][[$tpl.head]]
 
-<body itemscope itemtype="http://schema.org/WebPage">
+<body itemscope itemtype='http://schema.org/WebPage'>
 <div id="top" class="off-canvas-wrap" data-offcanvas>
     <div class="inner-wrap" id ="wrapper">
         <div class="pagewrapper">
             [[$tpl.pageheader]]
             
-            <main role="main" itemprop="mainContentOfPage" class="pagecontent">
+            <main role="main" class="pagecontent">
                 [[-$BreadCrumb]]
                 [[*content]]
             </main>

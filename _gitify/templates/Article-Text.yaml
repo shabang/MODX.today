@@ -13,8 +13,8 @@ properties: 'a:0:{}'
             [[$tpl.pageheader]]
             
             <div class="pagecontent">
-                <main role="main" itemprop="mainContentOfPage">
-                    [[*content]]
+                <main role="main" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/BlogPosting">
+                    <div itemprop="articleBody">[[*content]]</div>
                 </main>
                 [[$tpl.articlefooter]]
             </div>
