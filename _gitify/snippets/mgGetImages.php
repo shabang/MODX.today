@@ -43,6 +43,8 @@ $scriptProperties = array_merge(array(
 
     'scheme' => $modx->getOption('link_tag_scheme'),
 ), $scriptProperties);
+$scriptProperties['resource'] = $scriptProperties['resource'] > 0 ? $scriptProperties['resource'] : $modx->resource->get('id');
+
 $singleImageUrlParam = $modx->getOption('moregallery.single_image_url_param', null, 'iid');
 $random = in_array(strtolower($scriptProperties['sortBy']), array('random', 'rand', 'rand()'));
 
