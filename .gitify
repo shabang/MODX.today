@@ -81,6 +81,26 @@ data:
   cb_defaults:
     class: cbDefault
     primary: id
+
+  moregallery_image:
+    class: mgImage
+    primary: [resource, id]
+    package: moregallery
+    exclude_keys:
+      - editedon
+      - mgr_thumb_path
+      - file_url
+      - file_path
+      - view_url
+  moregallery_image_tag:
+    class: mgImageTag
+    primary: id
+  moregallery_image_crop:
+    class: mgImageCrop
+    primary: id
+  moregallery_tag:
+    class: mgTag
+    primary: display
 packages: 
   modx.com:
     service_url: http://rest.modx.com/extras/
@@ -92,4 +112,5 @@ packages:
       - getcache
       - seopro
       - translit
+      - templateselect
       - wayfinder
