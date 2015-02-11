@@ -1,3 +1,10 @@
+++ MoreGallery 1.3.0-rc2
+++ Released on 2015-02-10
++++++++++++++++++++++++++
+- Fix issue requiring &resource to be specified on mgGetImages calls
+- Fix positioning issues on URL label text and wide crop previews (#108, 109)
+- Make sure removing an image also removes the crop thumbnails (#107)
+
 ++ MoreGallery 1.3.0-rc1
 ++ Released on 2015-02-04
 +++++++++++++++++++++++++

@@ -7,6 +7,6 @@ properties: 'a:0:{}'
 -----
 
 <h1>
-    <small itemprop="datePublished" content="[[+publishedon:strtotime:phpdate=`c`]]">[[+publishedon:strtotime:date=`%b %d, %Y %H:%M`]]</small>
+    <small itemprop="datePublished" content="[[+publishedon:strtotime:phpdate=`c`]]">[[+publishedon:strtotime:date=`%B %d, %Y`]]</small>
     <a href="[[~[[+id]]]]" itemprop="url"><span itemprop="headline">[[+menutitle:default=`[[+longtitle:default=`[[+pagetitle]]`]]`]]</span></a>
 </h1>

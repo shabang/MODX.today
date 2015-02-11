@@ -1,5 +1,5 @@
 key: moregallery.source
-value: '1'
+value: '2'
 xtype: modx-combo-source
 namespace: moregallery
 area: Storage

@@ -590,7 +590,7 @@
     visibility: hidden; }
   /* line 641, moregallery.scss */
   .image-crop label {
-    padding-left: 75px;
+    padding-left: 100px;
     line-height: 35px; }
   /* line 646, moregallery.scss */
   .image-crop h3 {
@@ -600,7 +600,7 @@
     position: absolute;
     top: 5px;
     left: 0;
-    width: 100px; }
+    width: 90px; }
     /* line 656, moregallery.scss */
     .image-crop .image-crop-preview img {
       -webkit-transition: all 300ms ease-in-out;
@@ -609,12 +609,12 @@
       -o-transition: all 300ms ease-in-out;
       transition: all 300ms ease-in-out;
       max-height: 40px;
-      max-width: 100px;
+      max-width: 90px;
       position: relative; }
       /* line 665, moregallery.scss */
       .image-crop .image-crop-preview img:hover {
-        max-height: 200px;
-        max-width: 260px;
+        max-height: 250px;
+        max-width: 250px;
         z-index: 1;
         -moz-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.4);
         -webkit-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.4);
@@ -843,7 +843,7 @@
     border-color: #658F1A; }
 /* line 941, moregallery.scss */
 .mgimage-tags button {
-  float: left;
+  display: inline-block;
   margin: 0 5px 5px 0px;
   height: 32px;
   padding: 5px 10px;
@@ -870,87 +870,90 @@
     .moregallery_v23 .mgimage-tags button:hover {
       background-color: #3697cd;
       color: #fff; }
-/* line 977, moregallery.scss */
-.mgimage-tags ul li {
+/* line 976, moregallery.scss */
+.mgimage-tags ul {
   display: inline-block; }
-  /* line 980, moregallery.scss */
-  .mgimage-tags ul li div {
-    border: 1px solid #CCC;
-    background-color: #f7f7f3;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    -o-border-radius: 3px;
-    border-radius: 3px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    padding: 5px 5px 5px 8px;
-    line-height: 20px;
-    height: 32px; }
-  /* line 991, moregallery.scss */
-  .mgimage-tags ul li .mgimagetag-tag {
-    font-size: 11px; }
-  /* line 994, moregallery.scss */
-  .mgimage-tags ul li .delete {
-    color: #707070;
-    text-decoration: none;
-    padding: 4px;
-    font-size: 20px;
-    vertical-align: top; }
-    /* line 1001, moregallery.scss */
-    .mgimage-tags ul li .delete:hover {
-      color: #ff0000; }
+  /* line 979, moregallery.scss */
+  .mgimage-tags ul li {
+    display: inline-block; }
+    /* line 982, moregallery.scss */
+    .mgimage-tags ul li div {
+      border: 1px solid #CCC;
+      background-color: #f7f7f3;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -ms-border-radius: 3px;
+      -o-border-radius: 3px;
+      border-radius: 3px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      padding: 5px 5px 5px 8px;
+      line-height: 20px;
+      height: 32px; }
+    /* line 993, moregallery.scss */
+    .mgimage-tags ul li .mgimagetag-tag {
+      font-size: 11px; }
+    /* line 996, moregallery.scss */
+    .mgimage-tags ul li .delete {
+      color: #707070;
+      text-decoration: none;
+      padding: 4px;
+      font-size: 20px;
+      vertical-align: top; }
+      /* line 1003, moregallery.scss */
+      .mgimage-tags ul li .delete:hover {
+        color: #ff0000; }
 
-/* line 1010, moregallery.scss */
+/* line 1012, moregallery.scss */
 .modal-import .options {
   margin: 25px 0; }
-  /* line 1012, moregallery.scss */
+  /* line 1014, moregallery.scss */
   .modal-import .options li {
     float: left; }
-  /* line 1015, moregallery.scss */
+  /* line 1017, moregallery.scss */
   .modal-import .options li label {
     background: #eee;
     padding: 10px;
     border: 1px solid #ccc; }
-  /* line 1020, moregallery.scss */
+  /* line 1022, moregallery.scss */
   .modal-import .options .content {
     display: none;
     background: white;
     padding: 20px;
     border: 1px solid #ccc; }
 
-/* line 1029, moregallery.scss */
+/* line 1031, moregallery.scss */
 .mgimage-tags-holder .spinner {
   display: none;
   width: 30px;
   height: 30px; }
 
-/* line 1034, moregallery.scss */
+/* line 1036, moregallery.scss */
 .mgimage-tags-holder.mgimage-tags-loading .spinner {
   display: inline-block; }
 
-/* line 1039, moregallery.scss */
+/* line 1041, moregallery.scss */
 .mgsearchicon {
   background: url("../icons/search.png") transparent no-repeat; }
 
-/* line 1042, moregallery.scss */
+/* line 1044, moregallery.scss */
 .mgtrashicon {
   background: url("../icons/trash.png") transparent no-repeat; }
 
-/* line 1047, moregallery.scss */
+/* line 1049, moregallery.scss */
 .moregallery_v23 [class*="mgicon-"].icon, .moregallery_v23 .mgsearchicon.icon, .moregallery_v23 .mgtrashicon.icon {
   background-image: none !important; }
 
 /**
  * Slight MoreGallery - ContentBlocks integration improvement
  */
-/* line 1056, moregallery.scss */
+/* line 1058, moregallery.scss */
 .contentblocks_loaded #modx-resource-content-tab .main-wrapper {
   padding: 0; }
-  /* line 1059, moregallery.scss */
+  /* line 1061, moregallery.scss */
   .contentblocks_loaded #modx-resource-content-tab .main-wrapper #modx-resource-content {
     width: 100% !important; }
-  /* line 1062, moregallery.scss */
+  /* line 1064, moregallery.scss */
   .contentblocks_loaded #modx-resource-content-tab .main-wrapper .contentblocks-wrapper.type_mgresource {
     border-left: 0;
     border-right: 0;
@@ -961,7 +964,7 @@
  * Spinner
  * Thanks to http://www.designcouch.com/home/why/2013/05/23/dead-simple-pure-css-loading-spinner/
  */
-/* line 1074, moregallery.scss */
+/* line 1076, moregallery.scss */
 .spinner {
   position: relative;
   -webkit-animation: rotation .6s infinite linear;
@@ -971,7 +974,7 @@
   border: 6px solid rgba(0, 174, 239, 0.15);
   border-radius: 100%; }
 
-/* line 1084, moregallery.scss */
+/* line 1086, moregallery.scss */
 .spinner:before {
   content: "";
   display: block;
@@ -987,48 +990,48 @@
   border-radius: 100%; }
 
 @-webkit-keyframes rotation {
-  /* line 1100, moregallery.scss */
+  /* line 1102, moregallery.scss */
   from {
     -webkit-transform: rotate(0deg); }
 
-  /* line 1101, moregallery.scss */
+  /* line 1103, moregallery.scss */
   to {
     -webkit-transform: rotate(359deg); } }
 
 @-moz-keyframes rotation {
-  /* line 1104, moregallery.scss */
+  /* line 1106, moregallery.scss */
   from {
     -moz-transform: rotate(0deg); }
 
-  /* line 1105, moregallery.scss */
+  /* line 1107, moregallery.scss */
   to {
     -moz-transform: rotate(359deg); } }
 
 @-o-keyframes rotation {
-  /* line 1108, moregallery.scss */
+  /* line 1110, moregallery.scss */
   from {
     -o-transform: rotate(0deg); }
 
-  /* line 1109, moregallery.scss */
+  /* line 1111, moregallery.scss */
   to {
     -o-transform: rotate(359deg); } }
 
 @keyframes rotation {
-  /* line 1112, moregallery.scss */
+  /* line 1114, moregallery.scss */
   from {
     transform: rotate(0deg); }
 
-  /* line 1113, moregallery.scss */
+  /* line 1115, moregallery.scss */
   to {
     transform: rotate(359deg); } }
 
-/* line 1117, moregallery.scss */
+/* line 1119, moregallery.scss */
 .jcrop-keymgr {
   position: absolute !important;
   top: 0px !important;
   left: 0px !important;
   opacity: 0; }
 
-/* line 1123, moregallery.scss */
+/* line 1125, moregallery.scss */
 .jcrop-holder {
-  background-color: #fff; }
+  background-color: #fff !important; }

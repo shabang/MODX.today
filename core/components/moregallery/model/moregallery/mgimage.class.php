@@ -185,11 +185,21 @@ class mgImage extends xPDOSimpleObject
             $relativeUrl = $resource->getSourceRelativeUrl();
             $resource->source->removeObject($relativeUrl.$this->get('mgr_thumb'));
             $resource->source->removeObject($relativeUrl.$this->get('file'));
+
+            $crops = $this->getCrops();
+            /** @var mgImageCrop $crop */
+            foreach ($crops as $crop)
+            {
+                $resource->source->removeObject($relativeUrl . $crop->get('thumbnail'));
+            }
+
             if ($resource->source->hasErrors()) {
                 $errors = $resource->source->getErrors();
                 $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, 'Error(s) while removing file(s) for mgImage ' . $this->toJSON() . ':' . implode("\n", $errors));
             }
         }
+
+
         $this->clearCache();
         
         return parent::remove($ancestors);
