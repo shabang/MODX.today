@@ -5,10 +5,10 @@ description: ''
 sortorder: 3
 icon: image
 icon_type: core
-template: '<img src="[[+url]]" alt="[[+title]]">'
+template: "<figure class=\"content-image [[+class]]\">\n    <img src=\"[[+url]]\" alt=\"[[+title]]\" [[+style:notempty=`style=\"[[+style]]\"`]]>\n    [[+title:notempty=`<figcaption>[[+title]]</figcaption>`]]\n</figure>\n"
 properties: '{"source":"0","directory":"assets\/uploads\/[[+year]]\/[[+month]]\/","file_types":"png,gif,jpg,jpeg","use_tinyrte":"1"}'
-availability: ''
+availability: '[]'
 layouts: ''
 times_per_layout: 0
 times_per_page: 0
-settings: '[]'
+settings: '[{"reference":"class","title":"Classes","fieldtype":"textfield","default_value":"","fieldoptions":"","field_is_exposed":"modal"},{"reference":"style","title":"Inline Style","fieldtype":"textfield","default_value":"","fieldoptions":"","field_is_exposed":"modal"}]'

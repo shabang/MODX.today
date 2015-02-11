@@ -1,7 +1,7 @@
 id: 2
 name: 'Full Width'
 description: 'No markup, just the contents.'
-sortorder: 100
+sortorder: 2
 icon: layout_1
 icon_type: core
 columns: '[{"reference":"col1","width":"100"}]'
