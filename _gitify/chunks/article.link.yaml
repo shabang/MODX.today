@@ -12,6 +12,6 @@ properties: 'a:0:{}'
     <div itemprop="description">[[+introtext]]</div>
 
     <footer class="row">
-        <a href="[[~[[+id]]]]">[[+tv.home.read_more]]</a>
+        <a href="[[~[[+id]]]]" title="[[+tv.home.read_more]]" target="_blank">[[+tv.home.read_more]]</a>
     </footer>
 </article>
