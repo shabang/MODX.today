@@ -56,6 +56,9 @@ data:
   namespaces:
     class: modNamespace
     primary: name
+  mediasources:
+    class: modMediaSource
+    primary: id
   extension_packages:
     class: modExtensionPackage
     primary: namespace
