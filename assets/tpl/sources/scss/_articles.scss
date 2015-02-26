@@ -19,6 +19,15 @@ article.teaser {
     h2 {
         font-size: rem(27);
     }
+    .link-icon {
+        display: inline-block;
+        fill: #999;
+        width: rem(24);
+        height: rem(24);
+        margin-left: rem(-32);
+        position: relative;
+        left: rem(2);
+    }
     footer {
         margin-top: rem(16);
         font-size: rem(14);

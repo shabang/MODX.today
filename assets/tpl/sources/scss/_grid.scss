@@ -106,6 +106,7 @@ html.js .flexgrid {
             top: 0;
             bottom: 0;
             width: 1px;
+            margin-left: -1px;
         }
     }
     
@@ -120,6 +121,7 @@ html.js .flexgrid {
             top: 0;
             bottom: 0;
             width: 1px;
+            margin-left: -1px;
         }
         
         &:after {

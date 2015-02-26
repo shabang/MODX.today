@@ -12,7 +12,6 @@ data:
   content:
     type: content
     exclude_keys:
-      - createdby
       - createdon
       - editedby
       - editedon
