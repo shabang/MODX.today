@@ -1,4 +1,3 @@
-name: antenne.de
 data_directory: _gitify/
 data:
   contexts:
