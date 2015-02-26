@@ -5,7 +5,7 @@ description: ''
 sortorder: 3
 icon: image
 icon_type: core
-template: "<figure class=\"content-image [[+class]]\">\n    <img src=\"[[+url]]\" alt=\"[[+title]]\" [[+style:notempty=`style=\"[[+style]]\"`]]>\n    [[+title:notempty=`<figcaption>[[+title]]</figcaption>`]]\n</figure>\n"
+template: "<figure class=\"content-image [[+class]]\">\n    <img src=\"[[+url]]\" alt=\"[[+title:striptags]]\" [[+style:notempty=`style=\"[[+style]]\"`]]>\n    [[+title:notempty=`<figcaption>[[+title]]</figcaption>`]]\n</figure>\n"
 properties: '{"source":"0","directory":"assets\/uploads\/[[+year]]\/[[+month]]\/","file_types":"png,gif,jpg,jpeg","use_tinyrte":"1"}'
 availability: '[]'
 layouts: ''
