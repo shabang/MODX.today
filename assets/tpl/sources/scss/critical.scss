@@ -70,6 +70,9 @@ $imagePath: '/assets/tpl/img';
 // Template Areas
 @import "_header.scss";
 
+.off-canvas-menu {
+    display: none;
+}
 
 // Lazyload styles
 .lazyload, .lazyloading {
