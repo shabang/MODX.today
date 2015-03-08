@@ -70,7 +70,12 @@
 @import "_slider.scss";
 @import "_articles.scss";
 
-
+// show content
 .pagecontent > * {
 	opacity: 1;
+}
+
+// show offcanvas
+.off-canvas-menu {
+    display: block;
 }
