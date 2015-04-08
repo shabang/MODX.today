@@ -1,3 +1,15 @@
+++ MoreGallery 1.3.1-pl
+++ Released on 2015-03-27
++++++++++++++++++++++++++
+- Prevent paste from being intercepted by moregallery, resulting in errors (#41)
+- Fix issue when using Gitify where the mgImage representation has duplicated mgr_thumb paths
+
+++ MoreGallery 1.3.0-pl
+++ Released on 2015-02-20
++++++++++++++++++++++++++
+- Please see the 1.3.0-rc1 changelog below for what's new in 1.3.x
+- Ensure the moregallery service is loaded before accessing it in mgImage
+
 ++ MoreGallery 1.3.0-rc2
 ++ Released on 2015-02-10
 +++++++++++++++++++++++++

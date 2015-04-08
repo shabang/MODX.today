@@ -726,6 +726,7 @@ jQuery(function($) {
                 url: moreGallery.config.connector_url + '?action=mgr/images/upload',
                 dataType: 'json',
                 dropZone: $('#mgresource-backbone-wrapper'),
+                pasteZone: false,
                 progressInterval: 250,
 
                 /**

@@ -7,6 +7,15 @@ class mgImage extends xPDOSimpleObject
     const MODE_UPLOAD = 'upload';
     const MODE_IMPORT = 'import';
 
+    public function __construct(xPDO & $xpdo) {
+        parent::__construct($xpdo);
+
+        if (!$xpdo->moregallery)
+        {
+            $this->_loadMoreGalleryService();
+        }
+    }
+
     public function get($k, $format = null, $formatTemplate= null)
     {
         $value = parent::get($k, $format, $formatTemplate);
@@ -149,7 +158,7 @@ class mgImage extends xPDOSimpleObject
         $array = parent::toArray($keyPrefix, $rawValues, $excludeLazy, $includeRelated);
 
         $resource = $this->getResource();
-        if ($resource && $resource->_getSource()) {
+        if (!$rawValues && $resource && $resource->_getSource()) {
             $relativeUrl = $resource->getSourceRelativeUrl();
             $array['mgr_thumb_path'] = $resource->source->getBasePath().$relativeUrl.$array['mgr_thumb'];
             $array['mgr_thumb'] = $resource->source->getObjectUrl($relativeUrl.$array['mgr_thumb']);
@@ -385,5 +394,14 @@ class mgImage extends xPDOSimpleObject
             $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, '[moreGallery] Exception while creating mgr_thumb: ' . $e->getMessage());
         }
         return false;
+    }
+
+    private function _loadMoreGalleryService()
+    {
+        $corePath = $this->xpdo->getOption('moregallery.core_path', null, $this->xpdo->getOption('core_path') . 'components/moregallery/');
+        $moreGallery = $this->xpdo->getService('moregallery', 'moreGallery', $corePath . 'model/moregallery/');
+        if (!($moreGallery instanceof moreGallery)) {
+            $this->xpdo->log(modX::LOG_LEVEL_ERROR, 'Error loading moreGallery class from ' . $corePath, '', __METHOD__, __FILE__, __LINE__);
+        }
     }
 }
