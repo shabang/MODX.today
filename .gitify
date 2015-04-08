@@ -1,4 +1,5 @@
 data_directory: _gitify/
+backup_directory: .backups/
 data:
   contexts:
     class: modContext
