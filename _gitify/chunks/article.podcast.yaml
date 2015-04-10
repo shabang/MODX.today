@@ -7,7 +7,10 @@ properties: 'a:0:{}'
 -----
 
 <article class="teaser columns" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-    [[$articleTeaser.header? &id=`[[+id]]`]]
+    [[$articleTeaser.header? &id=`[[+id]]` &longtitle=`
+        <svg class="link-icon" role="presentation"><use xlink:href="[[++svg_url]]#podcast"></use></svg>
+        [[+longtitle:default=`[[+pagetitle]]`]]
+    `]]
     
     <div itemprop="description">[[+introtext]]</div>
 
