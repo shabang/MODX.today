@@ -109,6 +109,7 @@ packages:
       - collections
       - getresources
       - getcache
+      - formit
       - seopro
       - translit
       - templateselect
