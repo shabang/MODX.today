@@ -14,5 +14,11 @@ properties: 'a:0:{}'
     
     <div itemprop="description">[[+introtext]]</div>
 
-    [[$articleTeaser.footer? &id=`[[+id]]`]]
+<footer class="row">
+    <a href="/podcast/play/[[+tv.podcast.number]]" onclick="openPlayer('[[+tv.podcast.number]]');return false;">Play in Popup</a> |
+    <a href="[[~[[+id]]]]">Read more</a> 
+
+
+    <a class="right" href="[[~[[+id]]]]#comments" itemprop="discussionUrl"><svg role="presentation" class="comment-icon" width="14" height="14"><use xlink:href="[[++svg_url]]#comment"></use></svg> <span class="disqus-comment-count" data-disqus-identifier="thread-[[*id]]">Comments</span></a>
+</footer>
 </article>

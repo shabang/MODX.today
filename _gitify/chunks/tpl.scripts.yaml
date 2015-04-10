@@ -19,11 +19,11 @@ properties: 'a:0:{}'
     }
     
     function downloadAssetsAtOnload() {
-        loadCSS( '/assets/tpl/dist/main.[[+site_version]].css');
+        loadCSS( '/assets/tpl/dist/main.[[++site_version]].css');
         
         var element = document.createElement('script');
         element.type = 'text/javascript'; element.async = true;
-        element.src = '/assets/tpl/dist/main.[[+site_version]].js';
+        element.src = '/assets/tpl/dist/main.[[++site_version]].js';
         document.body.appendChild(element);
         
         var disqus_shortname = 'modxtoday';
@@ -65,4 +65,11 @@ properties: 'a:0:{}'
         element.src = '//'+document.location.hostname+':9091';
         document.body.appendChild(element);
     }
+
+    function openPlayer(episodeid){
+        fenster = window.open("/podcast/play/"+episodeid, "player"+episodeid, "width=769,height=250,status=yes,scrollbars=no,resizable=no");
+        fenster.focus();
+        return false;
+    }
+    
 </script>

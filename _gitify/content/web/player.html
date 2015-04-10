@@ -1,0 +1,75 @@
+id: 22
+pagetitle: 'Podcast Player'
+alias: player
+published: 1
+introtext: ''
+menuindex: 3
+createdby: 2
+publishedon: 1428674100
+publishedby: 2
+hidemenu: 1
+uri: player
+properties: '{"contentblocks":{"content":"[{\"layout\":2,\"content\":{\"col1\":[{\"value\":\"[[$cachebuster]][[$tpl.head]]\\n\\n<body itemscope itemtype=\\\"http:\/\/schema.org\/WebPage\\\">\\n    <div class=\\\"row\\\">\\n        <div class=\\\"large-7 medium-10 medium-centered small-12 columns\\\">\\n        \\n            <div class=\\\"row\\\">\\n                <div class=\\\"small-3 columns\\\">\\n                    <h1 id=\\\"logo\\\" style=\\\"min-height: 250px; text-align: center;\\\">\\n                        <a href=\\\"\/\\\" title=\\\"MODX.today\\\">\\n                            <svg role=\\\"image\\\" title=\\\"MODX.today\\\"><use xmlns:xlink=\\\"http:\/\/www.w3.org\/1999\/xlink\\\" xlink:href=\\\"\/assets\/tpl\/dist\/sprite.1428678016.svg#modxtoday\\\"><\/use><\/svg>\\n                        <\/a>\\n                        \\n                        <span style=\\\"color: #fff;\\\">#[[+episode.number]]<\/span>\\n                    <\/h1>\\n                <\/div>\\n                <div class=\\\"small-9 columns\\\">\\n                    <h2>[[+episode.pagetitle]]<\/h2>\\n        \\t\\t\\t<p class=\\\"noMargin\\\">[[+episode.introtext]]<\/p>\\n        \\t\\t\\t<div id=\\\"player\\\"><i>Loading Player\u2026<\/i><\/div>\\n                <\/div>\\n            <\/div>\\n        \\n        <\/div>\\n    <\/div>\\n    \\n\\t\\n\\t[[$tpl.scripts]]\\n\\t<script>\\n        var first_js = document.getElementsByTagName(''script'')[0];\\n        var js = document.createElement(''script'');\\n        js.src = \\\"http:\/\/jwpsrv.com\/library\/B9EyNH7jEeSd7g6sC0aurw.js\\\";\\n         \\n        if (js.addEventListener) { \/\/ normal browsers\\n          js.addEventListener(''load'', function(){\\n            startPlayer();\\n          }, false);\\n        } else {\\n          js.onreadystatechange = function() { \/\/ old IEs\\n            if (js.readyState in {loaded: 1, complete: 1}) {\\n              js.onreadystatechange = null;\\n              startPlayer();\\n            }\\n          };\\n        }\\n         \\n        first_js.parentNode.insertBefore(js, first_js);\\n        \\n        function startPlayer(){\\n            jwplayer(\\\"player\\\").setup({\\n                file: \\\"[[++podcast_cdn]]podcast-episode-[[+episode.number]].mp3\\\",\\n                width: 450,\\n                height: 35,\\n                autostart: true,\\n            });\\n        }\\n\\t<\/script>\\n<\/body>\\n<\/html>\",\"lang\":\"html\",\"field\":1,\"settings\":[]}]},\"settings\":[],\"parent\":0}]","linear":[{"value":"[[$cachebuster]][[$tpl.head]]\n\n<body itemscope itemtype=\"http:\/\/schema.org\/WebPage\">\n    <div class=\"row\">\n        <div class=\"large-7 medium-10 medium-centered small-12 columns\">\n        \n            <div class=\"row\">\n                <div class=\"small-3 columns\">\n                    <h1 id=\"logo\" style=\"min-height: 250px; text-align: center;\">\n                        <a href=\"\/\" title=\"MODX.today\">\n                            <svg role=\"image\" title=\"MODX.today\"><use xmlns:xlink=\"http:\/\/www.w3.org\/1999\/xlink\" xlink:href=\"\/assets\/tpl\/dist\/sprite.1428678016.svg#modxtoday\"><\/use><\/svg>\n                        <\/a>\n                        \n                        <span style=\"color: #fff;\">#[[+episode.number]]<\/span>\n                    <\/h1>\n                <\/div>\n                <div class=\"small-9 columns\">\n                    <h2>[[+episode.pagetitle]]<\/h2>\n        \t\t\t<p class=\"noMargin\">[[+episode.introtext]]<\/p>\n        \t\t\t<div id=\"player\"><i>Loading Player\u2026<\/i><\/div>\n                <\/div>\n            <\/div>\n        \n        <\/div>\n    <\/div>\n    \n\t\n\t[[$tpl.scripts]]\n\t<script>\n        var first_js = document.getElementsByTagName(''script'')[0];\n        var js = document.createElement(''script'');\n        js.src = \"http:\/\/jwpsrv.com\/library\/B9EyNH7jEeSd7g6sC0aurw.js\";\n         \n        if (js.addEventListener) { \/\/ normal browsers\n          js.addEventListener(''load'', function(){\n            startPlayer();\n          }, false);\n        } else {\n          js.onreadystatechange = function() { \/\/ old IEs\n            if (js.readyState in {loaded: 1, complete: 1}) {\n              js.onreadystatechange = null;\n              startPlayer();\n            }\n          };\n        }\n         \n        first_js.parentNode.insertBefore(js, first_js);\n        \n        function startPlayer(){\n            jwplayer(\"player\").setup({\n                file: \"[[++podcast_cdn]]podcast-episode-[[+episode.number]].mp3\",\n                width: 450,\n                height: 35,\n                autostart: true,\n            });\n        }\n\t<\/script>\n<\/body>\n<\/html>","lang":"html","field":1,"settings":[]}],"fieldcounts":{"1":1},"_isContentBlocks":true}}'
+tvs: {  }
+
+-----
+
+[[$cachebuster]][[$tpl.head]]
+
+<body itemscope itemtype="http://schema.org/WebPage">
+    <div class="row">
+        <div class="large-7 medium-10 medium-centered small-12 columns">
+        
+            <div class="row">
+                <div class="small-3 columns">
+                    <h1 id="logo" style="min-height: 250px; text-align: center;">
+                        <a href="/" title="MODX.today">
+                            <svg role="image" title="MODX.today"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/tpl/dist/sprite.1428678016.svg#modxtoday"></use></svg>
+                        </a>
+                        
+                        <span style="color: #fff;">#[[+episode.number]]</span>
+                    </h1>
+                </div>
+                <div class="small-9 columns">
+                    <h2>[[+episode.pagetitle]]</h2>
+        			<p class="noMargin">[[+episode.introtext]]</p>
+        			<div id="player"><i>Loading Player…</i></div>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+    
+	
+	[[$tpl.scripts]]
+	<script>
+        var first_js = document.getElementsByTagName('script')[0];
+        var js = document.createElement('script');
+        js.src = "http://jwpsrv.com/library/B9EyNH7jEeSd7g6sC0aurw.js";
+         
+        if (js.addEventListener) { // normal browsers
+          js.addEventListener('load', function(){
+            startPlayer();
+          }, false);
+        } else {
+          js.onreadystatechange = function() { // old IEs
+            if (js.readyState in {loaded: 1, complete: 1}) {
+              js.onreadystatechange = null;
+              startPlayer();
+            }
+          };
+        }
+         
+        first_js.parentNode.insertBefore(js, first_js);
+        
+        function startPlayer(){
+            jwplayer("player").setup({
+                file: "[[++podcast_cdn]]podcast-episode-[[+episode.number]].mp3",
+                width: 450,
+                height: 35,
+                autostart: true,
+            });
+        }
+	</script>
+</body>
+</html>

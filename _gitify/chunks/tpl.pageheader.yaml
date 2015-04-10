@@ -20,6 +20,7 @@ properties: 'a:0:{}'
 
 <nav class="left-off-canvas-menu off-canvas-menu" role="navigation" aria-label="Navigation">
     <div class="content">
+<p>gotcha</p>
         <ul class="off-canvas-list">
             [[Wayfinder?
                 &startId=`0`
