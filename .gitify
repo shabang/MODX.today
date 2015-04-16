@@ -108,9 +108,11 @@ packages:
       - breadcrumbs
       - collections
       - getresources
+      - getpage
       - getcache
       - formit
       - seopro
       - translit
       - templateselect
       - wayfinder
+      - taglister

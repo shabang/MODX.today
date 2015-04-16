@@ -1,0 +1,16 @@
+id: 25
+name: author
+description: ''
+category: Template
+properties: null
+
+-----
+
+        <div class="author-info" itemscope itemtype="http://schema.org/Person">
+            [[+title:default=`<h4>About the author</h4>`]] 
+            <p class="clearfix">
+                <a href="/posts/author/[[+slug]]"><img data-src="//www.gravatar.com/avatar/[[+email:md5]]?s=96&d=retro" width="48" height="48" class="lazyload left author-image"></a>
+                <a itemprop="url" href="/posts/author/[[+slug]]"><strong itemprop="name">[[+name]]</strong></a> 
+                [[+bio]]
+            </p>
+        </div>
