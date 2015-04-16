@@ -215,8 +215,7 @@ $(function(){
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
 	if (window.location.hash !== '' && window.location.hash.charAt(1) != '&' && $(window.location.hash).length > 0) {
-		var padding = $('.pageheader').height();
-		$("html, body").animate({ scrollTop: $(window.location.hash).offset().top - padding }, 1000);
+		$("html, body").animate({ scrollTop: $(window.location.hash).offset().top }, 1000);
 	}
 	
 	
@@ -230,11 +229,8 @@ $(function(){
 		// scroll to id if hash link clicked
 		if (href.charAt(0) == '#' && href.length > 1 && $(this).attr('role') != 'tab' && !$(this).hasClass('accordion-tab')) {
 			e.preventDefault();
-			var padding = 0;
-			if ($('.pageheader').hasClass('fixed')) padding += $('.pageheader').height();
-			
 		    $('html, body').animate({
-		        scrollTop: $(href).offset().top - padding
+		        scrollTop: $(href).offset().top
 		    }, 1000);
 		    return false;
 	    }
