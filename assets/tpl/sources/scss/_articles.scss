@@ -36,8 +36,12 @@ article.teaser {
 
 
 .author-image {
-    margin: rem(3 8 8 0);
-    border-radius: $global-radius;
+    margin: -3px 0.5rem 0.5rem 0;
+    border-radius: 0.1875rem;
+    width: 44px;
+    height: 44px;
+    position: relative;
+    top: 6px;
 }
 
 
