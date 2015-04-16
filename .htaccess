@@ -2,27 +2,12 @@
 #  PHP Settings
 # ----------------------------------------------------------------------
 
-# set default timezone
-php_value date.timezone "Europe/Berlin"
-
-# Do not display errors in browser (production - Off, development - On)
-php_flag display_errors on
-
-# Do not display startup errors (production - Off, development - On)
-php_flag display_startup_errors on
-
 # prevent access to PHP error log
 <Files php_errors.log>
     Order allow,deny
 	Deny from all
 	Satisfy All
 </Files>
-
-# magic_quotes_gpc off
-php_flag magic_quotes_gpc Off
-
-# register_globals off
-php_flag register_globals Off
 
 ServerSignature Off
 
@@ -34,7 +19,6 @@ ServerSignature Off
 
 # Use UTF-8 encoding for anything served text/plain or text/html
 AddDefaultCharset utf-8
-php_value default_charset utf-8
 
 # Force UTF-8 for a number of file formats
 AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
