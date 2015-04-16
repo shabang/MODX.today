@@ -11,7 +11,7 @@ properties: 'a:0:{}'
     <div class="[[++default_article_column_classnames]]">
     
         <hr>
-        [[$[[*author]]]]
+        [[$[[*author]]? &title=`<h4>About the author</h4>`]]
         
         <hr>
         <h3>Liked it? Share it!</h3>

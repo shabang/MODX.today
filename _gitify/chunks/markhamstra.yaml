@@ -2,7 +2,7 @@ id: 24
 name: markhamstra
 description: 'Mark Hamstra'
 category: Authors
-properties: null
+properties: 'a:0:{}'
 
 -----
 
@@ -10,5 +10,9 @@ properties: null
   &name=`Mark Hamstra` 
   &email=`hello@markhamstra.com`
   &slug=`markhamstra` 
-  &bio=`is the CEA at <a href="https://modmore.com/" itemscope itemtype="http://schema.org/Organization"><span itemprop="name">modmore</span></a> where he's building a brand for people that want to do more with MODX by selling premium extras with great support and documentation, and other initiatives meant to help users and MODX like MODX.today.`
+  &bio=`is the <abbr title="Chief Executive of Awesomeness">CEA</abbr> at
+  <a href="https://modmore.com/" itemscope itemtype="http://schema.org/Organization"><span itemprop="name">modmore</span></a>
+  where he's building a brand that helps people to do more with MODX. He accomplishes this by providing premium extras with
+  great support and documentation, and other initiatives meant to help MODXers around like MODX.today.`
+  &title=`[[+title]]`
 ]]
