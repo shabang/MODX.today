@@ -8,5 +8,5 @@ properties: 'a:0:{}'
 
 <figure itemscope itemtype="http://schema.org/ImageObject" data-idx="[[+idx]]" class="small-[[+idx:is=`1`:then=`6`:else=`[[+idx:is=`2`:then=`6`:else=`12`]]`]] columns no-padding no-margin">
     <meta itemprop="contentUrl" content="[[+file_url]]">
-    <a href="[[+view_url]]"><img alt="[[+pagetitle:escape]]" src="/assets/tpl/img/placeholder.gif" class="lazyload" data-src="[[+file_url]]"></a>
+    <a href="[[~[[+resource]]]]#[[+id]]"><img alt="[[+pagetitle:escape]]" src="/assets/tpl/img/placeholder.gif" class="lazyload" data-src="[[+file_url]]"></a>
 </figure>

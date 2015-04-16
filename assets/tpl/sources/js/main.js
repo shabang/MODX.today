@@ -248,6 +248,14 @@ $(function(){
 
     // init scroll handler
     if ($container.length > 0) {
+        $container.masonry({
+            'stamp': '.fixed'
+        });
+
+        Foundation.utils.image_loaded($container.find('img'), function () {
+            $container.masonry();
+        });
+
         addArticlesScrollHandler();
         $(document).trigger('scroll');
     }

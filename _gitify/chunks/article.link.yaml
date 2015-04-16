@@ -16,4 +16,5 @@ properties: 'a:0:{}'
     <footer class="row">
         <a href="[[~[[+id]]]]" title="[[+tv.home.read_more]]" target="_blank">[[+tv.home.read_more]]</a>
     </footer>
+    <a href="[[~[[+id]]]]" class="clickable-block"></a>
 </article>

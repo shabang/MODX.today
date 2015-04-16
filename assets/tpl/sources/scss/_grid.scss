@@ -59,7 +59,7 @@
         > *:first-child {
             margin-top: #{$column-gutter/2};
         }
-        > *:last-child {
+        > *:last-child, footer {
             margin-bottom: #{$column-gutter/2};
         }
     }
