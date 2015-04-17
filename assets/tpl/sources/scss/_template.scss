@@ -22,6 +22,10 @@
         font-size: $paragraph-font-size;
     }
     
+    .off-canvas-wrap, .off-canvas-wrap.move-right, .off-canvas-wrap.move-left, .inner-wrap {
+        min-height: 100vh;
+    }
+    
     .pagewrapper {
         z-index: 1;
         width: 100%;

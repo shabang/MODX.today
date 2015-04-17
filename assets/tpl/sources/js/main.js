@@ -96,12 +96,12 @@ $(function(){
 
  	$(document)
 	.on('open.fndtn.offcanvas', '[data-offcanvas]', function(e) {
-		checkMinHeight();
+		//checkMinHeight();
 		offcanvasScroll(true);
 		$(window).on('scroll', offcanvasScroll);
 	})
 	.on('close.fndtn.offcanvas', '[data-offcanvas]', function(e) {
-		$('#wrapper').css('min-height', 0);
+		//$('#wrapper').css('min-height', 0);
 		$(window).off('scroll', offcanvasScroll);
 	});
 
@@ -146,7 +146,7 @@ $(function(){
 		var minheight = 0;
 		if ($('.right-off-canvas-menu').length) minheight = $('.right-off-canvas-menu .content').height();
 		if ($('.left-off-canvas-menu').length && $('.left-off-canvas-menu .content').height() > minheight) minheight = $('.left-off-canvas-menu .content').height();
-		$('#wrapper').css('min-height', minheight+'px');
+		$('#wrapper').css('min-height', '100vh');//minheight+'px');
 	}
 
 
