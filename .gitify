@@ -7,6 +7,15 @@ data:
   context_settings:
     class: modContextSetting
     primary: [context_key, key]
+    exclude_keys:
+      - editedon
+  system_settings:
+    class: modSystemSetting
+    primary: key
+    exclude_keys:
+      - editedon
+    where:
+      - 'key:!=': environment
   content_types:
     class: modContentType
     primary: name
@@ -31,6 +40,7 @@ data:
   chunks:
     class: modChunk
     primary: name
+    extension: .html
   snippets:
     class: modSnippet
     primary: name
@@ -42,13 +52,29 @@ data:
   plugin_events:
     class: modPluginEvent
     primary: [pluginid,event]
+    
   users:
     class: modUser
     primary: id
   user_profiles:
     class: modUserProfile
     primary: internalKey
-
+    exclude_keys:
+      - sessionid
+      - thislogin
+      - lastlogin
+      - logincount
+      - failedloginattempts
+  user_groups:
+    class: modUserGroup
+    primary: id
+  user_group_members:
+    class: modUserGroupMember
+    primary: id
+  user_group_roles:
+    class: modUserGroupRole
+    primary: id
+      
   events:
     class: modEvent
     primary: name
@@ -58,14 +84,41 @@ data:
   mediasources:
     class: modMediaSource
     primary: id
+  mediasource_elements:
+    class: sources.modMediaSourceElement
+    primary: [source, object_class, object, context_key]
   extension_packages:
     class: modExtensionPackage
     primary: namespace
-  system_settings:
-    class: modSystemSetting
-    primary: key
-    exclude_keys:
-      - editedon
+  
+  dashboards:
+    class: modDashboard
+    primary: [id, name]
+  dashboard_widgts:
+    class: modDashboardWidget
+    primary: id
+  dashboard_widget_placement:
+    class: modDashboardWidgetPlacement
+    primary: [dashboard, widget]
+
+  quickstartbuttons_sets:
+    class: qsbSet
+    primary: name
+    package: quickstartbuttons
+  quickstartbuttons_set_usergroups:
+    class: qsbSetUserGroup
+    primary: [usergoup, set]
+  quickstartbuttons_icons:
+    class: qsbIcon
+    primary: name
+  quickstartbuttons_buttons:
+    class: qsbButton
+    primary: text
+
+  scheduler_tasks:
+    class: sTask
+    primary: [namespace, reference]
+    package: scheduler
 
   cb_fields:
     class: cbField
@@ -100,6 +153,24 @@ data:
   moregallery_tag:
     class: mgTag
     primary: display
+
+  collections_settings:
+    class: CollectionSetting
+    primary: id
+    package: collections
+  collections_tempaltes:
+    class: CollectionTemplate
+    primary: [id, name]
+  collections_templatecolumns:
+    class: CollectionTemplateColumn
+    primary: id
+  collections_resourcetemplates:
+    class: CollectionResourceTemplate
+    primary: [resource_template, collection_template]
+  collections_selections:
+    class: CollectionSelection
+    primary: [resource, collection]
+
 packages: 
   modx.com:
     service_url: http://rest.modx.com/extras/

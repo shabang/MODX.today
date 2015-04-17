@@ -1,0 +1,8 @@
+id: 3
+template: 1
+label: pagetitle
+name: pagetitle
+sortable: 1
+width: 170
+renderer: Collections.renderer.pagetitleWithButtons
+position: 2

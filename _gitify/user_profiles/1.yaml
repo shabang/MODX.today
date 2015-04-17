@@ -2,10 +2,6 @@ id: 1
 internalKey: 1
 fullname: 'Christian Seel'
 email: chris@modmore.com
-logincount: 4
-lastlogin: 1423669749
-thislogin: 1429285633
-sessionid: 539c26d837caeee776fd69f0d6427028
 comment: 'is a MODX Professional and Ambassador from Germany. With his agency <a itemscope itemtype="http://schema.org/Organization" href="http://chsmedien.de/?pk_campaign=modmore&pk_kwd=author"><span itemprop="name">chsmedien</span></a> he creates websites for medium and large sized companies.'
 website: 'http://christianseel.com/'
 extended: '[]'
