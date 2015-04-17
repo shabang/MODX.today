@@ -15,7 +15,7 @@
 	document.createElement( "picture" );
 
 	var lowTreshHold, partialLowTreshHold, isLandscape, lazyFactor, tMemory, substractCurRes, warn, eminpx,
-		alwaysCheckWDescriptor, resizeThrottle;
+		alwaysCheckWDescriptor, resizeThrottle, evalID;
 	// local object for method references and testing exposure
 	var ri = {};
 	var noop = function() {};
@@ -35,12 +35,10 @@
 	var srcsetAttr = srcAttr + "set";
 	var reflowBug = "webkitBackfaceVisibility" in docElem.style;
 	var ua = navigator.userAgent;
-	var supportNativeLQIP = (/AppleWebKit/i).test(ua);
 	var supportAbort = (/rident/).test(ua) || ((/ecko/).test(ua) && ua.match(/rv\:(\d+)/) && RegExp.$1 > 35 );
-	var imgAbortCount = 0;
 	var curSrcProp = "currentSrc";
 	var regWDesc = /\s+\+?\d+(e\d+)?w/;
-	var regSize = /(\([^)]+\))?\s*(.+)/;
+	var regSize = /((?:\([^)]+\)(?:\s*and\s*|\s*or\s*|\s*not\s*)?)+)?\s*(.+)/;
 	var regDescriptor =  /^([\+eE\d\.]+)(w|x)$/; // currently no h
 	var regHDesc = /\s*\d+h\s*/;
 	var setOptions = window.respimgCFG;
@@ -138,7 +136,6 @@
 				);
 		});
 
-
 		return function(css, length) {
 			var parsedLength;
 			if (!(css in cssCache)) {
@@ -185,7 +182,14 @@
 			}
 		}
 
-		elements = options.elements || ri.qsa( (options.context || document), ( options.reevaluate || options.reparse ) ? ri.sel : ri.selShort );
+		if(options.reparse && !options.reevaluate){
+			options.reevaluate = true;
+			if(window.console && console.warn){
+				console.warn('reparse was renamed to reevaluate!');
+			}
+		}
+
+		elements = options.elements || ri.qsa( (options.context || document), ( options.reevaluate || options.reselect ) ? ri.sel : ri.selShort );
 
 		if ( (plen = elements.length) ) {
 
@@ -195,33 +199,11 @@
 			// Loop through all elements
 
 			for ( i = 0; i < plen; i++ ) {
-				imgAbortCount++;
-				if(imgAbortCount < 6 && !elements[ i ].complete){
-					imgAbortCount++;
-				}
 				ri.fillImg(elements[ i ], options);
 			}
 			ri.teardownRun( options );
-			imgAbortCount++;
 		}
 	};
-
-	/**
-	 * adds an onload event to an image and reevaluates it, after onload
-	 */
-	var reevaluateAfterLoad = (function(){
-		var onload = function(){
-			off( this, "load", onload );
-			off( this, "error", onload );
-			ri.fillImgs( {elements: [this]} );
-		};
-		return function( img ){
-			off( img, "load", onload );
-			off( img, "error", onload );
-			on( img, "error", onload );
-			on( img, "load", onload );
-		};
-	})();
 
 	var parseDescriptor = memoize(function ( descriptor ) {
 
@@ -321,7 +303,7 @@
 
 		lazyFactor = (lazyFactor * dprM) + lazyFactor;
 
-		substractCurRes = 0.1 * dprM;
+		substractCurRes = 0.2 + (0.1 * dprM);
 
 		lowTreshHold = 0.5 + (0.2 * dprM);
 
@@ -336,10 +318,11 @@
 			lazyFactor *= 0.9;
 		}
 
+		evalID = [units.width, units.height, dprM].join('-');
 	}
 
 	function chooseLowRes( lowRes, diff, dpr ) {
-		var add = diff * Math.pow(lowRes, 2);
+		var add = diff * Math.pow(lowRes - 0.3, 1.9);
 		if(!isLandscape){
 			add /= 1.3;
 		}
@@ -348,27 +331,12 @@
 		return lowRes > dpr;
 	}
 
-	function inView(el) {
-		if(!el.getBoundingClientRect){return true;}
-		var rect = el.getBoundingClientRect();
-		var bottom, right, left, top;
-
-		return !!(
-		(bottom = rect.bottom) >= -9 &&
-		(top = rect.top) <= units.height + 9 &&
-		(right = rect.right) >= -9 &&
-		(left = rect.left) <= units.height + 9 &&
-		(bottom || right || left || top)
-		);
-	}
-
-
 	function applyBestCandidate( img ) {
 		var srcSetCandidates;
 		var matchingSet = ri.getSet( img );
 		var evaluated = false;
 		if ( matchingSet != "pending" ) {
-			evaluated = true;
+			evaluated = evalID;
 			if ( matchingSet ) {
 				srcSetCandidates = ri.setRes( matchingSet );
 				evaluated = ri.applySetCandidate( srcSetCandidates, img );
@@ -773,7 +741,7 @@
 			oldRes;
 
 		var imageData = img[ ri.ns ];
-		var evaled = true;
+		var evaled = evalID;
 		var lazyF = lazyFactor;
 		var sub = substractCurRes;
 
@@ -808,18 +776,6 @@
 
 				if ( curCan && isSameSet && curCan.res >= dpr ) {
 					bestCandidate = curCan;
-
-					// if image isn't loaded (!complete + src), test for LQIP or abort technique
-				} else if ( !supportNativeLQIP && !img.complete && getImgAttr.call( img, "src" ) && !img.lazyload ) {
-
-					//if there is no art direction or if the img isn't visible, we can use LQIP pattern
-					if (  (!supportAbort || imgAbortCount < 4) && ( isSameSet || !inView( img ))  ) {
-
-						bestCandidate = curCan;
-						candidateSrc = curSrc;
-						evaled = "L";
-						reevaluateAfterLoad( img );
-					}
 				}
 			}
 		}
@@ -1014,7 +970,7 @@
 
 	ri.fillImg = function(element, options) {
 		var parent, imageData;
-		var extreme = options.reparse || options.reevaluate;
+		var extreme = options.reselect || options.reevaluate;
 
 		// expando for caching data on the img
 		if ( !element[ ri.ns ] ) {
@@ -1023,18 +979,14 @@
 
 		imageData = element[ ri.ns ];
 
-		if ( imageData.evaled == "L" && element.complete ) {
-			imageData.evaled = false;
-		}
-
 		// if the element has already been evaluated, skip it
 		// unless `options.reevaluate` is set to true ( this, for example,
 		// is set to true when running `respimage` on `resize` ).
-		if ( !extreme && imageData.evaled ) {
+		if ( !extreme && imageData.evaled == evalID ) {
 			return;
 		}
 
-		if ( !imageData.parsed || options.reparse ) {
+		if ( !imageData.parsed || options.reevaluate ) {
 			parent = element.parentNode;
 			if ( !parent ) {
 				return;
@@ -1045,12 +997,12 @@
 		if ( !imageData.supported ) {
 			applyBestCandidate( element );
 		} else {
-			imageData.evaled = true;
+			imageData.evaled = evalID;
 		}
 	};
 
 	ri.setupRun = function( options ) {
-		if ( !alreadyRun || options.reevaluate || isVwDirty ) {
+		if ( !alreadyRun || isVwDirty || DPR != window.devicePixelRatio ) {
 			updateMetrics();
 
 			// if all images are reevaluated clear the resizetimer
@@ -1080,14 +1032,13 @@
 					isDomReady = isDomReady || regReady.test( readyState );
 					ri.fillImgs();
 					if ( isDomReady  ) {
-						imgAbortCount +=6;
 						clearTimeout( timerId );
 					}
 				}
 			};
 
 			var resizeEval = function() {
-				ri.fillImgs({ reevaluate: true });
+				ri.fillImgs();
 			};
 
 			var onResize = function() {
@@ -1124,7 +1075,7 @@
 			} else {
 				cfg[name] = args[0];
 				if(alreadyRun){
-					ri.fillImgs( { reevaluate: true } );
+					ri.fillImgs({reselect: true});
 				}
 			}
 		}

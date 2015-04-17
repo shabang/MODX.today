@@ -112,7 +112,10 @@ $slick-next-character: '\25B8'; //'▸'
 
    $row-width: rem(9999);
    $total-columns: 12;
-   $column-gutter: rem(80);
+   
+   $small-column-gutter: rem(16);
+   $column-gutter: rem(40);
+   $large-column-gutter: rem(80);
 
 
 // c. Global
@@ -754,7 +757,7 @@ $slick-next-character: '\25B8'; //'▸'
 
 
 // We use this to set the base for lots of form spacing and positioning styles
-   $form-spacing: rem(24);
+   $form-spacing: rem(16);
 
 
 // We use these to style the labels in different ways

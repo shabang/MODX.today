@@ -14,34 +14,62 @@ properties: 'a:0:{}'
         [[$[[*author]]? &title=`<h4>About the author</h4>`]]
         
         <hr>
-        <h3>Liked it? Share it!</h3>
-        <ul class="social-sharing">
-            <li class="facebook">
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[[~[[*id]]:urlencode? &scheme=`full`]]" target="_blank">
-                    <svg title="Facebook" role="presentation"><use xlink:href="[[++svg_url]]#facebook"></use></svg>
-                    <span>share</span>
-                </a>
-            </li>
-            <li class="twitter">
-                <a href="https://twitter.com/home?status=[[*longtitle:default=`[[*pagetitle]]`:urlencode]]+[[~[[*id]]:urlencode? &scheme=`full`]]+via+%40MODXtoday+%23MODX" target="_blank">
-                    <svg title="Twitter" role="presentation"><use xlink:href="[[++svg_url]]#twitter"></use></svg>
-                    <span>tweet</span>
-                </a>
-            </li>
-            <li class="googleplus">
-                <a href="https://plus.google.com/share?url=[[~[[*id]]:urlencode? &scheme=`full`]]" target="_blank">
-                    <svg title="Google+" role="presentation"><use xlink:href="[[++svg_url]]#googleplus"></use></svg>
-                    <span>share</span>
-                </a>
-            </li>
-            <li class="mail">
-                <a href="mailto:?subject=[[*longtitle:default=`[[*pagetitle]]`:urlencode]]&body=[[~[[*id]]:urlencode? &scheme=`full`]]">
-                    <svg title="E-Mail" role="presentation"><use xlink:href="[[++svg_url]]#mail"></use></svg>
-                    <span>forward</span>
-                </a>
-            </li>
-        </ul>
-        
+    </div>
+    
+    <div class="[[++default_article_column_classnames]]">
+        <div class="row small-gutter">
+            <div class="large-5 columns">
+                <h3>Liked it? Share it!</h3>
+                <ul class="social-sharing">
+                    <li class="facebook">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=[[~[[*id]]:urlencode? &scheme=`full`]]" target="_blank">
+                            <svg title="Facebook" role="presentation"><use xlink:href="[[++svg_url]]#facebook"></use></svg>
+                            <span>share</span>
+                        </a>
+                    </li>
+                    <li class="twitter">
+                        <a href="https://twitter.com/home?status=[[*longtitle:default=`[[*pagetitle]]`:urlencode]]+[[~[[*id]]:urlencode? &scheme=`full`]]+via+%40MODXtoday+%23MODX" target="_blank">
+                            <svg title="Twitter" role="presentation"><use xlink:href="[[++svg_url]]#twitter"></use></svg>
+                            <span>tweet</span>
+                        </a>
+                    </li>
+                    <li class="googleplus">
+                        <a href="https://plus.google.com/share?url=[[~[[*id]]:urlencode? &scheme=`full`]]" target="_blank">
+                            <svg title="Google+" role="presentation"><use xlink:href="[[++svg_url]]#googleplus"></use></svg>
+                            <span>share</span>
+                        </a>
+                    </li>
+                    <li class="mail">
+                        <a href="mailto:?subject=[[*longtitle:default=`[[*pagetitle]]`:urlencode]]&body=[[~[[*id]]:urlencode? &scheme=`full`]]">
+                            <svg title="E-Mail" role="presentation"><use xlink:href="[[++svg_url]]#mail"></use></svg>
+                            <span>forward</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="large-7 columns">
+                <h4>Stay up to date!</h4>
+                <p>With our weekly reading list you won't miss any MODX news!</p>
+                <form action="" method="post" data-abide>
+                    <label class="hide" for="rl-email">E-Mail</label>
+                    <input type="email" name="rl-email" id="rl-email" value="" placeholder="E-Mail Address">
+                    <small class="error">Please enter a valid e-mail address</small>
+                    
+                    <div class="row small-gutter">
+                        <div class="medium-6 columns">
+                            <input type="text" name="rl-firstname" value="" placeholder="First name">
+                        </div>
+                        <div class="medium-6 columns">
+                            <input type="text" name="rl-lastname" value="" placeholder="Last name">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>            
+    
+    
+    <div class="[[++default_article_column_classnames]]">    
         <hr>
     
         <h3 id="comments" class="extra-margin-top">Comments</h3>

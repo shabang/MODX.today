@@ -33,22 +33,29 @@ article.teaser {
         font-size: rem(14);
     }
 
-  a {
-    z-index: 1;
-    position: relative;
-  }
-  .clickable-block {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 0;
-  }
+    a {
+      z-index: 1;
+      position: relative;
+    }
+    
+   .clickable-block {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 0;
+        margin: 0;
+    }
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.02);
-  }
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+        h1,h2,h3 {
+            a {
+                color: $primary-color;
+            }
+        }
+    }
 }
 
 
@@ -68,10 +75,12 @@ ul.social-sharing {
     li {
         display: inline-block;
         background: #888;
+        margin: rem(0 1 8);
         
         a {
             display: block;
-            padding: rem(4 12);
+            min-width: rem(106);
+            padding: rem(5 12);
             color: #fff;
             font-weight: $font-weight-bold;
             transition: background-color $anchor-transition;

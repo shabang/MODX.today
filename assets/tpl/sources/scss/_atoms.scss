@@ -42,9 +42,19 @@
 		padding-top: rem(72) !important;
 	}
 	
+	.small-gutter .extended-with {
+    	margin-left: -#{$small-column-gutter / 2};
+    	margin-right: -#{$small-column-gutter / 2};
+	}
+	
 	.extended-with {
     	margin-left: -#{$column-gutter / 2};
     	margin-right: -#{$column-gutter / 2};
+	}
+	
+	.large-gutter .extended-with {
+    	margin-left: -#{$large-column-gutter / 2};
+    	margin-right: -#{$large-column-gutter / 2};
 	}
 	
 	.flex-video {
