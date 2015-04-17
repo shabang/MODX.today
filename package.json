@@ -31,7 +31,7 @@
     
     "build:css": "node node_modules/npm-build-tools/index.js --path \"assets/tpl/sources/scss/\" --ext \"scss\" --outputDir \"assets/tpl/dist/\" --outputStyle \"compressed\"",
     
-    "watch": "parallelshell \"npm run watch:css\" \"npm run watch:js\" \"npm run watch:svg\" \"npm run gitify\"",    
+    "watch": "parallelshell \"npm run watch:css\" \"npm run watch:js\" \"npm run watch:svg\"",    
     "watch:css": "watch \"npm run build:css\" assets/tpl/sources/scss",
     "watch:js": "watch \"npm run build:js\" assets/tpl/sources/js",
     "watch:svg": "watch \"npm run build:svg\" assets/tpl/sources/svg",
