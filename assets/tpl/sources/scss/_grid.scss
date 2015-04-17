@@ -38,14 +38,28 @@
 		}
 	}
     
-    .row.small-gutter {
+    
+    .row .row.small-gutter {
         margin-left: ($small-column-gutter / 2 * -1);
         margin-right: ($small-column-gutter / 2 * -1);
+    }
+    .row.small-gutter {
         .column, .columns {
             padding-left: ($small-column-gutter / 2);
             padding-right: ($small-column-gutter / 2);
         }
     }
+    
+    .row .row.large-gutter {
+        margin-left: ($large-column-gutter / 2 * -1);
+        margin-right: ($large-column-gutter / 2 * -1);
+    }
+    .row.large-gutter {
+        .column, .columns {
+            padding-left: ($large-column-gutter / 2);
+            padding-right: ($large-column-gutter / 2);
+        }
+    }    
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - -

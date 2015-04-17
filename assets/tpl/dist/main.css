@@ -3246,12 +3246,21 @@ table {
         -ms-transform: translateY(-50%);
             transform: translateY(-50%); } }
 
-.row.small-gutter {
+.row .row.small-gutter {
   margin-left: -0.5rem;
   margin-right: -0.5rem; }
-  .row.small-gutter .column, .row.small-gutter .columns {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem; }
+
+.row.small-gutter .column, .row.small-gutter .columns {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem; }
+
+.row .row.large-gutter {
+  margin-left: -2.5rem;
+  margin-right: -2.5rem; }
+
+.row.large-gutter .column, .row.large-gutter .columns {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem; }
 
 .flexgrid {
   display: block;
