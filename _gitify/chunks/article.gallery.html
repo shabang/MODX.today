@@ -9,7 +9,7 @@ properties: 'a:0:{}'
 <article class="teaser columns" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
     [[$articleTeaser.header? &id=`[[+id]]`]]
     <div class="extended-with">
-        [[-<a href="[[~[[+id]]]]"><img src="[[+tv.image]]" alt="[[+pagetitle]]"></a>]]
+        [[-<a href="[[~[[+id]]]]"><img src="[[+image]]" alt="[[+pagetitle]]"></a>]]
         <div class="row">[[mgGetImages? &resource=`[[+id]]` &imageTpl=`article.gallery.image` &limit=`3`]]</div>
     </div>
     [[$articleTeaser.footer? &id=`[[+id]]`]]

@@ -189,3 +189,5 @@ packages:
       - taglister
       - updater
       - locker
+      - simplesearch
+      - switch
