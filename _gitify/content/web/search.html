@@ -11,16 +11,20 @@ publishedon: 1429298520
 publishedby: 1
 hidemenu: 1
 uri: search
-properties: '{"contentblocks":{"content":"[{\"layout\":3,\"content\":{\"col1\":[{\"value\":\"Search results\",\"level\":\"h1\",\"field\":3,\"settings\":{}},{\"value\":\"[[!SimpleSearch]]\",\"lang\":\"html\",\"field\":1,\"settings\":{}}]},\"settings\":{\"layout_attributes\":\"\",\"layout_padding_top\":\" \",\"layout_padding_bottom\":\"extra-small-padding-bottom\",\"layout_classes\":\"\",\"col1_classes\":\"[[++default_article_column_classnames]]\"},\"parent\":0}]","linear":[{"value":"Search results","level":"h1","field":3,"settings":[]},{"value":"[[!SimpleSearch]]","lang":"html","field":1,"settings":[]}],"fieldcounts":{"3":1,"1":1},"_isContentBlocks":true}}'
+properties: '{"contentblocks":{"content":"[{\"layout\":2,\"content\":{\"col1\":[{\"value\":\"[[!SimpleSearchAjaxWrapper?\\n    &tpl=`search.result`\\n    &containerTpl=`search.container`\\n    &ids=`1`\\n    &idType=`parents`\\n    &searchStyle=`match`\\n    &showExtract=`0`\\n    &offsetIndex=`search_offset`\\n    &includeTVs=`1`\\n    &exclude=`1`\\n]]\",\"lang\":\"html\",\"field\":1,\"settings\":[]}]},\"settings\":[],\"parent\":0}]","linear":[{"value":"[[!SimpleSearchAjaxWrapper?\n    &tpl=`search.result`\n    &containerTpl=`search.container`\n    &ids=`1`\n    &idType=`parents`\n    &searchStyle=`match`\n    &showExtract=`0`\n    &offsetIndex=`search_offset`\n    &includeTVs=`1`\n    &exclude=`1`\n]]","lang":"html","field":1,"settings":[]}],"fieldcounts":{"1":1},"_isContentBlocks":true}}'
 tvs:
     image: ''
 
 -----
 
-<div class="row    extra-small-padding-bottom" >
-    <div class="[[++default_article_column_classnames]]">
-        <h1>Search results</h1>
-
-[[!SimpleSearch]]
-    </div>
-</div>
+[[!SimpleSearchAjaxWrapper?
+    &tpl=`search.result`
+    &containerTpl=`search.container`
+    &ids=`1`
+    &idType=`parents`
+    &searchStyle=`match`
+    &showExtract=`0`
+    &offsetIndex=`search_offset`
+    &includeTVs=`1`
+    &exclude=`1`
+]]

@@ -1,0 +1,17 @@
+id: 28
+name: search.result
+description: ''
+properties: null
+
+-----
+
+[[$[[switch?
+  &get=`[[+template]]`
+  &c1=`2` &do1=`article.text`
+  &c2=`3` &do2=`article.video`
+  &c3=`4` &do3=`article.gallery`
+  &c4=`5` &do4=`article.link`
+  &c5=`6` &do5=`article.podcast`
+
+  &default=`article.text` 
+]]? &id=`[[+id]]`]]
