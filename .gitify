@@ -90,6 +90,9 @@ data:
   extension_packages:
     class: modExtensionPackage
     primary: namespace
+    exclude_keys:
+      - created_at
+      - updated_at
   
   dashboards:
     class: modDashboard
