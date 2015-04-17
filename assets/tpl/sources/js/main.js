@@ -1,14 +1,14 @@
-// import "_modernizr";
-// import "_garlic.min";
-// import "../bower_components/svg4everybody/svg4everybody";
+// import "_modernizr.js";
+// import "_garlic.min.js";
+// import "../bower_components/svg4everybody/svg4everybody.js";
 
-// import "../bower_components/fastclick/lib/fastclick";
+// import "../bower_components/fastclick/lib/fastclick.js";
 
-// import "../bower_components/foundation/js/foundation/foundation";
-// import "../bower_components/foundation/js/foundation/foundation.offcanvas";
+// import "../bower_components/foundation/js/foundation/foundation.js";
+// import "../bower_components/foundation/js/foundation/foundation.offcanvas.js";
 
-// import "../bower_components/masonry/dist/masonry.pkgd";
-// import "../bower_components/slick.js/slick/slick";
+// import "../bower_components/masonry/dist/masonry.pkgd.js";
+// import "../bower_components/slick.js/slick/slick.js";
 
 
 // Lighweight wrapper for console.log

@@ -1,0 +1,11 @@
+{
+	"version": 3,
+	"file": "fonts-woff2.css",
+	"sources": [
+		"../sources/scss/fonts-woff2.scss",
+		"../sources/scss/_font-roboto-woff2.scss"
+	],
+	"sourcesContent": [],
+	"mappings": "WCEI,YAAa,YACb,IAAs6gF,+6gFACt6gF,YAAa,IACb,WAAY,mBAKZ,YAAa,YACb,IAA01pB,m2pBAC11pB,YAAa,IACb,WAAY,mBAKZ,YAAa,YACb,IAA0otB,mptBAC1otB,YAAa,IACb,WAAY,mBAKZ,YAAa,YACb,IAA81tB,u2tBAC91tB,YAAa,IACb,WAAY",
+	"names": []
+}
