@@ -15,4 +15,15 @@ properties: 'a:0:{}'
     or
     <a href="/podcast/play/[[*podcast.number]]" onclick="openPlayer('[[*podcast.number]]');return false;">Play in Popup</a>
 </p>
-<div id="player"><i>Loading Player…</i></div>
+<div id="jwplayer-podcast-[[*podcast.number]]"><i>Loading Player…</i></div>
+<script>
+    window.jwp.push({
+        'id': 'jwplayer-podcast-[[*podcast.number]]',
+        'options': {
+            file: "[[++podcast_cdn]]podcast-episode-[[*podcast.number]].mp3",
+            width: '100%',
+            height: 35,
+            autostart: false
+        }
+    });
+</script>

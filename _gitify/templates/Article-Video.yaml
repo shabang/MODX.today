@@ -17,9 +17,25 @@ properties: 'a:0:{}'
                     <div class="[[++default_article_column_classnames]]">
                         [[$tpl.articleheader]]
                     </div>
+                    
+                    <div id="jwplayer-video-[[*id]]"><i>Loading Player…</i></div>
+                    <script>
+                        window.jwp.push({
+                            'id': 'jwplayer-video-[[*id]]',
+                            'options': {
+                                file: "[[*video.file]]",
+                                width: '100%',
+                                aspectratio: "16:9",
+                                autostart: false
+                            }
+                        });
+                    </script>
+
+[[-
                     <div class="flex-video widescreen">
                        <iframe class="lazyload" src="[[*home.embed]]?showinfo=0&theme=light&color=white&rel=0" frameborder="0" allowfullscreen></iframe>
                     </div>
+                ]]
                     [[*content]]
                 </main>
                 [[$tpl.articlefooter]]
@@ -37,15 +53,6 @@ properties: 'a:0:{}'
     [[$tpl.scripts]]
     <script>
         [[$loadJWPlayer]]
-        
-        function startPlayer(){
-            jwplayer("player").setup({
-                file: "[[++podcast_cdn]]podcast-episode-[[*podcast.number]].mp3",
-                width: '100%',
-                height: '35',
-                autostart: false,
-            });
-        }
 	</script>
 </body>
 </html>

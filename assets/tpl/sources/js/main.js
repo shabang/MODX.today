@@ -255,9 +255,17 @@ $(function(){
         $container.masonry({
             'stamp': '.fixed'
         });
+        
+        var masonry = $container.data('masonry');
 
         Foundation.utils.image_loaded($container.find('img'), function () {
-            $container.masonry();
+            masonry.layout();
+        });
+        
+        $(document).on('modxtoday.jwplayer.rendered', function(e){
+            setTimeout(function(){
+                masonry.layout();
+            },0);
         });
 
         addArticlesScrollHandler();
