@@ -22,21 +22,6 @@ MODx.load({
         labelAlign: 'top',
         items: [{
             xtype: 'radiogroup'
-            ,fieldLabel: 'Air Mode'
-            ,description: 'Air Mode'
-            ,name: 'inopt_air'
-            ,hiddenName: 'inopt_air'
-            ,columns: 1
-            ,items: [
-                {boxLabel: 'On', name: 'inopt_air', inputValue: '1'},
-                {boxLabel: 'Off', name: 'inopt_air', inputValue: '0'},
-                {boxLabel: 'Inherit', name: 'inopt_air', inputValue: 'inherit'}
-            ]
-            ,listeners: oc
-            ,value: params['air']
-            ,defaultValue: 'inherit'
-        },{
-            xtype: 'radiogroup'
             ,fieldLabel: 'Auto Resize'
             ,description: 'Auto Resize'
             ,name: 'inopt_autoresize'
@@ -172,21 +157,6 @@ MODx.load({
             ,defaultValue: 'inherit'
         },{
             xtype: 'radiogroup'
-            ,fieldLabel: 'Fullpage'
-            ,description: 'Fullpage'
-            ,name: 'inopt_fullpage'
-            ,hiddenName: 'inopt_fullpage'
-            ,columns: 1
-            ,items: [
-                {boxLabel: 'On', name: 'inopt_fullpage', inputValue: '1'},
-                {boxLabel: 'Off', name: 'inopt_fullpage', inputValue: '0'},
-                {boxLabel: 'Inherit', name: 'inopt_fullpage', inputValue: 'inherit'}
-            ]
-            ,listeners: oc
-            ,value: params['fullpage']
-            ,defaultValue: 'inherit'
-        },{
-            xtype: 'radiogroup'
             ,fieldLabel: 'Fullscreen Button'
             ,description: 'Fullscreen Button'
             ,name: 'inopt_buttonFullScreen'
@@ -229,21 +199,6 @@ MODx.load({
             ]
             ,listeners: oc
             ,value: params['toolbarFixed']
-            ,defaultValue: 'inherit'
-        },{
-            xtype: 'radiogroup'
-            ,fieldLabel: 'Toolbar Fixed Box'
-            ,description: 'Toolbar Fixed Box'
-            ,name: 'inopt_toolbarFixedBox'
-            ,hiddenName: 'inopt_toolbarFixedBox'
-            ,columns: 1
-            ,items: [
-                {boxLabel: 'On', name: 'inopt_toolbarFixedBox', inputValue: '1'},
-                {boxLabel: 'Off', name: 'inopt_toolbarFixedBox', inputValue: '0'},
-                {boxLabel: 'Inherit', name: 'inopt_toolbarFixedBox', inputValue: 'inherit'}
-            ]
-            ,listeners: oc
-            ,value: params['toolbarFixedBox']
             ,defaultValue: 'inherit'
         },{
             xtype: 'radiogroup'
@@ -292,21 +247,6 @@ MODx.load({
             ]
             ,listeners: oc
             ,value: params['noFollow']
-            ,defaultValue: 'inherit'
-        },{
-            xtype: 'radiogroup'
-            ,fieldLabel: 'Mobile'
-            ,description: 'Mobile'
-            ,name: 'inopt_mobile'
-            ,hiddenName: 'inopt_mobile'
-            ,columns: 1
-            ,items: [
-                {boxLabel: 'On', name: 'inopt_mobile', inputValue: 1},
-                {boxLabel: 'Off', name: 'inopt_mobile', inputValue: 0},
-                {boxLabel: 'Inherit', name: 'inopt_mobile', inputValue: 'inherit'}
-            ]
-            ,listeners: oc
-            ,value: params['mobile']
             ,defaultValue: 'inherit'
         },{
             xtype: 'radiogroup'
@@ -421,14 +361,6 @@ MODx.load({
             ,anchor: '100%'
         },{
             xtype: 'textarea'
-            ,fieldLabel: 'Air Buttons'
-            ,description: 'Air Buttons'
-            ,name: 'inopt_airButtons'
-            ,listeners: oc
-            ,value: params['airButtons']
-            ,anchor: '100%'
-        },{
-            xtype: 'textarea'
             ,fieldLabel: 'Buttons'
             ,description: 'Buttons'
             ,name: 'inopt_buttons'
@@ -458,21 +390,6 @@ MODx.load({
             ,listeners: oc
             ,value: params['mediasource']
             ,anchor: '100%'
-        },{
-            xtype: 'radiogroup'
-            ,fieldLabel: 'Image Tab Link'
-            ,description: 'Image Tab Link'
-            ,name: 'inopt_imageTabLink'
-            ,hiddenName: 'inopt_imageTabLink'
-            ,columns: 1
-            ,items: [
-                {boxLabel: 'On', name: 'inopt_imageTabLink', inputValue: '1'},
-                {boxLabel: 'Off', name: 'inopt_imageTabLink', inputValue: '0'},
-                {boxLabel: 'Inherit', name: 'inopt_imageTabLink', inputValue: 'inherit'}
-            ]
-            ,listeners: oc
-            ,value: params['imageTabLink']
-            ,defaultValue: 'inherit'
         },{
             xtype: 'textfield'
             ,fieldLabel: 'Image Upload Path'

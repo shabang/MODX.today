@@ -1,3 +1,14 @@
+New Features:
+ - New and updated plugins including Counter, Limiter, and TextExpander!
+ - New Modular API for greater plugin extensibility
+ - Updated to Redactor.js v10 to include Imperavi's many updates, improvements and fixes http://imperavi.com/redactor/log/
+  - All new Syntax Highlighter Support powered by the renowned Ace code editor!
+  - Updated jQuery to ~1.11.2
+ 
+ Depreciated:
+ - Air mode, iframe mode, xhtml mode, vym mode. For full details see http://imperavi.com/redactor/docs/whats-new-10/
+
+
 ++ Redactor 1.5.3-pl
 ++ Released on 2014-12-30
 ++++++++++++++++++++++++++

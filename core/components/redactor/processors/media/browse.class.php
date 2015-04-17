@@ -45,13 +45,14 @@ class RedactorMediaBrowserProcessor extends RedactorFileBrowserProcessor {
         }
         elseif($image['type'] == 'file') {
             $thumb = $this->modx->getOption('connectors_url') . 'system/phpthumb.php?'.urldecode($thumbQuery);
+            $extension = pathinfo($imageUrlAbsolute, PATHINFO_EXTENSION);
             $json = array(
-                'thumb' => ($this->dynamicThumbs) ? $thumb : $imageUrlAbsolute,
+                'thumb' => ($this->dynamicThumbs && (empty($extension) || in_array($extension, array('jpg','jpeg','png','gif')))) ? $thumb : $imageUrlAbsolute,
                 'image' => $imageUrlAbsolute,
                 'title' => $image['id'],
-                'extension' => pathinfo($imageUrlAbsolute, PATHINFO_EXTENSION),
+                'extension' => $extension,
                 'figcaption' => ($this->displayImageNames) ? true : null,
-                'filename' => pathinfo($imageUrlAbsolute, PATHINFO_FILENAME) . '.' . pathinfo($imageUrlAbsolute, PATHINFO_EXTENSION)
+                'filename' => pathinfo($imageUrlAbsolute, PATHINFO_FILENAME) . '.' . $extension
             );
             if ($this->browseRecursive) $json['folder'] = dirname($image['pathRelative']);
             $files[] = $json;

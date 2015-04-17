@@ -16,6 +16,7 @@ $_lang['contentblocks.link.email'] = "Email Address";
 $_lang['contentblocks.link.link_new_tab'] = "Open in new tab";
 $_lang['contentblocks.link.add'] = "Add Link";
 $_lang['contentblocks.link.remove'] = "Remove Link";
+$_lang['contentblocks.link.placeholder'] = "Start typing the name of a resource, external link or email address";
 $_lang['contentblocks.link.link_detection_pattern_override'] = 'Link detectection pattern override';
 $_lang['contentblocks.link.link_detection_pattern_override.description'] = 'Regex to detect whether a link is valid; if not, http:// will be prepended.';
 

@@ -20,10 +20,6 @@ class ContentBlocksInputsGetListProcessor extends modProcessor {
         $inputs = array();
         foreach ($this->modx->contentblocks->inputs as $name => $input) {
             /** @var cbBaseInput $input */
-            $topics = $input->getLexiconTopics();
-            foreach ($topics as $topic) {
-                $this->modx->lexicon->load($topic);
-            }
             $inputs[] = array(
                 'id' => $name,
                 'value' => $name,

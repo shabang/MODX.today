@@ -16,6 +16,7 @@ $_lang['contentblocks.link.email'] = "E-mailadres";
 $_lang['contentblocks.link.link_new_tab'] = "Open in nieuw tabblad";
 $_lang['contentblocks.link.add'] = "Link toevoegen";
 $_lang['contentblocks.link.remove'] = "Link verwijderen";
+$_lang['contentblocks.link.placeholder'] = "Start typing the name of a resource, external link or email address";
 $_lang['contentblocks.link.link_detection_pattern_override'] = 'Link detectie patroon override';
 $_lang['contentblocks.link.link_detection_pattern_override.description'] = 'RegEx om te detecteren of een link geldig is; mocht dat niet het geval zijn dan wordt http:// voor de koppeling geplaatst.';
 

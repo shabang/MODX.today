@@ -9,7 +9,7 @@
     <textarea class="description" placeholder="{%=_('contentblocks.description')%}">{%=o.description%}</textarea>
 
     <div class="contentblocks-field-text contentblocks-field-link-input">
-        <input type="text" id="{%=o.id%}_linkfield" class="linkfield" value="{%#o.link%}" data-link-type="{%=o.linkType%}">
+        <input type="text" id="{%=o.id%}_linkfield" class="linkfield" value="{%#o.link%}" data-link-type="{%=o.linkType%}" placeholder="{%=_('contentblocks.link.placeholder')%}">
     </div>
     
     <div class="contentblocks-field-gallery-uploading">

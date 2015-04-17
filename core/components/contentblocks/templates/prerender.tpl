@@ -94,7 +94,7 @@
 <div class="contentblocks-modal-field contentblocks-modal-field-link">
     <label for="setting-{%=o.reference%}">{%=o.title%}</label>
     <div class="contentblocks-setting-link">
-        <input type="text" class="linkfield" data-name="{%=o.reference%}" id="setting-{%=o.reference%}" value="{%=o.value%}">
+        <input type="text" class="linkfield" data-name="{%=o.reference%}" id="setting-{%=o.reference%}" value="{%=o.value%}" placeholder="{%=_('contentblocks.link.placeholder')%}">
     </div>
 </div>
 </script>
@@ -109,7 +109,7 @@
 <div class="contentblocks-modal-field contentblocks-modal-field-link">
     <label>{%=o.title%}</label>
     <div class="contentblocks-setting-link">
-        <input type="text" id="tinyrte-link" class="linkfield" value="{%=o.value%}">
+        <input type="text" id="tinyrte-link" class="linkfield" value="{%=o.value%}" placeholder="{%=_('contentblocks.link.placeholder')%}">
     </div>
     <div class="contentblocks-actions">
         <a href="javascript:void(0);" class="big contentblocks-field-button save-button">{%=_('contentblocks.save')%}</a>

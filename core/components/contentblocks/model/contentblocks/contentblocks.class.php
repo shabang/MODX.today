@@ -82,7 +82,7 @@ class ContentBlocks {
     /** @var modParser $normalParser */
     public $normalParser;
 
-    public $version = '1.2.2-pl';
+    public $version = '1.2.4-pl';
 
     /**
      * @param \modX $modx
@@ -242,7 +242,7 @@ class ContentBlocks {
             $fields[$key]['settings'] = $this->modx->fromJSON($fields[$key]['settings']);
             if (is_array($fields[$key]['settings'])) {
                 foreach ($fields[$key]['settings'] as $idx => $setting) {
-                    if($setting['process_tags']) {
+                    if(isset($setting['process_tags']) && $setting['process_tags']) {
                         $this->modx->parser->processElementTags('', $setting['fieldoptions']);
                     }
                     $fields[$key]['settings'][$idx]['fieldoptions'] = explode("\n", $setting['fieldoptions']);
@@ -597,7 +597,20 @@ class ContentBlocks {
             ));
             if (is_array($erp)) {
                 foreach ($erp as $msg) {
-                    if (is_array($msg)) $this->inputs = array_merge($this->inputs, $msg);
+                    if (is_array($msg)) {
+                        foreach ($msg as $key => $input) {
+                            if ($input instanceof cbBaseInput) {
+                                $this->inputs[$key] = $input;
+
+                                $topics = $input->getLexiconTopics();
+                                if (!empty($topics)) {
+                                    foreach ($topics as $topic) {
+                                        $this->modx->lexicon->load($topic);
+                                    }
+                                }
+                            }
+                        }
+                    }
                     else {
                         $this->modx->log(modX::LOG_LEVEL_ERROR,'[ContentBlocks] Expecting an array event output, got ' . gettype($msg) . ': ' . print_r($msg, true));
                     }

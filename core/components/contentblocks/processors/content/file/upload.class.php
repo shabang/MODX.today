@@ -113,8 +113,11 @@ class ContentBlocksFileUploadProcessor extends ContentBlocksImageUploadProcessor
             return $this->failure($errors);
         }
 
+        // clean up any double-slashes
+        $url = str_replace('//', '/', $this->source->getObjectUrl($this->path . $_FILES['file']['name']));
+
         return $this->success('', array(
-            'url' => $this->source->getObjectUrl($this->path . $_FILES['file']['name']),
+            'url' => $url,
             'filename' => $_FILES['file']['name'],
             'size' => $_FILES['file']['size'],
             'upload_date' => strtotime('now'),

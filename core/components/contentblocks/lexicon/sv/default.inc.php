@@ -16,6 +16,7 @@ $_lang['contentblocks.link.email'] = "E-postadress";
 $_lang['contentblocks.link.link_new_tab'] = "Öppna i ny flik";
 $_lang['contentblocks.link.add'] = "Lägg till länk";
 $_lang['contentblocks.link.remove'] = "Ta bort länk";
+$_lang['contentblocks.link.placeholder'] = "Start typing the name of a resource, external link or email address";
 $_lang['contentblocks.link.link_detection_pattern_override'] = 'Åsidosättande av länk detektionsmönster';
 $_lang['contentblocks.link.link_detection_pattern_override.description'] = 'Regex för att upptäcka om en länk är giltig; om inte, kommer http:// att infogas i början.';
 

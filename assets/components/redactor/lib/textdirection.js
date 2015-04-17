@@ -1,24 +1,31 @@
-(function($, RedactorPlugins) {
-    RedactorPlugins.textdirection = {
-        init: function()
-        {
-            var that = this;
-            var dropdown = {};
+if (!RedactorPlugins) var RedactorPlugins = {};
 
-            dropdown['ltr'] = { title: 'Left to right', callback: function () { that.ltrTextDirection(); } };
-            dropdown['rtl'] = { title: 'Right to left', callback: function () { that.rtlTextDirection(); } };
+(function($)
+{
+	RedactorPlugins.textdirection = function()
+	{
+		return {
+			init: function()
+			{
+				var that = this;
+				var dropdown = {};
 
-            this.buttonAdd('direction', 'Change direction', false, dropdown);
-        },
-        rtlTextDirection: function()
-        {
-            this.bufferSet();
-            this.blockSetAttr('dir', 'rtl');
-        },
-        ltrTextDirection: function()
-        {
-            this.bufferSet();
-            this.blockRemoveAttr('dir');
-        }
-    };
-})(jQuery, window.RedactorPlugins || {});
+				dropdown.ltr = { title: 'Left to Right', func: that.textdirection.setLtr };
+				dropdown.rtl = { title: 'Right to Left', func: that.textdirection.setRtl};
+
+				var button = this.button.add('textdirection', 'Change Text Direction');
+				this.button.addDropdown(button, dropdown);
+			},
+			setRtl: function()
+			{
+				this.buffer.set();
+				this.block.setAttr('dir', 'rtl');
+			},
+			setLtr: function()
+			{
+				this.buffer.set();
+				this.block.removeAttr('dir');
+			}
+		};
+	};
+})(jQuery);

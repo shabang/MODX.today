@@ -60,15 +60,17 @@ switch ($modx->event->name) {
 
         if ($modx->controller && !($modx->controller instanceof modManagerControllerDeprecated)) {
             $modx->controller->addLexiconTopic('redactor:default');
-            $modx->controller->addCSS($redactor->config['assetsUrl'].'redactor-1.5.3.min.css');
+            $modx->controller->addCSS($redactor->config['assetsUrl'].'redactor-1.6.0.min.css');
             if($redactor->degradeUI) $modx->controller->addCSS($redactor->config['assetsUrl'].'buttons-legacy.min.css');
             if($redactor->rebeccaDay) $modx->controller->addCSS($redactor->config['assetsUrl'].'rebecca.min.css');
+            $modx->controller->addJavascript('https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js');
         }
         else {
             $modx->lexicon->load('redactor:default');
-            $modx->regClientCSS($redactor->config['assetsUrl'].'redactor-1.5.3.min.css');
+            $modx->regClientCSS($redactor->config['assetsUrl'].'redactor-1.6.0.min.css');
             if($redactor->degradeUI) $modx->regClientCSS($redactor->config['assetsUrl'].'buttons-legacy.min.css');
             if($redactor->rebeccaDay) $modx->regClientCSS($redactor->config['assetsUrl'].'rebecca.min.css');
+            if($redactor->loadAce) $modx->controller->regClientStartupScript('https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js');
         }
 
         if (isset($resource) && $resource instanceof modResource) {

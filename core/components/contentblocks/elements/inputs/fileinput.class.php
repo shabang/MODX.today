@@ -53,7 +53,7 @@ class fileInput extends cbBaseInput {
                 'key' => 'directory',
                 'fieldLabel' => $this->modx->lexicon('contentblocks.file.directory'),
                 'xtype' => 'textfield',
-                'default' => 'assets/uploads/files',
+                'default' => $this->modx->getOption('contentblocks.image.upload_path', null, 'assets/uploads/files/'),
                 'description' => $this->modx->lexicon('contentblocks.file.directory.description')
             ),
             array(

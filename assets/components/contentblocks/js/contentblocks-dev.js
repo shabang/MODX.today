@@ -5046,7 +5046,9 @@ var vcJquery = $.noConflict();
 
 
             setTimeout(function() {
-                $('#modx-panel-resource').parent().animate({scrollTop: newElementPosition.top - 50});
+                // make auto-scroll go to whatever's at the top. keeps scrolling from being really weird.
+                scrollPosition = (newElementPosition.top > newTargetPosition.top) ? newElementPosition.top : newTargetPosition.top;
+                $('#modx-panel-resource').parent().animate({scrollTop: scrollPosition - 50});
             }, 600);
         },
 

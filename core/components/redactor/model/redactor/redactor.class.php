@@ -35,6 +35,10 @@ class Redactor {
      */
     public $assetsLoaded = false;
     /**
+     * @var string Redactors asset url
+     */
+    public $assetsUrl = false;
+    /**
      * @var bool True in MODX version is less than 2.3.0-pl
      */
     public $degradeUI = false;
@@ -42,6 +46,10 @@ class Redactor {
      * @var bool Whether or not it's Rebecca Meyer's Birthday #rebeccapurple
      */
     public $rebeccaDay = false;
+    /**
+     * @var bool Whether or not to load ace javascript code editor
+     */
+    public $loadAce = true;
 
     /**
      * @param modX $modx
@@ -51,22 +59,23 @@ class Redactor {
         $this->modx =& $modx;
 
         $corePath = $this->modx->getOption('redactor.core_path',$config,$this->modx->getOption('core_path').'components/redactor/');
-        $assetsUrl = $this->modx->getOption('redactor.assets_url',$config,$this->modx->getOption('assets_url').'components/redactor/');
+        $this->assetsUrl = $this->modx->getOption('redactor.assets_url',$config,$this->modx->getOption('assets_url').'components/redactor/');
 
         $this->config = array_merge(array(
             'corePath' => $corePath,
             'templatePath' => $corePath.'templates/',
-            'assetsUrl' => $assetsUrl,
-            'connectorUrl' => $assetsUrl . 'connector.php'
+            'assetsUrl' => $this->assetsUrl,
+            'connectorUrl' => $this->assetsUrl . 'connector.php'
         ),$config);
         
-        $this->version = new VersionObject(1, 5, 3, 'pl');
+        $this->version = new VersionObject(1, 6, 0, 'dev5');
 
         $this->modx->lexicon->load('redactor:default');
         
         $vd = $this->modx->getVersionData();
         $this->degradeUI = (bool)(version_compare($vd['full_version'],'2.3.0-pl') === -1);
         $this->rebeccaDay = (bool)((bool)($this->modx->getOption('redactor.commemorateRebecca', null, false)) && date('m') == '06' && (date('d') == '07'));
+        $this->loadAce = (bool)$this->modx->getOption('redactor.plugin_syntax', null,true);
     }
 
     /**
@@ -75,7 +84,7 @@ class Redactor {
      * @return array
      */
     public function getGlobalOptions() {
-        $options = array();
+        $options = array('assetsUrl' => $this->assetsUrl);
 
         /**
          * Options related to the display of Redactor
@@ -86,8 +95,6 @@ class Redactor {
 
         $options['minHeight'] = (int)$this->modx->getOption('redactor.minHeight', null, 200);
         $options['autoresize'] = (bool)$this->modx->getOption('redactor.autoresize', null,true);
-        $options['modalOverlay'] = (bool)$this->modx->getOption('redactor.modalOverlay', null, true);
-        $options['wym'] = (bool)$this->modx->getOption('redactor.wym', null, false);
         $options['linkAnchor'] = (bool)$this->modx->getOption('redactor.linkAnchor', null, false);
         $options['linkEmail'] = (bool)$this->modx->getOption('redactor.linkEmail', null, false);
         $options['placeholder'] = (bool)$this->modx->getOption('redactor.placeholder', null, false, true);
@@ -97,13 +104,8 @@ class Redactor {
         $buttons = str_replace('fontcolor','',$buttons);
         $buttons = str_replace('backcolor','',$buttons);
         $options['buttons'] = $this->explode($buttons);
-        $options['air'] = (bool)$this->modx->getOption('redactor.air', null, false);
-        $airButtons = $this->modx->getOption('redactor.airButtons', null, 'formatting,bold,italic,deleted,unorderedactorlist,orderedactorlist,outdent,indent');
-        $airButtons = str_replace('fontcolor','',$airButtons);
-        $airButtons = str_replace('backcolor','',$airButtons);
-        $options['airButtons'] = $this->explode($airButtons);
+
         $options['buttonSource'] = (bool)$this->modx->getOption('redactor.buttonSource', null,true);
-        $options['observeLinks'] = (bool)$this->modx->getOption('redactor.observeLinks', null,false);
         $options['linkNofollow'] = (bool)$this->modx->getOption('redactor.linkNofollow', null,false);
 
         $options['formattingTags'] = $this->explode($this->modx->getOption('redactor.formattingTags', null, 'p,blockquote,pre,h1,h2,h3,h4'));
@@ -112,62 +114,66 @@ class Redactor {
         $options['typewriter'] = (bool)$this->modx->getOption('redactor.typewriter', null,false);
         $options['buttonsHideOnMobile'] = $this->modx->getOption('redactor.buttonsHideOnMobile', null,'');
         $options['toolbarOverflow'] = (bool)$this->modx->getOption('redactor.toolbarOverflow', null,false);
-        $options['toolbarFixed'] = (bool)$this->modx->getOption('redactor.toolbarFixed', null,true);
-        $options['toolbarFixedBox'] = (bool)$this->modx->getOption('redactor.toolbarFixedBox', null,true);
+        $options['toolbarFixed'] = (bool)$this->modx->getOption('redactor.toolbarFixed', null,false);
         $options['toolbarFixedTarget'] = $this->modx->getOption('redactor.toolbarFixedTarget', null, '#modx-content > .x-panel-bwrap > .x-panel-body');
-        $options['imageTabLink'] = (bool)$this->modx->getOption('redactor.imageTabLink', null,true);
+        
+        $options['focus'] = (bool)$this->modx->getOption('redactor.focus', null,false);
+        $options['focusEnd'] = (bool)$this->modx->getOption('redactor.focusEnd', null,false);
+        $options['scrollTarget'] = $this->modx->getOption('redactor.scrollTarget', null,'');
+        $options['enterKey'] = (bool)$this->modx->getOption('redactor.enterKey', null,true);
+        $options['cleanStyleOnEnter'] = (bool)$this->modx->getOption('redactor.cleanStyleOnEnter', null,false);
+        $options['linkTooltip'] = (bool)$this->modx->getOption('redactor.linkTooltip', null,true);
+        $options['imageLink'] = (bool)$this->modx->getOption('redactor.imageResizable', null,true);
+        $options['imagePosition'] = (bool)$this->modx->getOption('redactor.imagePosition', null,true);
+        $options['buttonsHide'] = $this->modx->getOption('redactor.buttonsHide', null,'');
+        $options['buttonsHideOnMobile'] = $this->modx->getOption('redactor.buttonsHideOnMobile', null,'');
 
         /**
          * Options related to underlying display stuff
          */
-        $options['iframe'] = (bool)$this->modx->getOption('redactor.iframe', null,false);
-        $css = $this->modx->getOption('redactor.css', null, $this->modx->getOption('editor_css_path'), true);
-        if ($options['iframe']) {
-            $options['css'] = isset($css) ? $css : $this->parsePathVariables($this->modx->getOption('assets_url')) . 'components/redactor/redactor-iframe.css';
-            $options['baseURL'] = $this->modx->getOption('site_url',null,'');
-        } else {
-            if($css) $this->modx->regClientCSS($this->parsePathVariables($css));
-        }
         $options['tabindex'] = (int)$this->modx->getOption('redactor.tabindex', null, '');
-        $options['shortcuts'] = (bool)$this->modx->getOption('redactor.shortcuts', null,true);
-        $options['mobile'] = (bool)$this->modx->getOption('redactor.mobile', null, true);
+        if((bool)$this->modx->getOption('redactor.shortcuts', null,true) === false )$options['shortcuts'] = false;
         $options['linkProtocol'] = $this->modx->getOption('redactor.linkProtocol', null, 'http://');
         if (empty($options['linkProtocol'])) $options['linkProtocol'] = false;
         $options['prefetch_ttl'] = $this->modx->getOption('redactor.prefetch_ttl', null, '86400000');
         //$options['imageFloatMargin'] = $this->modx->getOption('redactor.imageFloatMargin', null, '10px');
         $options['tabSpaces'] = (bool)$this->modx->getOption('redactor.tabSpaces', null, false);
+        
+        $options['tabifier'] = (bool)$this->modx->getOption('redactor.buttonsHideOnMobile', null,false);
 
         /**
          * Options related to processing the inputs
          */
         $options['allowedTags'] = $this->explode($this->modx->getOption('redactor.allowedTags', null, false, true));
-        $options['boldTag'] = $this->modx->getOption('redactor.boldTag', null, 'strong');
         $options['cleanup'] = (bool)$this->modx->getOption('redactor.cleanup', null, true);
         $options['convertDivs'] = (bool)$this->modx->getOption('redactor.convertDivs', null, true);
         $options['convertLinks'] = (bool)$this->modx->getOption('redactor.convertLinks', null, true);
         $options['deniedTags'] = $this->explode($this->modx->getOption('redactor.deniedTags', null, false, true));
-        $options['formattingPre'] = (bool)$this->modx->getOption('redactor.formattingPre', null, false);
-        $options['italicTag'] = $this->modx->getOption('redactor.italicTag', null, 'em');
         $options['linebreaks'] = (bool)$this->modx->getOption('redactor.linebreaks', null, false);
         $options['paragraphy'] = (bool)$this->modx->getOption('redactor.paragraphy', null, true);
-        $options['tidyHtml'] = (bool)$this->modx->getOption('redactor.tidyHtml', null, true);
         $options['linkSize'] = (bool)$this->modx->getOption('redactor.linkSize', null, 50);
         $options['advAttrib'] = (bool)$this->modx->getOption('redactor.advAttrib', null, false);
         $options['cleanSpaces'] = (bool)$this->modx->getOption('redactor.cleanSpaces', null, true);
-        $options['predefinedLinks'] = $this->parsePathVariables($this->modx->getOption('redactor.predefinedLinks', null, ''));
-        $options['shortcutsAdd'] = $this->modx->getOption('redactor.shortcutsAdd', null, '');
+        $options['definedLinks'] = $this->parsePathVariables($this->modx->getOption('redactor.predefinedLinks', null, '')); // #predefinedLinks
+        
+        if(!empty($this->modx->getOption('redactor.replaceTags', null,'')))  $options['replaceTags'] = $this->modx->getOption('redactor.replaceTags', null,'');
+        if(!empty($this->modx->getOption('redactor.replaceStyles', null,''))) $options['replaceStyles'] = $this->modx->getOption('redactor.replaceStyles', null,'');
+        $options['removeDataAttr'] = (bool)$this->modx->getOption('redactor.removeDataAttr', null,false);
+        if(!empty($this->modx->getOption('redactor.removeAttr', null,''))) $options['removeAttr'] = $this->modx->getOption('redactor.removeAttr', null,'');
+        if(!empty($this->modx->getOption('redactor.allowedAttr', null,''))) $options['allowedAttr'] = $this->modx->getOption('redactor.allowedAttr', null,'');
+        $options['replaceDivs'] = (bool)$this->modx->getOption('redactor.replaceDivs', null,true);
+        $options['preSpaces'] = is_numeric($this->modx->getOption('redactor.preSpaces', null,'4')) ? $this->modx->getOption('redactor.preSpaces', null,'4') : false;
 
         /**
          * File/image uploads and handling
          */
         $options['uploadFields'] = $this->modx->getOption('redactor.uploadFields', null, '');
-        $options['observeImages'] = (bool)$this->modx->getOption('redactor.observeImages', null, true);
         $options['autosave'] = (bool)$this->modx->getOption('redactor.autosave', null, false);
         $options['interval'] = (int)$this->modx->getOption('redactor.interval', null, 60);
 
         $resource = ($this->resource > 0) ? '&resource='.$this->resource : '';
-        $options['fileGetJson'] = $this->config['connectorUrl'] . '?action=media/browsefiles&HTTP_MODAUTH=' . $this->modx->user->getUserToken('mgr').$resource;
-        $options['imageGetJson'] = $this->config['connectorUrl'] . '?action=media/browse&HTTP_MODAUTH=' . $this->modx->user->getUserToken('mgr').$resource;
+        $options['fileManagerJson'] = $this->config['connectorUrl'] . '?action=media/browsefiles&HTTP_MODAUTH=' . $this->modx->user->getUserToken('mgr').$resource;
+        $options['imageManagerJson'] = $this->config['connectorUrl'] . '?action=media/browse&HTTP_MODAUTH=' . $this->modx->user->getUserToken('mgr').$resource;
         $options['imageUpload'] = $this->config['connectorUrl'] . '?action=media/uploadimage&HTTP_MODAUTH=' . $this->modx->user->getUserToken('mgr').$resource;
         $options['fileUpload']  = $this->config['connectorUrl'] . '?action=media/upload&HTTP_MODAUTH=' . $this->modx->user->getUserToken('mgr').$resource;
 
@@ -180,13 +186,30 @@ class Redactor {
         $options['browseFiles'] = (bool)$this->modx->getOption('redactor.browse_files', null, false);
         $options['searchImages'] = (bool)$this->modx->getOption('redactor.searchImages', null, false);
 
-        $options['fullpage'] = (bool)$this->modx->getOption('redactor.fullpage', null, false);
         $options['dragUpload'] = (bool)$this->modx->getOption('redactor.dragUpload', null, false);
         $options['convertImageLinks'] = (bool)$this->modx->getOption('redactor.convertImageLinks', null, false);
         $options['convertVideoLinks'] = (bool)$this->modx->getOption('redactor.convertVideoLinks', null, false);
+        
+        $options['dragImageUpload'] = (bool)$this->modx->getOption('redactor.allowedAttr', null,true);
+        $options['dragFileUpload'] = (bool)$this->modx->getOption('redactor.dragFileUpload', null,true);
+        
+        $options['imageEditable'] = (bool)$this->modx->getOption('redactor.imageEditable', null,true);
+        $options['imageResizable'] = (bool)$this->modx->getOption('redactor.imageResizable', null,true);
+        
+        $options['limiter'] = (bool)$this->modx->getOption('redactor.limiter', null,false);
+        
+        $options['textexpander'] = ($this->modx->getOption('redactor.textexpander', null, ''));
+        
+        $options['speechVoice'] = ($this->modx->getOption('redactor.speechVoice', null, 'Vicki'));
+        $options['speechRate'] = ($this->modx->getOption('redactor.speechRate', null, 1));
+        $options['speechPitch'] = ($this->modx->getOption('redactor.speechPitch', null, 1));
+        $options['speechVolume'] = ($this->modx->getOption('redactor.speechVolume', null, 1));
+        $options['counterWPM'] = ($this->modx->getOption('redactor.counterWPM', null, 275));
 
         $clipsJson = $this->modx->getOption('redactor.clipsJson', null, '');
         $stylesJson = $this->modx->getOption('redactor.stylesJson',null,'');
+        $formattingAddJson = $this->modx->getOption('redactor.formattingAdd', null,'');
+        $shortcutsAddJson = $this->modx->getOption('redactor.shortcutsAdd', null, '');
 
          // make it picky and not breaky
         if($this->modx->fromJSON($clipsJson)) {
@@ -195,16 +218,68 @@ class Redactor {
         if($this->modx->fromJSON($stylesJson)) {
             $options['stylesJson'] = $stylesJson;
         }
+        if($this->modx->fromJSON($formattingAddJson)) {
+            $options['formattingAdd'] = $formattingAddJson;
+        }
+        
+        if($this->modx->fromJSON($shortcutsAddJson)) {
+            $options['shortcutsAdd'] = $shortcutsAddJson;
+        }        
 
         $plugins = array();
-        if($this->modx->getOption('redactor.buttonFullScreen',null, true)) $plugins[] = 'fullscreen';
-        if(isset($options['clipsJson'])) $plugins[] = 'clips';
-        if(isset($options['stylesJson'])) $plugins[] = 'styles';
+        $pluginFiles = array($this->assetsUrl . "lib/typeahead.js");
+        
+        if($this->modx->getOption('redactor.buttonFullScreen',null, true)) {
+            $plugins[] = 'fullscreen';
+            $pluginFiles[] = $this->assetsUrl . 'lib/fullscreen.js';
+        }
+        
+        if(!empty($this->modx->getOption('redactor.predefinedLinks',null, ''))) {
+            $plugins[] = 'definedlinks';
+            $pluginFiles[] = $this->assetsUrl . 'lib/definedlinks.js';
+        }
+        
+        if(!empty($this->modx->getOption('redactor.textexpander',null, ''))) {
+            $plugins[] = 'textexpander';
+            $pluginFiles[] = $this->assetsUrl . 'lib/textexpander.js';
+        }
+        
+        if((bool)$this->modx->getOption('redactor.wym', null,false)) {
+            $plugins[] = 'wym';
+        }
 
         $options['plugin_files'] = '';
 
-        $pluginFiles = array();
+        if(isset($options['clipsJson'])) {
+            $plugins[] = 'clips';
+            $pluginFiles[] = $this->assetsUrl . 'lib/clips.js';
+        }
+        if(isset($options['stylesJson'])) {
+            $plugins[] = 'styles';
+            $pluginFiles[] = $this->assetsUrl . 'lib/styles.js';
+        }
+        
+        if($this->loadAce) {
+            $plugins[] = 'syntax'; 
+            $pluginFiles[] = $this->assetsUrl . 'lib/syntax.js';
+            $options['aceTheme'] = ($this->modx->getOption('redactor.syntax_aceTheme', null, 'ace/theme/monokai'));
+            $options['aceMode'] = ($this->modx->getOption('redactor.syntax_aceMode', null, 'ace/mode/html'));
+        }
 
+        // 3pc plugins we allow to be easily included via system settings
+        $ps = array('counter','filemanager','fontcolor','fontfamily','fontsize','imagemanager','limiter','table','textdirection','video','speek','contrast','download','zoom');
+        foreach($ps as $p) {
+            if((bool)$this->modx->getOption("redactor.plugin_$p", null, false)) {
+                $pluginFiles[] = $this->assetsUrl . "lib/$p.js";
+                $plugins[] = $p;
+            }
+        }
+        
+        if((bool)$this->modx->getOption('redactor.plugin_replacer', null, true)) {
+            $pluginFiles[] = $this->assetsUrl . 'lib/replacer.js';
+            $plugins[] = 'replacer';
+        }
+        
         $additionalPlugins = $this->explode($this->modx->getOption('redactor.additionalPlugins', null, ''));
         if (!empty($additionalPlugins)) {
             foreach ($additionalPlugins as $pluginDefinition) {
@@ -213,6 +288,9 @@ class Redactor {
                 if (isset($pluginDefinition[1])) $pluginFiles[] = implode(':', array_slice($pluginDefinition,1 ));
             }
         }
+        
+        $plugins = array_unique($plugins);
+        $plugins = array_filter(array_map('trim',$plugins));
 
         if (!empty($pluginFiles)) {
             foreach ($pluginFiles as $file) {
@@ -220,8 +298,8 @@ class Redactor {
             }
         }
         
-        $options['toolbarFixedTopOffset'] = ($this->degradeUI) ? 78 : 55; 
-
+        //$options['toolbarFixedTopOffset'] = ($this->degradeUI) ? 78 : 55; 
+        $plugins[] = 'modmore';
         if(count($plugins) > 0) $options['plugins'] = $plugins;
         return $options;
     }
@@ -232,10 +310,11 @@ class Redactor {
     public function initialize() {
         if (!$this->assetsLoaded) {
             $this->modx->controller->addLexiconTopic('redactor:default');
-            $this->modx->controller->addCSS($this->config['assetsUrl'].'redactor-1.5.3.min.css');
+            $this->modx->controller->addCSS($this->config['assetsUrl'].'redactor-1.6.0.min.css');
             if($this->degradeUI) $this->modx->controller->addCSS($this->config['assetsUrl'].'buttons-legacy.min.css');
             if($this->rebeccaDay) $this->modx->controller->addCSS($this->config['assetsUrl'].'rebecca.min.css');
-            $this->modx->controller->addJavascript($this->config['assetsUrl'].'redactor-1.5.3.min.js');
+            $this->modx->controller->addJavascript($this->config['assetsUrl'].'redactor-1.6.0.min.js');
+            if($this->loadAce) $this->modx->controller->addJavascript('https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js');
         }
         $this->assetsLoaded = true;
     }
@@ -410,6 +489,33 @@ class Redactor {
                 'alias' => $resource->get('alias'),
                 'context_key' => $resource->get('context_key')
             ));
+            if((bool)$this->modx->getOption('redactor.parse_parent_path',null,true) && $parent = $resource->getOne('Parent')) {
+                $this->setPathVariables(array(
+                    'parent' => $parent->get('id'),
+                    'parent_alias' => $parent->get('alias'),
+                ));
+                $pids = $this->modx->getParentIds($resource->get('id'), (int)$this->modx->getOption('redactor.parse_parent_path_height', null,10), array('context' => $resource->get('context_key')));
+                $ultimateParent = $this->modx->getObject('modResource', $pids[count($pids)-2]);
+
+                if(isset($ultimateParent)) {
+                    $this->setPathVariables(array(
+                        'ultimate_parent' => $ultimateParent->get('id'),
+                        'ultimate_alias' => $ultimateParent->get('alias'),
+                    ));
+                } else {
+                    $this->setPathVariables(array(
+                        'ultimate_parent' => '',
+                        'ultimate_alias' => ''
+                    ));
+                }
+            } else {
+                $this->setPathVariables(array(
+                    'parent' => '',
+                    'alias' => '',
+                    'ultimate_parent' => '',
+                    'ultimate_alias' => ''
+                ));
+            }
         }
     }
 

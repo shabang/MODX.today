@@ -15,6 +15,8 @@ class RedactorResourcePrefetchProcessor extends modObjectGetListProcessor {
      * @return xPDOQuery
      */
     public function prepareQueryBeforeCount(xPDOQuery $c) {
+        $this->includeIntrotext = $this->modx->getOption('redactor.typeahead.include_introtext', null, true);
+        
         $c->where(array(
             'parent' => 0,
             'published' => true,
@@ -24,10 +26,9 @@ class RedactorResourcePrefetchProcessor extends modObjectGetListProcessor {
         $c->select($this->modx->getSelectColumns('modResource', 'modResource', '', array(
             'id',
             'pagetitle',
-            'introtext'
+            ($this->includeIntrotext) ? 'introtext' : null,
+            'context_key'
         )));
-
-        $this->includeIntrotext = $this->modx->getOption('redactor.typeahead.include_introtext', null, true);
 
         return $c;
     }

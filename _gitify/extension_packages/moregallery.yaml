@@ -4,5 +4,5 @@ name: moregallery
 path: '[[++core_path]]components/moregallery/'
 service_class: moreGallery
 service_name: moregallery
-created_at: null
+created_at: '2015-04-17 17:36:46'
 updated_at: '2015-02-26 11:38:21'

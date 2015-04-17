@@ -1,3 +1,24 @@
+++ ContentBlocks 1.2.4-pl
+++ Released on 2015-03-30
+++++++++++++++++++++++++++
+- Fix issue processing table inputs with only one row (#268)
+- Make sure lexicon topics are always loaded for custom input types
+- Make sure the resource is set when rebuilding content
+- Fix default upload directory values not inheriting from the contentblocks.image.upload_path system setting
+- Fix source override not being applied in file input
+- Prevent E_NOTICE error when parsing settings
+
+++ ContentBlocks 1.2.3-pl
+++ Released on 2015-02-17
+++++++++++++++++++++++++++
+- Fix missing upload progress bar on file input
+- Allow categories to be specified by name on chunk selector
+- Allow using "/" in upload fields to place files at the root of a media source
+- Add instructional placeholder to link fields
+- Fix bug where nested repeaters created rows in their parent repeaters
+- Hide "Add item" button on repeater when limit reached
+- Allow code as a target field type for defaults
+
 ++ ContentBlocks 1.2.2-pl
 ++ Released on 2015-01-30
 ++++++++++++++++++++++++++

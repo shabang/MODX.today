@@ -143,8 +143,11 @@ class ContentBlocksImageUploadProcessor extends modProcessor {
         // Make sure the connection closes for sites with keep-alive enabled
         header("Connection: close");
 
+        // clean up any double-slashes
+        $url = str_replace('//', '/', $this->source->getObjectUrl($this->path . $_FILES['file']['name']));
+
         return $this->success('', array(
-            'url' => $this->source->getObjectUrl($this->path . $_FILES['file']['name']),
+            'url' => $url,
             'size' => $_FILES['file']['size'],
             'extension' => $fileExtension,
         ));

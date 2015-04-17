@@ -16,6 +16,7 @@ $_lang['contentblocks.link.email'] = "E-Mail-Adresse";
 $_lang['contentblocks.link.link_new_tab'] = "In neuem Tab öffnen";
 $_lang['contentblocks.link.add'] = "Link hinzufügen";
 $_lang['contentblocks.link.remove'] = "Link entfernen";
+$_lang['contentblocks.link.placeholder'] = "Start typing the name of a resource, external link or email address";
 $_lang['contentblocks.link.link_detection_pattern_override'] = 'Link-Erkennungsmuster überschreiben';
 $_lang['contentblocks.link.link_detection_pattern_override.description'] = 'Regex um festzustellen, ob ein Link gültig ist; falls nicht, wird http:// vorangestellt.';
 
@@ -453,7 +454,7 @@ $_lang['setting_contentblocks.image.prefix_time_desc'] = "Wenn aktiviert, wird h
 $_lang['setting_contentblocks.image.sanitize'] = "Säubern";
 $_lang['setting_contentblocks.image.sanitize_desc'] = "Wenn aktiviert, werden hochgeladene Dateinamen vor dem Upload gesäubert, um sicherzustellen, dass keine problematischen Zeichen enthalten sind. Die Säuberung unterstützt auch Transliteration mit iconv oder Transliterationsbibliotheken von Fremdherstellern.";
 
-$_lang['setting_contentblocks.image.source'] = "Quellcode";
+$_lang['setting_contentblocks.image.source'] = "Medienquelle";
 $_lang['setting_contentblocks.image.source_desc'] = "Wählen Sie die Medienquelle, die für Bild- und Galerie-Eingabetypen verwendet werden soll. Sie kann auf Feld-Ebene überschieben werden.";
 
 $_lang['setting_contentblocks.image.upload_path'] = "Upload-Pfad";

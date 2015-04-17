@@ -525,7 +525,8 @@
                 },
                 allowedFileTypes: data.properties.file_types,
                 hideFiles: true,
-                title: _('contentblocks.file.choose_file')
+                title: _('contentblocks.file.choose_file'),
+                source: input.source
             });
             this.fileBrowser.setSource(input.source);
 

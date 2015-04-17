@@ -1,10 +1,10 @@
 (function ($, ContentBlocks) {
     ContentBlocks.fieldTypes.repeater = function(dom, data) {
-
         var group = Ext.decode(data.properties.group),
             wrapper = dom.find('.contentblocks-repeater-wrapper'),
             emptyRowTmpl = tmpl('contentblocks-repeater-item'),
-            maxItems = (data.properties && data.properties.max_items) ? data.properties.max_items : 0;
+            maxItems = (data.properties && data.properties.max_items) ? data.properties.max_items : 0,
+            buttons = wrapper.next('.contentblocks-field-actions-bottom');
 
         var input = {
             init: function () {
@@ -17,7 +17,7 @@
                     this.addRow();
                 }
 
-                dom.on('click', '.contentblocks-repeater-add-item', input.addEmptyRow);
+                buttons.on('click', '.contentblocks-repeater-add-item', input.addEmptyRow);
                 dom.on('click', '.contentblocks-repeater-delete-row', input.deleteRow);
                 dom.on('click', '.contentblocks-repeater-expanded', function() {
                     $(this).removeClass('contentblocks-repeater-expanded').addClass('contentblocks-repeater-collapsed').text('+').closest('.contentblocks-field-repeater').children('.contentblocks-repeater-wrapper').slideUp(300, function() {
@@ -62,6 +62,12 @@
 
             deleteRow: function() {
                 $(this).closest('.contentblocks-repeater-row').remove();
+                if (maxItems > 0) {
+                    var currentItems = wrapper.children().length;
+                    if(currentItems == (maxItems - 1)) {
+                        buttons.find('.contentblocks-repeater-add-item').show();
+                    }
+                }
             },
 
             addEmptyRow: function() {
@@ -99,6 +105,13 @@
                     });
                 });
                 wrapper.append(newRow);
+
+                if (maxItems > 0) {
+                    var currentItems = wrapper.children().length;
+                    if(currentItems == maxItems) {
+                        buttons.find('.contentblocks-repeater-add-item').hide();
+                    }
+                }
                 ContentBlocks.fixColumnHeights();
             },
 

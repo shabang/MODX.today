@@ -16,6 +16,7 @@ $_lang['contentblocks.link.email'] = "Adresse email";
 $_lang['contentblocks.link.link_new_tab'] = "Ouvrir dans un nouvel onglet";
 $_lang['contentblocks.link.add'] = "Ajouter un lien";
 $_lang['contentblocks.link.remove'] = "Supprimer le lien";
+$_lang['contentblocks.link.placeholder'] = "Start typing the name of a resource, external link or email address";
 $_lang['contentblocks.link.link_detection_pattern_override'] = '"Surcharge" de pattern de détection de lien';
 $_lang['contentblocks.link.link_detection_pattern_override.description'] = 'Regex pour détecter si un lien est valide ; Si ce n\'est pas le cas, http:// va être ajouté au début.';
 

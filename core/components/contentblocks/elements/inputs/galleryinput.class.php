@@ -88,7 +88,7 @@ class GalleryInput extends cbBaseInput {
                 'key' => 'directory',
                 'fieldLabel' => $this->modx->lexicon('contentblocks.directory'),
                 'xtype' => 'textfield',
-                'default' => 'assets/uploads/galleries',
+                'default' => $this->modx->getOption('contentblocks.image.upload_path', null, 'assets/uploads/images/'),
                 'description' => $this->modx->lexicon('contentblocks.directory.description')
             ),
             array(

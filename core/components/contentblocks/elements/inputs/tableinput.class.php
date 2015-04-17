@@ -123,28 +123,47 @@ class TableInput extends cbBaseInput {
     
     public function cleanRows($rows) {
         // get rid of last row, because it's (probably) always empty. Test that first.
-        if(implode('', end(array_values($rows))) == '') {
+        $lastRow = end($rows);
+        $lastRow = implode('', $lastRow);
+        if(empty($lastRow)) {
             array_pop($rows);
         }
         
         // if we knew for sure that the last col was always empty, we could just foreach
         // and array_pop. but I'm not 100% sure that the data hasn't changed, so we'll 
         // rotate the array, do our same test, array_pop, and rotate it back.
-        
-        $rotated = call_user_func_array(
-            'array_map',
-            array(-1 => null) + $rows
-        );
-        
-        if(implode('', end(array_values($rotated))) == '') {
-            array_pop($rotated);
-            
-            // we only need to re-rotate if we had to remove the last row. If not, then 
-            // $rows holds the correct values already. Saves a small amount of computation.
-            $rows = call_user_func_array(
+        if (count($rows) > 1) {
+            $rotated = call_user_func_array(
                 'array_map',
-                array(-1 => null) + $rotated
+                array(-1 => null) + $rows
             );
+
+            $lastRow = end($rotated);
+            if (!is_array($lastRow)) {
+                $lastRow = array();
+            }
+
+            $lastRow = implode('', $lastRow);
+            if (empty($lastRow)) {
+                array_pop($rotated);
+                if (empty($rotated)) {
+                    return $rows;
+                }
+
+                // we only need to re-rotate if we had to remove the last row. If not, then
+                // $rows holds the correct values already. Saves a small amount of computation.
+                $rows = call_user_func_array(
+                    'array_map',
+                    array(-1 => null) + $rotated
+                );
+            }
+        }
+        else {
+            $row = $rows[0];
+            if (end($row) == '') {
+                array_pop($row);
+                $rows = array($row);
+            }
         }
         return $rows;
     }    
