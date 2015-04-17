@@ -68,15 +68,15 @@
       "outputAbbreviatedPath" : "\/lang\/da-min.js",
       "fileType" : 64
     },
-    "\/lib\/jquery.js" : {
+    "\/lib\/jquery-1.10.2.js" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/lib\/jquery.js",
+      "inputAbbreviatedPath" : "\/lib\/jquery-1.10.2.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/lib\/jquery-min.js",
+      "outputAbbreviatedPath" : "\/lib\/jquery-1.9.1-min.js",
       "fileType" : 64
     },
     "\/lang\/zh_cn.js" : {

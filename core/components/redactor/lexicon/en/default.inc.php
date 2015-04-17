@@ -187,10 +187,6 @@ $_lang['setting_redactor.file_upload_path_desc'] = 'The path, relative to the ro
         <li><code>&#91;&#91;+pagetitle&#93;&#93;</code> the pagetitle of the current resource.</li>
         <li><code>&#91;&#91;+id&#93;&#93;</code> the id of the currently resource.</li>
         <li><code>&#91;&#91;+alias&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+parent&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+parent_alias&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+ultimate_parent&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+ultimate_parent_alias&#93;&#93;</code> the alias of the current resource.</li>
     </ul>
     Also see <code>Image Upload Path</code>, <code>Media Source</code> and <a href="https://www.modmore.com/extras/redactor/documentation/media-sources/">Using Media Sources with Redactor</a>';
 
@@ -205,10 +201,6 @@ $_lang['setting_redactor.image_upload_path_desc'] = 'The path, relative to the r
         <li><code>&#91;&#91;+pagetitle&#93;&#93;</code> the pagetitle of the current resource.</li>
         <li><code>&#91;&#91;+id&#93;&#93;</code> the id of the currently resource.</li>
         <li><code>&#91;&#91;+alias&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+parent&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+parent_alias&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+ultimate_parent&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+ultimate_parent_alias&#93;&#93;</code> the alias of the current resource.</li>
     </ul>
     Also see <code>Image Upload Path</code>, <code>Media Source</code> and <a href="https://www.modmore.com/extras/redactor/documentation/media-sources/">Using Media Sources with Redactor</a>';
     
@@ -223,10 +215,6 @@ $_lang['setting_redactor.file_upload_path_desc'] = 'The path, relative to the ro
         <li><code>&#91;&#91;+pagetitle&#93;&#93;</code> the pagetitle of the current resource.</li>
         <li><code>&#91;&#91;+id&#93;&#93;</code> the id of the currently resource.</li>
         <li><code>&#91;&#91;+alias&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+parent&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+parent_alias&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+ultimate_parent&#93;&#93;</code> the alias of the current resource.</li>
-        <li><code>&#91;&#91;+ultimate_parent_alias&#93;&#93;</code> the alias of the current resource.</li>
     </ul>
     Also see <code>Image Upload Path</code>, <code>Media Source</code> and <a href="https://www.modmore.com/extras/redactor/documentation/media-sources/">Using Media Sources with Redactor</a>';
 
@@ -369,138 +357,5 @@ $_lang['setting_redactor.toolbarFixed_desc'] = 'If this option is turned on, Red
 $_lang['setting_redactor.toolbarFixedBox'] = 'Toolbar Fixed Box';
 $_lang['setting_redactor.toolbarFixedBox_desc'] = 'This option makes a fixed toolbar to the width of the editor.';
 
-$_lang['setting_redactor.focus'] = 'Focus';
-$_lang['setting_redactor.focus_desc'] = 'By default, Redactor doesn\'t receive focus on load, because there may be other input fields on a page. However, to set focus to Redactor, you can use this setting.';
-
-$_lang['setting_redactor.focusEnd'] = 'Focus End';
-$_lang['setting_redactor.focusEnd_desc'] = 'This setting allows focus to be set after the last character in Redactor.';
-
-$_lang['setting_redactor.scrollTarget'] = 'Scroll Target';
-$_lang['setting_redactor.scrollTarget_desc'] = 'This setting allows to set a parent layer when Redactor is placed inside of layer with scrolling. When this is set, scroll will return to correct position when a user pastes some text.';
-
-$_lang['setting_redactor.enterKey'] = 'Enter Key';
-$_lang['setting_redactor.enterKey_desc'] = 'This setting allows to prevent use of Return key.';
-
-$_lang['setting_redactor.cleanStyleOnEnter'] = 'Clean Style on Enter';
-$_lang['setting_redactor.cleanStyleOnEnter_desc'] = 'When enabled this setting will prevent new paragraph from inheriting styles, classes and attributes form a previous paragraph.';
-
-$_lang['setting_redactor.linkTooltip'] = 'Link Tooltip';
-$_lang['setting_redactor.linkTooltip_desc'] = 'Shows link tooltip with Edit and Unlink buttons on click.';
-
-$_lang['setting_redactor.imageEditable'] = 'Image Editable';
-$_lang['setting_redactor.imageEditable_desc'] = 'When set to true, user can launch image editing by clicking on an image. \'Edit\' button will appear, and clicking on this button will launch a modal window with editable image parameters. When set to \'false\', clicking on an image will do nothing. Regardless of imageEditable, users can still resize an image visually by dragging its bottom right corner. This can be turned off by setting \'imageResizable\' to \'false\'.';
-
-$_lang['setting_redactor.imageResizable'] = 'Image Resizable';
-$_lang['setting_redactor.imageResizable_desc'] = 'Turns on visual manual image resizing.';
-
-$_lang['setting_redactor.imageLink'] = 'Image Link';
-$_lang['setting_redactor.imageLink_desc'] = 'Turns on the ability to add a link to an image via edit modal window.';
-
-$_lang['setting_redactor.imagePosition'] = 'Image Position';
-$_lang['setting_redactor.imagePosition_desc'] = 'This setting allows to set image position (float alignment) in relation to the text.';
-
-$_lang['setting_redactor.buttonsHide'] = 'Hidden Buttons';
-$_lang['setting_redactor.buttonsHide_desc'] = 'This setting allows Redactor to hide certain buttons on launch.';
-
-$_lang['setting_redactor.buttonsHideOnMobile'] = 'Hidden Mobile Buttons';
-$_lang['setting_redactor.buttonsHideOnMobile_desc'] = 'This setting allows Redactor to hide certain buttons on mobile devices.';
-
-$_lang['setting_redactor.formattingAdd'] = 'Formatting Add';
-$_lang['setting_redactor.formattingAdd_desc'] = 'This setting allows to select tags and styles for the formatting dropdown. formattingAdd can only be applied to p, pre, blockquote and header tags. Each formatting tag gets a CSS class that allows to customize style of each element. See more here: http://imperavi.com/redactor/docs/settings/formatting/#setting-formattingAdd';
-    
-$_lang['setting_redactor.tabifier'] = 'Tabifier';
-$_lang['setting_redactor.tabifier_desc'] = 'Sets indent for code when using code.toggle or code.get.';
-
-$_lang['setting_redactor.replaceTags'] = 'Replace Tags';
-$_lang['setting_redactor.replaceTags_desc'] = 'By default, <strike> tag will always be replaced with <del>. You can set your own array of tags to be replaced. See more at http://imperavi.com/redactor/docs/settings/clean/#setting-replaceTags';
-
-$_lang['setting_redactor.replaceStyles'] = 'Replace Styles';
-$_lang['setting_redactor.replaceStyles_desc'] = 'This setting allows to set which span styles will be replaced by tags. See more at http://imperavi.com/redactor/docs/settings/clean/#setting-replaceStyles';
-
-$_lang['setting_redactor.removeDataAttr'] = 'Remove Data Attribute';
-$_lang['setting_redactor.removeDataAttr_desc'] = 'When enabled, Redactor will remove all data attributes in the code.';
-
-$_lang['setting_redactor.removeAttr'] = 'Remove Attribute';
-$_lang['setting_redactor.removeAttr_desc'] = 'This setting allows to set attributes that will be removed from the code.';
-
-$_lang['setting_redactor.allowedAttr'] = 'Allowed Attribute';
-$_lang['setting_redactor.allowedAttr_desc'] = 'This setting allows to set attributes that will not be removed from the code.';
-
-$_lang['setting_redactor.dragImageUpload'] = 'Drag Image Upload';
-$_lang['setting_redactor.dragImageUpload_desc'] = 'When disabled, turns off drag and drop image uploads.';
-
-$_lang['setting_redactor.dragFileUpload'] = 'Drag File Upload';
-$_lang['setting_redactor.dragFileUpload_desc'] = 'When disabled, turns off the ability to upload files using drag and drop.';
-
-$_lang['setting_redactor.replaceDivs'] = 'Replace Divs';
-$_lang['setting_redactor.replaceDivs_desc'] = "This setting makes Redactor to convert all divs in a text into paragraphs. With 'linebreaks' set to 'true', all div tags will be removed, and text will be marked up with tag.";
-
-$_lang['setting_redactor.preSpaces'] = 'Pre Spaces';
-$_lang['setting_redactor.preSpaces_desc'] = "This setting allows to set the number of spaces that will be applied when a user presses Tab key inside of preformatted blocks. If set to 'false', Tab key will apply tabulation instead of spaces inside of preformatted blocks.";
 
 
-$_lang['setting_redactor.plugin_counter'] = 'Counter';
-$_lang['setting_redactor.plugin_counter_desc'] = "Adds a character counter.";
-
-$_lang['setting_redactor.plugin_fontcolor'] = 'Font Color';
-$_lang['setting_redactor.plugin_fontcolor_desc'] = "Adds the ability to set the text color and/or text backgroud color.";
-
-$_lang['setting_redactor.plugin_fontfamily'] = 'Font Family';
-$_lang['setting_redactor.plugin_fontfamily_desc'] = "Choose a font family for selected text.";
-
-$_lang['setting_redactor.plugin_preSpaces'] = 'Font Size';
-$_lang['setting_redactor.plugin_preSpaces_desc'] = "Change the font size specified in pixels. Bigger sometimes is better.";
-
-//$_lang['setting_redactor.plugin_imagemanager'] = 'Image Manager';
-//$_lang['setting_redactor.plugin_imagemanager_desc'] = "Upload or choose and insert images, align pictures and tell a more visual story.";
-
-//$_lang['setting_redactor.plugin_filemanager'] = 'File Manager';
-//$_lang['setting_redactor.plugin_filemanager_desc'] = "Manage, upload, select files and place them anywhere in Redactor.";
-
-$_lang['setting_redactor.plugin_limiter'] = 'Limiter';
-$_lang['setting_redactor.plugin_limiter_desc'] = "Limit the number of characters a user can enter.";
-
-$_lang['setting_redactor.plugin_table'] = 'Table';
-$_lang['setting_redactor.plugin_table_desc'] = "Insert and format tables with ease.";
-
-$_lang['setting_redactor.plugin_textdirection'] = 'Text Direction';
-$_lang['setting_redactor.plugin_textdirection_desc'] = "Easily change the direction of the text in a block element (paragraph, header, blockquote etc.).";
-
-$_lang['setting_redactor.plugin_video'] = 'Video';
-$_lang['setting_redactor.plugin_video_desc'] = "Enrich text with embedded video.";
-
-$_lang['setting_redactor.parse_parent_path'] = 'Parse Parent Path';
-$_lang['setting_redactor.parse_parent_path_desc'] = "When enabled, parses path variables for [[++parent]], [[++parent_alias]], [[++ultimate_parent]], [[++ultimate_parent_alias]] placeholders.";
-
-$_lang['setting_redactor.parse_parent_path_height'] = 'Parse Parent Path Height';
-$_lang['setting_redactor.parse_parent_path_height_desc'] = "Depth to search for a resource's ultimate parent.";
-
-$_lang['setting_redactor.plugin_replacer'] = 'Relace Text';
-$_lang['setting_redactor.plugin_replacer_desc'] = "When enabled use CTRL+F to trigger a simple Find and Replace tool.";
-
-$_lang['setting_redactor.plugin_speek'] = 'Speek Plugin';
-$_lang['setting_redactor.plugin_speek_desc'] = "When enabled and in supported browsers adds a toolbar button which reads editor content aloud.";
-
-$_lang['setting_redactor.plugin_speechVoice'] = 'Speech Voice';
-$_lang['setting_redactor.plugin_speechVoice_desc'] = "Voice to be used by Speek Plugin when reading aloud.";
-
-$_lang['setting_redactor.plugin_speechRate'] = 'Speech Rate';
-$_lang['setting_redactor.plugin_speechRate_desc'] = "Rate at which voice should be spoken by Speek Plugin when reading aloud.";
-
-$_lang['setting_redactor.plugin_speechPitch'] = 'Speech Pitch';
-$_lang['setting_redactor.plugin_speechPitch_desc'] = "Pitch at which voice should be spoken by Speek Plugin when reading aloud.";
-
-$_lang['setting_redactor.plugin_speechVolume'] = 'Speech Volume';
-$_lang['setting_redactor.plugin_speechVolume_desc'] = "Volume at which voice should be spoken by Speek Plugin when reading aloud.";
-
-$_lang['setting_redactor.plugin_contrast'] = 'Contrast Plugin';
-$_lang['setting_redactor.plugin_contrast_desc'] = "When enabled hit F5 to invert eidtor screen contrast.";
-
-$_lang['setting_redactor.plugin_download'] = 'Download Plugin';
-$_lang['setting_redactor.plugin_download_desc'] = "When enabled adds a toolbar button to download editor code.";
-
-$_lang['setting_redactor.plugin_download'] = 'Zoom Plugin';
-$_lang['setting_redactor.plugin_download_desc'] = "When enabled allows text to be resized using CTRL + \"+-\" keys.";
-
-$_lang['setting_redactor.counterWPM'] = 'Counter Words Per Minute';
-$_lang['setting_redactor.counterWPM_desc'] = "Words per minute used by counter plugin to estimate reading time.";

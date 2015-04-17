@@ -1,4 +1,4 @@
-<script type="text/javascript" src="{$assetsUrl}redactor-1.6.0.min.js"></script>
+<script type="text/javascript" src="{$assetsUrl}redactor-1.5.3.min.js"></script>
 {$langFile}
 <textarea id="tv{$tv->id}" class="red-richtext" name="tv{$tv->id}" tvtype="{$tv->type}">{$tv->get('value')|escape}</textarea>
 

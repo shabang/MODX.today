@@ -15,8 +15,6 @@ class RedactorResourceSearchProcessor extends modObjectGetListProcessor {
      * @return xPDOQuery
      */
     public function prepareQueryBeforeCount(xPDOQuery $c) {
-        $this->includeIntrotext = $this->modx->getOption('redactor.typeahead.include_introtext', null, true);
-        
         $query = $this->getProperty('query');
         $c->where(array(
             'deleted' => false,
@@ -36,9 +34,10 @@ class RedactorResourceSearchProcessor extends modObjectGetListProcessor {
         $c->select($this->modx->getSelectColumns('modResource', 'modResource', '', array(
             'id',
             'pagetitle',
-            ($this->includeIntrotext) ? 'introtext' : null,
-            'context_key'
+            'introtext'
         )));
+
+        $this->includeIntrotext = $this->modx->getOption('redactor.typeahead.include_introtext', null, true);
 
         return $c;
     }

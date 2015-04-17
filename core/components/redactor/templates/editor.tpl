@@ -1,7 +1,4 @@
-<script type="text/javascript">
-    if (!RedactorPlugins) var RedactorPlugins = {};
-</script>
-<script type="text/javascript" src="[[+assetsUrl]]redactor-1.6.0.min.js"></script>
+<script type="text/javascript" src="[[+assetsUrl]]redactor-1.5.3.min.js"></script>
 [[+plugin_files]]
 [[+langFile:notempty=`<script type="text/javascript" src="[[+langFile]]"></script>`]]
 <script type="text/javascript">
@@ -15,6 +12,7 @@
         } : null;
 
         redactorOptions.toolbarFixedTarget = '#modx-content > .x-panel-bwrap > .x-panel-body';
+        redactorOptions.toolbarFixedTopOffset = [[+toolbarFixedTopOffset]];
         redactorOptions.imageUploadErrorCallback = function(json) {
             alert(json.error);
         };
