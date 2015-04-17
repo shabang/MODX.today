@@ -381,7 +381,7 @@
     font-family: "Roboto", monospace;
     font-weight: 400;
     line-height: normal;
-    margin: 0 0 1.25rem;
+    margin: 0 0 1rem;
     position: relative;
     text-decoration: none;
     text-align: center;
@@ -389,10 +389,10 @@
     -moz-appearance: none;
     border-radius: 0;
     display: inline-block;
-    padding-top: 1rem;
-    padding-right: 2rem;
-    padding-bottom: 1.0625rem;
-    padding-left: 2rem;
+    padding-top: 0.9375rem;
+    padding-right: 1.875rem;
+    padding-bottom: 1rem;
+    padding-left: 1.875rem;
     font-size: 1rem;
     background-color: #1f4a7f;
     border-color: #193b66;
@@ -449,10 +449,10 @@
       padding-left: 2.25rem;
       font-size: 1.25rem; }
     .redactor_editor button.small, .redactor_editor .button.small, .redactor_dropdown_box_styles button.small, .redactor_dropdown_box_styles .button.small {
-      padding-top: 0.875rem;
-      padding-right: 1.75rem;
-      padding-bottom: 0.9375rem;
-      padding-left: 1.75rem;
+      padding-top: 0.75rem;
+      padding-right: 1.5rem;
+      padding-bottom: 0.8125rem;
+      padding-left: 1.5rem;
       font-size: 0.8125rem; }
     .redactor_editor button.tiny, .redactor_editor .button.tiny, .redactor_dropdown_box_styles button.tiny, .redactor_dropdown_box_styles .button.tiny {
       padding-top: 0.625rem;

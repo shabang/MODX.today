@@ -9,17 +9,17 @@ properties: 'a:0:{}'
 
 <footer class="row">
     <div class="[[++default_article_column_classnames]]">
-    
         <hr>
         [[$[[*author]]? &title=`<h4>About the author</h4>`]]
-        
         <hr>
     </div>
     
     <div class="[[++default_article_column_classnames]]">
         <div class="row small-gutter">
             <div class="large-5 columns">
-                <h3>Liked it? Share it!</h3>
+                <p class="share-count"><span class="number" data-sharecount>42</span><span class="x">x</span> shared</p>
+                
+                <h4>Liked it? Share it!</h4>
                 <ul class="social-sharing">
                     <li class="facebook">
                         <a href="https://www.facebook.com/sharer/sharer.php?u=[[~[[*id]]:urlencode? &scheme=`full`]]" target="_blank">
@@ -50,10 +50,7 @@ properties: 'a:0:{}'
             <div class="large-7 columns">
                 <h4>Stay up to date!</h4>
                 <p>With our weekly reading list you won't miss any MODX news!</p>
-                <form action="" method="post" data-abide>
-                    <label class="hide" for="rl-email">E-Mail</label>
-                    <input type="email" name="rl-email" id="rl-email" value="" placeholder="E-Mail Address">
-                    <small class="error">Please enter a valid e-mail address</small>
+                <form action="////markhamstra.us2.list-manage.com/subscribe/post?u=f70125e94ef1181a22558acd5&id=fa929fd825" method="post" data-abide>
                     
                     <div class="row small-gutter">
                         <div class="medium-6 columns">
@@ -61,6 +58,17 @@ properties: 'a:0:{}'
                         </div>
                         <div class="medium-6 columns">
                             <input type="text" name="rl-lastname" value="" placeholder="Last name">
+                        </div>
+                    </div>
+                    
+                    <div class="row small-gutter">
+                        <div class="medium-8 columns">
+                            <label class="hide" for="rl-email">E-Mail</label>
+                            <input required type="email" name="rl-email" id="rl-email" value="" placeholder="E-Mail Address">
+                            <small class="error">Please enter a valid e-mail address</small>
+                        </div>
+                        <div class="medium-4 columns">
+                            <button type="submit" class="button small expand">Submit</button>
                         </div>
                     </div>
                 </form>
