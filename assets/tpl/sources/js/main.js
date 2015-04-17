@@ -334,7 +334,10 @@ $(function(){
                         else {
                             $container.masonry('appended', $items);
                         }
-
+                        
+                        // init jwplayers
+                        renderJWPlayers();
+                        
                         // re-add scroll handler
                         addArticlesScrollHandler();
                     }

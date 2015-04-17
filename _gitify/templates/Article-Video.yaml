@@ -18,7 +18,11 @@ properties: 'a:0:{}'
                         [[$tpl.articleheader]]
                     </div>
                     
-                    <div id="jwplayer-video-[[*id]]"><i>Loading Player…</i></div>
+                    <figure>
+                        <div id="jwplayer-video-[[*id]]">
+                            <p class="text-center"><i>Loading Player…</i></p>
+                        </div>
+                    </figure>
                     <script>
                         window.jwp.push({
                             'id': 'jwplayer-video-[[*id]]',

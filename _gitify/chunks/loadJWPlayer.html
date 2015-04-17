@@ -11,14 +11,14 @@ js.src = "http://jwpsrv.com/library/B9EyNH7jEeSd7g6sC0aurw.js";
  
 if (js.addEventListener) { // normal browsers
     js.addEventListener('load', function(){
-        startPlayer();
+        renderJWPlayers();
     }, false);
     
 } else {
     js.onreadystatechange = function() { // old IEs
         if (js.readyState in {loaded: 1, complete: 1}) {
            js.onreadystatechange = null;
-           startPlayer();
+           renderJWPlayers();
         }
     };
 }
@@ -26,11 +26,15 @@ if (js.addEventListener) { // normal browsers
 first_js.parentNode.insertBefore(js, first_js);
 
 
-function startPlayer(){
+function renderJWPlayers(){
     var players = window.jwp;
     for (i=0; i < players.length; i++) {
+        // init player
         jwplayer(players[i].id).setup(players[i].options).onReady(function(){
+            // trigger event that might re-layout the grid
             $(document).trigger('modxtoday.jwplayer.rendered');
         });
+        // remove player from array
+        window.jwp.splice(i,1);
     }
 }

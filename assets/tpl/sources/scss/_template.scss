@@ -73,4 +73,13 @@
                 text-align:right;
             }
         }
+        
+        .jwplayer {
+            .jwpreview {
+                background-size: cover !important;
+            }
+            img {
+                width: auto;
+            }
+        }
     }
