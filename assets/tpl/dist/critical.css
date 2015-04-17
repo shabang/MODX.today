@@ -1951,6 +1951,9 @@ h1#logo {
     font-size: 0.625rem;
     text-transform: uppercase; }
 
+.search-button {
+  opacity: 0.75; }
+
 .off-canvas-menu {
   display: none; }
 
