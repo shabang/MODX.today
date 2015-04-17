@@ -97,3 +97,13 @@
 	.white-bg {
 		background-color: #fff !important;
 	}
+
+    .button.small {
+        position: relative;
+        padding: rem(7 0 5);
+        svg {
+            width: rem(24);
+            height: rem(24);
+            fill: #fff;
+        }
+    }

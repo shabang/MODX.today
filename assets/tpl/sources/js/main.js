@@ -6,6 +6,7 @@
 
 // import "../bower_components/foundation/js/foundation/foundation.js";
 // import "../bower_components/foundation/js/foundation/foundation.abide.js";
+// import "../bower_components/foundation/js/foundation/foundation.reveal.js";
 // import "../bower_components/foundation/js/foundation/foundation.offcanvas.js";
 
 // import "../bower_components/masonry/dist/masonry.pkgd.js";

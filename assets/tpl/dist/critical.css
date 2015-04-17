@@ -1723,6 +1723,14 @@ table {
 .white-bg {
   background-color: #fff !important; }
 
+.button.small {
+  position: relative;
+  padding: 0.4375rem 0 0.3125rem; }
+  .button.small svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: #fff; }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *	Grid
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -1915,15 +1923,15 @@ h1#logo {
     h1#logo svg * {
       fill: #fff; }
 
-.off-canvas-toggle {
+.off-canvas-toggle, .search-button {
   display: inline-block;
   float: right;
   width: 5.5rem;
   transition: background-color .15s ease-in-out; }
   @media only screen and (min-width:64rem) {
-    .off-canvas-toggle {
+    .off-canvas-toggle, .search-button {
       float: none; } }
-  .off-canvas-toggle svg {
+  .off-canvas-toggle svg, .search-button svg {
     display: block;
     width: 5.5rem;
     height: 5.5rem;
@@ -1931,11 +1939,11 @@ h1#logo {
     padding: 1.875rem;
     fill: rgba(255, 255, 255, 0.9);
     transition: fill .15s ease-in-out; }
-  .off-canvas-toggle:hover {
+  .off-canvas-toggle:hover, .search-button:hover {
     background: rgba(255, 255, 255, 0.05); }
-    .off-canvas-toggle:hover svg {
+    .off-canvas-toggle:hover svg, .search-button:hover svg {
       fill: #ff8f0d; }
-  .off-canvas-toggle span {
+  .off-canvas-toggle span, .search-button span {
     display: none;
     color: #fff;
     font-weight: 400;

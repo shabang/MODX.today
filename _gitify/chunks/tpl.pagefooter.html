@@ -16,3 +16,23 @@ properties: 'a:0:{}'
 </footer>
 
 <a class="exit-off-canvas" href="#"></a>
+
+<div id="searchModal" class="reveal-modal small" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+    <form action="[[~100]]" method="get" class="row">
+        <div class="row small-gutter">
+            <div class="small-12 columns">
+                <h1 id="modalTitle" class="no-margin-top">Search</h1>
+            </div>
+            <div class="medium-10 columns">
+                <input type="search" name="search" placeholder="Enter search term…" class="no-margin" required>
+            </div>
+            <div class="medium-2 columns">
+                <button type="submit" class="button small expand no-margin">
+                    <svg role="presentation"><use xlink:href="[[++svg_url]]#search"></use></svg>
+                </button>
+            </div>
+        </div>
+        
+    </form>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
