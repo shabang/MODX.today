@@ -3,5 +3,5 @@ name: 'Default Article'
 description: ''
 icon: template_03
 icon_type: core
-content: '[{"layout":1,"content":{"col1":[{"chunk_properties":{},"field":6,"settings":{}},{"value":"","field":2,"settings":{}}]},"settings":{"layout_attributes":"","layout_padding_top":" ","layout_padding_bottom":" ","equalizer":"0","layout_classes":"row","col1_classes":"[[++default_article_column_classnames]]"},"parent":0}]'
-availability: '[{"field":"parent","value":"2"}]'
+content: '[{"layout":3,"content":{"col1":[{"chunk_properties":{},"field":6,"settings":{}},{"value":"","field":2,"settings":{}}]},"settings":[],"parent":0}]'
+availability: '[{"field":"parent","value":"1"}]'

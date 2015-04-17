@@ -3,5 +3,5 @@ name: 'Default Template'
 description: ''
 icon: template_03
 icon_type: core
-content: '[{"layout":1,"content":{"col1":[{"value":"","lang":"html","field":1,"settings":{}}]},"settings":[],"parent":0}]'
+content: '[{"layout":3,"content":{"col1":[{"value":"","level":"h1","field":3,"settings":{}},{"value":"","field":2,"settings":{}}]},"settings":[],"parent":0}]'
 availability: '[{"field":"resource","value":"-1"}]'

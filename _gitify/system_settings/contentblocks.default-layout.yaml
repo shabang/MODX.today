@@ -1,5 +1,5 @@
 key: contentblocks.default_layout
-value: '1'
+value: '3'
 xtype: numberfield
 namespace: contentblocks
 area: Defaults

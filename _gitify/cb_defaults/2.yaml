@@ -1,8 +1,8 @@
 id: 2
 constraint_field: parent
-constraint_value: '2'
+constraint_value: '1'
 default_template: '2'
-target_layout: 1
+target_layout: 3
 target_field: 2
 target_column: col1
 sortorder: 1
