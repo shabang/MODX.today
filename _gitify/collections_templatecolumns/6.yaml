@@ -1,0 +1,7 @@
+id: 6
+template: 1
+label: Type
+name: template
+width: 40
+php_renderer: CollectionPostTypeRenderer
+position: 1
