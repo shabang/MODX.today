@@ -246,7 +246,9 @@ $(function(){
  *	Infinite scrolling on articles overview
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     var $container = $('#articles-grid'),
-        url = location.href;
+        url = location.href,
+        isSearchPage = url.search('search') !== -1,
+        searchOffset = 0;
 
     // init scroll handler
     if ($container.length > 0) {
@@ -268,27 +270,51 @@ $(function(){
 
     function infiniteArticlesScrollHandler () {
         if ($(window).scrollTop() + $(window).height() >= ($container.height() - 700)) {
-            var page = $container.data('page') || 1;
-            page = page + 1;
-            $container.data('page', page);
-            loadMoreArticles(page);
+            if (isSearchPage) {
+                var searchOffset = $container.data('search-offset') || 0;
+                searchOffset = searchOffset + 10;
+                $container.data('search-offset', 10);
+                loadMoreArticles(false, searchOffset);
+            }
+            else {
+                var page = $container.data('page') || 1;
+                page = page + 1;
+                $container.data('page', page);
+                loadMoreArticles(page);
+            }
         }
     }
 
-    function loadMoreArticles(page){
+    function loadMoreArticles(page, searchOffset){
         $container.addClass('loading');
 
         // disable scroll handler until done loading
         $(document).off('scroll');
 
+        var data = {};
+        if (page) {
+            data.page = page;
+        }
+        else {
+            data.search_offset = searchOffset;
+        }
+
         $.ajax({
             url: url,
             dataType: "html",
-            data: {page: page},
+            data: data,
             success: function (response) {
                 $container.removeClass('loading');
                 if (response && response.length > 0) {
-                    var $items = $('<div>' + response + '</div>').find('#container').find('> .columns').not('.fixed');
+                    var $response = $('<div>' + response + '</div>');
+
+                    if (isSearchPage) {
+                        $response = $response.find('#articles-grid');
+                    }
+                    else {
+                        $response = $response.find('#container');
+                    }
+                    var $items = $response.find('> .columns').not('.fixed');
                     if ($items.length > 0) {
                         $container.append($items);
 
