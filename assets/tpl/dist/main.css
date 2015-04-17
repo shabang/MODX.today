@@ -3498,36 +3498,38 @@ label.error {
 a:hover .comment-icon {
   fill: #ff8f0d; }
 
-article.teaser h1 {
-  font-size: 1.875rem; }
-article.teaser h2 {
-  font-size: 1.6875rem; }
-article.teaser .link-icon {
-  display: inline-block;
-  fill: #999;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin-left: -2rem;
-  position: relative;
-  left: 0.125rem; }
-article.teaser footer {
-  margin-top: 1rem;
-  font-size: 0.875rem; }
-article.teaser a {
-  z-index: 1;
-  position: relative; }
-article.teaser .clickable-block {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 0;
-  margin: 0; }
-article.teaser:hover {
-  background-color: rgba(0, 0, 0, 0.02); }
-  article.teaser:hover h1 a, article.teaser:hover h2 a, article.teaser:hover h3 a {
-    color: #1f4a7f; }
+article.teaser {
+  transition: background-color 0.15s ease-in-out; }
+  article.teaser h1 {
+    font-size: 1.875rem; }
+  article.teaser h2 {
+    font-size: 1.6875rem; }
+  article.teaser .link-icon {
+    display: inline-block;
+    fill: #999;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-left: -2rem;
+    position: relative;
+    left: 0.125rem; }
+  article.teaser footer {
+    margin-top: 1rem;
+    font-size: 0.875rem; }
+  article.teaser a {
+    z-index: 1;
+    position: relative; }
+  article.teaser .clickable-block {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    margin: 0; }
+  article.teaser:hover {
+    background-color: rgba(0, 0, 0, 0.02); }
+    article.teaser:hover h1 a, article.teaser:hover h2 a, article.teaser:hover h3 a {
+      color: #1f4a7f; }
 
 .author-image {
   margin: -3px 0.5rem 0.5rem 0;

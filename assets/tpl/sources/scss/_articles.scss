@@ -13,6 +13,8 @@ a:hover .comment-icon {
 
 
 article.teaser {
+    transition: background-color 0.15s ease-in-out;
+    
     h1 {
         font-size: rem(30);
     }
