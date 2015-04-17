@@ -360,11 +360,11 @@ $slick-next-character: '\25B8'; //'▸'
 
 
 // We use these to style blockquotes
-   $blockquote-font-color: scale-color($header-font-color, $lightness: 35%);
-   $blockquote-padding: rem(9 20 0 19);
-   $blockquote-border: 1px solid $gainsboro;
-   $blockquote-cite-font-size: rem(13);
-   $blockquote-cite-font-color: scale-color($header-font-color, $lightness: 23%);
+   $blockquote-font-color: scale-color($body-font-color, $lightness: 5%);
+   $blockquote-padding: rem(24 24 1);
+   $blockquote-border: none;
+   $blockquote-cite-font-size: ($paragraph-font-size * 0.85);
+   $blockquote-cite-font-color: scale-color($body-font-color, $lightness: 10%);
    $blockquote-cite-link-color: $blockquote-cite-font-color;
 
 

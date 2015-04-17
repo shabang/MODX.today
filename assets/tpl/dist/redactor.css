@@ -787,19 +787,19 @@
       border-bottom: 1px dotted #DDDDDD; }
   .redactor_editor blockquote, .redactor_dropdown_box_styles blockquote {
     margin: 0 0 1rem;
-    padding: 0.5625rem 1.25rem 0 1.1875rem;
-    border-left: 1px solid #DDDDDD; }
+    padding: 1.5rem 1.5rem 0.0625rem;
+    border-left: none; }
     .redactor_editor blockquote cite, .redactor_dropdown_box_styles blockquote cite {
       display: block;
-      font-size: 0.8125rem;
-      color: #2f70c0; }
+      font-size: 0.85rem;
+      color: #666666; }
       .redactor_editor blockquote cite:before, .redactor_dropdown_box_styles blockquote cite:before {
         content: "\2014 \0020"; }
       .redactor_editor blockquote cite a, .redactor_editor blockquote cite a:visited, .redactor_dropdown_box_styles blockquote cite a, .redactor_dropdown_box_styles blockquote cite a:visited {
-        color: #2f70c0; }
+        color: #666666; }
   .redactor_editor blockquote, .redactor_editor blockquote p, .redactor_dropdown_box_styles blockquote, .redactor_dropdown_box_styles blockquote p {
     line-height: 1.66667;
-    color: #4785d2; }
+    color: #5e5e5e; }
   .redactor_editor .vcard, .redactor_dropdown_box_styles .vcard {
     display: inline-block;
     margin: 0 0 1.25rem 0;

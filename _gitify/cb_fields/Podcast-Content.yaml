@@ -2,6 +2,7 @@ id: 7
 input: repeater
 name: 'Podcast Content'
 description: ''
+sortorder: 1
 icon: unorderedlist
 icon_type: core
 template: "<dt>[[+timestamp:notempty=`&#91;[[+timestamp]]&#93;`]]\n[[+link:notempty=`<a href=\"[[+link]]\">[[+title]]</a>`:empty=`[[+title]]`]]\n</dt>\n  <dd>[[+description]]</dd>"

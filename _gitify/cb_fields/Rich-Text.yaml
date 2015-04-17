@@ -2,7 +2,7 @@ id: 2
 input: richtext
 name: 'Rich Text'
 description: ''
-sortorder: 2
+sortorder: 4
 icon: richtext
 icon_type: core
 template: '[[+value]]'

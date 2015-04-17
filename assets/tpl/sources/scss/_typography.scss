@@ -3,6 +3,14 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 	
 	h1,h2,h3,h4,h5,h6 {
+    	-webkit-font-variant-ligatures: common-ligatures; 
+        font-variant-ligatures: common-ligatures;
+        -moz-font-feature-settings: "kern=1"; /* pre-Firefox 14+ */
+        -webkit-font-feature-settings: "kern";
+        -moz-font-feature-settings: "kern"; /* Firefox 14+ */
+        font-feature-settings: "kern"; /* standard */
+        font-kerning: normal;
+
 		small {
 			display: block;
 			margin-bottom: rem(8);
@@ -23,6 +31,7 @@
 	
 	h1 {
     	margin-top: #{$large-column-gutter};
+        margin-bottom: rem(20);
 	}
 		
 	a {
@@ -89,14 +98,17 @@
 	}
 
 
-
-/*------------------------------------*\
-	#OVERRIDE STYLES
-\*------------------------------------*/
-
-
-
-
-h1{
-  margin-bottom:rem(20);//adds room between the H1 and Article Intro texts
-}
+    blockquote {
+        p {
+            text-rendering: optimizeLegibility;
+            -webkit-font-variant-ligatures: common-ligatures; 
+            font-variant-ligatures: common-ligatures;
+            font-size: rem(20);
+            font-family: $header-font-family;
+            font-style: italic;
+        }
+        
+        cite {
+            text-align: right;
+        }
+    }
