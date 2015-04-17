@@ -2,7 +2,7 @@ id: 3
 input: heading
 name: Heading
 description: ''
-sortorder: 3
+sortorder: 1
 icon: heading
 icon_type: core
 template: '<[[+level]]>[[+value]]</[[+level]]>'

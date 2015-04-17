@@ -2,7 +2,7 @@ id: 4
 input: image_with_title
 name: Image
 description: ''
-sortorder: 5
+sortorder: 3
 icon: image
 icon_type: core
 template: "<figure class=\"content-image [[+class]]\">\n    <img src=\"[[+url]]\" alt=\"[[+title:striptags]]\" [[+style:notempty=`style=\"[[+style]]\"`]]>\n    [[+title:notempty=`<figcaption>[[+title]]</figcaption>`]]\n</figure>\n"

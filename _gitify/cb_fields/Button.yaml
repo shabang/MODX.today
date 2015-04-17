@@ -2,7 +2,7 @@ id: 5
 input: link
 name: Button
 description: ''
-sortorder: 7
+sortorder: 5
 icon: code
 icon_type: core
 template: "<p>\n    <a href=\"[[+link]]\" class=\"large button\">[[+link]]</a>\n</p>"

@@ -14,6 +14,9 @@ properties: 'a:0:{}'
             
             <div class="pagecontent">
                 <main role="main" itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/BlogPosting">
+                    <div class="[[++default_article_column_classnames]]">
+                        [[$tpl.articleheader]]
+                    </div>
                     <div itemprop="articleBody">[[*content]]</div>
                 </main>
                 [[$tpl.articlefooter]]

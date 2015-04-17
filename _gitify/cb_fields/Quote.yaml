@@ -2,7 +2,7 @@ id: 9
 input: quote
 name: Quote
 description: ''
-sortorder: 6
+sortorder: 4
 icon: quote
 icon_type: core
 template: "<blockquote>\n    <p>[[+value]]</p>\n    [[+cite:notempty=`<cite>[[+cite]]</cite>`]]\n</blockquote>"

@@ -3,5 +3,5 @@ name: 'Default Article'
 description: ''
 icon: template_03
 icon_type: core
-content: '[{"layout":3,"content":{"col1":[{"chunk_properties":{},"field":6,"settings":{}},{"value":"","field":2,"settings":{}}]},"settings":[],"parent":0}]'
+content: '[{"layout":3,"content":{"col1":[{"value":"","field":2,"settings":{}}]},"settings":[],"parent":0}]'
 availability: '[{"field":"parent","value":"1"}]'
