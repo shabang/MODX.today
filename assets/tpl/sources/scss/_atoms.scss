@@ -1,7 +1,19 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *	Atom Styles
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+ 
+    html.no-js {
+        .show-with-js {
+            display: none;
+        }
+    }
+    
+    html.js {
+        .hide-with-js {
+            display: none;
+        }
+    }
+    
 	.no-margin {
 		margin: 0 !important;
 	}

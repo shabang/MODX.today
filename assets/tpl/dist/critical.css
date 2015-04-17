@@ -1649,6 +1649,12 @@ blockquote cite {
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *	Atom Styles
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+html.no-js .show-with-js {
+  display: none; }
+
+html.js .hide-with-js {
+  display: none; }
+
 .no-margin {
   margin: 0 !important; }
 
@@ -1793,6 +1799,7 @@ table {
     .flexgrid > * > *:last-child, .flexgrid > * footer {
       margin-bottom: 2.5rem; }
   .flexgrid > .fixed {
+    padding-bottom: 1px;
     background: #1f4a7f; }
     .flexgrid > .fixed *, .flexgrid > .fixed a {
       color: #fff; }
@@ -1849,6 +1856,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 1rem; }
+
+.off-canvas-wrap, .off-canvas-wrap.move-right, .off-canvas-wrap.move-left, .inner-wrap {
+  min-height: 100vh; }
 
 .pagewrapper {
   z-index: 1;
