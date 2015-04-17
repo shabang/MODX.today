@@ -3459,6 +3459,10 @@ ul.social-sharing {
     ul.social-sharing li.pinterest {
       background-color: #cb2027; }
 
+iframe.twitter-tweet.twitter-tweet-rendered {
+  max-width: 100% !important;
+  margin: 1rem auto 1.5rem !important; }
+
 .pagecontent > * {
   opacity: 1; }
 
