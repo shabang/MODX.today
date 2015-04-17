@@ -2,7 +2,7 @@ id: 3
 type: image
 name: image
 caption: 'Post Image'
-category: 'Home View'
+category: Article
 elements: ''
 display: default
 default_text: ''

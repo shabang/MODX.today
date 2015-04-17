@@ -35,5 +35,17 @@ properties: 'a:0:{}'
 
     
     [[$tpl.scripts]]
+    <script>
+        [[$loadJWPlayer]]
+        
+        function startPlayer(){
+            jwplayer("player").setup({
+                file: "[[++podcast_cdn]]podcast-episode-[[*podcast.number]].mp3",
+                width: '100%',
+                height: '35',
+                autostart: false,
+            });
+        }
+	</script>
 </body>
 </html>

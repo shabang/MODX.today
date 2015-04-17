@@ -2,7 +2,7 @@ id: 2
 type: textarea
 name: home.embed
 caption: 'Summary Embed'
-category: 'Home View'
+category: Article
 elements: ''
 display: default
 default_text: ''

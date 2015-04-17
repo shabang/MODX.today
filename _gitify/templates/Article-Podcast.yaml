@@ -38,7 +38,7 @@ properties: 'a:0:{}'
         function startPlayer(){
             jwplayer("player").setup({
                 file: "[[++podcast_cdn]]podcast-episode-[[*podcast.number]].mp3",
-                width: 450,
+                width: '100%',
                 height: 35,
                 autostart: false,
             });
