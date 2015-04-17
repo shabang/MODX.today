@@ -187,3 +187,5 @@ packages:
       - templateselect
       - wayfinder
       - taglister
+      - updater
+      - locker
