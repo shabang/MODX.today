@@ -53,13 +53,14 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
     figure {
-        margin: rem(0 0) $column-gutter; //override default figure margins
+        margin: $column-gutter 0;
         
         img {
             width: 100%;
         }
         
         figcaption {
+            padding: ($column-gutter / 2) 0;
             text-align: center;
             
             .figure__source {
