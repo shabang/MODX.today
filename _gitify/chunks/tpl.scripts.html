@@ -19,11 +19,11 @@ properties: 'a:0:{}'
     }
     
     function downloadAssetsAtOnload() {
-        loadCSS( '/assets/tpl/dist/main.[[++site_version]].css');
+        loadCSS( '/assets/tpl/dist/main.[[+site_version]].css');
         
         var element = document.createElement('script');
         element.type = 'text/javascript'; element.async = true;
-        element.src = '/assets/tpl/dist/main.[[++site_version]].js';
+        element.src = '/assets/tpl/dist/main.[[+site_version]].js';
         document.body.appendChild(element);
         
         var disqus_shortname = 'modxtoday';
