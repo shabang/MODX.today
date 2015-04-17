@@ -17,5 +17,6 @@ if (strpos($resource->get('alias'),'/') !== false) return;
 $publishedon = strtotime($resource->get('publishedon'));
 $newAlias = strftime('%Y',$publishedon) . '/' . strftime('%m',$publishedon) . '/' . $resource->get('alias');
 $resource->set('alias', $newAlias);
+$resource->save();
 
 return;
