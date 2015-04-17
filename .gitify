@@ -158,7 +158,7 @@ data:
     class: CollectionSetting
     primary: id
     package: collections
-  collections_tempaltes:
+  collections_templates:
     class: CollectionTemplate
     primary: [id, name]
   collections_templatecolumns:
