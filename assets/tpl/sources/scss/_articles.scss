@@ -50,13 +50,14 @@ article.teaser {
         z-index: 0;
         margin: 0;
     }
+}
 
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.02);
-        h1,h2,h3 {
-            a {
-                color: $primary-color;
-            }
+
+html.no-touch article.teaser:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    h1,h2,h3 {
+        a {
+            color: $primary-color;
         }
     }
 }
