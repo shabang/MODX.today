@@ -327,8 +327,9 @@ $(function(){
                         $container.append($items);
 
                         if ($items.find('img').length > 0) {
+                            $container.masonry('appended', $items);
                             Foundation.utils.image_loaded($items.find('img'), function () {
-                                $container.masonry('appended', $items);
+                                $container.data('masonry').layout();
                             });
                         }
                         else {
