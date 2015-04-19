@@ -22,7 +22,9 @@ properties: 'a:0:{}'
                         [[*content]]
                         
                         <figure>
-                            <div id="jwplayer-video-[[*id]]">
+                            <div id="jwplayer-video-[[*id]]" itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+                                <meta itemprop="name" content="[[*longtitle:default=`[[+pagetite]]`:htmlent]]" />
+                                <meta itemprop="contentURL" content="[[*video.file]]" />
                                 <p class="text-center"><i>Loading Player…</i></p>
                             </div>
                         </figure>

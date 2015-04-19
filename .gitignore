@@ -39,8 +39,6 @@ setup/config.upgrade-advanced.xml
 /setup
 core/cache/
 core/packages/*/
-/assets/uploads
-/assets/components/phpthumbof/cache
 
 #ignore qsync file from QNAP
 .qicon

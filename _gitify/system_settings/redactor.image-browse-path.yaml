@@ -1,4 +1,4 @@
 key: redactor.image_browse_path
-value: assets/uploads/
+value: images/
 namespace: redactor
 area: Media
