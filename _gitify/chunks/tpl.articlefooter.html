@@ -17,7 +17,7 @@ properties: 'a:0:{}'
     <div class="[[++default_article_column_classnames]]">
         <div class="row small-gutter">
             <div class="large-5 columns">
-                <p class="share-count"><span class="number" data-sharecount>42</span><span class="x">x</span> shared</p>
+                <p class="share-count"><span class="number" data-sharecount>0</span><span class="x">x</span> shared</p>
                 
                 <h4>Liked it? Share it!</h4>
                 <ul class="social-sharing">
@@ -25,18 +25,21 @@ properties: 'a:0:{}'
                         <a href="https://www.facebook.com/sharer/sharer.php?u=[[~[[*id]]:urlencode? &scheme=`full`]]" target="_blank">
                             <svg title="Facebook" role="presentation"><use xlink:href="[[++svg_url]]#facebook"></use></svg>
                             <span>share</span>
+                            <span data-facebook-sharecount></span>
                         </a>
                     </li>
                     <li class="twitter">
                         <a href="https://twitter.com/home?status=[[*longtitle:default=`[[*pagetitle]]`:urlencode]]+[[~[[*id]]:urlencode? &scheme=`full`]]+via+%40MODXtoday+%23MODX" target="_blank">
                             <svg title="Twitter" role="presentation"><use xlink:href="[[++svg_url]]#twitter"></use></svg>
                             <span>tweet</span>
+                            <span data-twitter-sharecount></span>
                         </a>
                     </li>
                     <li class="googleplus">
                         <a href="https://plus.google.com/share?url=[[~[[*id]]:urlencode? &scheme=`full`]]" target="_blank">
                             <svg title="Google+" role="presentation"><use xlink:href="[[++svg_url]]#googleplus"></use></svg>
                             <span>share</span>
+                            <span data-googleplus-sharecount></span>
                         </a>
                     </li>
                     <li class="mail">
