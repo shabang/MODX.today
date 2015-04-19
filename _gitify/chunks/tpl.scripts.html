@@ -33,6 +33,31 @@ properties: 'a:0:{}'
         dsq.type = 'text/javascript'; dsq.async = true;
         dsq.src = '//' + disqus_shortname + '.disqus.com/[[*parent:is=`1`:then=`embed`:else=`count`]].js';
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        
+        
+    
+        [[*parent:eq=`1`:then=`
+        $.ajax({
+            dataType: "json",
+            url: '[[~103? &resource=`[[*id]]`]]',
+            success: function(data) {
+                if (data.total) {
+                    $('span[data-sharecount]').text(data.total);
+                }
+                /* For now, we don't split it up across the different buttons, but we could.
+                if (data.sources.facebook > 0) {
+                    $('span[data-facebook-sharecount]').text(data.sources.facebook);
+                }
+                if (data.sources.twitter > 0) {
+                    $('span[data-twitter-sharecount]').text(data.sources.twitter);
+                }
+                if (data.sources.googleplus > 0) {
+                    $('span[data-googleplus-sharecount]').text(data.sources.googleplus);
+                }*/
+                    
+            }
+        });
+        `]]
     }
     
     if (window.addEventListener)
