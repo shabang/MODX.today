@@ -8,6 +8,7 @@ properties: 'a:0:{}'
 -----
 
 <script defer src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script defer src="/assets/tpl/dist/main.[[+site_version]].js"></script>
 <script>
     function loadCSS( href ){'use strict';
         var ss = window.document.createElement('link');
@@ -21,10 +22,10 @@ properties: 'a:0:{}'
     function downloadAssetsAtOnload() {
         loadCSS( '/assets/tpl/dist/main.[[+site_version]].css');
         
-        var element = document.createElement('script');
+        /*var element = document.createElement('script');
         element.type = 'text/javascript'; element.async = true;
         element.src = '/assets/tpl/dist/main.[[+site_version]].js';
-        document.body.appendChild(element);
+        document.body.appendChild(element);*/
         
         var disqus_shortname = 'modxtoday';
         var disqus_identifier = 'thread-[[*id]]';
