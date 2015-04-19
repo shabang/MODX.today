@@ -1,5 +1,5 @@
 id: 12
-name: 'Autofill Image TV'
+name: 'Autofill Preview Image TV'
 properties: 'a:0:{}'
 
 -----
@@ -7,7 +7,7 @@ properties: 'a:0:{}'
 switch ($modx->event->name)
 {
     case 'OnDocFormSave':
-        $oldImageValue = $resource->getTVValue('image'); //1200x630
+        $oldImageValue = $resource->getTVValue('preview.image'); //1200x630
         $imageValue = false;
         
         if (empty($oldImageValue))
@@ -51,7 +51,7 @@ switch ($modx->event->name)
             
             if ($imageValue)
             {
-                $resource->setTVValue('image', $imageValue);
+                $resource->setTVValue('preview.image', $imageValue);
                 $resource->save();
             }
         }
