@@ -41,7 +41,7 @@ properties: 'a:0:{}'
     <link rel="dns-prefetch" href="//ajax.googleapis.com">
     
     <style type="text/css" id="criticalcss">
-        [[!includeFile? &file=`/assets/tpl/dist/critical.css`]]
+        [[!includeFile:replace=`critical.css==/assets/tpl/dist/critical.css`? &file=`/assets/tpl/dist/critical.css`]]
         [[-!getCache?
             &element=`includeFile`
             &cacheKey=`template`
@@ -53,7 +53,6 @@ properties: 'a:0:{}'
     
     
     <noscript>
-        <link rel="stylesheet" href="/assets/tpl/dist/fonts-woff.[[+site_version]].css">
         <link rel="stylesheet" href="/assets/tpl/dist/main.[[+site_version]].css">
     </noscript>
 
@@ -145,7 +144,6 @@ properties: 'a:0:{}'
             addClasses: true
         };
     </script>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700|Roboto+Slab:400,400italic,700' rel='stylesheet' type='text/css'>
 
     <script src="/assets/tpl/dist/images.[[+site_version]].js" async></script>    
     

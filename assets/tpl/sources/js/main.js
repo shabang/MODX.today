@@ -352,3 +352,35 @@ $(function(){
         });
     }
 });
+
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *	Render JWPlayers of this page
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    function renderJWPlayers(){
+        var players = window.jwp;
+        
+        for (i=0; i < players.length; i++) {
+            // init player
+            var player = players[i];
+            
+            if (typeof player.beforeInit == 'function') player.beforeInit();
+            
+            /* jshint ignore:start */
+            jwplayer(player.id).setup(player.options).onReady(function(){
+                // trigger event that might re-layout the grid
+                $(document).trigger('modxtoday.jwplayer.rendered');
+                
+                if (typeof player.onReady == 'function') player.onReady();
+            });
+            /* jshint ignore:end */
+            
+            if (typeof player.afterInit == 'function') player.afterInit();
+            
+            // remove player from array
+            window.jwp.splice(i,1);
+        }
+    }
