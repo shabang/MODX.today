@@ -3460,6 +3460,8 @@ article.teaser {
     font-size: 1.875rem; }
   article.teaser h2 {
     font-size: 1.6875rem; }
+  article.teaser h1 a, article.teaser h2 a, article.teaser h3 a {
+    color: #1f4a7f; }
   article.teaser .link-icon {
     display: inline-block;
     fill: #999;
@@ -3485,8 +3487,6 @@ article.teaser {
 
 html.no-touch article.teaser:hover {
   background-color: rgba(0, 0, 0, 0.02); }
-  html.no-touch article.teaser:hover h1 a, html.no-touch article.teaser:hover h2 a, html.no-touch article.teaser:hover h3 a {
-    color: #1f4a7f; }
 
 .author-image {
   margin: -3px 0.5rem 0.5rem 0;
