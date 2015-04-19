@@ -11,10 +11,15 @@ properties: 'a:0:{}'
         <svg class="link-icon" role="presentation"><use xlink:href="[[++svg_url]]#link"></use></svg> [[+longtitle:default=`[[+pagetitle]]`]]
     `]]
     
-    <div itemprop="description">[[+introtext]]</div>
+    <div itemprop="description">
+        [[+tv.preview.image:notempty=`
+            <p class="extended-with"><img src="[[+tv.preview.image]]" alt="[[+longtitle:default=`[[+pagetitle]]`:htmlent]]"></p>
+        `]]
+        [[+introtext]]
+    </div>
 
     <footer class="row">
         <a href="[[~[[+id]]]]" title="[[+tv.home.read_more]]" target="_blank">[[+tv.home.read_more]]</a>
     </footer>
-    <a href="[[~[[+id]]]]" class="clickable-block"></a>
+    <a href="[[~[[+id]]]]" class="clickable-block" target="_blank"></a>
 </article>
