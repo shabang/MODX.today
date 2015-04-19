@@ -340,8 +340,9 @@ $(function(){
 
                         if ($items.find('img').length > 0) {
                             $container.masonry('appended', $items);
-                            Foundation.utils.image_loaded($items.find('img'), function () {
-                                $container.data('masonry').layout();
+                            var masonry = $container.data('masonry');
+                            $items.find('img').each(function(i,img){
+                                Foundation.utils.image_loaded($(img), function(){masonry.layout();});
                             });
                         }
                         else {
