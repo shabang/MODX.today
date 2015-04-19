@@ -28,12 +28,22 @@ first_js.parentNode.insertBefore(js, first_js);
 
 function renderJWPlayers(){
     var players = window.jwp;
+    
     for (i=0; i < players.length; i++) {
         // init player
-        jwplayer(players[i].id).setup(players[i].options).onReady(function(){
+        var player = players[i];
+        
+        if (typeof player.beforeInit == 'function') player.beforeInit();
+        
+        jwplayer(player.id).setup(player.options).onReady(function(){
             // trigger event that might re-layout the grid
             $(document).trigger('modxtoday.jwplayer.rendered');
+            
+            if (typeof player.onReady == 'function') player.onReady();
         });
+        
+        if (typeof player.afterInit == 'function') player.afterInit();
+        
         // remove player from array
         window.jwp.splice(i,1);
     }

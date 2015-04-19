@@ -18,29 +18,39 @@ properties: 'a:0:{}'
                         [[$tpl.articleheader]]
                     </div>
                     
-                    <figure>
-                        <div id="jwplayer-video-[[*id]]">
-                            <p class="text-center"><i>Loading Player…</i></p>
-                        </div>
-                    </figure>
-                    <script>
-                        window.jwp.push({
-                            'id': 'jwplayer-video-[[*id]]',
-                            'options': {
-                                file: "[[*video.file]]",
-                                width: '100%',
-                                aspectratio: "16:9",
-                                autostart: false
-                            }
-                        });
-                    </script>
-
-[[-
-                    <div class="flex-video widescreen">
-                       <iframe class="lazyload" src="[[*home.embed]]?showinfo=0&theme=light&color=white&rel=0" frameborder="0" allowfullscreen></iframe>
+                    <div itemprop="articleBody">
+                        [[*content]]
+                        
+                        <figure>
+                            <div id="jwplayer-video-[[*id]]">
+                                <p class="text-center"><i>Loading Player…</i></p>
+                            </div>
+                        </figure>
+                        <script>
+                            window.jwp.push({
+                                'id': 'jwplayer-video-[[*id]]',
+                                'options': {
+                                    file: "[[*video.file]]",
+                                    width: '100%',
+                                    aspectratio: "16:9",
+                                    autostart: true,
+                                    mute: true,
+                                    controls: false
+                                },
+                                'afterInit': function(){
+                                    [[- poster-less preview http://support.jwplayer.com/customer/portal/articles/1439795-example-a-poster-less-preview ]]
+                                    jwplayer('jwplayer-video-[[*id]]').onPlay(function(){
+                                        var self = this;
+                                        setTimeout(function() {
+                                            self.pause().setMute(false).setControls(true);
+                                        },300);
+                                    });
+                                }
+                            });
+                            
+                        </script>
                     </div>
-                ]]
-                    [[*content]]
+
                 </main>
                 [[$tpl.articlefooter]]
             </div>

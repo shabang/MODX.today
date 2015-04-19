@@ -1,7 +1,7 @@
 id: 3
 type: image
-name: image
-caption: 'Post Image'
+name: preview.image
+caption: 'Post Preview Image'
 category: Article
 elements: ''
 display: default
