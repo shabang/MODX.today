@@ -1,4 +1,5 @@
 id: 3
+source: 2
 type: image
 name: preview.image
 caption: 'Post Preview Image'

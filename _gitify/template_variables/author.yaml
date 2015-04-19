@@ -2,7 +2,7 @@ id: 6
 type: listbox
 name: author
 caption: Author
-category: Template
+category: Article
 elements: '@SELECT `name` FROM `mxty_site_htmlsnippets` WHERE `category` = 44'
 display: default
 properties: 'a:0:{}'

@@ -1,4 +1,4 @@
 key: redactor.file_upload_path
-value: assets/uploads/
+value: 'files/[[+year]]/[[+images]]/'
 namespace: redactor
 area: Media

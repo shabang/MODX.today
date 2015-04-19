@@ -9,7 +9,10 @@ properties: 'a:0:{}'
 <article class="teaser columns" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
     [[$articleTeaser.header? &id=`[[+id]]`]]
     
-    <div itemprop="description">[[+introtext]]</div>
+    <div itemprop="description">
+        [[+tv.preview.image:notempty=`<p><img src="[[+tv.preview.image]]" alt="[[+longtitle:default=`[[+pagetitle]]`:htmlent]]"></p>`]]
+        [[+introtext]]
+    </div>
 
     [[$articleTeaser.footer? &id=`[[+id]]`]]
 </article>

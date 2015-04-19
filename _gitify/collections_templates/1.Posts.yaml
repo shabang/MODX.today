@@ -6,7 +6,8 @@ bulk_actions: 1
 page_size: 10
 sort_field: publishedon
 sort_dir: desc
-child_template: null
+child_template: 2
+tab_label: Posts
 child_hide_from_menu: null
 child_published: null
 child_cacheable: null

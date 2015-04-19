@@ -10,24 +10,18 @@ properties: 'a:0:{}'
     [[$articleTeaser.header? &id=`[[+id]]`]]
     
     <div class="extended-with">
-    [[-
-        <div class="flex-video widescreen">
-            <iframe class="lazyload" data-src="[[+tv.home.embed]]?showinfo=0&theme=light&color=white&rel=0" frameborder="0" allowfullscreen></iframe>
-        </div>
-    ]]    
-        <div id="jwplayer-video-[[+id]]"><i>Loading Player…</i></div>
-        <script>
-            window.jwp.push({
-                'id': 'jwplayer-video-[[+id]]',
-                'options': {
-                    file: "[[+tv.video.file]]",
-                    width: '100%',
-                    aspectratio: "16:9",
-                    autostart: false
-                }
-            });
-        </script>
+        [[+tv.video.file:getYoutubeId:toPlaceholder=`video.youtube.id`]]
+        
+        [[+tv.preview.image:isnot=``:then=`
+            <p><img src="[[+tv.preview.image]]" alt="[[+longtitle:default=`[[+pagetitle]]`:htmlent]]"></p>
+        `:else=`
+            [[+video.youtube.id:notempty=`
+                <p><img src="http://img.youtube.com/vi/[[+video.youtube.id]]/sddefault.jpg" alt="[[+longtitle:default=`[[+pagetitle]]`:htmlent]]"></p>
+            `]]
+        `]]
     </div>
-
+    
+    [[+introtext:notempty=`<div itemprop="description">[[+introtext]]</div>`]]
+    
     [[$articleTeaser.footer? &id=`[[+id]]`]]
 </article>
