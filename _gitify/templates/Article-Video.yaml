@@ -65,10 +65,8 @@ properties: 'a:0:{}'
         </div> <!-- .inner-wrap -->
     </div> <!-- .off-canvas-wrap -->    
 
-    
+    [[*id:notempty=`1`:toPlaceholder=`load.jwplayer`]]
     [[$tpl.scripts]]
-    <script>
-        [[$loadJWPlayer]]
-	</script>
+
 </body>
 </html>
