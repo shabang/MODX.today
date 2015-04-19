@@ -1,5 +1,6 @@
 // import "_modernizr.js";
 // import "_garlic.min.js";
+// import "_prism.js";
 // import "../bower_components/svg4everybody/svg4everybody.js";
 
 // import "../bower_components/fastclick/lib/fastclick.js";
