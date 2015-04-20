@@ -352,6 +352,9 @@ $(function(){
                         // init jwplayers
                         renderJWPlayers();
                         
+                        // load comment counts
+                        if (typeof DISQUSWIDGETS !== 'undefined') DISQUSWIDGETS.getCount();
+                        
                         // re-add scroll handler
                         addArticlesScrollHandler();
                     }
