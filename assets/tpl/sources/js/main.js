@@ -15,6 +15,7 @@
 
 // import "_garlic.min.js";
 // import "_prism.js";
+// import "_imgloaded.js";
 
 
 // Lighweight wrapper for console.log
@@ -269,9 +270,22 @@ $(function(){
         });
         
         var masonry = $container.data('masonry');
+        $(document).on('lazybeforeunveil', function(e) {
+            console.log('relayouting before unveil', e);
+            setTimeout(function() {
+                masonry.layout();
+            }, 250);
 
-        Foundation.utils.image_loaded($container.find('img'), function () {
-            masonry.layout();
+        });
+
+        $container.find('img, picture').each(function(i, img) {
+            console.log(i, img);
+            $(img).imagesLoaded(function(){
+                console.log('relayouting', img);
+                setTimeout(function() {
+                    masonry.layout();
+                }, 250);
+            });
         });
         
         $(document).on('modxtoday.jwplayer.rendered', function(e){
@@ -338,11 +352,17 @@ $(function(){
                     if ($items.length > 0) {
                         $container.append($items);
 
-                        if ($items.find('img').length > 0) {
+                        if ($items.find('img, picture').length > 0) {
                             $container.masonry('appended', $items);
-                            var masonry = $container.data('masonry');
-                            $items.find('img').each(function(i,img){
-                                Foundation.utils.image_loaded($(img), function(){masonry.layout();});
+
+                            $items.find('img, picture').each(function(i, img) {
+                                $(img).imagesLoaded(function(){
+                                    console.log('relayouting', img);
+
+                                    setTimeout(function() {
+                                        masonry.layout();
+                                    }, 250);
+                                });
                             });
                         }
                         else {
@@ -400,3 +420,4 @@ $(function(){
             window.jwp.splice(i,1);
         }
     }
+

@@ -1,0 +1,20 @@
+id: 32
+name: article.preview_image
+description: ''
+category: 'Home View'
+properties: 'a:0:{}'
+
+-----
+
+<p class="extended-width">
+    <picture style="display: block;">
+        <!--[if IE 9]><video style="display: none;><![endif]-->
+        <source data-srcset="[[+image:pthumb=`w=397`]]" media="--xsmall" />
+        <source data-srcset="[[+image:pthumb=`w=768`]]" media="--small" />
+        <source data-srcset="[[+image:pthumb=`w=512`]]" media="--medium" />
+        <source data-srcset="[[+image:pthumb=`w=397`]]" media="--large" />
+        <source data-srcset="[[+image:pthumb=`w=512`]]" media="--xlarge" />
+        <!--[if IE 9]></video><![endif]-->
+        <img class="lazyload" alt="[[+title:htmlent]]" />
+    </picture>
+</p>

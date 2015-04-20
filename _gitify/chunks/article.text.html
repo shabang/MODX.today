@@ -10,11 +10,7 @@ properties: 'a:0:{}'
     [[$articleTeaser.header? &id=`[[+id]]`]]
     
     <div itemprop="description">
-        [[+tv.preview.image:notempty=`
-            <p class="extended-width">
-                <img src="[[+tv.preview.image]]" alt="[[+longtitle:default=`[[+pagetitle]]`:htmlent]]">
-            </p>
-        `]]
+        [[[[+tv.preview.image:notempty=`$article.preview_image`:default=`-`]]? &image=`[[+tv.preview.image]]` &title=`[[+longtitle:default=`[[+pagetitle]]`]]`]]
         [[+introtext]]
     </div>
 
