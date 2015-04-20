@@ -146,3 +146,57 @@ iframe.twitter-tweet.twitter-tweet-rendered {
     max-width: 100% !important;
     margin: rem(16) auto rem(24) !important;
 }
+
+#loading {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  -moz-transition: opacity 1s;
+  -ms-transition: opacity 1s;
+  -o-transition: opacity 1s;
+  transition: opacity 1s;
+  .loading & {
+    opacity: 1;
+  }
+}
+
+.spinner {
+  z-index: 3;
+  height: 40px;
+  width: 40px;
+  margin: 8px auto;
+  position:relative;
+  -webkit-animation: rotation .6s infinite linear;
+  -moz-animation: rotation .6s infinite linear;
+  -o-animation: rotation .6s infinite linear;
+  animation: rotation .6s infinite linear;
+  border: 6px solid $primary-color;
+  border-top-color:  lighten($primary-color, 60%);
+  border-radius:100%;
+  //background: #1f4a7f;
+}
+
+@-webkit-keyframes rotation {
+  from {-webkit-transform: rotate(0deg);}
+  to {-webkit-transform: rotate(359deg);}
+}
+
+@-moz-keyframes rotation {
+  from {-moz-transform: rotate(0deg);}
+  to {-moz-transform: rotate(359deg);}
+}
+
+@-o-keyframes rotation {
+  from {-o-transform: rotate(0deg);}
+  to {-o-transform: rotate(359deg);}
+}
+
+@keyframes rotation {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(359deg);}
+}

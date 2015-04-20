@@ -259,12 +259,14 @@ $(function(){
  *	Infinite scrolling on articles overview
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     var $container = $('#articles-grid'),
+        $body = $('body'),
         url = location.href,
-        isSearchPage = url.search('search') !== -1,
-        searchOffset = 0;
+        isSearchPage = url.search('search') !== -1;
 
     // init scroll handler
     if ($container.length > 0) {
+        $body.append('<div id="loading"><div class="spinner"></div></div>');
+
         $container.masonry({
             'stamp': '.fixed'
         });
@@ -320,7 +322,7 @@ $(function(){
     }
 
     function loadMoreArticles(page, searchOffset){
-        $container.addClass('loading');
+        $body.addClass('loading');
 
         // disable scroll handler until done loading
         $(document).off('scroll');
@@ -338,7 +340,7 @@ $(function(){
             dataType: "html",
             data: data,
             success: function (response) {
-                $container.removeClass('loading');
+                $body.removeClass('loading');
                 if (response && response.length > 0) {
                     var $response = $('<div>' + response + '</div>');
 
