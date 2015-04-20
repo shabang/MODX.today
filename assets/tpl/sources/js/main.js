@@ -16,8 +16,6 @@
 // import "_garlic.min.js";
 // import "_prism.js";
 
-// import "_imgloaded.js";
-
 
 // Lighweight wrapper for console.log
 // http://paulirish.com/2009/log-a-lightweight-wrapper-for-consolelog/
@@ -275,7 +273,7 @@ $(function(){
         var masonry = $container.data('masonry');
 
         $container[0].addEventListener('load', function(){
-            console.log('load triggered');
+            //console.log('load triggered');
             masonry.layout();
         }, true);
         
