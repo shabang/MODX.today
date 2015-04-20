@@ -3088,15 +3088,15 @@ html.js .hide-with-js {
 .extra-large-padding-top {
   padding-top: 4.5rem !important; }
 
-.small-gutter .extended-with {
+.small-gutter .extended-width {
   margin-left: -0.5rem;
   margin-right: -0.5rem; }
 
-.extended-with {
+.extended-width {
   margin-left: -1.25rem;
   margin-right: -1.25rem; }
 
-.large-gutter .extended-with {
+.large-gutter .extended-width {
   margin-left: -2.5rem;
   margin-right: -2.5rem; }
 
