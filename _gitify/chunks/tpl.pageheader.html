@@ -23,15 +23,14 @@ properties: 'a:0:{}'
 <nav class="left-off-canvas-menu off-canvas-menu" role="navigation" aria-label="Navigation">
     <div class="content">
         <ul class="off-canvas-list">
-            [[Wayfinder?
-                &startId=`0`
-                &outerTpl=`wayfinder.outerTpl`
-                &innerTpl=`wayfinder.innerTpl`
-                &rowTpl=`wayfinder.rowTpl`
-                &scheme=`abs`
-                &level=`1`
-                &excludeDocs=``
-            ]]
+[[getResources?
+  &parents=`0`
+  &depth=`0`
+  &tpl=`menu.tpl`
+  &sortby=`menuindex`
+  &sortdir=`ASC`
+  &limit=`0`
+]]
         </ul>
     </div>
 </nav>
