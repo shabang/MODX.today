@@ -274,14 +274,10 @@ $(function(){
         
         var masonry = $container.data('masonry');
 
-/*        $(document).on('lazybeforeunveil', function(e) {
-            console.log('before unveil', e);
-            //console.log('relayouting after', e.target);
+        $container[0].addEventListener('load', function(){
+            console.log('load triggered');
             masonry.layout();
-        });
-*/
-
-        reloadMasonryOnLoad($container);
+        }, true);
         
         $(document).on('modxtoday.jwplayer.rendered', function(e){
             setTimeout(function(){
@@ -350,10 +346,6 @@ $(function(){
                         $container.masonry('appended', $items);
                         masonry.layout();
                         
-                        if ($items.find('img').length > 0) {
-                            reloadMasonryOnLoad($items);
-                        }
-                        
                         // init jwplayers
                         renderJWPlayers();
                         
@@ -371,20 +363,6 @@ $(function(){
                 log('error', textStatus);
             }
         });
-    }
-    
-    function reloadMasonryOnLoad($container){
-        $container[0].addEventListener('load', function(){
-            console.log('load triggered');
-            masonry.layout();
-        }, true);
-/*        $container.find('img').each(function(i,img){
-            Foundation.utils.image_loaded($(img), function(){
-                console.log('relayouting masonry', $(img));
-                masonry.layout();
-            });
-        });
-*/
     }
 });
 
