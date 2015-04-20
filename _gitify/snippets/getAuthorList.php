@@ -1,6 +1,6 @@
 id: 29
 name: getAuthorList
-properties: null
+properties: 'a:0:{}'
 
 -----
 
