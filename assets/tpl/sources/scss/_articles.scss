@@ -148,6 +148,7 @@ iframe.twitter-tweet.twitter-tweet-rendered {
 }
 
 #loading {
+  pointer-events: none;
   position: fixed;
   bottom: 0;
   left: 0;

@@ -3546,6 +3546,7 @@ iframe.twitter-tweet.twitter-tweet-rendered {
   margin: 1rem auto 1.5rem !important; }
 
 #loading {
+  pointer-events: none;
   position: fixed;
   bottom: 0;
   left: 0;
