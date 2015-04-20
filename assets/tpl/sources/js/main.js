@@ -15,6 +15,7 @@
 
 // import "_garlic.min.js";
 // import "_prism.js";
+
 // import "_imgloaded.js";
 
 
@@ -272,23 +273,15 @@ $(function(){
         });
         
         var masonry = $container.data('masonry');
-        $(document).on('lazybeforeunveil', function(e) {
-            console.log('relayouting before unveil', e);
-            setTimeout(function() {
-                masonry.layout();
-            }, 250);
 
+/*        $(document).on('lazybeforeunveil', function(e) {
+            console.log('before unveil', e);
+            //console.log('relayouting after', e.target);
+            masonry.layout();
         });
+*/
 
-        $container.find('img, picture').each(function(i, img) {
-            console.log(i, img);
-            $(img).imagesLoaded(function(){
-                console.log('relayouting', img);
-                setTimeout(function() {
-                    masonry.layout();
-                }, 250);
-            });
-        });
+        reloadMasonryOnLoad($container);
         
         $(document).on('modxtoday.jwplayer.rendered', function(e){
             setTimeout(function(){
@@ -352,23 +345,13 @@ $(function(){
                     }
                     var $items = $response.find('> .columns').not('.fixed');
                     if ($items.length > 0) {
+                        
                         $container.append($items);
-
-                        if ($items.find('img, picture').length > 0) {
-                            $container.masonry('appended', $items);
-
-                            $items.find('img, picture').each(function(i, img) {
-                                $(img).imagesLoaded(function(){
-                                    console.log('relayouting', img);
-
-                                    setTimeout(function() {
-                                        masonry.layout();
-                                    }, 250);
-                                });
-                            });
-                        }
-                        else {
-                            $container.masonry('appended', $items);
+                        $container.masonry('appended', $items);
+                        masonry.layout();
+                        
+                        if ($items.find('img').length > 0) {
+                            reloadMasonryOnLoad($items);
                         }
                         
                         // init jwplayers
@@ -388,6 +371,20 @@ $(function(){
                 log('error', textStatus);
             }
         });
+    }
+    
+    function reloadMasonryOnLoad($container){
+        $container[0].addEventListener('load', function(){
+            console.log('load triggered');
+            masonry.layout();
+        }, true);
+/*        $container.find('img').each(function(i,img){
+            Foundation.utils.image_loaded($(img), function(){
+                console.log('relayouting masonry', $(img));
+                masonry.layout();
+            });
+        });
+*/
     }
 });
 

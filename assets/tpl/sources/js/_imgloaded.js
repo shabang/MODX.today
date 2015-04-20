@@ -1,7 +1,9 @@
 (function($){
     'use strict';
-    $.fn.imagesLoaded = (function(){
-        var imageLoaded = function (img, cb, delay){
+    $.fn.img_loaded = (function(){
+        return function (cb){
+            var img = this;
+            var delay = 0;
             console.log(' tracking', img);
             var timer;
             var isReponsive = false;
@@ -47,20 +49,6 @@
                     $img.attr('src', src);
                 }
             }
-        };
-
-        return function(cb){
-            var i = 0;
-            var $imgs = $('img', this).add(this.filter('img'));
-            var ready = function(){
-                i++;
-                if(i >= $imgs.length){
-                    cb();
-                }
-            };
-            $imgs.each(function(){
-                imageLoaded(this, ready);
-            });
             return this;
         };
     })();

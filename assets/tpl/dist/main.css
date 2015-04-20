@@ -3476,6 +3476,8 @@ article.teaser {
   article.teaser a {
     z-index: 1;
     position: relative; }
+  article.teaser picture {
+    display: block; }
   article.teaser .clickable-block {
     position: absolute;
     top: 0;
