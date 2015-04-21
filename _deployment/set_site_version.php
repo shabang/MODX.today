@@ -32,4 +32,3 @@ $cacheRefreshOptions =  array( 'system_settings' => array() );
 $modx->cacheManager-> refresh($cacheRefreshOptions);
 
 print('Settings updated.'.PHP_EOL);
-exit();
