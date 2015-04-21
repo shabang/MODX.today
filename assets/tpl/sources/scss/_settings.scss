@@ -289,10 +289,10 @@ $slick-next-character: '\25B8'; //'▸'
 
 
 // We use these to control header size reduction on small screens
-   $h1-font-reduction: rem(10) !default;
+   $h1-font-reduction: rem(7) !default;
    $h2-font-reduction: rem(8) !default;
-   $h3-font-reduction: rem(6) !default;
-   $h4-font-reduction: rem(3) !default;
+   $h3-font-reduction: rem(5) !default;
+   $h4-font-reduction: rem(2) !default;
    $h5-font-reduction: rem(0) !default;
    $h6-font-reduction: 0 !default;
 
