@@ -38,6 +38,34 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
 
 
 # ----------------------------------------------------------------------
+# | HTTP Strict Transport Security (HSTS)                              |
+# ----------------------------------------------------------------------
+
+# Force client-side SSL redirection.
+#
+# If a user types `example.com` in their browser, even if the server
+# redirects them to the secure version of the website, that still leaves
+# a window of opportunity (the initial HTTP connection) for an attacker
+# to downgrade or redirect the request.
+#
+# The following header ensures that browser will ONLY connect to your
+# server via HTTPS, regardless of what the users type in the browser's
+# address bar.
+#
+# (!) Remove the `includeSubDomains` optional directive if the website's
+# subdomains are not using HTTPS.
+#
+# http://www.html5rocks.com/en/tutorials/security/transport-layer-security/
+# https://tools.ietf.org/html/draft-ietf-websec-strict-transport-sec-14#section-6.1
+# http://blogs.msdn.com/b/ieinternals/archive/2014/08/18/hsts-strict-transport-security-attacks-mitigations-deployment-https.aspx
+
+<IfModule mod_headers.c>
+     Header set Strict-Transport-Security "max-age=16070400"
+</IfModule>
+
+
+
+# ----------------------------------------------------------------------
 # Domain Rewrite
 # ----------------------------------------------------------------------
 
@@ -46,9 +74,16 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
 #RewriteCond %{HTTP_HOST} !^name.kunden.chsmedien\.de [NC]
 #RewriteRule (.*) http://name.kunden.chsmedien.de/$1 [R=301,L]
 
-# Rewrite to force SSL (optional if available)
-#RewriteCond %{SERVER_PORT} 80 
-#RewriteRule (.*) https://name.kunden.chsmedien.de/$1 [R=301,L]
+# Rewrite to force SSL
+RewriteCond %{SERVER_PORT} 80 
+RewriteCond %{HTTP_HOST} ^dev.modx\.today [NC]
+RewriteRule (.*) https://dev.modx.today/$1 [R=301,L]
+
+# Rewrite to force SSL
+RewriteCond %{SERVER_PORT} 80 
+RewriteCond %{HTTP_HOST} ^modx\.today [NC]
+RewriteRule (.*) https://modx.today/$1 [R=301,L]
+
 
 
 
