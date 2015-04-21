@@ -48,9 +48,8 @@ window.lazySizesConfig = {
     }
     
     var disqus_shortname = 'modxtoday';
-[[*parent:is=`1`:then=`
-    var disqus_identifier = 'thread-[[*id]]';
-    var disqus_url = '[[~[[*id]]? &scheme=`full`]]';
+[[*parent:is=`1`:then=`var disqus_identifier = 'thread-[[*id]]';
+    var disqus_url = 'https://modx.today[[~[[*id]]? &scheme=`abs`]]';
 `]]
     
     onContentLoaded(function(){
