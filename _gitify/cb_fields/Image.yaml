@@ -11,4 +11,4 @@ availability: '[]'
 layouts: ''
 times_per_layout: 0
 times_per_page: 0
-settings: '[{"reference":"class","title":"Classes","fieldtype":"textfield","default_value":"","fieldoptions":"","field_is_exposed":"modal"},{"reference":"style","title":"Inline Style","fieldtype":"textfield","default_value":"","fieldoptions":"","field_is_exposed":"modal"}]'
+settings: '[{"reference":"class","title":"Extra width","fieldtype":"select","default_value":"extended-width","fieldoptions":"none=\non both sides=extended-width","field_is_exposed":"modal"},{"reference":"style","title":"Inline Style","fieldtype":"textfield","default_value":"","fieldoptions":"","field_is_exposed":"modal"}]'
