@@ -6,9 +6,14 @@ properties: 'a:0:{}'
 
 -----
 
+[[+image:pthumb=`w=768&q=70&f=jpeg`:getImageHeight:toPlaceholder=`image.height`]]
 <p class="extended-width text-center">
-    <img data-sizes="auto" data-srcset="[[+image:pthumb=`w=768&q=70&f=jpeg`]] 768w, [[+image:pthumb=`w=512&q=70&f=jpeg`]] 512w, [[+image:pthumb=`w=397&q=70&f=jpeg`]] 397w" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="[[+title:htmlent]]">
-    <noscript>
-        <img src="[[+image:pthumb=`w=768&q=70&f=jpeg`]]" alt="[[+title:htmlent]]" />
-    </noscript>
+    <span class="preview-image" style="padding-top:[[+image.height:div=`768`:multiply=`100`]]%;">
+        <span>
+            <img width="768" height="[[+image.height]]" data-sizes="auto" data-srcset="[[+image:pthumb=`w=768&q=70&f=jpeg`]] 768w, [[+image:pthumb=`w=512&q=70&f=jpeg`]] 512w, [[+image:pthumb=`w=397&q=70&f=jpeg`]] 397w" class="lazyload show-with-js" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="[[+title:htmlent]]">
+            <noscript>
+                <img src="[[+image:pthumb=`w=768&q=70&f=jpeg`]]" width="768" height="[[+image.height]]" alt="[[+title:htmlent]]" />
+            </noscript>
+        </span>
+    </span>
 </p>
