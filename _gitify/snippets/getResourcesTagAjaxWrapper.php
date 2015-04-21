@@ -1,12 +1,32 @@
 id: 28
 name: getResourcesTagAjaxWrapper
 category: tagLister
-properties: null
+properties: 'a:0:{}'
 
 -----
 
-// Call getResourcesTag to handle processing
-$result = $modx->runSnippet('getResourcesTag', $scriptProperties);
+$cacheParams = $scriptProperties;
+$cacheRequestParams = array('author', 'page');
+foreach ($cacheRequestParams as $reqParam) {
+    if (isset($_REQUEST[$reqParam])) {
+        $cacheParams[$reqParam] = $_REQUEST[$reqParam];
+    }
+}
+$cacheParams = serialize($cacheParams);
+$cacheKey = 'articles-grid/' . md5($cacheParams);
+
+$cached = $modx->cacheManager->get($cacheKey);
+if (!empty($cached)) {
+    return $cached;
+}
+
+// Call getResourcesTag to handle processing of stuff
+$snippet = $modx->getObject('modSnippet', array('name' => 'getResourcesTag'));
+$snippet->setCacheable(false);
+$result = $snippet->process($scriptProperties);
+
+// Write to the cache
+$modx->cacheManager->set($cacheKey, $result);
 
 // Check if we're dealing with an AJAX request
 $isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
@@ -19,5 +39,5 @@ if ($isAjax) {
     exit();
 }
 
-// No ajax? Just do nothing else.
+// No ajax? Just return the value.
 return $result;
