@@ -221,15 +221,25 @@ class mgImage extends xPDOSimpleObject
      */
     public function save($cacheFlag= null) {
         if ($this->isNew()) {
-            $this->set('uploadedon', time());
-            $this->set('uploadedby', $this->xpdo->user ? $this->xpdo->user->get('id') : 0);
-        } else {
-            $this->set('editedon', time());
-            $this->set('editedby', $this->xpdo->user ? $this->xpdo->user->get('id') : 0);
+            $this->setIfEmpty('uploadedon', time());
+            $this->setIfEmpty('uploadedby', $this->xpdo->user ? $this->xpdo->user->get('id') : 0);
         }
         $saved = parent::save($cacheFlag);
         $this->clearCache();
         return $saved;
+    }
+
+    /**
+     * Used by {@see self::save()}, this function only calls $this->set if there is not yet a value for it.
+     *
+     * @param $key
+     * @param $value
+     */
+    protected function setIfEmpty($key, $value) {
+        $current = $this->get($key);
+        if (empty($current)) {
+            $this->set($key, $value);
+        }
     }
 
     public function clearCache() {
