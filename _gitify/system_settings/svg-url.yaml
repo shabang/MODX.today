@@ -1,4 +1,2 @@
 key: svg_url
 value: '/assets/tpl/dist/sprite.[[++site_version]].svg'
-namespace: antenne
-area: site

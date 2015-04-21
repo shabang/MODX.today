@@ -1,5 +1,4 @@
 key: cachebust
 value: '0'
 xtype: combo-boolean
-namespace: antenne
-area: site
+namespace: core
