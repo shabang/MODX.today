@@ -74,6 +74,11 @@ $imagePath: '/assets/tpl/img';
     display: none;
 }
 
+picture {
+    display: block;
+    background: #f0f0f0;
+}
+    
 // Lazyload styles
 .lazyload, .lazyloading {
 	opacity: 0;

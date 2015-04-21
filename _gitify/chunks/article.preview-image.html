@@ -6,15 +6,9 @@ properties: 'a:0:{}'
 
 -----
 
-<p class="extended-width">
-    <picture style="display: block;">
-        <!--[if IE 9]><video style="display: none;><![endif]-->
-        <source data-srcset="[[+image:pthumb=`w=397`]]" media="--xsmall" />
-        <source data-srcset="[[+image:pthumb=`w=768`]]" media="--small" />
-        <source data-srcset="[[+image:pthumb=`w=512`]]" media="--medium" />
-        <source data-srcset="[[+image:pthumb=`w=397`]]" media="--large" />
-        <source data-srcset="[[+image:pthumb=`w=512`]]" media="--xlarge" />
-        <!--[if IE 9]></video><![endif]-->
-        <img class="lazyload" alt="[[+title:htmlent]]" />
-    </picture>
+<p class="extended-width text-center">
+    <img data-sizes="auto" data-srcset="[[+image:pthumb=`w=768&q=70&f=jpeg`]] 768w, [[+image:pthumb=`w=512&q=70&f=jpeg`]] 512w, [[+image:pthumb=`w=397&q=70&f=jpeg`]] 397w" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="[[+title:htmlent]]">
+    <noscript>
+        <img src="[[+image:pthumb=`w=768&q=70&f=jpeg`]]" alt="[[+title:htmlent]]" />
+    </noscript>
 </p>
