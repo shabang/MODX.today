@@ -1,0 +1,66 @@
+// project settings
+@import "_settings.scss";
+
+// ink.css
+@import "_ink.scss";
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Slab:400,700);
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: $header-font-family;
+    font-weight: 700;
+    color: $primary-color;
+    margin: 32px 0 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    small {
+        display: block;
+        font-family: $header-font-family;
+        font-size: 50%;
+        color: $small-font-color;
+        font-weight: 400;
+    }
+}
+
+h1 {
+    font-size: $h1-font-size;
+}
+
+h2 {
+    font-size: $h2-font-size;
+}
+
+h3 {
+    font-size: $h3-font-size;
+}
+
+h4 {
+    font-size: $h4-font-size;
+}
+
+
+body, p {
+    font-family: $body-font-family;
+    font-size: 16px;
+    line-height: 1.6;
+    color: $body-font-color;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.blue-ribbon {
+    background: $primary-color;
+}
+
+.wrapper.main-wrapper {
+    padding-left: 40px;
+}
+
+.ribbon-column.columns {
+    width: 60px;
+}
+
+.main-column.columns {
+    width: 480px;
+}
