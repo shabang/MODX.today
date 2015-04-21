@@ -14,8 +14,10 @@ properties: 'a:0:{}'
             
             <div class="pagecontent">
                 <main role="main" itemprop="mainContentOfPage">
-                    <div class="[[++default_article_column_classnames]]">
-                        [[$tpl.articleheader]]
+                    <div class="row">
+                        <div class="[[++default_article_column_classnames]]">
+                            [[$tpl.articleheader]]
+                        </div>
                     </div>
                     
                     <div itemprop="articleBody">
