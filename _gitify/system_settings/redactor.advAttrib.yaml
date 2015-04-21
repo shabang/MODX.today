@@ -1,4 +1,5 @@
 key: redactor.advAttrib
+value: '1'
 xtype: modx-combo-boolean
 namespace: redactor
 area: advanced
