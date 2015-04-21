@@ -2,6 +2,9 @@
 @function rem($px) {
 	@return rem-calc($px)
 }
+@function em($px) {
+	@return strip-unit(rem-calc($px)) * 1em;
+}
 
 
 // define image path
@@ -114,8 +117,9 @@ $slick-next-character: '\25B8'; //'▸'
    $total-columns: 12;
    
    $small-column-gutter: rem(16);
-   $column-gutter: rem(40);
+   $medium-column-gutter: rem(40);
    $large-column-gutter: rem(80);
+   $column-gutter: $large-column-gutter;
 
 
 // c. Global
@@ -214,12 +218,12 @@ $slick-next-character: '\25B8'; //'▸'
 // d. Media Query Ranges
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
-   $xsmall-range: (0rem, rem(450));
-   $small-range: (0rem, rem(768));
-   $medium-range: (rem(769), rem(1024));
-   $large-range: (rem(1025), rem(1199));
-   $xlarge-range: (rem(1200), rem(1264));
-   $xxlarge-range: (rem(1265), 99999999rem);
+   $xsmall-range: (0rem, em(450));
+   $small-range: (0rem, em(768));
+   $medium-range: (em(769), em(1024));
+   $large-range: (em(1025), em(1199));
+   $xlarge-range: (em(1200), em(1264));
+   $xxlarge-range: (em(1265), 99999999rem);
 
    $screen: "only screen";
 
@@ -285,11 +289,11 @@ $slick-next-character: '\25B8'; //'▸'
 
 
 // We use these to control header size reduction on small screens
-   $h1-font-reduction: rem(12) !default;
-   $h2-font-reduction: rem(10) !default;
-   $h3-font-reduction: rem(8) !default;
-   $h4-font-reduction: rem(6) !default;
-   $h5-font-reduction: rem(2) !default;
+   $h1-font-reduction: rem(10) !default;
+   $h2-font-reduction: rem(8) !default;
+   $h3-font-reduction: rem(6) !default;
+   $h4-font-reduction: rem(3) !default;
+   $h5-font-reduction: rem(0) !default;
    $h6-font-reduction: 0 !default;
 
 
