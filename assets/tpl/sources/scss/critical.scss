@@ -16,7 +16,7 @@ $imagePath: '/assets/tpl/img';
 
 
 // Foundation components
-@import "../bower_components/foundation/scss/foundation/components/grid";
+//@import "../bower_components/foundation/scss/foundation/components/grid";
 //@import "../bower_components/foundation/scss/foundation/components/accordion";
 //@import "../bower_components/foundation/scss/foundation/components/alert-boxes";
 //@import "../bower_components/foundation/scss/foundation/components/block-grid";
@@ -64,7 +64,7 @@ $imagePath: '/assets/tpl/img';
 @import "_atoms.scss";
 
 // Basics
-@import "_grid.scss";
+//@import "_grid.scss";
 @import "_template.scss";
 
 // Template Areas
@@ -87,6 +87,10 @@ picture {
 .lazyloaded {
 	opacity: 1;
 	transition: opacity .3s ease-in-out;
+}
+
+a {
+    color: $primary-color;
 }
 
 // hide pagecontent until main.css is loaded
