@@ -76,6 +76,8 @@ RewriteCond %{HTTP_HOST} ^staging\.modx\.today [OR,NC]
 RewriteCond %{HTTP_HOST} ^modx\.today [NC]
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
+RewriteRule ^(\.|_backup|_deployment|_gitify|core|config\.core\.php|package\.json|readme.md) /index.php?q=404 [L]
+
 
 # ----------------------------------------------------------------------
 #  More security
@@ -112,8 +114,6 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 	Deny from all
 	Satisfy All
 </FilesMatch>
-
-
 
 
 # ----------------------------------------------------------------------
