@@ -4,10 +4,6 @@ npm-debug.log
 # ignore all IIS files
 web.config
 
-# ignore all config.core.php
-config.core.php
-!setup/includes/config.core.php
-
 # ignore all config.inc.php
 config.inc.php
 
