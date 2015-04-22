@@ -1,0 +1,60 @@
+id: 33
+name: email.article.full-width
+description: ''
+category: 'Reading List'
+properties: 'a:0:{}'
+
+-----
+
+<table class="row">
+  <tr>
+    <td class="wrapper last">
+
+      <table class="twelve columns">
+        <tr>
+          <td>
+            <h2><a href="https://modx.today/[[+uri]]">[[+longtitle:default=`[[+pagetitle]]`]]</a></h2>
+          </td>
+          <td class="expander"></td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+
+<table class="row">
+  <tr>
+[[+tv.preview.image:notempty=`
+    <td class="wrapper">
+
+      <table class="four columns">
+        <tr>
+          <td>
+            
+            <img width="180" height="180" src="[[+tv.preview.image:pthumb=`w=600&h=600&zc=C&q=70&f=jpeg`]]">
+
+          </td>
+          <td class="expander"></td>
+        </tr>
+      </table>
+
+    </td>
+`]]
+    <td class="wrapper last">
+
+      <table class="[[+tv.preview.image:notempty=`eight`:empty=`twelve`]] columns">
+        <tr>
+          <td>
+            [[+introtext]]
+            
+            <p><a href="https://modx.today/[[+uri]]">[[+tv.home.read_more:is=`Read more`:then=`Read the full post at MODX.today`:else=`[[+tv.home.read_more]]`]]</a></p>
+
+          </td>
+          <td class="expander"></td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
