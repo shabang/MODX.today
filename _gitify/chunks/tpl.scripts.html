@@ -108,32 +108,31 @@ window.lazySizesConfig = {
     setTimeout(function(){
         document.getElementById('criticalcss').innerHTML = document.getElementById('criticalcss').innerHTML + '.pagecontent > * {opacity:1;}';
     }, 3500);
-
     
-    // Google Analytics Tracking
-    /*    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-XXXXXX-XX', 'auto');
-        ga('set', 'anonymizeIp', true);
-        ga('send', 'pageview');
-    */
     
-    // add live-reload script for local development
-    if (document.location.hostname.indexOf('localhost') > -1) {
-        var element = document.createElement('script');
-        element.src = '//'+document.location.hostname+':9091';
-        document.body.appendChild(element);
-    }
-
     function openPlayer(episodeid){
         fenster = window.open("/podcast/play/"+episodeid, "player"+episodeid, "width=769,height=250,status=yes,scrollbars=no,resizable=no");
         fenster.focus();
         return false;
     }
-    
 
+[[++http_host:is=`modx.today`:then=`
+    // Analytics
+    var _paq = _paq || [];
+    _paq.push(['setDocumentTitle', '[[*longtitle]]']);
+    _paq.push(["setCookieDomain", "modx.today"]);
+    _paq.push(["setDomains", ["modx.today"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u="//analytics.modmore.com/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', 2]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+    
+    // Pingdom Real-Time-Tracking
     var _prum = [['id', '5537796eabe53d5c0974ef92'],
                  ['mark', 'firstbyte', (new Date()).getTime()]];
     (function() {
@@ -143,4 +142,13 @@ window.lazySizesConfig = {
         p.src = 'https://rum-static.pingdom.net/prum.min.js';
         s.parentNode.insertBefore(p, s);
     })();
+`:else=`
+
+    // add live-reload script for local development
+    if (document.location.hostname.indexOf('localhost') > -1) {
+        var element = document.createElement('script');
+        element.src = '//'+document.location.hostname+':9091';
+        document.body.appendChild(element);
+    }
+`]]
 </script>
