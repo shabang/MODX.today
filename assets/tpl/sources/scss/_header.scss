@@ -49,10 +49,11 @@ h1#logo {
     }
 }
 
-.off-canvas-toggle, .search-button {
+.off-canvas-toggle, .icon-button {
     display: inline-block;
     float: right;
     width: rem(88);
+    background-color: rgba(#fff, 0);
     transition: background-color #{$anchor-transition};
     
     @media #{$large-up} {
@@ -65,15 +66,12 @@ h1#logo {
         height: rem(88);
         margin: 0 auto;
         padding: rem(30);
-        fill: rgba(#fff, .9);
-        transition: fill #{$anchor-transition};
+        fill: #fff;
+        transition: fill #{$anchor-transition}, opacity #{$anchor-transition};
     }
     
     &:hover {
-        background: rgba(#fff,.05);
-        svg {
-            fill: $orange;
-        }
+        background-color: rgba(#fff,.05);
     }
     
     span {
@@ -86,6 +84,28 @@ h1#logo {
     }
 }
 
-.search-button {
-    opacity: 0.75;
+.icon-button {
+    opacity: 0.8;
+    transition: opacity #{$anchor-transition};
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.bottom-icons {
+    display: none;
+}
+@media #{$screen} and (min-height: 500px) and (min-width:#{lower-bound($large-range)}) {
+    .bottom-icons {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        padding-bottom: rem(15);
+        .icon-button {
+            svg {
+                height: rem(54);
+                padding: rem(15 30);
+            }
+        }
+    }
 }
