@@ -72,6 +72,7 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
 # Rewrite to force SSL
 RewriteCond %{SERVER_PORT} 80 
 RewriteCond %{HTTP_HOST} ^dev\.modx\.today [OR,NC]
+RewriteCond %{HTTP_HOST} ^staging\.modx\.today [OR,NC]
 RewriteCond %{HTTP_HOST} ^modx\.today [NC]
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
