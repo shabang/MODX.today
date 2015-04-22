@@ -55,6 +55,16 @@ if (isset($json[0]['result']['metadata']['globalCounts']['count'])) {
     $results['sources']['googleplus'] = $json[0]['result']['metadata']['globalCounts']['count'];
 }
 
+// LinkedIn
+$linkedinUrl = "https://www.linkedin.com/countserv/count/share?url={$urlEnc}&format=json";
+$linkedinCount = $modx->fromJSON(file_get_contents($linkedinUrl));
+// var_dump($linkedinCount);
+
+if (is_array($linkedinCount) && isset($linkedinCount['count'])) {
+    $total += $linkedinCount['count'];
+    $results['sources']['linkedin'] = $linkedinCount['count'];
+}
+
 $results['total'] = $total;
 
 $modx->cacheManager->set('shares/' . $urlHash, $results, 60 * 15);
