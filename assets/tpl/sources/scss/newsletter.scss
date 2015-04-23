@@ -6,11 +6,16 @@
 
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Slab:400,700);
 
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: $header-font-family;
     font-weight: 700;
     color: $primary-color;
-    margin: 32px 0 16px;
+    margin: 32px 0 4px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
@@ -20,6 +25,16 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 50%;
         color: $small-font-color;
         font-weight: 400;
+        
+        &.week {
+            display: inline;
+            color: #fff;
+            padding-left: 10px;
+        }
+    }
+    
+    a, a:visited {
+        color: $primary-color !important;
     }
 }
 
@@ -49,18 +64,28 @@ body, p {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.blue-ribbon {
+p {
+    margin-bottom: 16px;
+}
+
+img {
+    float:none;
+}
+
+a, a:visited {
+    color: $primary-color !important;
+}
+
+.blue-banner {
     background: $primary-color;
+    
+    h1 {
+        color: #fff;
+        margin: 0 0 2px;
+    }
 }
 
-.wrapper.main-wrapper {
-    padding-left: 40px;
-}
-
-.ribbon-column.columns {
-    width: 60px;
-}
-
-.main-column.columns {
-    width: 480px;
+.content-wrapper {
+    padding-top: 50px;
+    padding-bottom: 30px;
 }
