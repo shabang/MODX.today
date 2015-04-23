@@ -15,18 +15,16 @@ foreach ($cacheRequestParams as $reqParam) {
 $cacheParams = serialize($cacheParams);
 $cacheKey = 'articles-grid/' . md5($cacheParams);
 
-$cached = $modx->cacheManager->get($cacheKey);
-if (!empty($cached)) {
-    return $cached;
+$result = $modx->cacheManager->get($cacheKey);
+if (empty($result)) {
+    // Call getResourcesTag to handle processing of stuff
+    $snippet = $modx->getObject('modSnippet', array('name' => 'getResourcesTag'));
+    $snippet->setCacheable(false);
+    $result = $snippet->process($scriptProperties);
+    
+    // Write to the cache
+    $modx->cacheManager->set($cacheKey, $result);
 }
-
-// Call getResourcesTag to handle processing of stuff
-$snippet = $modx->getObject('modSnippet', array('name' => 'getResourcesTag'));
-$snippet->setCacheable(false);
-$result = $snippet->process($scriptProperties);
-
-// Write to the cache
-$modx->cacheManager->set($cacheKey, $result);
 
 // Check if we're dealing with an AJAX request
 $isAjax = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
