@@ -70,7 +70,7 @@ h1#logo {
         transition: fill #{$anchor-transition}, opacity #{$anchor-transition};
     }
     
-    &:hover {
+    &:hover, &:focus {
         background-color: rgba(#fff,.05);
     }
     
@@ -87,7 +87,7 @@ h1#logo {
 .icon-button {
     opacity: 0.8;
     transition: opacity #{$anchor-transition};
-    &:hover {
+    &:hover, &:focus {
         opacity: 1;
     }
 }
