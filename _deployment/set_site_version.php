@@ -28,7 +28,7 @@ $CacheBusting->set('value', '0');
 $CacheBusting->save();
 
 
-$cacheRefreshOptions =  array( 'system_settings' => array() );
-$modx->cacheManager-> refresh($cacheRefreshOptions);
+$cacheRefreshOptions =  array( 'system_settings' => array(), 'default' => array() );
+$modx->cacheManager->refresh($cacheRefreshOptions);
 
 print('Settings updated.'.PHP_EOL);
