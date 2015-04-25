@@ -22,7 +22,7 @@
                 font-size:r em(14);
                 color: $body-font-color;
                 
-                &:hover {
+                &:hover, &:focus {
                     color: $primary-color;
                 }
             }
@@ -32,8 +32,10 @@
                 transition: fill .2s ease-in-out;
             }
             
-            a:hover .breadcrumbs__icon-home {
+            a:hover, a:focus {
+              .breadcrumbs__icon-home {
                 fill: $primary-color;
+              }
             }
             
             &.current{
