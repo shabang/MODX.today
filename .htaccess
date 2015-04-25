@@ -132,6 +132,16 @@ RewriteRule ^(\.|_backup|_deployment|_gitify|core|config\.core\.php|package\.jso
 
 
 # ----------------------------------------------------------------------
+#  filename based cache busting
+# ----------------------------------------------------------------------
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)\.(\d+)\.(ico|js|css|jpg|png|gif|svg|eot|ttf|woff)$ $1.$3
+
+
+
+# ----------------------------------------------------------------------
 # Custom Rewrites
 # ----------------------------------------------------------------------
 
