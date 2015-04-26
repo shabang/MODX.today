@@ -218,12 +218,12 @@ $slick-next-character: '\25B8'; //'▸'
 // d. Media Query Ranges
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
-   $xsmall-range: (0rem, em(450));
-   $small-range: (0rem, em(768));
+   $xsmall-range: (0em, em(450));
+   $small-range: (0em, em(768));
    $medium-range: (em(769), em(1024));
    $large-range: (em(1025), em(1199));
    $xlarge-range: (em(1200), em(1264));
-   $xxlarge-range: (em(1265), 99999999rem);
+   $xxlarge-range: (em(1265), 99999999em);
 
    $screen: "only screen";
 
