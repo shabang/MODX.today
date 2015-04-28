@@ -16,7 +16,7 @@ git clone https://github.com/modmore/MODX.today.git
 
 Then navigate into the main folder of the repository and install node dependencies:
 ```
-cd MODXtoday
+cd MODX.today
 npm install
 ```
 
