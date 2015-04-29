@@ -1,4 +1,4 @@
 key: use_weblink_target
-value: '1'
+value: '0'
 xtype: combo-boolean
 area: site

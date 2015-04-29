@@ -1,0 +1,3 @@
+name: hits
+path: '{core_path}components/hits/'
+assets_path: '{assets_path}components/hits'

@@ -1,0 +1,47 @@
+Changelog file for Hits component.
+
+Hits 1.3.0
+++++++++++++++++++++++++++
+#14 hit_keys support
+
+Hits 1.2.1
+++++++++++++++++++++++++++
+#1 MySQL Optimization (thanks @the-dunnock)
+
+Hits 1.2.0
+++++++++++++++++++++++++++
+#4 Adding Knockout feature to zero out values before incrementing
+
+Hits 1.1.0
+++++++++++++++++++++++++++
+#9 [Feature] Added offset support
+Removing empty assets folder
+
+Hits 1.0.4
+++++++++++++++++++++++++++
+#7 Fixed Trailing Output bug
+#8 Fixed Limit bug
+
+Hits 1.0.3
+++++++++++++++++++++++++++
+chunkParents hotfix
+
+Hits 1.0.2
+++++++++++++++++++++++++++
+chunkFix default tpl
+
+Hits 1.0.0
+++++++++++++++++++++++++++
+chunkInitial release
+
+Hits 0.1.2
+++++++++++++++++++++++++++
+chunkAdding support for &parents=`0`
+
+Hits 0.1.1
+++++++++++++++++++++++++++
+chunkRemoving setup options
+
+Hits 0.1.0
+++++++++++++++++++++++++++
+chunkInitial commit

@@ -184,6 +184,7 @@ packages:
       - getresources
       - getpage
       - getcache
+      - hits
       - formit
       - seopro
       - translit
