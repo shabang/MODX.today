@@ -1,0 +1,22 @@
+id: 35
+name: search.no_results
+description: ''
+properties: 'a:0:{}'
+
+-----
+
+<div class="row">
+    <div class="[[++default_article_column_classnames]]">
+        <h1>No results found :-(</h1>
+        <p>Oh no! We couldn't find any articles matching your search query. Make sure your search term is at least two characters long, and that it is not <em>too</em> specific. </p>
+    
+        
+        <h2>Try again</h2>
+        <form action="[[~[[*id]]]]" method="get">
+            <input type="search" name="search" placeholder="Enter search term…" required>
+            <button type="submit" class="button">
+                Search
+            </button>
+        </form>
+    </div>
+</div>
