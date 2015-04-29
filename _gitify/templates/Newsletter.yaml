@@ -11,6 +11,7 @@ properties: 'a:0:{}'
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width"/>
     
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Slab:400,700" rel="stylesheet" type="text/css">
     <style type="text/css">
         [[!includeFile? &file=`/assets/tpl/dist/newsletter.css`]]
     </style>
@@ -56,19 +57,34 @@ properties: 'a:0:{}'
             <table class="container"> <!-- Container restricts the content width -->
               <tr>
                 <td class="content-wrapper"> <!-- Wrapper stays on the inner table -->
-
+                    
+                    <p>Hi *|FNAME|*,</p>
                     [[*introtext]]
 
-                  [[getResources?
-                    &parents=`1`
-                    &limit=`0`
-                    &includeTVs=`1`
-                    &includeTVList=`home.read_more,preview.image,podcast.number`
-                    &tpl=`email.article.full-width`
-                    &where=`{"publishedon:>":[[getTime? &input=`-7 days`]]}`
-                    &sortby=`publishedon`
-                  ]]
+                    [[getResources?
+                        &parents=`1`
+                        &limit=`0`
+                        &includeTVs=`1`
+                        &includeTVList=`home.read_more,preview.image,podcast.number`
+                        &tpl=`email.article.full-width`
+                        &where=`{"publishedon:>":[[getTime? &input=`-7 days`]]}`
+                        &sortby=`publishedon`
+                    ]]
     
+                </td>
+              </tr>
+            </table>
+            
+            
+            
+            <table class="container footer-container"> <!-- Container restricts the content width -->
+              <tr>
+                <td class="content-wrapper footer"> <!-- Wrapper stays on the inner table -->
+
+                    <p>MODX.today Reading List is a service by MODX.today, founded by modmore</p>
+                    <p>Sent to *|EMAIL|* – <a href="*|UNSUB|*">Unsubscribe</a> or <a href="*|UPDATE_PROFILE|*">update your profile</a></p>
+                    
+                    *|REWARDS|*
                 </td>
               </tr>
             </table>
