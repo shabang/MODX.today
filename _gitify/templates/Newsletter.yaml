@@ -58,7 +58,6 @@ properties: 'a:0:{}'
               <tr>
                 <td class="content-wrapper"> <!-- Wrapper stays on the inner table -->
                     
-                    <p>Hi *|FNAME|*,</p>
                     [[*introtext]]
 
                     [[getResources?
@@ -67,7 +66,7 @@ properties: 'a:0:{}'
                         &includeTVs=`1`
                         &includeTVList=`home.read_more,preview.image,podcast.number`
                         &tpl=`email.article.full-width`
-                        &where=`{"publishedon:>":[[getTime? &input=`-7 days`]]}`
+                        &where=`{"publishedon:>":[[getTime? &input=`[[*week]]`]], "AND:publishedon:<":[[getTime? &input=`[[*week]] + 7 days`]]}`
                         &sortby=`publishedon`
                     ]]
     
