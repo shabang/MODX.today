@@ -36,7 +36,7 @@ properties: 'a:0:{}'
                             <tr>
                               <td>
             
-                                <h1>MODX.today Reading List <small class="week">[[*pagetitle]]</small></h1>
+                                <h1>MODX.today <span class="nowrap">Reading List</span> <small class="week">[[*pagetitle]]</small></h1>
             
                               </td>
                               <td class="expander"></td>
@@ -107,7 +107,7 @@ properties: 'a:0:{}'
                 <td class="content-wrapper footer"> <!-- Wrapper stays on the inner table -->
 
                     <p>MODX.today Reading List is a service by MODX.today, founded by modmore</p>
-                    <p>Sent to *|EMAIL|* – <a href="*|UNSUB|*">Unsubscribe</a> or <a href="*|UPDATE_PROFILE|*">update your profile</a></p>
+                    <p>Sent to <a href="*|UPDATE_PROFILE|*">*|EMAIL|*</a> – <a href="*|UNSUB|*">Unsubscribe</a> or <a href="*|UPDATE_PROFILE|*">update your profile</a></p>
                     
                     *|REWARDS|*
                 </td>
