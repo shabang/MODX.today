@@ -10,7 +10,7 @@ properties: 'a:0:{}'
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width"/>
-    
+    <title>MODX.today Reading List [[*pagetitle]]</title>
     <link href="http://fonts.googleapis.com/css?family=Roboto:400,500|Roboto+Slab:400,700" rel="stylesheet" type="text/css">
     <style type="text/css">
         [[!includeFile? &file=`/assets/tpl/dist/newsletter.css`]]
@@ -60,15 +60,41 @@ properties: 'a:0:{}'
                     
                     [[*introtext]]
 
-                    [[getResources?
-                        &parents=`1`
-                        &limit=`0`
-                        &includeTVs=`1`
-                        &includeTVList=`home.read_more,preview.image,podcast.number`
-                        &tpl=`email.article.full-width`
-                        &where=`{"publishedon:>":[[getTime? &input=`[[*week]]`]], "AND:publishedon:<":[[getTime? &input=`[[*week]] + 7 days`]]}`
-                        &sortby=`publishedon`
-                    ]]
+[[!getCache:toPlaceholder=`most_read_ids`? 
+    &element=`Hits`
+    &cacheExpires=`[[*published:is=`1`:then=`300`:else=`0`]]`
+    &cacheKey=`most_read_posts`
+    &cacheElementKey=`newsletter-[[*week]]`
+    &parents=`1` 
+    &limit=`0` 
+    &outputSeparator=`,`
+]]
+    
+[[!getResources?
+    &parents=`-1`
+    &resources=`[[!+most_read_ids]]`
+    &sortby=`FIELD(modResource.id, [[!+most_read_ids]])`
+    &sortdir=`ASC`
+    &where=`{"publishedon:>":[[getTime? &input=`[[*week]]`]], "AND:publishedon:<":[[getTime? &input=`[[*week]] + 7 days`]], "AND:template:=":"2"}`
+    
+    &limit=`0`
+    &includeTVs=`1`
+    &includeTVList=`home.read_more,preview.image,podcast.number`
+    &tpl=`email.article.full-width`
+]]
+                    
+[[!getResources?
+    &parents=`-1`
+    &resources=`[[!+most_read_ids]]`
+    &sortby=`FIELD(modResource.id, [[!+most_read_ids]])`
+    &sortdir=`ASC`
+    &where=`{"publishedon:>":[[getTime? &input=`[[*week]]`]], "AND:publishedon:<":[[getTime? &input=`[[*week]] + 7 days`]], "AND:template:!=":"2"}`
+    
+    &limit=`0`
+    &includeTVs=`1`
+    &includeTVList=`home.read_more,preview.image,podcast.number`
+    &tpl=`email.article.full-width`
+]]
     
                 </td>
               </tr>
