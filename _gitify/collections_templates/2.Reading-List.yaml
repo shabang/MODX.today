@@ -3,6 +3,7 @@ name: 'Reading List'
 sort_dir: desc
 child_template: 7
 resource_type_selection: 0
+content_place: none
 child_hide_from_menu: null
 child_published: null
 child_cacheable: null
