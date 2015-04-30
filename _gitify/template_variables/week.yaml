@@ -1,0 +1,14 @@
+id: 8
+source: 1
+type: text
+name: week
+caption: 'Year & Week'
+description: 'Format: {YYYY}W{WW} (week needs two digits)'
+category: 'Reading List'
+elements: ''
+display: default
+default_text: ''
+properties: 'a:0:{}'
+input_properties: 'a:3:{s:10:"allowBlank";s:5:"false";s:9:"maxLength";s:0:"";s:9:"minLength";s:0:"";}'
+output_properties: 'a:0:{}'
+content: ''
