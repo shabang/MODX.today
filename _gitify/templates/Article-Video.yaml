@@ -43,11 +43,14 @@ properties: 'a:0:{}'
                                 },
                                 'afterInit': function(){
                                     [[- poster-less preview http://support.jwplayer.com/customer/portal/articles/1439795-example-a-poster-less-preview ]]
+                                    var isFirst = true;
                                     jwplayer('jwplayer-video-[[*id]]').onPlay(function(){
+                                        if (isFirst === false) return;
                                         var self = this;
                                         setTimeout(function() {
                                             self.pause().setMute(false).setControls(true);
                                         },300);
+                                        isFirst = false;
                                     });
                                 }
                             });
