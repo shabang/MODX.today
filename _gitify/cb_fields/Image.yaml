@@ -6,7 +6,7 @@ sortorder: 3
 icon: image
 icon_type: core
 template: "[[+linked:eq=`1`:then=`<a href=\"[[+url]]\" title=\"View Full Image\" target=\"_blank\">`:else=``]]\n<figure class=\"content-image [[+class]] [[+classnames]]\">\n    <img data-src=\"[[+url]]\" class=\"lazyload\" alt=\"[[+title:striptags]]\" [[+style:notempty=`style=\"[[+style]]\"`]]>\n    [[+title:notempty=`<figcaption>[[+title]]</figcaption>`]]\n</figure>\n[[+linked:eq=`1`:then=`</a>`:else=``]]\n"
-properties: '{"source":"0","directory":"[[+year]]\/[[+month]]\/","file_types":"png,gif,jpg,jpeg","use_tinyrte":"1"}'
+properties: '{"source":"0","directory":"images\/[[+year]]\/[[+month]]\/","file_types":"png,gif,jpg,jpeg","use_tinyrte":"1"}'
 availability: '[]'
 layouts: ''
 times_per_layout: 0
