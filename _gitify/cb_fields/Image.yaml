@@ -2,7 +2,7 @@ id: 4
 input: image_with_title
 name: Image
 description: ''
-sortorder: 3
+sortorder: 4
 icon: image
 icon_type: core
 template: "[[+linked:eq=`1`:then=`<a href=\"[[+url]]\" title=\"View Full Image\" target=\"_blank\">`:else=``]]\n<figure class=\"content-image [[+class]] [[+classnames]]\">\n    <img data-src=\"[[+url]]\" class=\"lazyload\" alt=\"[[+title:striptags]]\" [[+style:notempty=`style=\"[[+style]]\"`]]>\n    [[+title:notempty=`<figcaption>[[+title]]</figcaption>`]]\n</figure>\n[[+linked:eq=`1`:then=`</a>`:else=``]]\n"
