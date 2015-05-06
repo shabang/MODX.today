@@ -11,7 +11,7 @@
 
 // import "../bower_components/masonry/dist/masonry.pkgd.js";
 
-// i-m-port "../bower_components/slick.js/slick/slick.js";
+// import "../bower_components/slick.js/slick/slick.js";
 
 // import "_garlic.min.js";
 // import "_prism.js";
@@ -362,7 +362,21 @@ $(function(){
             }
         });
     }
-});
+
+
+
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     *	Instantiate Slick galleries
+     * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    var $galleries = $('.gallery');
+    if ($galleries.length > 0) {
+        $galleries.each(function(i, gal) { $(gal).slick({
+            slide: 'div'
+        }); });
+    }
+ });
 
 
 
