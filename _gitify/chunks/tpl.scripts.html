@@ -60,7 +60,13 @@ window.lazySizesConfig = {
         });
         loadCSS('https://fonts.googleapis.com/css?family=Roboto:400,500,700|Roboto+Slab:400,400italic,700');
         if (window.jqueryLoaded !== true) loadJS('/assets/tpl/dist/jquery-2.1.3.min.js', false);
-        loadJS('/assets/tpl/dist/main.[[+site_version]].js', true);
+        loadJS('/assets/tpl/dist/main.[[+site_version]].js', true, function() {
+          [[+load.jwplayer:is=`1`:then=`
+             loadJS('https://jwpsrv.com/library/B9EyNH7jEeSd7g6sC0aurw.js', true, function(){
+               renderJWPlayers();
+             });
+          `:else=``]]
+       });
         
     [[*parent:is=`1`:then=`
         loadJS('//modxtoday.disqus.com/embed.js', true);
@@ -89,11 +95,7 @@ window.lazySizesConfig = {
         loadJS('//modxtoday.disqus.com/count.js', true);
     `]]
     
-    [[+load.jwplayer:is=`1`:then=`
-        loadJS('https://jwpsrv.com/library/B9EyNH7jEeSd7g6sC0aurw.js', true, function(){
-            renderJWPlayers();
-        });
-    `:else=``]]
+
     });
     
     function onContentLoaded(callback) {
