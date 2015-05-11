@@ -172,9 +172,10 @@ RewriteRule ^(.+)\.(\d+)\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf|svg|eot|ttf|w
 # ----------------------------------------------------------------------
 # remove etag
 # ----------------------------------------------------------------------
-
-Header unset ETag
-FileETag None
+<IfModule mod_headers.c>
+	Header unset ETag
+	FileETag None
+</IfModule>
 
 
 
@@ -183,7 +184,6 @@ FileETag None
 #  Compression
 # ----------------------------------------------------------------------
 
-<IfModule mod_deflate.c>
 
 # Force compression for mangled `Accept-Encoding` request headers
 # https://developer.yahoo.com/blogs/ydn/pushing-beyond-gzipping-25601.html
