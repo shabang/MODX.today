@@ -1,0 +1,7 @@
+id: 9
+template: 1
+label: Hits
+name: parent
+width: 50
+php_renderer: hitsColumnRenderer
+position: 6
