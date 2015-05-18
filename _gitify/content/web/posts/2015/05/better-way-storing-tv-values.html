@@ -1,0 +1,82 @@
+id: 133
+pagetitle: 'A better way of storing TV Values'
+alias: 2015/05/better-way-storing-tv-values
+published: 1
+parent: 1
+introtext: '<p>When using checkbox, listbox and radio type TVs, you are&nbsp;probably used to defining the values in the TV properties. But if you want to change those values to fix a typo, you will lose the selections on all resources that have that value selected. The team at Qaraqter found that unacceptable, and came up with a solution in the form of a new extra called <em>Set Input Options</em>.&nbsp;</p>'
+template: 2
+menuindex: 38
+createdby: 2
+publishedon: 1431941340
+publishedby: 2
+uri: posts/2015/05/better-way-storing-tv-values
+show_in_tree: 0
+properties: '{"contentblocks":{"content":"[{\"layout\":3,\"content\":{\"col1\":[{\"value\":\"<p>In the Swiss army knife that is MODX, TV\u2019s still play a major role in creating and managing your content. There\u2019s a few different input types available, and I\u2019m sure you\u2019re also using the checkbox, listbox and radio types every now and then. The options for those TV\u2019s are defined in the Input Option Values field, using the familiar double-equals and double-pipes formatting:<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"Man||Bear||Pig\\nOption 1==value1||Option 2==value2\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"<p>This works fine in a lot of cases, but there is a problem with this. If you want to change the value of the option (typo\u2019s, different chunk name, etc), all the TV\u2019s with the old value(s) selected, will loose these selections. Very inconvenient, if your client just filled 80 resources with their content and set the TV\u2019s accordingly.<\/p><p>Especially for larger, more complex projects, this is unacceptable behaviour. The selected values of TV\u2019s should be referenced in the database by a unique ID. This way, you can change whatever you want in the value, without harming the existing selections. And we created a little extra called Set Input Options to do just that.<\/p>\",\"field\":2,\"settings\":[]},{\"url\":\"\/assets\/uploads\/images\/2015\/05\/Screen_Shot_2015_05_18_at_10.49.07.png\",\"title\":\"The Set Input Options component, showing the configured groups.\",\"size\":\"54092\",\"extension\":\"png\",\"field\":4,\"settings\":[]},{\"value\":\"How to use Set Input Options to manage your TV\u2019s\",\"level\":\"h2\",\"field\":3,\"settings\":[]},{\"value\":\"<p>Set Input Options is a very basic CMP that allows you to create groups with their own input options. These options can then be used in TV''s, for checkboxes \/ listboxes etc.<\/p><p>To set it up, you have to go through the following steps:<\/p><ol><li>Install SetInputOptions through the package manager<\/li><li>Go to <em>Extras<\/em> &gt; <em>Set Input Options<\/em> and create a group with some options<\/li><li>Create a TV with an @SELECT binding in the Input Options Value field, that points to the options created in step 2 (see example below)<\/li><li>Fetch the input option values in your content with the getInputOptions or Rowboat snippets<\/li><\/ol>\",\"field\":2,\"settings\":[]},{\"url\":\"\/assets\/uploads\/images\/2015\/05\/Screen_Shot_2015_05_18_at_10.49.55.png\",\"title\":\"Showing a list of options in a group in the Set Input Options component.\",\"size\":\"70094\",\"extension\":\"png\",\"field\":4,\"settings\":[]},{\"value\":\"Connect your TV to your custom input options\",\"level\":\"h3\",\"field\":3,\"settings\":[]},{\"value\":\"<p>An example of an @SELECT binding for checkboxes and radios:<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"@SELECT `name` AS `name`,`id` FROM `[[+PREFIX]]setinputoptions_inputoptions` WHERE `group` = 2 AND `softDelete` = 0 ORDER BY `position`\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"<p>An example @SELECT binding for listboxes and multiselects. Note the first part up till <em>UNION ALL<\/em>. This adds an empty first item to your TV, so by default, nothing will be selected.<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"@SELECT '''' AS name, '''' AS id UNION ALL ( SELECT `name` AS `name`,`id` FROM `[[+PREFIX]]setinputoptions_inputoptions` WHERE `group` = 1 AND `softDelete` = 0 ORDER BY `position` )\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"<p><strong>Important<\/strong> Don\u2019t forget to use a `,` as output delimiter, in order for the getInputOptions snippet to work!<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"Display input option values using the getInputOptions snippet\",\"level\":\"h3\",\"field\":3,\"settings\":[]},{\"value\":\"<p>To reconnect the unique ID of the input option to the name that needs to be displayed, you can use the getInputOptions snippet. This snippet needs a comma separated list of ID\u2019s as input, which it will get from the TV. By default, only the name of the value is being displayed, but you can use your own tpl chunk to override this.<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"[[getInputOptions? &tv=`[[*your_template_variable]]` &tpl=`yourTplChunk`]]\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"<p><strong>Available Properties:<\/strong><\/p><ul><li><b style=\\\"background-color: initial;\\\"><\/b>tpl<\/li><li>delimiter<\/li><li>outputDelimiter<\/li><\/ul><p><strong>Available Placeholders in the row tpl:<\/strong><\/p><ul><li>name<\/li><li>alias<\/li><\/ul>\",\"field\":2,\"settings\":[]},{\"value\":\"Display input option values using the Rowboat snippet\",\"level\":\"h2\",\"field\":3,\"settings\":[]},{\"value\":\"<p>You can also use&nbsp;<a href=\\\"http:\/\/rtfm.modx.com\/extras\/revo\/rowboat\\\" target=\\\"_blank\\\">Rowboat<\/a> to list all the options in a group. Useful for example, for creating filter buttons. Don''t forget to download and install Rowboat separately through the package manager!<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"[[Rowboat?\\n    &table=`modx_setinputoptions_inputoptions`\\n    &tpl=`filterButtonsRow`\\n    &limit=`10`\\n    &sortBy=`position`\\n    &where=`{\\\"group\\\":\\\"1\\\"}`\\n]]\",\"lang\":\"html\",\"field\":10,\"settings\":[]}]},\"settings\":[],\"parent\":0}]","linear":[{"value":"<p>In the Swiss army knife that is MODX, TV\u2019s still play a major role in creating and managing your content. There\u2019s a few different input types available, and I\u2019m sure you\u2019re also using the checkbox, listbox and radio types every now and then. The options for those TV\u2019s are defined in the Input Option Values field, using the familiar double-equals and double-pipes formatting:<\/p>","field":2,"settings":[]},{"value":"Man||Bear||Pig\nOption 1==value1||Option 2==value2","lang":"html","field":10,"settings":[]},{"value":"<p>This works fine in a lot of cases, but there is a problem with this. If you want to change the value of the option (typo\u2019s, different chunk name, etc), all the TV\u2019s with the old value(s) selected, will loose these selections. Very inconvenient, if your client just filled 80 resources with their content and set the TV\u2019s accordingly.<\/p><p>Especially for larger, more complex projects, this is unacceptable behaviour. The selected values of TV\u2019s should be referenced in the database by a unique ID. This way, you can change whatever you want in the value, without harming the existing selections. And we created a little extra called Set Input Options to do just that.<\/p>","field":2,"settings":[]},{"url":"\/assets\/uploads\/images\/2015\/05\/Screen_Shot_2015_05_18_at_10.49.07.png","title":"The Set Input Options component, showing the configured groups.","size":"54092","extension":"png","field":4,"settings":[]},{"value":"How to use Set Input Options to manage your TV\u2019s","level":"h2","field":3,"settings":[]},{"value":"<p>Set Input Options is a very basic CMP that allows you to create groups with their own input options. These options can then be used in TV''s, for checkboxes \/ listboxes etc.<\/p><p>To set it up, you have to go through the following steps:<\/p><ol><li>Install SetInputOptions through the package manager<\/li><li>Go to <em>Extras<\/em> &gt; <em>Set Input Options<\/em> and create a group with some options<\/li><li>Create a TV with an @SELECT binding in the Input Options Value field, that points to the options created in step 2 (see example below)<\/li><li>Fetch the input option values in your content with the getInputOptions or Rowboat snippets<\/li><\/ol>","field":2,"settings":[]},{"url":"\/assets\/uploads\/images\/2015\/05\/Screen_Shot_2015_05_18_at_10.49.55.png","title":"Showing a list of options in a group in the Set Input Options component.","size":"70094","extension":"png","field":4,"settings":[]},{"value":"Connect your TV to your custom input options","level":"h3","field":3,"settings":[]},{"value":"<p>An example of an @SELECT binding for checkboxes and radios:<\/p>","field":2,"settings":[]},{"value":"@SELECT `name` AS `name`,`id` FROM `[[+PREFIX]]setinputoptions_inputoptions` WHERE `group` = 2 AND `softDelete` = 0 ORDER BY `position`","lang":"html","field":10,"settings":[]},{"value":"<p>An example @SELECT binding for listboxes and multiselects. Note the first part up till <em>UNION ALL<\/em>. This adds an empty first item to your TV, so by default, nothing will be selected.<\/p>","field":2,"settings":[]},{"value":"@SELECT '''' AS name, '''' AS id UNION ALL ( SELECT `name` AS `name`,`id` FROM `[[+PREFIX]]setinputoptions_inputoptions` WHERE `group` = 1 AND `softDelete` = 0 ORDER BY `position` )","lang":"html","field":10,"settings":[]},{"value":"<p><strong>Important<\/strong> Don\u2019t forget to use a `,` as output delimiter, in order for the getInputOptions snippet to work!<\/p>","field":2,"settings":[]},{"value":"Display input option values using the getInputOptions snippet","level":"h3","field":3,"settings":[]},{"value":"<p>To reconnect the unique ID of the input option to the name that needs to be displayed, you can use the getInputOptions snippet. This snippet needs a comma separated list of ID\u2019s as input, which it will get from the TV. By default, only the name of the value is being displayed, but you can use your own tpl chunk to override this.<\/p>","field":2,"settings":[]},{"value":"[[getInputOptions? &tv=`[[*your_template_variable]]` &tpl=`yourTplChunk`]]","lang":"html","field":10,"settings":[]},{"value":"<p><strong>Available Properties:<\/strong><\/p><ul><li><b style=\"background-color: initial;\"><\/b>tpl<\/li><li>delimiter<\/li><li>outputDelimiter<\/li><\/ul><p><strong>Available Placeholders in the row tpl:<\/strong><\/p><ul><li>name<\/li><li>alias<\/li><\/ul>","field":2,"settings":[]},{"value":"Display input option values using the Rowboat snippet","level":"h2","field":3,"settings":[]},{"value":"<p>You can also use&nbsp;<a href=\"http:\/\/rtfm.modx.com\/extras\/revo\/rowboat\" target=\"_blank\">Rowboat<\/a> to list all the options in a group. Useful for example, for creating filter buttons. Don''t forget to download and install Rowboat separately through the package manager!<\/p>","field":2,"settings":[]},{"value":"[[Rowboat?\n    &table=`modx_setinputoptions_inputoptions`\n    &tpl=`filterButtonsRow`\n    &limit=`10`\n    &sortBy=`position`\n    &where=`{\"group\":\"1\"}`\n]]","lang":"html","field":10,"settings":[]}],"fieldcounts":{"2":9,"10":5,"4":2,"3":4},"_isContentBlocks":true}}'
+tvs:
+    author: hugopeek
+    preview.image: images/2015/05/Screen_Shot_2015_05_18_at_10.49.07.png
+
+-----
+
+<div class="row   " >
+    <div class="[[++default_article_column_classnames]]">
+        <p>In the Swiss army knife that is MODX, TV’s still play a major role in creating and managing your content. There’s a few different input types available, and I’m sure you’re also using the checkbox, listbox and radio types every now and then. The options for those TV’s are defined in the Input Option Values field, using the familiar double-equals and double-pipes formatting:</p>
+
+<pre><code class="language-markup">Man||Bear||Pig
+Option 1==value1||Option 2==value2</code></pre>
+
+<p>This works fine in a lot of cases, but there is a problem with this. If you want to change the value of the option (typo’s, different chunk name, etc), all the TV’s with the old value(s) selected, will loose these selections. Very inconvenient, if your client just filled 80 resources with their content and set the TV’s accordingly.</p><p>Especially for larger, more complex projects, this is unacceptable behaviour. The selected values of TV’s should be referenced in the database by a unique ID. This way, you can change whatever you want in the value, without harming the existing selections. And we created a little extra called Set Input Options to do just that.</p>
+
+
+<figure class="content-image extended-width ">
+    <img data-src="/assets/uploads/images/2015/05/Screen_Shot_2015_05_18_at_10.49.07.png" class="lazyload" alt="The Set Input Options component, showing the configured groups." >
+    <figcaption>The Set Input Options component, showing the configured groups.</figcaption>
+</figure>
+
+
+
+<h2>How to use Set Input Options to manage your TV’s</h2>
+
+<p>Set Input Options is a very basic CMP that allows you to create groups with their own input options. These options can then be used in TV's, for checkboxes / listboxes etc.</p><p>To set it up, you have to go through the following steps:</p><ol><li>Install SetInputOptions through the package manager</li><li>Go to <em>Extras</em> &gt; <em>Set Input Options</em> and create a group with some options</li><li>Create a TV with an @SELECT binding in the Input Options Value field, that points to the options created in step 2 (see example below)</li><li>Fetch the input option values in your content with the getInputOptions or Rowboat snippets</li></ol>
+
+
+<figure class="content-image extended-width ">
+    <img data-src="/assets/uploads/images/2015/05/Screen_Shot_2015_05_18_at_10.49.55.png" class="lazyload" alt="Showing a list of options in a group in the Set Input Options component." >
+    <figcaption>Showing a list of options in a group in the Set Input Options component.</figcaption>
+</figure>
+
+
+
+<h3>Connect your TV to your custom input options</h3>
+
+<p>An example of an @SELECT binding for checkboxes and radios:</p>
+
+<pre><code class="language-markup">@SELECT `name` AS `name`,`id` FROM `&#91;&#91;+PREFIX&#93;&#93;setinputoptions_inputoptions` WHERE `group` = 2 AND `softDelete` = 0 ORDER BY `position`</code></pre>
+
+<p>An example @SELECT binding for listboxes and multiselects. Note the first part up till <em>UNION ALL</em>. This adds an empty first item to your TV, so by default, nothing will be selected.</p>
+
+<pre><code class="language-markup">@SELECT '' AS name, '' AS id UNION ALL ( SELECT `name` AS `name`,`id` FROM `&#91;&#91;+PREFIX&#93;&#93;setinputoptions_inputoptions` WHERE `group` = 1 AND `softDelete` = 0 ORDER BY `position` )</code></pre>
+
+<p><strong>Important</strong> Don’t forget to use a `,` as output delimiter, in order for the getInputOptions snippet to work!</p>
+
+<h3>Display input option values using the getInputOptions snippet</h3>
+
+<p>To reconnect the unique ID of the input option to the name that needs to be displayed, you can use the getInputOptions snippet. This snippet needs a comma separated list of ID’s as input, which it will get from the TV. By default, only the name of the value is being displayed, but you can use your own tpl chunk to override this.</p>
+
+<pre><code class="language-markup">&#91;&#91;getInputOptions? &amp;tv=`&#91;&#91;*your_template_variable&#93;&#93;` &amp;tpl=`yourTplChunk`&#93;&#93;</code></pre>
+
+<p><strong>Available Properties:</strong></p><ul><li><b style="background-color: initial;"></b>tpl</li><li>delimiter</li><li>outputDelimiter</li></ul><p><strong>Available Placeholders in the row tpl:</strong></p><ul><li>name</li><li>alias</li></ul>
+
+<h2>Display input option values using the Rowboat snippet</h2>
+
+<p>You can also use&nbsp;<a href="http://rtfm.modx.com/extras/revo/rowboat" target="_blank">Rowboat</a> to list all the options in a group. Useful for example, for creating filter buttons. Don't forget to download and install Rowboat separately through the package manager!</p>
+
+<pre><code class="language-markup">&#91;&#91;Rowboat?
+    &amp;table=`modx_setinputoptions_inputoptions`
+    &amp;tpl=`filterButtonsRow`
+    &amp;limit=`10`
+    &amp;sortBy=`position`
+    &amp;where=`{&quot;group&quot;:&quot;1&quot;}`
+&#93;&#93;</code></pre>
+    </div>
+</div>
