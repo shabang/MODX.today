@@ -4,8 +4,8 @@ name: 'Slick Gallery'
 description: ''
 sortorder: 5
 icon: gallery
-template: "<div class=\"slick-slide\">\n    <img src=\"[[+url]]\" alt=\"[[+title]]\">\n    <div class=\"gallery-slide-info\">\n        [[+title:notempty=`<h3>[[+title]]</h3>`]]\n        [[+description:notempty=`<p>[[+description]]</p>`]]\n    </div>\n</div>"
-properties: '{"wrapper_template":"<div class=\"gallery extendessd-width\">\n    [[+images]]\n<\/div>","max_images":"12","thumb_size":"medium","source":"0","show_description":"1","show_link_field":"0","directory":"images\/[[+year]]\/[[+month]]\/","file_types":"png,gif,jpg,jpeg"}'
+template: "<div class=\"slick-slide\">\n    <figure class=\"content-image\">\n        <img data-src=\"[[+url]]\" class=\"lazyload\" alt=\"[[+title:htmlent]]\">\n        [[+title:notempty=`\n            <figcaption class=\"gallery-slide-info\">\n                <span class=\"title\">[[+title]]</span>\n                [[+description:notempty=`<p><small class=\"description\">[[+description]]</small></p>`]]\n            </figcaption>`]]\n    </figure>\n</div>"
+properties: '{"wrapper_template":"<div class=\"gallery slick-slider slick-centerMode\" data-slider=\"slick\" data-options=\"slide:div;autoplay:false;centerMode:true;centerPadding:16%;\">\n    [[+images]]\n<\/div>","max_images":"12","thumb_size":"medium","source":"0","show_description":"1","show_link_field":"0","directory":"images\/[[+year]]\/[[+month]]\/","file_types":"png,gif,jpg,jpeg"}'
 availability: '[]'
 layouts: ''
 settings: '[]'

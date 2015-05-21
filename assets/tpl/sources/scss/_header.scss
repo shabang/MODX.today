@@ -67,7 +67,7 @@ h1#logo {
         margin: 0 auto;
         padding: rem(30);
         fill: #fff;
-        transition: fill #{$anchor-transition}, opacity #{$anchor-transition};
+        transition: fill $anchor-transition, opacity $anchor-transition;
     }
     
     &:hover, &:focus {

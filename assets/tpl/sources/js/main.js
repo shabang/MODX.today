@@ -201,6 +201,16 @@ $(function(){
 			};
 		}
 */
+
+        // disable center mode for small-screens
+        options.responsive = [{
+              breakpoint: 769,
+              settings: {
+                centerMode: false,
+                centerPadding: 0
+              }
+        }];
+        
 		$(this).slick(options);
 	});
 
