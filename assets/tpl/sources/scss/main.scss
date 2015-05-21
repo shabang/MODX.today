@@ -48,8 +48,9 @@
 
 
 //	/!\ disable icon-font loading in slick.scss !!!
+$slick-font-family: 'foo';
 @import "../bower_components/slick.js/slick/slick.scss";
-@import "../bower_components/slick.js/slick/slick-theme.scss";
+//@import "../bower_components/slick.js/slick/slick-theme.scss";
 
 
 // Atoms

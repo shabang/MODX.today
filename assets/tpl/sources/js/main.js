@@ -172,26 +172,9 @@ $(function(){
 	$('[data-slider]').each(function(index, slider){
 
 		var options = Foundation.utils.data_options($(this));
-
-		if ($('.custom-controls', slider).length) {
-			//options.prevArrow = $('.custom-controls .prev', slider);
-			//options.nextArrow = $('.custom-controls .next', slider);
-
-
-		}
-
-		var controls = $('<div class="custom-controls"></div>').appendTo(slider);
-		options.prevArrow = $('<button class="prev"><svg role="presentation"><use xlink:href="'+window.projectvars.svgsprite+'#slider-arrow-prev"/></svg></button>').appendTo(controls);
-		options.nextArrow = $('<button class="next"><svg role="presentation"><use xlink:href="'+window.projectvars.svgsprite+'#slider-arrow-next"/></svg></button>').appendTo(controls);
-
 		options.lazyLoad = 'ondemand'; //'progressive';
-
 		if (typeof options.slide == 'undefined') {
-			options.slide = 'section';
-		}
-
-		if ($('.custom-controls', slider).length && $('> '+options.slide, slider).length == 1) {
-			$('.custom-controls', slider).hide();
+			options.slide = 'div';
 		}
 
 		if (typeof options.autoplay == 'undefined') {
@@ -206,7 +189,7 @@ $(function(){
 		if (typeof options.dots == 'undefined') {
 			options.dots = true;
 		}
-
+/*
 		if ($(this).data('thumbs') === true ) {
 			options.customPaging = function(slider, j) {
 				if (typeof $(slider.$slides[j]).find('img').first().attr('src') == "undefined") {
@@ -217,7 +200,7 @@ $(function(){
 				return '<img alt="Slide '+(j+1)+'" src="'+ src +'" class="thumbnail">';
 			};
 		}
-
+*/
 		$(this).slick(options);
 	});
 
