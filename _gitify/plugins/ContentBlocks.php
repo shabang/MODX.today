@@ -151,13 +151,13 @@ HTML
     case 'OnDocFormSave':
         $ContentBlocks->setResource($resource);
 
-        $vc = $resource->get('contentblocks');
+        $cbJson = $resource->get('contentblocks');
 
-        $vcContent = $modx->fromJSON($vc);
-        if (!empty($vc) && $vcContent !== false && is_array($vcContent)) {
-            $summary = $ContentBlocks->summarizeContent($vcContent);
+        $cbContent = $modx->fromJSON($cbJson);
+        if (!empty($cbJson) && $cbContent !== false && is_array($cbContent)) {
+            $summary = $ContentBlocks->summarizeContent($cbContent);
             $resource->setProperties(array(
-                'content' => $vc,
+                'content' => $cbJson,
                 'linear' => $summary['linear'],
                 'fieldcounts' => $summary['fieldcounts'],
                 '_isContentBlocks' => true,
@@ -166,7 +166,7 @@ HTML
             // We save the CB data as soon as possible ...
             $resource->save();
             // ... then we parse it to HTML which is stored in the content ...
-            $resource->setContent($ContentBlocks->generateHtml($vcContent));
+            $resource->setContent($ContentBlocks->generateHtml($cbContent));
             // ... to make sure parse errors don't lose the content.
         }
         $resource->set('contentblocks', '');

@@ -3,11 +3,8 @@ input: repeater
 name: 'Podcast Content'
 description: ''
 icon: unorderedlist
-icon_type: core
 template: "<dt>[[+timestamp:notempty=`&#91;[[+timestamp]]&#93;`]]\n[[+link:notempty=`<a href=\"[[+link]]\">[[+title]]</a>`:empty=`[[+title]]`]]\n</dt>\n  <dd>[[+description]]</dd>"
 properties: '{"wrapper_template":"<h3>[[+headline]]<\/h3>\n<dl>\n  [[+rows]]\n<\/dl>","group":"[{\"id\":\"\",\"input\":\"textfield\",\"key\":\"timestamp\",\"name\":\"Timestamp\",\"width\":20,\"sortorder\":\"0\",\"template\":\"[[+value]]\",\"properties\":{}},{\"id\":\"\",\"input\":\"textfield\",\"key\":\"title\",\"name\":\"Title\",\"width\":50,\"sortorder\":\"1\",\"template\":\"[[+value]]\",\"properties\":{}},{\"id\":\"\",\"input\":\"link\",\"key\":\"link\",\"name\":\"Link\",\"width\":30,\"sortorder\":\"0\",\"template\":\"[[+link]]\",\"properties_link_detection_pattern_override\":\"\",\"properties\":{\"link_detection_pattern_override\":\"\"}},{\"id\":\"\",\"input\":\"richtext\",\"key\":\"description\",\"name\":\"Description\",\"width\":\"100\",\"sortorder\":\"3\",\"template\":\"[[+value]]\",\"properties\":{}}]","row_separator":"","max_items":"0"}'
 availability: '[{"field":"template","value":"6"}]'
 layouts: ''
-times_per_layout: 0
-times_per_page: 0
 settings: '[]'

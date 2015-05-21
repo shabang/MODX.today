@@ -136,6 +136,7 @@ Ext.extend(ContentBlocksComponent.grid.Fields,MODx.grid.Grid,{
             xtype: 'contentblocks-window-field',
             record: record,
             isUpdate: false,
+            isDuplicate: true,
             title: _('contentblocks.duplicate_field'),
             listeners: {
                 success: {fn: function(r) {

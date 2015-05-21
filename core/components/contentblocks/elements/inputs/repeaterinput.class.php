@@ -162,6 +162,12 @@ class RepeaterInput extends cbBaseInput {
         return $this->contentBlocks->parse($tpl, $phs);
     }
 
+    /**
+     * Gets the group information as array
+     *
+     * @param cbField $field
+     * @return array
+     */
     public function getGroup(cbField $field)
     {
         $ta = $field->get('group');
@@ -188,8 +194,16 @@ class RepeaterInput extends cbBaseInput {
         $group = $this->getGroup($field);
 
         $dependencies = array();
-        foreach ($group as $field) {
-            $dependencies[] = $field['input'];
+        foreach ($group as $fieldInfo) {
+            $dependencies[] = $fieldInfo['input'];
+
+            if ($fieldInfo['input'] === 'repeater') {
+                $this->modx->log(modX::LOG_LEVEL_ERROR, print_r($fieldInfo, true));
+                $nestedGroup = $this->modx->fromJSON($fieldInfo['properties']['group']);
+                foreach ($nestedGroup as $nestedField) {
+                    $dependencies[] = $nestedField['input'];
+                }
+            }
         }
         return $dependencies;
     }

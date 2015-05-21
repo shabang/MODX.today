@@ -4,11 +4,8 @@ name: 'Code Snippet'
 description: ''
 sortorder: 3
 icon: code
-icon_type: core
 template: '<pre><code class="language-[[+lang:eq=`html`:then=`markup`:else=`[[+lang]]`]]">[[+value]]</code></pre>'
 properties: '{"available_languages":"html=HTML,javascript=JavaScript,css=CSS,php=PHP","default_language":"html","entities":"1"}'
 availability: '[]'
 layouts: ''
-times_per_layout: 0
-times_per_page: 0
 settings: '[]'

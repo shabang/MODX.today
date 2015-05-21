@@ -11,6 +11,12 @@ class cbLayoutCreateProcessor extends modObjectCreateProcessor {
      */
     public function beforeSet() {
         $this->setCheckbox('layout_only_nested', true);
+
+        $sort = (int)$this->getProperty('sortorder', 0);
+        if ($sort < 1) {
+            $sort = $this->modx->getCount($this->classKey) + 1;
+            $this->setProperty('sortorder', $sort);
+        }
         return parent::beforeSet();
     }
 }

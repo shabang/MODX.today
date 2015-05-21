@@ -6,9 +6,9 @@ $xpdo_meta_map['mgImageTag']= array (
   'extends' => 'xPDOSimpleObject',
   'fields' => 
   array (
-    'resource' => NULL,
-    'image' => NULL,
-    'tag' => NULL,
+    'resource' => 0,
+    'image' => 0,
+    'tag' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -16,22 +16,25 @@ $xpdo_meta_map['mgImageTag']= array (
     array (
       'dbtype' => 'int',
       'precision' => '11',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => false,
+      'default' => 0,
     ),
     'image' => 
     array (
       'dbtype' => 'int',
       'precision' => '11',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => false,
+      'default' => 0,
     ),
     'tag' => 
     array (
       'dbtype' => 'int',
       'precision' => '11',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => false,
+      'default' => 0,
     ),
   ),
   'indexes' => 

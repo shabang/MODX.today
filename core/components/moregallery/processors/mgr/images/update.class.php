@@ -41,9 +41,9 @@ class mgImageUpdateProcessor extends modObjectUpdateProcessor {
             }
             $this->setProperty('crops', $crops);
         }
+
         $this->setProperty('editedon', time());
         $this->setProperty('editedby', $this->modx->user ? $this->modx->user->get('id') : 0);
-
 
         return parent::beforeSet();
     }

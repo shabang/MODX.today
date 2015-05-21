@@ -5,7 +5,7 @@
  * @package moreGallery
  */
 class moreGallery {
-    public $version = '1.3.1-pl';
+    public $version = '1.3.3-pl';
 
     public $cacheOptions = array(
         xPDO::OPT_CACHE_KEY => 'moregallery'

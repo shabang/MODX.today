@@ -3297,7 +3297,10 @@ jQuery.fn.autoGrow = function() {
     };
     tmpl.cache = {};
     tmpl.load = function (id) {
-        return document.getElementById(id).innerHTML;
+        var elem = document.getElementById(id);
+        if (elem) return elem.innerHTML;
+        if (console) console.error('Template not found: ', id);
+        return '<div class="error">Uh oh, could not find template "' + id + '".</div>';
     };
     tmpl.regexp = /([\s'\\])(?!(?:[^{]|\{(?!%))*%\})|(?:\{%(=|#)([\s\S]+?)%\})|(\{%)|(%\})/g;
     tmpl.func = function (s, p1, p2, p3, p4, p5) {

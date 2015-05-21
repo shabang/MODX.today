@@ -10,7 +10,7 @@
             this.editor.setValue(data.value || '', 1);
             this.editor.setOptions({
                 minLines: 4,
-                maxLines: 100,
+                maxLines: Infinity,
                 wrap: 'free'
             });
             this.editor.on('input', function() {

@@ -10,25 +10,25 @@
     </object>
 
     <object class="mgImage" table="moregallery_image" extends="xPDOSimpleObject">
-        <field key="resource" dbtype="int" precision="11" phptype="int" null="false" />
+        <field key="resource" dbtype="int" precision="11" phptype="integer" null="false" />
 
         <field key="filename" dbtype="varchar" precision="250" phptype="string" null="false" default="" />
         <field key="file" dbtype="varchar" precision="250" phptype="string" null="false" default="" />
         <field key="mgr_thumb" dbtype="varchar" precision="250" phptype="string" null="false" default="" />
         <field key="exif" dbtype="text" phptype="array" null="true" />
 
-        <field key="width" dbtype="int" precision="10" phptype="int" null="false" default="0" />
-        <field key="height" dbtype="int" precision="10" phptype="int" null="false" default="0" />
+        <field key="width" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="height" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
 
         <field key="name" dbtype="varchar" precision="250" phptype="string" null="true" />
         <field key="description" dbtype="text" phptype="string" null="true" />
         <field key="url" dbtype="varchar" precision="250" phptype="string" null="true" />
-        <field key="sortorder" dbtype="int" precision="10" phptype="int" null="false" default="0" />
+        <field key="sortorder" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
 
-        <field key="uploadedon" dbtype="int" precision="20" phptype="int" null="false" default="0" />
-        <field key="uploadedby" dbtype="int" precision="10" phptype="int" null="false" default="0" />
-        <field key="editedon" dbtype="int" precision="20" phptype="int" null="false" default="0" />
-        <field key="editedby" dbtype="int" precision="10" phptype="int" null="false" default="0" />
+        <field key="uploadedon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+        <field key="uploadedby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="editedon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+        <field key="editedby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
 
         <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
 
@@ -51,8 +51,8 @@
 
     <object class="mgTag" table="moregallery_tag" extends="xPDOSimpleObject">
         <field key="display" dbtype="varchar" precision="250" phptype="string" null="false" default="" />
-        <field key="createdon" dbtype="int" precision="20" phptype="int" null="false" default="0" />
-        <field key="createdby" dbtype="int" precision="10" phptype="int" null="false" default="0" />
+        <field key="createdon" dbtype="int" precision="20" phptype="integer" null="false" default="0" />
+        <field key="createdby" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
 
         <index alias="display" name="display" primary="false" unique="false" type="BTREE">
             <column key="display" length="" collation="A" null="false" />
@@ -62,9 +62,9 @@
     </object>
 
     <object class="mgImageTag" table="moregallery_image_tag" extends="xPDOSimpleObject">
-        <field key="resource" dbtype="int" precision="11" phptype="int" null="false" />
-        <field key="image" dbtype="int" precision="11" phptype="int" null="false" />
-        <field key="tag" dbtype="int" precision="11" phptype="int" null="false" />
+        <field key="resource" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+        <field key="image" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
+        <field key="tag" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
 
         <index alias="resource" name="resource" primary="false" unique="false" type="BTREE">
             <column key="resource" length="" collation="A" null="false" />
@@ -82,16 +82,16 @@
     </object>
 
     <object class="mgImageCrop" table="moregallery_image_crop" extends="xPDOSimpleObject">
-        <field key="image" dbtype="int" precision="11" phptype="int" null="false" />
+        <field key="image" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
         <field key="crop" dbtype="varchar" precision="100" phptype="string" null="false" />
         <field key="thumbnail" dbtype="varchar" precision="255" phptype="string" default="" null="false" />
         <field key="thumbnail_hash" dbtype="varchar" precision="255" phptype="string" default="" null="false" />
-        <field key="x" dbtype="int" precision="11" phptype="int" default="0" null="false" />
-        <field key="y" dbtype="int" precision="11" phptype="int" default="0" null="false" />
-        <field key="x2" dbtype="int" precision="11" phptype="int" default="0" null="false" />
-        <field key="y2" dbtype="int" precision="11" phptype="int" default="0" null="false" />
-        <field key="width" dbtype="int" precision="11" phptype="int" default="0" null="false" />
-        <field key="height" dbtype="int" precision="11" phptype="int" default="0" null="false" />
+        <field key="x" dbtype="int" precision="11" phptype="integer" default="0" null="false" />
+        <field key="y" dbtype="int" precision="11" phptype="integer" default="0" null="false" />
+        <field key="x2" dbtype="int" precision="11" phptype="integer" default="0" null="false" />
+        <field key="y2" dbtype="int" precision="11" phptype="integer" default="0" null="false" />
+        <field key="width" dbtype="int" precision="11" phptype="integer" default="0" null="false" />
+        <field key="height" dbtype="int" precision="11" phptype="integer" default="0" null="false" />
 
         <index alias="image" name="image" primary="false" unique="false" type="BTREE">
             <column key="image" length="" collation="A" null="false" />

@@ -24,7 +24,7 @@ $xpdo_meta_map['mgTag']= array (
     array (
       'dbtype' => 'int',
       'precision' => '20',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => false,
       'default' => 0,
     ),
@@ -32,7 +32,7 @@ $xpdo_meta_map['mgTag']= array (
     array (
       'dbtype' => 'int',
       'precision' => '10',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => false,
       'default' => 0,
     ),

@@ -50,7 +50,7 @@ jQuery(function($) {
 
             '<div class="mgresource-loading spinner"></div>' +
             '' +
-            '<input id="mgresource-upload-input" type="file" name="upload" multiple>' +
+            '<input id="mgresource-upload-input" type="file" multiple>' +
             '' +
             '<div id="mgresource-modal-mask"></div>' +
             '' +
@@ -65,9 +65,9 @@ jQuery(function($) {
             '<div class="edit-form">' +
             '   <a href="javascript:void(0);" class="close">&times;</a>' +
             '   <h3><%= moreGallery.lang("edit_image_header") %></h3>' +
-            '   <label><%= moreGallery.lang("name_field") %> <br /><input type="text" name="mgimage-name" id="mgimage-name" value="<%= name %>"></label><br />' +
+            '   <label><%= moreGallery.lang("name_field") %> <br /><input type="text" id="mgimage-name" value="<%= name %>"></label><br />' +
             '   <label for="mgimage-description"><%= moreGallery.lang("description") %></label> <br />' +
-            '   <textarea name="mgimage-description" id="mgimage-description" rows="5"><%= description %></textarea> <br />' +
+            '   <textarea id="mgimage-description" rows="5"><%= description %></textarea> <br />' +
             '' +
             '   <div class="mgimage-tags">' +
             '       <label for="mgimage-new-tag"><%= moreGallery.lang("tags") %></label>' +
@@ -80,7 +80,7 @@ jQuery(function($) {
             '       </div>' +
             '   </div>' +
             '' +
-            '   <label><%= moreGallery.lang("url") %> <br /><input type="text" name="mgimage-url" id="mgimage-url" value="<%= url %>"></label>' +
+            '   <label><%= moreGallery.lang("url") %> <br /><input type="text" id="mgimage-url" value="<%= url %>"></label>' +
             '   <div class="edit-form-buttons">' +
         '           <a href="javascript:void(0);" class="save">' +
         '               <span class="headline"><%= moreGallery.lang("save") %></span>' +
@@ -113,7 +113,7 @@ jQuery(function($) {
             '   <li>' +
             '       <a href="javascript:void(0);" class="import-from-gallery">Gallery</a>' +
             '       <div class="content">' +
-            '           <select name="selection"><%= galleries %></select>' +
+            '           <select id="selection"><%= galleries %></select>' +
             '       </div>' +
             '   </li>' +
             '   <li>' +
@@ -630,7 +630,7 @@ jQuery(function($) {
 
             $.each(fields, function(index, fld) {
                 var fieldValue = '',
-                    field = appView.$('#mgresource-modal input[name='+fld.name+'], #mgresource-modal textarea[name='+fld.name+']'),
+                    field = appView.$('#mgresource-modal #'+fld.name),
                     currentValue = appView.activeModelInModal.get(fld.key);
                 if (field) fieldValue = field.val();
 
@@ -728,6 +728,7 @@ jQuery(function($) {
                 dropZone: $('#mgresource-backbone-wrapper'),
                 pasteZone: false,
                 progressInterval: 250,
+                paramName: 'upload',
 
                 /**
                  * Add an item to the upload queue.

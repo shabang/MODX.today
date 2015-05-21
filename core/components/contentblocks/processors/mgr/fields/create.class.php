@@ -30,6 +30,12 @@ class cbFieldCreateProcessor extends modObjectCreateProcessor {
         $av = $this->getProperty('availability');
         $av = $this->modx->toJSON($av);
         $this->setProperty('availability', $av);
+
+        $sort = (int)$this->getProperty('sortorder', 0);
+        if ($sort < 1) {
+            $sort = $this->modx->getCount($this->classKey) + 1;
+            $this->setProperty('sortorder', $sort);
+        }
         return parent::beforeSet();
     }
 }

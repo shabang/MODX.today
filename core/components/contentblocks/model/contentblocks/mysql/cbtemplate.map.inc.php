@@ -33,7 +33,7 @@ $xpdo_meta_map['cbTemplate']= array (
     array (
       'dbtype' => 'int',
       'precision' => '5',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => false,
       'default' => 0,
     ),

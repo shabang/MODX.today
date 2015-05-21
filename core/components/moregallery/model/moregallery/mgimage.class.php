@@ -197,8 +197,7 @@ class mgImage extends xPDOSimpleObject
 
             $crops = $this->getCrops();
             /** @var mgImageCrop $crop */
-            foreach ($crops as $crop)
-            {
+            foreach ($crops as $crop) {
                 $resource->source->removeObject($relativeUrl . $crop->get('thumbnail'));
             }
 

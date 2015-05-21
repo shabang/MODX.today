@@ -4,11 +4,8 @@ name: Image
 description: ''
 sortorder: 4
 icon: image
-icon_type: core
 template: "[[+linked:eq=`1`:then=`<a href=\"[[+url]]\" title=\"View Full Image\" target=\"_blank\">`:else=``]]\n<figure class=\"content-image [[+class]] [[+classnames]]\">\n    <img data-src=\"[[+url]]\" class=\"lazyload\" alt=\"[[+title:striptags]]\" [[+style:notempty=`style=\"[[+style]]\"`]]>\n    [[+title:notempty=`<figcaption>[[+title]]</figcaption>`]]\n</figure>\n[[+linked:eq=`1`:then=`</a>`:else=``]]\n"
 properties: '{"source":"0","directory":"images\/[[+year]]\/[[+month]]\/","file_types":"png,gif,jpg,jpeg","use_tinyrte":"1"}'
 availability: '[]'
 layouts: ''
-times_per_layout: 0
-times_per_page: 0
 settings: '[{"reference":"class","title":"Extra width","fieldtype":"select","default_value":"extended-width","fieldoptions":"none=\non both sides=extended-width","field_is_exposed":"modal"},{"reference":"classnames","title":"Extra classes for figure","fieldtype":"textfield","default_value":"","fieldoptions":"","field_is_exposed":"modal"},{"reference":"style","title":"Image Inline Style","fieldtype":"textfield","default_value":"","fieldoptions":"","field_is_exposed":"modal"},{"reference":"linked","title":"Add Link to Image?","fieldtype":"select","default_value":"0","fieldoptions":"Yes=1\nNo=0","field_is_exposed":"modal"}]'

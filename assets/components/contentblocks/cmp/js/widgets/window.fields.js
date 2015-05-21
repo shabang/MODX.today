@@ -315,7 +315,7 @@ Ext.extend(ContentBlocksComponent.window.Field, MODx.Window, {
             prop.anchor = '100%';
 
             switch (prop.xtype) {
-                case 'code': // This is separate as I'd like it to be Ace-powered later
+                case 'code': // This is separate as it can use Ace
                     prop.xtype = Ext.ComponentMgr.isRegistered('modx-texteditor') ? 'modx-texteditor' : 'textarea';
                     prop.mimeType = 'text/html';
                     break;
@@ -336,7 +336,7 @@ Ext.extend(ContentBlocksComponent.window.Field, MODx.Window, {
             propHolder.doLayout();
         }
 
-        if (!f.config.isUpdate) {
+        if (!f.config.isUpdate && !f.config.isDuplicate) {
             if (record.data.defaultTpl) {
                 var tpl = Ext.getCmp(combo.formId + '-template');
                 tpl.setValue(record.data.defaultTpl);

@@ -1,3 +1,14 @@
+++ ContentBlocks 1.2.5-pl
+++ Released on 2015-05-15
+++++++++++++++++++++++++++
+- Make sure Ace extends infinitely for better scrolling
+- Fix several database issues with strict SQL modes
+- Fix issue where duplicating a field lost some of its values (availability, template) (#278)
+- Make sure the sort order is set to a good number automatically when creating a new field/layout
+- Fix issue where nested repeaters might not work (#281)
+- Fix wrong template in the default Link field
+- Improve error reporting when a template for the canvas can't be loaded
+
 ++ ContentBlocks 1.2.4-pl
 ++ Released on 2015-03-30
 ++++++++++++++++++++++++++

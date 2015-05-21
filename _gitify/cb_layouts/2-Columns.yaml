@@ -3,7 +3,6 @@ name: '2 Columns'
 description: 'Use the layout settings to tweak its behaviour. '
 sortorder: 1
 icon: template_01
-icon_type: core
 columns: '[{"reference":"col1","width":50},{"reference":"col2","width":"50"}]'
 template: "<div class=\"row [[+layout_classes]] [[+layout_padding_top]] [[+layout_padding_bottom]]\">\n    <div class=\"[[+outer_classes]] columns\">\n        <div class=\"row\" [[+layout_attributes]]>\n            <div class=\"[[+col1_classes]] columns\">\n                [[+col1]]\n            </div>\n            <div class=\"[[+col2_classes]] columns\">\n                [[+col2]]\n            </div>\n        </div>\n    </div>\n</div>"
 availability: '[]'

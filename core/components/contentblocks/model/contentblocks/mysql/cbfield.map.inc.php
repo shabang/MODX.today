@@ -10,13 +10,13 @@ $xpdo_meta_map['cbField']= array (
     'description' => NULL,
     'sortorder' => 0,
     'icon' => NULL,
-    'icon_type' => NULL,
+    'icon_type' => 'core',
     'template' => NULL,
     'properties' => NULL,
     'availability' => NULL,
     'layouts' => NULL,
-    'times_per_layout' => NULL,
-    'times_per_page' => NULL,
+    'times_per_layout' => 0,
+    'times_per_page' => 0,
     'settings' => NULL,
   ),
   'fieldMeta' => 
@@ -47,7 +47,7 @@ $xpdo_meta_map['cbField']= array (
     array (
       'dbtype' => 'int',
       'precision' => '5',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => false,
       'default' => 0,
     ),
@@ -64,6 +64,7 @@ $xpdo_meta_map['cbField']= array (
       'precision' => '255',
       'phptype' => 'string',
       'null' => false,
+      'default' => 'core',
     ),
     'template' => 
     array (
@@ -94,15 +95,17 @@ $xpdo_meta_map['cbField']= array (
     array (
       'dbtype' => 'int',
       'precision' => '5',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => true,
+      'default' => 0,
     ),
     'times_per_page' => 
     array (
       'dbtype' => 'int',
       'precision' => '5',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => true,
+      'default' => 0,
     ),
     'settings' => 
     array (

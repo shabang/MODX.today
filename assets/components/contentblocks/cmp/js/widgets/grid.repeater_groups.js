@@ -151,7 +151,6 @@ Ext.extend(ContentBlocksComponent.grid.RepeaterGroups, MODx.grid.LocalGrid, {
             grid: this,
             listeners: {
                 success: {fn: function (r) {
-                    console.log(r);
                     var s = this.getStore();
                     var rec = new this.propRecord(r);
                     s.add(rec);

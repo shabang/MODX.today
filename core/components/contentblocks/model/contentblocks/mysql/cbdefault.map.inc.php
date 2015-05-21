@@ -40,14 +40,14 @@ $xpdo_meta_map['cbDefault']= array (
     array (
       'dbtype' => 'int',
       'precision' => '15',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => false,
     ),
     'target_field' => 
     array (
       'dbtype' => 'int',
       'precision' => '15',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => true,
     ),
     'target_column' => 
@@ -61,7 +61,7 @@ $xpdo_meta_map['cbDefault']= array (
     array (
       'dbtype' => 'int',
       'precision' => '5',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => false,
       'default' => 0,
     ),

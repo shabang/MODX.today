@@ -6,7 +6,7 @@ $xpdo_meta_map['mgImageCrop']= array (
   'extends' => 'xPDOSimpleObject',
   'fields' => 
   array (
-    'image' => NULL,
+    'image' => 0,
     'crop' => NULL,
     'thumbnail' => '',
     'thumbnail_hash' => '',
@@ -23,8 +23,9 @@ $xpdo_meta_map['mgImageCrop']= array (
     array (
       'dbtype' => 'int',
       'precision' => '11',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'null' => false,
+      'default' => 0,
     ),
     'crop' => 
     array (
@@ -53,7 +54,7 @@ $xpdo_meta_map['mgImageCrop']= array (
     array (
       'dbtype' => 'int',
       'precision' => '11',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'default' => 0,
       'null' => false,
     ),
@@ -61,7 +62,7 @@ $xpdo_meta_map['mgImageCrop']= array (
     array (
       'dbtype' => 'int',
       'precision' => '11',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'default' => 0,
       'null' => false,
     ),
@@ -69,7 +70,7 @@ $xpdo_meta_map['mgImageCrop']= array (
     array (
       'dbtype' => 'int',
       'precision' => '11',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'default' => 0,
       'null' => false,
     ),
@@ -77,7 +78,7 @@ $xpdo_meta_map['mgImageCrop']= array (
     array (
       'dbtype' => 'int',
       'precision' => '11',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'default' => 0,
       'null' => false,
     ),
@@ -85,7 +86,7 @@ $xpdo_meta_map['mgImageCrop']= array (
     array (
       'dbtype' => 'int',
       'precision' => '11',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'default' => 0,
       'null' => false,
     ),
@@ -93,7 +94,7 @@ $xpdo_meta_map['mgImageCrop']= array (
     array (
       'dbtype' => 'int',
       'precision' => '11',
-      'phptype' => 'int',
+      'phptype' => 'integer',
       'default' => 0,
       'null' => false,
     ),
