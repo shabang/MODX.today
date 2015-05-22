@@ -1,0 +1,7 @@
+id: 4
+name: 'Default Updates Post'
+description: ''
+icon: template_03
+icon_type: core
+content: '[{"layout":3,"content":{"col1":[{"value":"<p>These are the updates released in the past week, retrieved automatically from the MODX.com and modmore.com Package Providers.</p>\n<p><a href=\"/posts/author/releaserobot\" title=\"More Release Robot Posts\">View more Release Robot History</a> for more package updates.</p>","field":2,"settings":{}},{"rows":[],"field":12,"settings":{}}]},"settings":[],"parent":0}]'
+availability: '[{"field":"template","value":"8"}]'

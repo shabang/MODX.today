@@ -1,0 +1,6 @@
+id: 1
+class_key: sFileTask
+content: elements/tasks/extras_feed.task.php
+namespace: modxtoday
+reference: extras_feed
+description: 'Imports a list of recent released extras into a post with a Repeater.'
