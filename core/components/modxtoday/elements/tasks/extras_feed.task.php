@@ -71,6 +71,7 @@ if (!$resource) {
     ));
     $resource->set('alias', $resource->cleanAlias($resource->get('pagetitle')));
     $resource->save();
+    $resource->setTVValue('author', 'releaserobot');
 
     $blankContent = $modx->toJSON($contentBlocks->getDefaultCanvas($resource));
     $resource->setProperties(array(
