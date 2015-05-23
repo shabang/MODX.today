@@ -196,3 +196,11 @@ packages:
       - simplesearch
       - switch
       - pthumb
+environments:
+  modx.today:
+    name: Production
+    branch: production
+    auto_commit_and_push: true
+  defaults:
+    auto_commit_and_push: false
+    commit_delay: instant
