@@ -183,14 +183,12 @@ Git::set_bin('/usr/local/bin/git');
                     modPlugin: plugins*/
                 )
             );
-
-            $this->modx->log(modX::LOG_LEVEL_ERROR, print_r($envs, true) . ' // ' . print_r($config, true));
-
+            
             if (isset($envs['defaults']) && is_array($envs['defaults'])) {
                 $defaults = array_merge($defaults, $envs['defaults']);
             }
 
-            $host = $_SERVER['HTTP_HOST'];
+            $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : MODX_HTTP_HOST;
             $environment = (isset($envs[$host])) ? $envs[$host] : array();
             $this->environment = array_merge($defaults, $environment);
         }
