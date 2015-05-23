@@ -190,6 +190,7 @@ Git::set_bin('/usr/local/bin/git');
 
             $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : MODX_HTTP_HOST;
             $environment = (isset($envs[$host])) ? $envs[$host] : array();
+            $this->modx->log(modX::LOG_LEVEL_ERROR, 'Host: ' . $host . ' Environment: ' . print_r($environment, true));
             $this->environment = array_merge($defaults, $environment);
         }
         return $this->environment;
