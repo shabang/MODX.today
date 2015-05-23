@@ -66,7 +66,8 @@ class GitifyWatch {
                 $this->modx->log(modX::LOG_LEVEL_ERROR, 'Could not load Git helper class from '. $path, '', __METHOD__, __FILE__, __LINE__);
                 return false;
             }
-            Git::set_bin('/usr/local/bin/git');
+
+Git::set_bin('/usr/local/bin/git');
 
             $repo = Git::open($this->config['repositoryPath']);
 
