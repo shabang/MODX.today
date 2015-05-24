@@ -55,6 +55,7 @@ $newPackages = array(
     ),
 );
 
+$isNew = false;
 /** @var modResource $resource */
 $resource = $modx->getObject('modResource', array(
     'parent' => 1,      // Posts container
@@ -62,6 +63,7 @@ $resource = $modx->getObject('modResource', array(
     'AND:createdon:>=' => $monday
 ));
 if (!$resource) {
+    $isNew = true;
     $resource = $modx->newObject('modResource');
     $resource->fromArray(array(
         'parent' => 1,
@@ -71,7 +73,7 @@ if (!$resource) {
     ));
     $resource->set('alias', $resource->cleanAlias($resource->get('pagetitle')));
     $resource->save();
-    $resource->setTVValue('author', 'releaserobot');
+    $resource->setTVValue('author', 'robbie');
 
     $blankContent = $modx->toJSON($contentBlocks->getDefaultCanvas($resource));
     $resource->setProperties(array(
@@ -181,6 +183,11 @@ $resource->save();
 $modx->getCacheManager()->delete('web/resources/' . $resource->id, array(
     xPDO::OPT_CACHE_KEY => 'resource'
 ));
-$modx->getCacheManager()->delete('articles-grid/' . $resource->id, array(
+$modx->cacheManager->delete('articles-grid/' . $resource->id, array(
     xPDO::OPT_CACHE_KEY => 'default'
 ));
+if ($isNew) {
+    $modx->cacheManager->delete($resource->get('context_key'), array(
+        xPDO::OPT_CACHE_KEY => 'context_settings'
+    ));
+}
