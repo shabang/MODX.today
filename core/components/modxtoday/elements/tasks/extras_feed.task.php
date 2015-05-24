@@ -44,6 +44,7 @@ require_once dirname(dirname(dirname(__FILE__))) . '/model/htmlpurifier-4.6.0/li
  * @return string
  */
 function prepareChangelog(modTransportProvider $provider, $changelog)  {
+    $changelog = str_replace(array('[',']'), array('&#91;','&#93;'), $changelog);
     if ($provider->get('name') === 'modmore.com') {
         // Changelogs are trusted from modmore.com, and in a plain text form.
         // We process these into nicely formatted HTML here.
@@ -52,7 +53,6 @@ function prepareChangelog(modTransportProvider $provider, $changelog)  {
 
         $ulLevel = 0;
         foreach ($changelogRaw as $line) {
-            $line = str_replace(array('[',']'), array('&#91;','&#93;'), $line);
             $thisUlLevel = 0;
             while (substr(ltrim($line), 0 , 1) == '-') {
                 $thisUlLevel++;

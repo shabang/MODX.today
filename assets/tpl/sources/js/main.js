@@ -369,7 +369,33 @@ $(function(){
             slide: 'div'
         }); });
     }
- });
+
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    *	Show changelogs on click in Release Robot Robbie's posts.
+    * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    $('.extras-feed').on('click', '.show-changelog', function(e) {
+        e.preventDefault();
+
+        var $handler = $(this),
+            target = $(this).data('target'),
+            $target = $('#' + target);
+
+        $target.slideDown({easing: 'linear', complete: function() {
+            $handler.fadeOut();
+        }});
+    }).on('click', '.close-changelog', function(e) {
+        e.preventDefault();
+
+        var target = $(this).data('target'),
+            $target = $('#' + target),
+            $handler = $('a[data-target=' + target + ']');
+
+        $target.slideUp({easing: 'linear'});
+        $handler.fadeIn();
+    });
+});
 
 
 
