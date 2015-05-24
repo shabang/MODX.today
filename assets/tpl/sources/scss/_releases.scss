@@ -1,4 +1,7 @@
 .extras-feed {
+  .show-changelog {
+    float: right;
+  }
   .changelog {
     display: none;
 
@@ -10,12 +13,10 @@
       margin-bottom: 1rem;
     }
 
-    position: relative;
     .close-changelog {
-      position: absolute;
-      top: 0;
-      right: 0;
+      float: right;
       padding: 0 0.5em;
+      margin: -0.5em;
       font-size: 2em;
     }
   }

@@ -383,7 +383,7 @@ $(function(){
             $target = $('#' + target);
 
         $target.slideDown({easing: 'linear', complete: function() {
-            $handler.fadeOut();
+            $handler.hide();
         }});
     }).on('click', '.close-changelog', function(e) {
         e.preventDefault();
@@ -393,7 +393,7 @@ $(function(){
             $handler = $('a[data-target=' + target + ']');
 
         $target.slideUp({easing: 'linear'});
-        $handler.fadeIn();
+        $handler.show();
     });
 });
 

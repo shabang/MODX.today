@@ -32,6 +32,9 @@ function getPackageLink(modTransportProvider $provider, $packageInfo) {
 
         case 'modx.com':
             return 'http://modx.com/extras/package/' . $lcaseName . '?utm_source=modxtoday&utm_medium=releaserobotrobbie&utm_campaign=releases_' . date('W') . '&utm_term=' . $lcaseName;
+
+        case 'extras.io':
+            return 'https://extras.io/extras/' . $lcaseName . '?utm_source=modxtoday&utm_medium=releaserobotrobbie&utm_campaign=releases_' . date('W') . '&utm_term=' . $lcaseName;
     }
 
     return false;
@@ -95,6 +98,7 @@ function prepareChangelog(modTransportProvider $provider, $changelog)  {
 $providers = array(
     'modmore.com',
     'modx.com',
+    //'extras.io', doesn't seem to work yet - maybe a subtle difference in how packages are loaded?
 );
 
 $startOfWeek = mktime(0, 0, 0, date("n"), date("j") - date("N") + 1);
