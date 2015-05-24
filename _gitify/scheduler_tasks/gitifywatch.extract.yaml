@@ -1,0 +1,6 @@
+id: 1
+class_key: sFileTask
+content: elements/tasks/extract.task.php
+namespace: gitifywatch
+reference: extract
+description: 'Extracts data from the database, commits it and pushes it to the remote git server.'

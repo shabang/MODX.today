@@ -1,0 +1,4 @@
+key: gitifywatch.repository_path
+value: '{base_path}'
+namespace: gitifywatch
+area: Gitify
