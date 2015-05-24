@@ -18,49 +18,178 @@ if (!$contentBlocks) {
     return false;
 }
 
+/**
+ * @param modTransportProvider $provider
+ * @param $packageInfo
+ * @return bool|string
+ */
+function getPackageLink(modTransportProvider $provider, $packageInfo) {
+    $signature = $packageInfo['signature'];
+    $lcaseName = substr($signature, 0, strpos($signature, '-'));
+    switch ($provider->get('name')) {
+        case 'modmore.com':
+            return 'https://www.modmore.com/extras/' . $lcaseName . '/?pk_campaign=releaserobotrobbie&pk_kwd=releases_' . date('W') . '_' . $lcaseName;
+
+        case 'modx.com':
+            return 'http://modx.com/extras/package/' . $lcaseName . '?utm_source=modxtoday&utm_medium=releaserobotrobbie&utm_campaign=releases_' . date('W') . '&utm_term=' . $lcaseName;
+    }
+
+    return false;
+}
+
+require_once dirname(dirname(dirname(__FILE__))) . '/model/htmlpurifier-4.6.0/library/HTMLPurifier.auto.php';
+/**
+ * @param modTransportProvider $provider
+ * @param $changelog
+ * @return string
+ */
+function prepareChangelog(modTransportProvider $provider, $changelog)  {
+    if ($provider->get('name') === 'modmore.com') {
+        // Changelogs are trusted from modmore.com, and in a plain text form.
+        // We process these into nicely formatted HTML here.
+        $changelogRaw = explode("\n", $changelog);
+        $output = array();
+
+        $ulLevel = 0;
+        foreach ($changelogRaw as $line) {
+            $line = str_replace(array('[',']'), array('&#91;','&#93;'), $line);
+            $thisUlLevel = 0;
+            while (substr(ltrim($line), 0 , 1) == '-') {
+                $thisUlLevel++;
+                $line = substr(trim($line), 1);
+            }
+            if ($thisUlLevel > $ulLevel) {
+                $output[] = str_repeat('<ul>', $thisUlLevel - $ulLevel);
+            }
+            elseif ($thisUlLevel < $ulLevel) {
+                $output[] = str_repeat('</ul>', $ulLevel - $thisUlLevel);
+            }
+
+            if ($thisUlLevel > 0) {
+                $output[] = '<li>' . $line . '</li>';
+            }
+            elseif (!empty($line)) {
+                $output[] = '<p><b>' . $line . '</b></p>';
+            }
+
+            $ulLevel = $thisUlLevel;
+        }
+        while ($ulLevel > 0) {
+            $output[] = '</ul>';
+            $ulLevel--;
+        }
+
+        $output = implode("\n", $output);
+        return $output;
+    }
+
+    // Other sources may not be trusted, and contain raw HTML, so we purify the HTML here.
+    $config = HTMLPurifier_Config::createDefault();
+    $config->set('CSS.AllowedProperties', array());
+    $config->set('AutoFormat.RemoveEmpty', true);
+    $config->set('Attr.AllowedClasses', array());
+    $purifier = new HTMLPurifier($config);
+    return $purifier->purify($changelog);
+}
+
 $providers = array(
-    'modx.com' => array(
-        'url' => 'http://rest.modx.com/extras/',
-    ),
-    'modmore.com' => array(
-        'url' => 'https://rest.modmore.com/',
-        'username' => '',
-        'apikey' => '',
-    )
+    'modmore.com',
+    'modx.com',
 );
 
-$monday = mktime(0, 0, 0, date("n"), date("j") - date("N") + 1);
+$startOfWeek = mktime(0, 0, 0, date("n"), date("j") - date("N") + 1);
 
-$newPackages = array(
-    'FormIt' => array(
-        'package_name' => 'FormIt',
-        'version' => '2.2.7',
-        'changelog' => 'awesome updates',
-        'link' => 'google.com/formit',
-        'releasedon' => '2015-05-22',
-    ),
-    'SmartTag' => array(
-        'package_name' => 'SmartTag',
-        'version' => '1.0.6',
-        'changelog' => 'new awesome updates in 1.0.6',
-        'link' => 'google.com/smarttag',
-        'releasedon' => '2015-05-22',
-    ),
-    'VersionX' => array(
-        'package_name' => 'VersionX',
-        'version' => '1.3.0',
-        'changelog' => '<p>Auto-saving of drafts<br>New UI</p>',
-        'link' => 'http://modx.com/extras/package/versionx',
-        'releasedon' => '2015-05-22',
-    ),
-);
+$newPackages = array();
+
+foreach ($providers as $providerName) {
+    /** @var modTransportProvider $provider */
+    $modx->loadClass('transport.modTransportProvider');
+    $provider = $modx->getObject('transport.modTransportProvider', array('name' => $providerName));
+    if (!$provider) {
+        $run->addError('provider_not_found:'.$providerName, array(
+            'message' => 'Could not find a provider with the specified name to fetch packages from.',
+            'name' => $providerName
+        ));
+        continue;
+    }
+    /** @var modProcessorResponse $result */
+    $result = $modx->runProcessor('workspace/packages/rest/getInfo', array(
+        'provider' => $provider->get('id'),
+    ));
+
+    if (!$result->isError()) {
+        $data = $result->getObject();
+        if (isset($data['newest']) && is_array($data['newest'])) {
+            $newest = array_reverse($data['newest']);
+            foreach ($newest as $newPkg) {
+                // Only deal with releases from the last week
+                $releasedOn = strtotime($newPkg['releasedon']);
+                if ($releasedOn < $startOfWeek) {
+                    continue;
+                }
+
+                // Create the new package array
+                $name = $newPkg['package_name'];
+                $newPackage = array(
+                    'package_name' => $name,
+                    'version' => trim(substr($newPkg['name'], strlen($name))),
+                    'changelog' => '',
+                    'link' => '',
+                    'releasedon' => date('Y-m-d', $releasedOn)
+                );
+
+                // Get more information from the provider; in particular the changelog and info to create a link
+                $packageInfo = $modx->runProcessor('workspace/packages/rest/getList', array(
+                    'provider' => $provider->get('id'),
+                    'query' => $name
+                ));
+                $packageResults = $modx->fromJSON($packageInfo->response);
+
+                // Try to find the specified package.
+                $package = false;
+                foreach ($packageResults['results'] as $info) {
+                    if ($info['name'] == $name) {
+                        $package = $info;
+                    }
+                }
+
+                // If we found no exact match, try for something that starts with the right name.
+                if (!$package) {
+                    $nameLength = strlen($name);
+                    foreach ($packageResults['results'] as $info) {
+                        $partialName = substr($info['name'], 0, $nameLength);
+                        if ($partialName == $name) {
+                            $package = $info;
+                        }
+                    }
+                }
+
+                // If we have the package, add more info
+                if ($package) {
+                    $link = getPackageLink($provider, $package);
+                    if ($link) {
+                        $newPackage['link'] = $link;
+                    }
+                    $newPackage['changelog'] = prepareChangelog($provider, $package['changelog']);
+                    $newPackage['version'] = $package['version-compiled'];
+                }
+
+                // Add it to the list
+                $newPackages[$name] = $newPackage;
+
+                // Delay processing for 0.3s to not hit external services _too_ much
+                usleep(300000);
+            }
+        }
+    }
+}
 
 $isNew = false;
 /** @var modResource $resource */
 $resource = $modx->getObject('modResource', array(
     'parent' => 1,      // Posts container
     'template' => 8,    // Article - Extras Feed template
-    'AND:createdon:>=' => $monday
+    'AND:createdon:>=' => $startOfWeek
 ));
 if (!$resource) {
     $isNew = true;
