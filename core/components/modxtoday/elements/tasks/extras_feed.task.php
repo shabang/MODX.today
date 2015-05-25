@@ -122,7 +122,7 @@ foreach ($providers as $providerName) {
         'provider' => $provider->get('id'),
     ));
 
-    if (!$result->isError()) {
+    if ($result && !$result->isError()) {
         $data = $result->getObject();
         if (isset($data['newest']) && is_array($data['newest'])) {
             $newest = array_reverse($data['newest']);
