@@ -98,7 +98,7 @@ function prepareChangelog(modTransportProvider $provider, $changelog)  {
 $providers = array(
     'modmore.com',
     'modx.com',
-    //'extras.io', doesn't seem to work yet - maybe a subtle difference in how packages are loaded?
+    'extras.io', // doesn't provide a changelog yet
 );
 
 $startOfWeek = mktime(0, 0, 0, date("n"), date("j") - date("N") + 1);
@@ -135,6 +135,9 @@ foreach ($providers as $providerName) {
 
                 // Create the new package array
                 $name = $newPkg['package_name'];
+                if (empty($name)) {
+                    $name = $newPkg['name'];
+                }
                 $newPackage = array(
                     'package_name' => $name,
                     'version' => trim(substr($newPkg['name'], strlen($name))),
@@ -176,6 +179,9 @@ foreach ($providers as $providerName) {
                         $newPackage['link'] = $link;
                     }
                     $newPackage['changelog'] = prepareChangelog($provider, $package['changelog']);
+                    if (empty($newPackage['changelog'])) {
+                        $newPackage['changelog'] = '<p><em>There is no changelog available for this release.</em></p>';
+                    }
                     $newPackage['version'] = $package['version-compiled'];
                 }
 
