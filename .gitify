@@ -15,7 +15,9 @@ data:
     exclude_keys:
       - editedon
     where:
-      - 'key:!=': environment
+      - 'key:NOT IN':
+        - environment
+        - 'gitifywatch.gitify_path'
   content_types:
     class: modContentType
     primary: name

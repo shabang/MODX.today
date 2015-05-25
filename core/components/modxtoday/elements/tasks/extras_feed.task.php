@@ -333,3 +333,35 @@ if ($isNew) {
         xPDO::OPT_CACHE_KEY => 'context_settings'
     ));
 }
+
+$path = $modx->getOption('scheduler.core_path', null, $modx->getOption('core_path') . 'components/scheduler/');
+$scheduler = $modx->getService('scheduler', 'Scheduler', $path . 'model/scheduler/');
+if (!$scheduler) {
+    return;
+}
+$task = $scheduler->getTask('gitifywatch', 'extract');
+if ($task instanceof sTask) {
+    $trigger = array(
+        'username' => 'Release Robot Robbie',
+        'mode' => $isNew ? 'created' : 'updated',
+        'target' => $resource->get('pagetitle'),
+        'partition' => 'content',
+    );
+
+    // Try to find one already scheduled
+    $run = $modx->getObject('sTaskRun', array(
+        'task' => $task->get('id'),
+        'status' => sTaskRun::STATUS_SCHEDULED,
+    ));
+
+    if ($run instanceof sTaskRun) {
+        $data = $run->get('data');
+        $data['triggers'][] = $trigger;
+        $run->set('data', $data);
+        $run->save();
+    } else {
+        $task->schedule(time() - 60, array(
+            'triggers' => array($trigger),
+        ));
+    }
+}
