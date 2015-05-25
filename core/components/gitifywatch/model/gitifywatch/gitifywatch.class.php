@@ -138,7 +138,6 @@ Git::set_bin('/usr/local/bin/git');
 
             $remote = (!empty($environment['remote'])) ? $environment['remote'] : 'origin';
             $branch = (!empty($environment['branch'])) ? $environment['branch'] : $repo->active_branch();
-            var_dump($remote, $branch);
             $log['push'] = $repo->push($remote, $branch);
 
             $this->modx->log(modX::LOG_LEVEL_WARN, 'Auto-committing & pushing results: ' . print_r($log, true), '', __METHOD__, __FILE__, __LINE__);
