@@ -139,7 +139,7 @@ Git::set_bin('/usr/local/bin/git');
             $remote = (!empty($environment['remote'])) ? $environment['remote'] : 'origin';
             $branch = (!empty($environment['branch'])) ? $environment['branch'] : $repo->active_branch();
             var_dump($remote, $branch);
-            $log['push'] = $repo->push('origin', 'feature-extrasfeed');//$remote, $branch);
+            $log['push'] = $repo->push($remote, $branch);
 
             $this->modx->log(modX::LOG_LEVEL_WARN, 'Auto-committing & pushing results: ' . print_r($log, true), '', __METHOD__, __FILE__, __LINE__);
 
@@ -165,7 +165,6 @@ Git::set_bin('/usr/local/bin/git');
             $envs = (isset($config['environments']) && is_array($config['environments'])) ? $config['environments'] : array();
             $defaults = array(
                 'name' => '-unnamed environment-',
-                'branch' => 'develop',
                 'auto_commit_and_push' => true,
                 'remote' => 'origin',
                 'partitions' => array(
@@ -176,15 +175,6 @@ Git::set_bin('/usr/local/bin/git');
                     'modChunk' => 'chunks',
                     'modSnippet' => 'snippets',
                     'modPlugin' => 'plugins'
-                    /*
-                partitions:
-                    modResource: content
-                    modTemplate: templates
-                    modCategory: categories
-                    modTemplateVar: template_variables
-                    modChunk: chunks
-                    modSnippet: snippets
-                    modPlugin: plugins*/
                 )
             );
             

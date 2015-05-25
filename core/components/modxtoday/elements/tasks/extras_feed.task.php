@@ -303,7 +303,7 @@ $resource->setProperties(array(
 $parsedContent = $contentBlocks->generateHtml($cbContent);
 $resource->setContent($parsedContent);
 
-if (!$resource->get('published')) {
+if (!$resource->get('published') && count($newPackages) > 0) {
     $resource->set('published', true);
     $resource->set('publishedon', time());
     $resource->set('publishedby', 1);
