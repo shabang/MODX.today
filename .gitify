@@ -205,7 +205,6 @@ environments:
     auto_commit_and_push: true
   localhost.modx.today:
     name: Development
-    branch: develop
     auto_commit_and_push: true
   defaults:
     auto_commit_and_push: false
