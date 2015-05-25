@@ -102,6 +102,7 @@ $providers = array(
 );
 
 $startOfWeek = mktime(0, 0, 0, date("n"), date("j") - date("N") + 1);
+$startOfWeekDate = strftime('%B %d, %Y', $startOfWeek);
 
 $newPackages = array();
 
@@ -181,7 +182,7 @@ foreach ($providers as $providerName) {
                 // Add it to the list
                 $newPackages[$name] = $newPackage;
 
-                // Delay processing for 0.3s to not hit external services _too_ much
+                // Delay processing for 0.3s to not hit external services _too_ quickly
                 usleep(300000);
             }
         }
@@ -202,13 +203,15 @@ if (!$resource) {
         'parent' => 1,
         'template' => 8,
         'createdon' => time(),
-        'pagetitle' => 'Extra Updates for week ' . date('W')
+        'pagetitle' => 'Extra Updates for Week&nbsp;' . date('W')
     ));
     $resource->set('alias', $resource->cleanAlias($resource->get('pagetitle')));
     $resource->save();
+    $resource->set('description', '​Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
+    $resource->set('introtext', '​Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
     $resource->setTVValue('author', 'robbie');
 
-    $blankContent = $modx->toJSON($contentBlocks->getDefaultCanvas($resource));
+    $blankContent = $modx->toJSON($contentBlocks->getDefaultCanvas($resource, '​Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '.'));
     $resource->setProperties(array(
         'content' => $blankContent,
         '_isContentBlocks' => true,
