@@ -349,16 +349,16 @@ if ($task instanceof sTask) {
     );
 
     // Try to find one already scheduled
-    $run = $modx->getObject('sTaskRun', array(
+    $extract = $modx->getObject('sTaskRun', array(
         'task' => $task->get('id'),
         'status' => sTaskRun::STATUS_SCHEDULED,
     ));
 
-    if ($run instanceof sTaskRun) {
-        $data = $run->get('data');
+    if ($extract instanceof sTaskRun) {
+        $data = $extract->get('data');
         $data['triggers'][] = $trigger;
-        $run->set('data', $data);
-        $run->save();
+        $extract->set('data', $data);
+        $extract->save();
     } else {
         $task->schedule(time() - 60, array(
             'triggers' => array($trigger),
