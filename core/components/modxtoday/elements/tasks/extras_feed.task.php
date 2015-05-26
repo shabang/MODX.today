@@ -118,7 +118,7 @@ foreach ($providers as $providerName) {
         continue;
     }
     /** @var modProcessorResponse $result */
-    $result = $modx->runProcessor('workspace/packages/rest/getInfo', array(
+    $result = $modx->runProcessor('workspace/packages/rest/getinfo', array(
         'provider' => $provider->get('id'),
     ));
 
@@ -130,7 +130,7 @@ foreach ($providers as $providerName) {
                 // Only deal with releases from the last week
                 $releasedOn = strtotime($newPkg['releasedon']);
                 if ($releasedOn < $startOfWeek) {
-                    continue;
+                    //continue;
                 }
 
                 // Create the new package array
@@ -199,12 +199,12 @@ $isNew = false;
 /** @var modResource $resource */
 $resource = $modx->getObject('modResource', array(
     'parent' => 1,      // Posts container
-    'template' => 8,    // Article - Extras Feed template
+    'AND:template:=' => 8,    // Article - Extras Feed template
     'AND:createdon:>=' => $startOfWeek
 ));
 if (!$resource) {
     $isNew = true;
-    $resource = $modx->newObject('modResource');
+    $resource = $modx->newObject('modDocument');
     $resource->fromArray(array(
         'parent' => 1,
         'template' => 8,
@@ -213,11 +213,11 @@ if (!$resource) {
     ));
     $resource->set('alias', $resource->cleanAlias($resource->get('pagetitle')));
     $resource->save();
-    $resource->set('description', '​Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
-    $resource->set('introtext', '​Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
+    $resource->set('description', 'Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
+    $resource->set('introtext', 'Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
     $resource->setTVValue('author', 'robbie');
 
-    $blankContent = $modx->toJSON($contentBlocks->getDefaultCanvas($resource, '​Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '.'));
+    $blankContent = $modx->toJSON($contentBlocks->getDefaultCanvas($resource, 'Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '.'));
     $resource->setProperties(array(
         'content' => $blankContent,
         '_isContentBlocks' => true,
