@@ -2,7 +2,7 @@ id: 6
 name: cbGetFieldContent
 description: 'Get the content of a particular ContentBlocks field. (Part of ContentBlocks)'
 category: ContentBlocks
-properties: null
+properties: 'a:0:{}'
 
 -----
 
@@ -42,6 +42,9 @@ properties: null
  
 
 $resource = (isset($scriptProperties['resource']) && $scriptProperties['resource'] != $modx->resource->get('id')) ? $modx->getObject('modResource', $scriptProperties['resource']) : $modx->resource;
+if (!$resource) {
+    return '';
+}
 $fld = $modx->getOption('field', $scriptProperties, 0, true);
 $fieldSettingFilter = $modx->getOption('fieldSettingFilter', $scriptProperties, false, true); 
 $limit = $modx->getOption('limit', $scriptProperties, 0, true);
