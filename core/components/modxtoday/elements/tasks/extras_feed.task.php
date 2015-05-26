@@ -147,7 +147,7 @@ foreach ($providers as $providerName) {
                 );
 
                 // Get more information from the provider; in particular the changelog and info to create a link
-                $packageInfo = $modx->runProcessor('workspace/packages/rest/getList', array(
+                $packageInfo = $modx->runProcessor('workspace/packages/rest/getlist', array(
                     'provider' => $provider->get('id'),
                     'query' => $name
                 ));
@@ -199,12 +199,12 @@ $isNew = false;
 /** @var modResource $resource */
 $resource = $modx->getObject('modResource', array(
     'parent' => 1,      // Posts container
-    'template' => 8,    // Article - Extras Feed template
+    'AND:template:=' => 8,    // Article - Extras Feed template
     'AND:createdon:>=' => $startOfWeek
 ));
 if (!$resource) {
     $isNew = true;
-    $resource = $modx->newObject('modResource');
+    $resource = $modx->newObject('modDocument');
     $resource->fromArray(array(
         'parent' => 1,
         'template' => 8,
