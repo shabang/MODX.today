@@ -118,7 +118,7 @@ foreach ($providers as $providerName) {
         continue;
     }
     /** @var modProcessorResponse $result */
-    $result = $modx->runProcessor('workspace/packages/rest/getInfo', array(
+    $result = $modx->runProcessor('workspace/packages/rest/getinfo', array(
         'provider' => $provider->get('id'),
     ));
 
@@ -213,11 +213,11 @@ if (!$resource) {
     ));
     $resource->set('alias', $resource->cleanAlias($resource->get('pagetitle')));
     $resource->save();
-    $resource->set('description', '​Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
-    $resource->set('introtext', '​Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
+    $resource->set('description', 'Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
+    $resource->set('introtext', 'Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
     $resource->setTVValue('author', 'robbie');
 
-    $blankContent = $modx->toJSON($contentBlocks->getDefaultCanvas($resource, '​Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '.'));
+    $blankContent = $modx->toJSON($contentBlocks->getDefaultCanvas($resource, 'Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '.'));
     $resource->setProperties(array(
         'content' => $blankContent,
         '_isContentBlocks' => true,
