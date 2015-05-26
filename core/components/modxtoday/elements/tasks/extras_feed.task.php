@@ -130,7 +130,7 @@ foreach ($providers as $providerName) {
                 // Only deal with releases from the last week
                 $releasedOn = strtotime($newPkg['releasedon']);
                 if ($releasedOn < $startOfWeek) {
-                    //continue;
+                    continue;
                 }
 
                 // Create the new package array
@@ -147,7 +147,7 @@ foreach ($providers as $providerName) {
                 );
 
                 // Get more information from the provider; in particular the changelog and info to create a link
-                $packageInfo = $modx->runProcessor('workspace/packages/rest/getList', array(
+                $packageInfo = $modx->runProcessor('workspace/packages/rest/getlist', array(
                     'provider' => $provider->get('id'),
                     'query' => $name
                 ));
