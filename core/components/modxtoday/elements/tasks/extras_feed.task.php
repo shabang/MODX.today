@@ -330,7 +330,7 @@ $resource->save();
 $modx->getCacheManager()->delete('web/resources/' . $resource->id, array(
     xPDO::OPT_CACHE_KEY => 'resource'
 ));
-$modx->cacheManager->delete('articles-grid/' . $resource->id, array(
+$modx->cacheManager->delete('articles-grid/', array(
     xPDO::OPT_CACHE_KEY => 'default'
 ));
 if ($isNew) {
