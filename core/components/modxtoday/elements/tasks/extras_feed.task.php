@@ -5,7 +5,7 @@
  * @var sTaskRun $run
  */
 
-$task->schedule('+1 hour');
+$task->schedule(time() - 60);//'+1 hour'); //@todo
 
 $corePath = $modx->getOption('contentblocks.core_path', null, MODX_CORE_PATH . 'components/contentblocks/') . 'model/contentblocks/';
 /** @var ContentBlocks $contentBlocks */
@@ -196,12 +196,17 @@ foreach ($providers as $providerName) {
 }
 
 $isNew = false;
-/** @var modResource $resource */
-$resource = $modx->getObject('modResource', array(
-    'parent' => 1,      // Posts container
+
+$c = $modx->newQuery('modResource');
+$c->where(array(
+    'parent:=' => 1,      // Posts container
     'AND:template:=' => 8,    // Article - Extras Feed template
-    'AND:createdon:>=' => $startOfWeek
+    'AND:publishedon:>=' => $startOfWeek
 ));
+
+/** @var modResource $resource */
+$resource = $modx->getObject('modDocument', $c);
+
 if (!$resource) {
     $isNew = true;
     $resource = $modx->newObject('modDocument');
