@@ -5,7 +5,7 @@
  * @var sTaskRun $run
  */
 
-$task->schedule(time() - 60);//'+1 hour'); //@todo
+$task->schedule('+1 hour');
 
 $corePath = $modx->getOption('contentblocks.core_path', null, MODX_CORE_PATH . 'components/contentblocks/') . 'model/contentblocks/';
 /** @var ContentBlocks $contentBlocks */
