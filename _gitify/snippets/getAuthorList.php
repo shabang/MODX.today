@@ -4,7 +4,13 @@ properties: 'a:0:{}'
 
 -----
 
-$chunks = $modx->getCollection('modChunk', array('category' => 44));
+$c = $modx->newQuery('modChunk');
+$c->where(array(
+  'category' => 44,
+));
+$c->sortby('name', 'ASC');
+
+$chunks = $modx->getCollection('modChunk', $c);
 
 $output = array();
 foreach ($chunks as $chunk) {
