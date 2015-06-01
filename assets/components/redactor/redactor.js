@@ -8476,6 +8476,7 @@ var RedactorPlugins = {};
     					var $a = $(a).attr('class','').addClass('redactor-added-link');
                         if(linkClass) $a.addClass(linkClass);
                         if(linkID) $a.attr('id',linkID);
+                        if(linkTitle) $a.attr('title',linkTitle);
     					this.exec('inserthtml', this.outerHtml($a), false);
     					this.$editor.find('a.redactor-added-link').removeAttr('style').removeClass('redactor-added-link').each(function()
     					{

@@ -1,4 +1,4 @@
-<script type="text/javascript" src="[[+assetsUrl]]redactor-1.5.3.min.js"></script>
+<script type="text/javascript" src="[[+assetsUrl]]redactor-1.5.4.min.js"></script>
 [[+plugin_files]]
 [[+langFile:notempty=`<script type="text/javascript" src="[[+langFile]]"></script>`]]
 <script type="text/javascript">
@@ -69,9 +69,11 @@
         /** Setup jQuery's ajax to pass the necessary headers */
         MODx.on('ready', function(){
             $.ajaxSetup({
-                headers: {
-                    'modAuth': MODx.siteId,
-                    'Powered-By': 'Redactor in MODX Revolution'
+                beforeSend:function(xhr, settings){
+                    if(settings.url.indexOf(MODx.config.url_scheme + MODx.config.http_host + MODx.config.manager_url === 0) || settings.url.indexOf(MODx.config.url_scheme + MODx.config.http_host + MODx.config['redactor.assets_url'] === 0)) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                        xhr.setRequestHeader('Powered-By','Redactor in MODX Revolution');    
+                    }
                 }
             });
 

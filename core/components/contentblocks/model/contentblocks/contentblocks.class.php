@@ -902,7 +902,7 @@ class ContentBlocks {
     }
 
     /**
-     * @param bool|modResource $resource
+     * @param bool $resource
      * @param string $content
      * @return array|mixed
      */

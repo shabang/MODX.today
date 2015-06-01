@@ -60,7 +60,7 @@ class Redactor {
             'connectorUrl' => $assetsUrl . 'connector.php'
         ),$config);
         
-        $this->version = new VersionObject(1, 5, 3, 'pl');
+        $this->version = new VersionObject(1, 5, 4, 'pl');
 
         $this->modx->lexicon->load('redactor:default');
         
@@ -232,10 +232,10 @@ class Redactor {
     public function initialize() {
         if (!$this->assetsLoaded) {
             $this->modx->controller->addLexiconTopic('redactor:default');
-            $this->modx->controller->addCSS($this->config['assetsUrl'].'redactor-1.5.3.min.css');
+            $this->modx->controller->addCSS($this->config['assetsUrl'].'redactor-1.5.4.min.css');
             if($this->degradeUI) $this->modx->controller->addCSS($this->config['assetsUrl'].'buttons-legacy.min.css');
             if($this->rebeccaDay) $this->modx->controller->addCSS($this->config['assetsUrl'].'rebecca.min.css');
-            $this->modx->controller->addJavascript($this->config['assetsUrl'].'redactor-1.5.3.min.js');
+            $this->modx->controller->addJavascript($this->config['assetsUrl'].'redactor-1.5.4.min.js');
         }
         $this->assetsLoaded = true;
     }
@@ -256,6 +256,8 @@ class Redactor {
         foreach ($this->pathVariables as $key => $value) {
             $path = str_replace('[[+'.$key.']]', $value, $path);
         }
+        
+        $path = preg_replace('/\[\[.*?\]\]/', '', $path);
         return $path;
     }
     

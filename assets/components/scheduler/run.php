@@ -8,10 +8,8 @@
  * @var modX $modx
  */
 require_once dirname(dirname(dirname(dirname(__FILE__)))).'/config.core.php';
-require_once MODX_CORE_PATH.'model/modx/modx.class.php';
-$modx = new modX();
-$modx->initialize('web');
-$modx->getService('error','error.modError', '', '');
+require_once MODX_CORE_PATH.'config/'.MODX_CONFIG_KEY.'.inc.php';
+require_once MODX_CONNECTORS_PATH.'index.php';
 
 $corePath = $modx->getOption('scheduler.core_path',null,$modx->getOption('core_path').'components/scheduler/');
 require_once $corePath.'model/scheduler/scheduler.class.php';

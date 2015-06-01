@@ -1,3 +1,12 @@
+++ Redactor 1.5.4-pl
+++ Released on 2015-05-25
+++++++++++++++++++++++++++
+ - Hardened XHR Security
+ - #267 Clean up placeholders that don't exist
+ - #284 Upload filename correctly when it starts with UTF8
+ - #285 Fix issue with setting title on link create
+ - #292 Fix additional plugin usage with RedactorTV
+
 ++ Redactor 1.5.3-pl
 ++ Released on 2014-12-30
 ++++++++++++++++++++++++++

@@ -69,7 +69,8 @@ class RedactorMediaUploadProcessor extends redProcessor {
              * Prepare file names.
              */
             foreach ($_FILES as $key => $upload) {
-                $originalName = pathinfo($upload['name'], PATHINFO_FILENAME);
+                $originalName = pathinfo('1' . $upload['name'], PATHINFO_FILENAME); // https://github.com/modmore/Redactor/issues/284
+                $originalName = substr($originalName, 1);
                 if((bool)$this->modx->getOption('redactor.cleanFileNames', null, true)) $originalName = $this->sanitizeFileName($originalName);
                 $extension = pathinfo($upload['name'], PATHINFO_EXTENSION);
                 $_FILES[$key]['name'] = $hash . $originalName . '.' . $extension;

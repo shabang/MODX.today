@@ -52,12 +52,26 @@ class RedactorInputRender extends modTemplateVarInputRender {
         $params['imageGetJson'] = $params['imageGetJson'].'&tv=' . $this->tv->get('id');
         $params['fileGetJson'] = $params['fileGetJson'].'&tv=' . $this->tv->get('id');
         $params['imageUpload'] = $params['imageUpload'].'&tv=' . $this->tv->get('id');
+        
         if(isset($params['clipboardUploadUrl'])) $params['clipboardUploadUrl'] = $params['clipboardUploadUrl'].'&tv=' . $this->tv->get('id');
         $params['fileUpload'] = $params['fileUpload'].'&tv=' . $this->tv->get('id');
-        $params['plugins'] = array(); // wipe it clean and read
+
 		if(isset($params['clipsJson']) && !empty($params['clipsJson'])) $params['plugins'][] = "clips";
+        else {
+            if (in_array('clips', $params['plugins'])) unset($params['plugins'][array_search('clips', $params['plugins'])]);
+        }
+        
 		if(isset($params['stylesJson']) && !empty($params['stylesJson'])) $params['plugins'][] = "styles";
-        ($params['buttonFullScreen']) ? $params['plugins'][] = "fullscreen" : $params['plugins'] = array_diff($params['plugins'],array('fullscreen'));
+        else {
+            if (in_array('styles', $params['plugins'])) unset($params['plugins'][array_search('styles', $params['plugins'])]);
+        }
+        
+		if(isset($params['buttonFullScreen']) && !empty($params['buttonFullScreen'])) $params['plugins'][] = "fullscreen";
+        else {
+            if (in_array('fullscreen', $params['plugins'])) unset($params['plugins'][array_search('fullscreen', $params['plugins'])]);
+        }
+        
+        $params['plugins'] = array_unique($params['plugins']);
         /**
          * Set placeholders and register CSS/JS files.
          */
@@ -105,10 +119,10 @@ class RedactorInputRender extends modTemplateVarInputRender {
     }
 
     protected function registerStuff() {
-        $this->modx->controller->addCSS($this->redactor->config['assetsUrl'].'redactor-1.5.3.min.css');
+        $this->modx->controller->addCSS($this->redactor->config['assetsUrl'].'redactor-1.5.4.min.css');
         if($this->redactor->degradeUI) $this->modx->controller->addCSS($this->redactor->config['assetsUrl'].'buttons-legacy.min.css');
         if($this->redactor->rebeccaDay) $this->modx->controller->addCSS($this->redactor->config['assetsUrl'].'rebecca.min.css');
-        $this->modx->controller->addJavascript($this->redactor->config['assetsUrl'].'redactor-1.5.3.min.js');
+        $this->modx->controller->addJavascript($this->redactor->config['assetsUrl'].'redactor-1.5.4.min.js');
     }
 }
 return 'RedactorInputRender';
