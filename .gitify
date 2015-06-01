@@ -18,6 +18,12 @@ data:
       - 'key:NOT IN':
         - environment
         - 'gitifywatch.gitify_path'
+        - 'mail_smtp_hosts'
+        - 'mail_smtp_user'
+        - 'mail_smtp_pass'
+        - 'mail_smtp_port'
+        - 'mail_smtp_prefix'
+        - 'mail_use_smtp'
   content_types:
     class: modContentType
     primary: name
