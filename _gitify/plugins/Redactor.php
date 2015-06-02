@@ -60,13 +60,13 @@ switch ($modx->event->name) {
 
         if ($modx->controller && !($modx->controller instanceof modManagerControllerDeprecated)) {
             $modx->controller->addLexiconTopic('redactor:default');
-            $modx->controller->addCSS($redactor->config['assetsUrl'].'redactor-1.5.3.min.css');
+            $modx->controller->addCSS($redactor->config['assetsUrl'].'redactor-1.5.4.min.css');
             if($redactor->degradeUI) $modx->controller->addCSS($redactor->config['assetsUrl'].'buttons-legacy.min.css');
             if($redactor->rebeccaDay) $modx->controller->addCSS($redactor->config['assetsUrl'].'rebecca.min.css');
         }
         else {
             $modx->lexicon->load('redactor:default');
-            $modx->regClientCSS($redactor->config['assetsUrl'].'redactor-1.5.3.min.css');
+            $modx->regClientCSS($redactor->config['assetsUrl'].'redactor-1.5.4.min.css');
             if($redactor->degradeUI) $modx->regClientCSS($redactor->config['assetsUrl'].'buttons-legacy.min.css');
             if($redactor->rebeccaDay) $modx->regClientCSS($redactor->config['assetsUrl'].'rebecca.min.css');
         }
