@@ -1,0 +1,23 @@
+id: 42
+name: articleEmbed
+description: ''
+properties: null
+
+-----
+
+[[getResources?
+        &parents=`-1`
+        &resources=`[[+article]]`
+        &tplCondition=`template`
+        &includeTVs=`1`
+        &includeTVList=`home.read_more,preview.image,podcast.number`
+        &tpl=`article.text`
+        &conditionalTpls=`{
+            "2": "article.text",
+            "3": "article.video",
+            "4": "article.gallery",
+            "5": "article.link",
+            "6": "article.podcast"
+        }`
+        &limit=`1`
+]]

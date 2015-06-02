@@ -1,0 +1,11 @@
+id: 13
+input: chunk
+name: 'Embed Article'
+description: 'Shows another article on MODX.today, opengraph style.'
+sortorder: 11
+icon: snippet_C
+template: '[[+tag]]'
+properties: '{"chunk":"42","custom_preview":""}'
+availability: '[]'
+layouts: ''
+settings: '[{"reference":"article","title":"Article","fieldtype":"select","default_value":"","fieldoptions":"None=0\n[[getArticlesForSetting]]","field_is_exposed":"asField","process_tags":"1"}]'
