@@ -219,7 +219,7 @@ if (!$resource) {
     $resource->set('alias', $resource->cleanAlias($resource->get('pagetitle')));
     $resource->save();
     $resource->set('description', 'Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
-    $resource->set('introtext', 'Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].');
+    $resource->set('introtext', '<p>Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '. The updates this week include [[getReleases? &resource=`' . $resource->get('id') . '`]].</p>');
     $resource->setTVValue('author', 'robbie');
 
     $blankContent = $modx->toJSON($contentBlocks->getDefaultCanvas($resource, 'Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of ' . $startOfWeekDate . '.'));
