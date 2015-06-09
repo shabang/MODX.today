@@ -3,7 +3,6 @@ name: GitifyWatch
 description: 'Watches for changes in resources and elements to automatically run Gitify and git to commit & push changes.'
 category: 'Gitify Watch'
 properties: 'a:0:{}'
-disabled: 1
 
 -----
 
