@@ -1,0 +1,72 @@
+id: 185
+pagetitle: 'Advanced images with Image+'
+alias: 2015/06/advanced-images-image-plus
+published: 1
+parent: 1
+introtext: '<p>Have you ever faced the problem, that you created a layout using an image with a defined aspect ratio, but the image you want to use has a different aspect ratio? Or do you need an image in a getResources output with a different aspect ratio than the original image displayed on another resource? In both cases, the image you want to use can''t be cropped automatic, because the subject of the image may not be in the center. Introducing Image+.&nbsp;</p>'
+template: 2
+menuindex: 54
+createdby: 2
+publishedon: 1434014520
+publishedby: 2
+uri: posts/2015/06/advanced-images-image-plus
+show_in_tree: 0
+properties: '{"contentblocks":{"content":"[{\"layout\":3,\"content\":{\"col1\":[{\"value\":\"<p>Have you ever faced the problem, that you created a layout using an image with a defined aspect ratio, but the image you want to use has a different aspect ratio? Or do you need an image in a getResources output with a different aspect ratio than the original image displayed on another resource? In both cases, the image you want to use can''t be cropped automatic, because the subject of the image may&nbsp;not be in the center.<\/p><p>This is when&nbsp;<a href=\\\"http:\/\/modx.com\/extras\/package\/imageplustvinput\\\" target=\\\"_blank\\\">the freshly updated&nbsp;Image+ package<\/a> could be very useful. It''s&nbsp;a custom template variable, which lets you select and crop the image during editing a resource. And it includes a snippet that allows you to&nbsp;output the cropped image with other options too.<\/p>\",\"field\":2,\"settings\":[]},{\"url\":\"\/assets\/uploads\/images\/2015\/06\/imageplus_23.jpg\",\"title\":\"\",\"size\":\"124684\",\"extension\":\"jpg\",\"field\":4,\"settings\":[]},{\"value\":\"<p>Aside from being able&nbsp;of cropping an image, the Image+ template variable&nbsp;does something else a regular image template variable can''t do:&nbsp;guarantee a minimal height and width of the selected image. When that happens,&nbsp;Image+ will warn the editor&nbsp;and does not allow to use the image.<\/p><p>All input and output options of the Image+ custom template variable and the snippet properties are described in the&nbsp;<a href=\\\"http:\/\/jako.github.io\/ImagePlus\/\\\" target=\\\"_blank\\\">comprehensive documentation<\/a>. Now let''s look at some examples of how you can use Image+.<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"Example 1: Keep the Crop\",\"level\":\"h2\",\"field\":3,\"settings\":[]},{\"value\":\"<p>If you want to use the the selected crop of an Image+ image, but you want to display the image in a different size, you can use the following ImagePlus snippet call:<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"[[ImagePlus? \\n    &tvname=`imageplus` \\n    &options=`w=100&h=50&zc=1` \\n]]\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"<p>This call will crop the image and then&nbsp;resizes it to 100px width and 50px height using zoom crop, and returns the url to the image.<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"Example 2: Responsive Images\",\"level\":\"h2\",\"field\":3,\"settings\":[]},{\"value\":\"<p>If you want to create responsive images that uses a crop i.e for the small size, you can use the following ImagePlus snippet call:<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"[[ImagePlus? \\n    &tvname=`imageplus` \\n    &options=`w=200` \\n    &type=`tpl`\\n    &tpl=`ImagePlus.responsive`\\n]]\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"<p>Assuming you are using the pThumb MODX crop engine you can&nbsp;use the following ImagePlus.responsive chunk:<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"<picture>\\n    <source media=\\\"(min-width: 36em)\\\"\\n        srcset=\\\"[[+source.src:pthumb=`w=1024`]] 1024w,\\n            [[+source.src:pthumb=`w=640`]] 640w,\\n            [[+source.src:pthumb=`w=320`]] 320w\\\"\\n        sizes=\\\"33.3vw\\\" \/>\\n    <source srcset=\\\"[[+source.src:pthumb=`[[+crop.options]]&w=640`]] 2x,\\n        [[+source.src:pthumb=`[[+crop.options]]&w=320`]] 1x\\\" \/>\\n    <img src=\\\"[[+url]]\\\" \/>\\n<\/picture>\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"<p>The cropped versions will be served on all browser viewports smaller than 36em in this example.<\/p><p>In an upcoming version of Image+ you will be able of defining more than one crop for even better&nbsp;support of responsive images.<\/p>\",\"field\":2,\"settings\":[]}]},\"settings\":[],\"parent\":0}]","linear":[{"value":"<p>Have you ever faced the problem, that you created a layout using an image with a defined aspect ratio, but the image you want to use has a different aspect ratio? Or do you need an image in a getResources output with a different aspect ratio than the original image displayed on another resource? In both cases, the image you want to use can''t be cropped automatic, because the subject of the image may&nbsp;not be in the center.<\/p><p>This is when&nbsp;<a href=\"http:\/\/modx.com\/extras\/package\/imageplustvinput\" target=\"_blank\">the freshly updated&nbsp;Image+ package<\/a> could be very useful. It''s&nbsp;a custom template variable, which lets you select and crop the image during editing a resource. And it includes a snippet that allows you to&nbsp;output the cropped image with other options too.<\/p>","field":2,"settings":[]},{"url":"\/assets\/uploads\/images\/2015\/06\/imageplus_23.jpg","title":"","size":"124684","extension":"jpg","field":4,"settings":[]},{"value":"<p>Aside from being able&nbsp;of cropping an image, the Image+ template variable&nbsp;does something else a regular image template variable can''t do:&nbsp;guarantee a minimal height and width of the selected image. When that happens,&nbsp;Image+ will warn the editor&nbsp;and does not allow to use the image.<\/p><p>All input and output options of the Image+ custom template variable and the snippet properties are described in the&nbsp;<a href=\"http:\/\/jako.github.io\/ImagePlus\/\" target=\"_blank\">comprehensive documentation<\/a>. Now let''s look at some examples of how you can use Image+.<\/p>","field":2,"settings":[]},{"value":"Example 1: Keep the Crop","level":"h2","field":3,"settings":[]},{"value":"<p>If you want to use the the selected crop of an Image+ image, but you want to display the image in a different size, you can use the following ImagePlus snippet call:<\/p>","field":2,"settings":[]},{"value":"[[ImagePlus? \n    &tvname=`imageplus` \n    &options=`w=100&h=50&zc=1` \n]]","lang":"html","field":10,"settings":[]},{"value":"<p>This call will crop the image and then&nbsp;resizes it to 100px width and 50px height using zoom crop, and returns the url to the image.<\/p>","field":2,"settings":[]},{"value":"Example 2: Responsive Images","level":"h2","field":3,"settings":[]},{"value":"<p>If you want to create responsive images that uses a crop i.e for the small size, you can use the following ImagePlus snippet call:<\/p>","field":2,"settings":[]},{"value":"[[ImagePlus? \n    &tvname=`imageplus` \n    &options=`w=200` \n    &type=`tpl`\n    &tpl=`ImagePlus.responsive`\n]]","lang":"html","field":10,"settings":[]},{"value":"<p>Assuming you are using the pThumb MODX crop engine you can&nbsp;use the following ImagePlus.responsive chunk:<\/p>","field":2,"settings":[]},{"value":"<picture>\n    <source media=\"(min-width: 36em)\"\n        srcset=\"[[+source.src:pthumb=`w=1024`]] 1024w,\n            [[+source.src:pthumb=`w=640`]] 640w,\n            [[+source.src:pthumb=`w=320`]] 320w\"\n        sizes=\"33.3vw\" \/>\n    <source srcset=\"[[+source.src:pthumb=`[[+crop.options]]&w=640`]] 2x,\n        [[+source.src:pthumb=`[[+crop.options]]&w=320`]] 1x\" \/>\n    <img src=\"[[+url]]\" \/>\n<\/picture>","lang":"html","field":10,"settings":[]},{"value":"<p>The cropped versions will be served on all browser viewports smaller than 36em in this example.<\/p><p>In an upcoming version of Image+ you will be able of defining more than one crop for even better&nbsp;support of responsive images.<\/p>","field":2,"settings":[]}],"fieldcounts":{"2":7,"4":1,"3":2,"10":3},"_isContentBlocks":true}}'
+tvs:
+    author: thomasjakobi
+    preview.image: images/2015/06/imageplus_23.jpg
+
+-----
+
+<div class="row   " >
+    <div class="[[++default_article_column_classnames]]">
+        <p>Have you ever faced the problem, that you created a layout using an image with a defined aspect ratio, but the image you want to use has a different aspect ratio? Or do you need an image in a getResources output with a different aspect ratio than the original image displayed on another resource? In both cases, the image you want to use can't be cropped automatic, because the subject of the image may&nbsp;not be in the center.</p><p>This is when&nbsp;<a href="http://modx.com/extras/package/imageplustvinput" target="_blank">the freshly updated&nbsp;Image+ package</a> could be very useful. It's&nbsp;a custom template variable, which lets you select and crop the image during editing a resource. And it includes a snippet that allows you to&nbsp;output the cropped image with other options too.</p>
+
+
+<figure class="content-image extended-width ">
+    <img data-src="/assets/uploads/images/2015/06/imageplus_23.jpg" class="lazyload" alt="" >
+    
+</figure>
+
+
+
+<p>Aside from being able&nbsp;of cropping an image, the Image+ template variable&nbsp;does something else a regular image template variable can't do:&nbsp;guarantee a minimal height and width of the selected image. When that happens,&nbsp;Image+ will warn the editor&nbsp;and does not allow to use the image.</p><p>All input and output options of the Image+ custom template variable and the snippet properties are described in the&nbsp;<a href="http://jako.github.io/ImagePlus/" target="_blank">comprehensive documentation</a>. Now let's look at some examples of how you can use Image+.</p>
+
+<h2>Example 1: Keep the Crop</h2>
+
+<p>If you want to use the the selected crop of an Image+ image, but you want to display the image in a different size, you can use the following ImagePlus snippet call:</p>
+
+<pre><code class="language-markup">&#91;&#91;ImagePlus? 
+    &amp;tvname=`imageplus` 
+    &amp;options=`w=100&amp;h=50&amp;zc=1` 
+&#93;&#93;</code></pre>
+
+<p>This call will crop the image and then&nbsp;resizes it to 100px width and 50px height using zoom crop, and returns the url to the image.</p>
+
+<h2>Example 2: Responsive Images</h2>
+
+<p>If you want to create responsive images that uses a crop i.e for the small size, you can use the following ImagePlus snippet call:</p>
+
+<pre><code class="language-markup">&#91;&#91;ImagePlus? 
+    &amp;tvname=`imageplus` 
+    &amp;options=`w=200` 
+    &amp;type=`tpl`
+    &amp;tpl=`ImagePlus.responsive`
+&#93;&#93;</code></pre>
+
+<p>Assuming you are using the pThumb MODX crop engine you can&nbsp;use the following ImagePlus.responsive chunk:</p>
+
+<pre><code class="language-markup">&lt;picture&gt;
+    &lt;source media=&quot;(min-width: 36em)&quot;
+        srcset=&quot;&#91;&#91;+source.src:pthumb=`w=1024`&#93;&#93; 1024w,
+            &#91;&#91;+source.src:pthumb=`w=640`&#93;&#93; 640w,
+            &#91;&#91;+source.src:pthumb=`w=320`&#93;&#93; 320w&quot;
+        sizes=&quot;33.3vw&quot; /&gt;
+    &lt;source srcset=&quot;&#91;&#91;+source.src:pthumb=`&#91;&#91;+crop.options&#93;&#93;&amp;w=640`&#93;&#93; 2x,
+        &#91;&#91;+source.src:pthumb=`&#91;&#91;+crop.options&#93;&#93;&amp;w=320`&#93;&#93; 1x&quot; /&gt;
+    &lt;img src=&quot;&#91;&#91;+url&#93;&#93;&quot; /&gt;
+&lt;/picture&gt;</code></pre>
+
+<p>The cropped versions will be served on all browser viewports smaller than 36em in this example.</p><p>In an upcoming version of Image+ you will be able of defining more than one crop for even better&nbsp;support of responsive images.</p>
+    </div>
+</div>
