@@ -1,12 +1,12 @@
 id: 31
 name: rssItem
 description: ''
-properties: null
+properties: 'a:0:{}'
 
 -----
 
 <item>
-  <title>[[+pagetitle:htmlent]]</title>
+  <title>[[+pagetitle:htmlent:cdata]]</title>
   <link>[[~[[+id]]? &scheme=`full` &pk_campaign=`rssfeed` &pk_kwd=`post`]]</link>
   <description>
     [[+introtext:default=`[[+content:ellipsis=`600`]]`:cdata]]
@@ -14,6 +14,6 @@ properties: null
   <pubDate>[[+publishedon:strtotime:date=`%a, %d %b %Y %H:%M:%S %z`]]</pubDate>
   <guid isPermaLink="false">[[~[[+id]]? &scheme=`full`]]</guid>
   <dc:creator>
-      [[+createdby:userinfo=`fullname`]]
+      [[+createdby:userinfo=`fullname`:cdata]]
   </dc:creator>
 </item>
