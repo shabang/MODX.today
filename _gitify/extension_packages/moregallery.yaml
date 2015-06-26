@@ -1,6 +1,0 @@
-id: 1
-namespace: moregallery
-name: moregallery
-path: '[[++core_path]]components/moregallery/'
-service_class: moreGallery
-service_name: moregallery
