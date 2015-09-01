@@ -47,10 +47,10 @@ window.lazySizesConfig = {
     	return script;
     }
     
+    var disqus_shortname = 'modxtoday';
 [[*parent:is=`1`:then=`
     [[*published:eq=`1`:then=`
-    var disqus_shortname = 'modxtoday';
-    var disqus_identifier = '[[*disqus_id]]';
+    var disqus_identifier = '[[*disqus_id:default=`thread-[[*id]]`]]';
     var disqus_url = 'https://modx.today[[~[[*id]]? &scheme=`abs`]]';
     
     loadJS('//modxtoday.disqus.com/embed.js', true);
