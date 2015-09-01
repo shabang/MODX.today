@@ -47,9 +47,14 @@ window.lazySizesConfig = {
     	return script;
     }
     
+[[*parent:is=`1`:then=`
+    [[*published:eq=`1`:then=`
     var disqus_shortname = 'modxtoday';
-[[*parent:is=`1`:then=`var disqus_identifier = 'thread-[[*id]]';
+    var disqus_identifier = '[[*disqus_id]]';
     var disqus_url = 'https://modx.today[[~[[*id]]? &scheme=`abs`]]';
+    
+    loadJS('//modxtoday.disqus.com/embed.js', true);
+    `:else=``]]
 `]]
     
     onContentLoaded(function(){
@@ -69,9 +74,6 @@ window.lazySizesConfig = {
        });
         
     [[*parent:is=`1`:then=`
-    
-        loadJS('//modxtoday.disqus.com/embed.js', true);
-        
         $.ajax({
             dataType: "json",
             url: '[[~103? &resource=`[[*id]]`]]',

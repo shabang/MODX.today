@@ -1,0 +1,11 @@
+id: 15
+input: blockdown
+name: Markdown
+description: ''
+sortorder: 12
+icon: code
+template: '[[+value]]'
+properties: '{"theme_editor":"themes\/editor\/epic-dark.css","theme_preview":"themes\/preview\/preview-dark.css"}'
+availability: ''
+layouts: ''
+settings: '[]'
