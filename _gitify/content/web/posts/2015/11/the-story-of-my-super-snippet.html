@@ -1,0 +1,80 @@
+id: 268
+pagetitle: 'The Story of my Super Snippet'
+alias: 2015/11/the-story-of-my-super-snippet
+published: 1
+parent: 1
+introtext: '<p>This is the story of a Snippet I once wrote, how it started out as a very simple way of doing a specific task and how MODX enabled it to become something more -- something super.</p>'
+template: 2
+menuindex: 121
+createdby: 2
+publishedon: 1447318800
+uri: posts/2015/11/the-story-of-my-super-snippet
+show_in_tree: 0
+properties: '{"contentblocks":{"content":"[{\"layout\":3,\"content\":{\"col1\":[{\"value\":\"This is the story of a Snippet I once wrote, how it started out as a very simple way of doing a specific task and how MODX enabled it to become something more -- something super.\\n\\n## Simple \\\"problem\\\" solving\\n\\nI am building a site in **MODX Revolution** and I start by making a template for an article with the `pagetitle` placeholder in an `h1`-tag, `introtext` in a `p`-tag (with a class of `intro`) and `content` not wrapped in anything -- I use a rich-text editor, so the markup is of course already there. All is well, until one of the users of the site wants to leave `introtext` empty... that leaves us with an empty paragraph beneath the page''s title -- not pretty, especially when that paragraph has a bottom margin I can''t get rid of.\\n\\nBut this is MODX, so it''s not a problem at all. Pretty fix:\\n\",\"field\":15,\"settings\":[]},{\"value\":\"[[*introtext:ne=``:then=`<p class=\\\"intro\\\">[[*introtext]]<\/p>`]]\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"Even prettier fix:\\n\",\"field\":15,\"settings\":[]},{\"value\":\"[[If?\\n    &subject=`[[*introtext]]`\\n    &operator=`notempty`\\n    &then=`<p class=\\\"intro\\\">[[*introtext]]<\/p>`\\n]]\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"Problem fixed, time to move on! Right? Sure! Only, I suddenly feel an urge to not have MODX parse the `introtext` placeholder more than necessary. So what can I do? I''ll create a Snippet -- more specifically, an [output modifier](https:\/\/rtfm.modx.com\/revolution\/2.x\/making-sites-with-modx\/customizing-content\/input-and-output-filters-%28output-modifiers%29 \\\"Read about it in the MODX Docs\\\")!\\n\\n## Enter wrap\\n\\nI name my Snippet `wrap` and put one line of code in it:\",\"field\":15,\"settings\":[]},{\"value\":\"return (empty($input) === false && strpos($options, ''|'') !== false) ? str_replace(''|'', $input, $options) : '''';\",\"lang\":\"php\",\"field\":10,\"settings\":[]},{\"value\":\"And here''s how I use it to solve my empty paragraph problem:\",\"field\":15,\"settings\":[]},{\"value\":\"[[*introtext:wrap=`<p class=\\\"intro\\\">|<\/p>`]]\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"So all it does is check if both `$input` is not empty *and* `$options` has a pipe-character in it? And if both these conditions are met, then go ahead and replace the pipe with the value in `$input` and then return the result? Yes! That''s what it does!\\n\\n## There''s more\\n\\nFor me, this is a cool little Snippet, capable of solving one tiny little \\\"problem\\\". And that''s all, until I suddenly find another use for it: mailto-links!\",\"field\":15,\"settings\":[]},{\"value\":\"[[*email:wrap=`<a href=\\\"mailto:|\\\">|<\/a>`]]\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"Of course it replaces multiple pipes! Now the Snippet is going from cool to beautiful! I''m really proud. But now it turns super, by fixing a problem that is even greater than both empty paragraphs and duplicate placeholders in mailto-links, combined!\",\"field\":15,\"settings\":[]},{\"value\":\"[[getResources?\\n    &parents=`-1`\\n    &resources=`[[*comma_separated_id_list]]`\\n    &tpl=`ResourceListTemplate`\\n    &sortby=`FIELD(modResource.id, [[*comma_separated_id_list]] )`\\n    &sortdir=`ASC`\\n]]\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"This **getResources** call works perfectly, just don''t leave the *comma_separated_id_list* empty. The result is an incomplete sorting clause in the query to the database, MODX throwing errors and clients getting angry. Not good. Easy to fix? Sure! Just do this:\\n\",\"field\":15,\"settings\":[]},{\"value\":\"[[[[If?\\n    &subject=`[[*comma_separated_id_list]]`\\n    &operator=`notempty`\\n    &then=`$ResourceListWrapper`\\n    &else=`-empty`\\n]]]]\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"That''s it, right? Of course not! I''m the guy who had to take care of an empty paragraph by adding a tiny little Snippet capable of (up until now) only helping out with two tiny problems. So, can `wrap` \\\"save\\\" the day, yet again? Here''s why it went from beautiful to super:\",\"field\":15,\"settings\":[]},{\"value\":\"&sortby=`[[*comma_separated_id_list:wrap=`FIELD(modResource.id, | )`:default=`menuindex`]]`\",\"lang\":\"html\",\"field\":10,\"settings\":[]},{\"value\":\"Now we can lose the **If**-call and don''t worry about empty template variables. I even get to add a default sorting field!\\n\\nSo there you have it. That''s the how and why. The reasoning and solutions are purely subjective and there may be other, better alternatives out there, but the point is: this is what makes MODX so great! To me MODX is an excellent extension of programming. There''s never just *one* way to do something. MODX lets me create something quickly and then gives me the option to easily use it in ways I never even imagined. That''s why it''s so super!\",\"field\":15,\"settings\":[]}]},\"settings\":[],\"parent\":0}]","linear":[{"value":"This is the story of a Snippet I once wrote, how it started out as a very simple way of doing a specific task and how MODX enabled it to become something more -- something super.\n\n## Simple \"problem\" solving\n\nI am building a site in **MODX Revolution** and I start by making a template for an article with the `pagetitle` placeholder in an `h1`-tag, `introtext` in a `p`-tag (with a class of `intro`) and `content` not wrapped in anything -- I use a rich-text editor, so the markup is of course already there. All is well, until one of the users of the site wants to leave `introtext` empty... that leaves us with an empty paragraph beneath the page''s title -- not pretty, especially when that paragraph has a bottom margin I can''t get rid of.\n\nBut this is MODX, so it''s not a problem at all. Pretty fix:\n","field":15,"settings":[]},{"value":"[[*introtext:ne=``:then=`<p class=\"intro\">[[*introtext]]<\/p>`]]","lang":"html","field":10,"settings":[]},{"value":"Even prettier fix:\n","field":15,"settings":[]},{"value":"[[If?\n    &subject=`[[*introtext]]`\n    &operator=`notempty`\n    &then=`<p class=\"intro\">[[*introtext]]<\/p>`\n]]","lang":"html","field":10,"settings":[]},{"value":"Problem fixed, time to move on! Right? Sure! Only, I suddenly feel an urge to not have MODX parse the `introtext` placeholder more than necessary. So what can I do? I''ll create a Snippet -- more specifically, an [output modifier](https:\/\/rtfm.modx.com\/revolution\/2.x\/making-sites-with-modx\/customizing-content\/input-and-output-filters-%28output-modifiers%29 \"Read about it in the MODX Docs\")!\n\n## Enter wrap\n\nI name my Snippet `wrap` and put one line of code in it:","field":15,"settings":[]},{"value":"return (empty($input) === false && strpos($options, ''|'') !== false) ? str_replace(''|'', $input, $options) : '''';","lang":"php","field":10,"settings":[]},{"value":"And here''s how I use it to solve my empty paragraph problem:","field":15,"settings":[]},{"value":"[[*introtext:wrap=`<p class=\"intro\">|<\/p>`]]","lang":"html","field":10,"settings":[]},{"value":"So all it does is check if both `$input` is not empty *and* `$options` has a pipe-character in it? And if both these conditions are met, then go ahead and replace the pipe with the value in `$input` and then return the result? Yes! That''s what it does!\n\n## There''s more\n\nFor me, this is a cool little Snippet, capable of solving one tiny little \"problem\". And that''s all, until I suddenly find another use for it: mailto-links!","field":15,"settings":[]},{"value":"[[*email:wrap=`<a href=\"mailto:|\">|<\/a>`]]","lang":"html","field":10,"settings":[]},{"value":"Of course it replaces multiple pipes! Now the Snippet is going from cool to beautiful! I''m really proud. But now it turns super, by fixing a problem that is even greater than both empty paragraphs and duplicate placeholders in mailto-links, combined!","field":15,"settings":[]},{"value":"[[getResources?\n    &parents=`-1`\n    &resources=`[[*comma_separated_id_list]]`\n    &tpl=`ResourceListTemplate`\n    &sortby=`FIELD(modResource.id, [[*comma_separated_id_list]] )`\n    &sortdir=`ASC`\n]]","lang":"html","field":10,"settings":[]},{"value":"This **getResources** call works perfectly, just don''t leave the *comma_separated_id_list* empty. The result is an incomplete sorting clause in the query to the database, MODX throwing errors and clients getting angry. Not good. Easy to fix? Sure! Just do this:\n","field":15,"settings":[]},{"value":"[[[[If?\n    &subject=`[[*comma_separated_id_list]]`\n    &operator=`notempty`\n    &then=`$ResourceListWrapper`\n    &else=`-empty`\n]]]]","lang":"html","field":10,"settings":[]},{"value":"That''s it, right? Of course not! I''m the guy who had to take care of an empty paragraph by adding a tiny little Snippet capable of (up until now) only helping out with two tiny problems. So, can `wrap` \"save\" the day, yet again? Here''s why it went from beautiful to super:","field":15,"settings":[]},{"value":"&sortby=`[[*comma_separated_id_list:wrap=`FIELD(modResource.id, | )`:default=`menuindex`]]`","lang":"html","field":10,"settings":[]},{"value":"Now we can lose the **If**-call and don''t worry about empty template variables. I even get to add a default sorting field!\n\nSo there you have it. That''s the how and why. The reasoning and solutions are purely subjective and there may be other, better alternatives out there, but the point is: this is what makes MODX so great! To me MODX is an excellent extension of programming. There''s never just *one* way to do something. MODX lets me create something quickly and then gives me the option to easily use it in ways I never even imagined. That''s why it''s so super!","field":15,"settings":[]}],"fieldcounts":{"15":9,"10":8},"_isContentBlocks":true}}'
+tvs:
+    author: havardvidme
+    disqus_id: ''
+    preview.image: ''
+
+-----
+
+<div class="row   " >
+    <div class="[[++default_article_column_classnames]]">
+        <p>This is the story of a Snippet I once wrote, how it started out as a very simple way of doing a specific task and how MODX enabled it to become something more -- something super.</p>
+<h2>Simple &quot;problem&quot; solving</h2>
+<p>I am building a site in <strong>MODX Revolution</strong> and I start by making a template for an article with the <code>pagetitle</code> placeholder in an <code>h1</code>-tag, <code>introtext</code> in a <code>p</code>-tag (with a class of <code>intro</code>) and <code>content</code> not wrapped in anything -- I use a rich-text editor, so the markup is of course already there. All is well, until one of the users of the site wants to leave <code>introtext</code> empty... that leaves us with an empty paragraph beneath the page's title -- not pretty, especially when that paragraph has a bottom margin I can't get rid of.</p>
+<p>But this is MODX, so it's not a problem at all. Pretty fix:</p>
+
+<pre><code class="language-markup">&#91;&#91;*introtext:ne=``:then=`&lt;p class=&quot;intro&quot;&gt;&#91;&#91;*introtext&#93;&#93;&lt;/p&gt;`&#93;&#93;</code></pre>
+
+<p>Even prettier fix:</p>
+
+<pre><code class="language-markup">&#91;&#91;If?
+    &amp;subject=`&#91;&#91;*introtext&#93;&#93;`
+    &amp;operator=`notempty`
+    &amp;then=`&lt;p class=&quot;intro&quot;&gt;&#91;&#91;*introtext&#93;&#93;&lt;/p&gt;`
+&#93;&#93;</code></pre>
+
+<p>Problem fixed, time to move on! Right? Sure! Only, I suddenly feel an urge to not have MODX parse the <code>introtext</code> placeholder more than necessary. So what can I do? I'll create a Snippet -- more specifically, an <a href="https://rtfm.modx.com/revolution/2.x/making-sites-with-modx/customizing-content/input-and-output-filters-%28output-modifiers%29" title="Read about it in the MODX Docs">output modifier</a>!</p>
+<h2>Enter wrap</h2>
+<p>I name my Snippet <code>wrap</code> and put one line of code in it:</p>
+
+<pre><code class="language-php">return (empty($input) === false &amp;&amp; strpos($options, '|') !== false) ? str_replace('|', $input, $options) : '';</code></pre>
+
+<p>And here's how I use it to solve my empty paragraph problem:</p>
+
+<pre><code class="language-markup">&#91;&#91;*introtext:wrap=`&lt;p class=&quot;intro&quot;&gt;|&lt;/p&gt;`&#93;&#93;</code></pre>
+
+<p>So all it does is check if both <code>$input</code> is not empty <em>and</em> <code>$options</code> has a pipe-character in it? And if both these conditions are met, then go ahead and replace the pipe with the value in <code>$input</code> and then return the result? Yes! That's what it does!</p>
+<h2>There's more</h2>
+<p>For me, this is a cool little Snippet, capable of solving one tiny little &quot;problem&quot;. And that's all, until I suddenly find another use for it: mailto-links!</p>
+
+<pre><code class="language-markup">&#91;&#91;*email:wrap=`&lt;a href=&quot;mailto:|&quot;&gt;|&lt;/a&gt;`&#93;&#93;</code></pre>
+
+<p>Of course it replaces multiple pipes! Now the Snippet is going from cool to beautiful! I'm really proud. But now it turns super, by fixing a problem that is even greater than both empty paragraphs and duplicate placeholders in mailto-links, combined!</p>
+
+<pre><code class="language-markup">&#91;&#91;getResources?
+    &amp;parents=`-1`
+    &amp;resources=`&#91;&#91;*comma_separated_id_list&#93;&#93;`
+    &amp;tpl=`ResourceListTemplate`
+    &amp;sortby=`FIELD(modResource.id, &#91;&#91;*comma_separated_id_list&#93;&#93; )`
+    &amp;sortdir=`ASC`
+&#93;&#93;</code></pre>
+
+<p>This <strong>getResources</strong> call works perfectly, just don't leave the <em>comma_separated_id_list</em> empty. The result is an incomplete sorting clause in the query to the database, MODX throwing errors and clients getting angry. Not good. Easy to fix? Sure! Just do this:</p>
+
+<pre><code class="language-markup">&#91;&#91;&#91;&#91;If?
+    &amp;subject=`&#91;&#91;*comma_separated_id_list&#93;&#93;`
+    &amp;operator=`notempty`
+    &amp;then=`$ResourceListWrapper`
+    &amp;else=`-empty`
+&#93;&#93;&#93;&#93;</code></pre>
+
+<p>That's it, right? Of course not! I'm the guy who had to take care of an empty paragraph by adding a tiny little Snippet capable of (up until now) only helping out with two tiny problems. So, can <code>wrap</code> &quot;save&quot; the day, yet again? Here's why it went from beautiful to super:</p>
+
+<pre><code class="language-markup">&amp;sortby=`&#91;&#91;*comma_separated_id_list:wrap=`FIELD(modResource.id, | )`:default=`menuindex`&#93;&#93;`</code></pre>
+
+<p>Now we can lose the <strong>If</strong>-call and don't worry about empty template variables. I even get to add a default sorting field!</p>
+<p>So there you have it. That's the how and why. The reasoning and solutions are purely subjective and there may be other, better alternatives out there, but the point is: this is what makes MODX so great! To me MODX is an excellent extension of programming. There's never just <em>one</em> way to do something. MODX lets me create something quickly and then gives me the option to easily use it in ways I never even imagined. That's why it's so super!</p>
+    </div>
+</div>
