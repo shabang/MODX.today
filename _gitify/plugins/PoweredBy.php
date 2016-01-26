@@ -1,6 +1,6 @@
 id: 31
 name: PoweredBy
-properties: null
+properties: 'a:0:{}'
 
 -----
 
