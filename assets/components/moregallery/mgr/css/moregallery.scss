@@ -662,6 +662,7 @@
       max-height: 40px;
       max-width: 90px;
       position: relative;
+      background-color: #fff; 
       &:hover {
         max-height: 250px;
         max-width: 250px;
@@ -873,6 +874,9 @@
           border-color: #2d86b7;
         }
       }
+    }
+    textarea {
+      min-height: 9em;
     }
 
     h3 {

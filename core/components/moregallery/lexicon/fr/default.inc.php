@@ -53,6 +53,8 @@ $_lang['moregallery.model_error'] = 'Une erreur est survenue, le modèle d\'imag
 
 $_lang['moregallery.error_invalid_resource'] = 'Une erreur est survenue, la ressource "[[+resource]]" n\'est pas une galerie valide.';
 $_lang['moregallery.error_loading_source'] = 'Une erreur est survenue lors du chargement du media source de cette galerie.';
+$_lang['moregallery.error_invalid_filetype'] = 'Sorry, .[[+extension]] files are not allowed.';
+$_lang['moregallery.error_upload_failed'] = 'the file could not be uploaded (Error [[+error]]).';
 
 // Tags related, for MoreGallery 1.1
 $_lang['moregallery.tags'] = 'Tags';
@@ -77,16 +79,16 @@ $_lang['setting_moregallery.image_id_in_name'] = 'ID de l\'image dans le nom de 
 $_lang['setting_moregallery.image_id_in_name_desc'] = 'Indiquez "prefix" ou "suffix" pour ajouter l\'ID de l\'image dans son nom de fichier, lors de l\'upload. Cela vous permet d\'être certain que le nom de l\'image est unique.';
 $_lang['setting_moregallery.resource_id_in_path'] = 'Resource ID in Path';
 $_lang['setting_moregallery.resource_id_in_path_desc'] = 'When enabled, the Gallery Resource ID will be suffixed to the Source Relative URL so each gallery has its own directory.';
-$_lang['setting_moregallery.content_position'] = 'Content Position';
-$_lang['setting_moregallery.content_position_desc'] = 'Set to "above", "below", "tab" or "hide" to determine how the Content field will be displayed, if at all.';
+$_lang['setting_moregallery.content_position'] = 'Position du contenu';
+$_lang['setting_moregallery.content_position_desc'] = 'Indiquez "above" (au dessus), "below" (en dessous), "tab" (dans un onglet) ou "hide" (masqué) pour définir comment le champ de contenu sera affiché.';
 $_lang['setting_moregallery.use_rte_for_images'] = 'Utilisez l\'éditeur de texte enrichi';
 $_lang['setting_moregallery.use_rte_for_images_desc'] = 'Activez cette option pour que l\'éditeur de texte enrichi soit utilisé pour le champ de description de l\'image. Nous recommandons l\'utilisation de Redactor, mais d\'autres éditeurs sont également supportés.';
 $_lang['setting_moregallery.crops'] = 'Crops';
-$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/">full Crops documentation</a> for more information about syntax and functionality.';
+$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">full Crops documentation</a> for more information about syntax and functionality.';
 $_lang['setting_moregallery.single_image_url_param'] = 'Single Image URL Parameter';
 $_lang['setting_moregallery.single_image_url_param_desc'] = 'Used with the mgGetImages snippet, the single image url parameter determines whether a listing or single image is displayed. This URL parameter will contain the image ID and, if not found, it will send the user to the configured 404 page. ';
-$_lang['setting_moregallery.add_icon_to_toolbar'] = 'Add Icon to Toolbar';
-$_lang['setting_moregallery.add_icon_to_toolbar_desc'] = 'When enabled, a "New Gallery" icon will be added to resource toolbar providing quick access to create new Galleries.';
+$_lang['setting_moregallery.add_icon_to_toolbar'] = 'Ajouter l\'icône à la barre d\'outils';
+$_lang['setting_moregallery.add_icon_to_toolbar_desc'] = 'Activez cette option pour qu\'une icône "Nouvelle Galerie" soit ajoutée à la barre d\'outils des ressources, donnant un accès rapide à la création de nouvelle galeries.';
 
 $_lang['setting_moregallery.sanitize_replace'] = 'Sanitize Replacement';
 $_lang['setting_moregallery.sanitize_replace_desc'] = 'Any characters in the uploaded filenames that do not match the sanitize pattern will be replaced with this character.';

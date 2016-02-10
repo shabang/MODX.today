@@ -10,9 +10,10 @@ var mg$ = $.noConflict();
     mg$(document).ready(function($) {
         MODx.on("ready", function() {
             $.ajaxSetup({
-                headers: {
-                    'modAuth': MODx.siteId,
-                    'Powered-By': 'moreGallery for MODX Revolution'
+                beforeSend:function(xhr, settings){
+                    if(!settings.crossDomain) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                    }
                 }
             });
 

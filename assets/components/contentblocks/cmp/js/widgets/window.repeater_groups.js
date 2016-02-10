@@ -17,7 +17,7 @@ ContentBlocksComponent.window.RepeaterField = function(config) {
         },
         width: 750,
         y: 20,
-        bodyCssClass: 'window-vtabs',
+        bodyCssClass: 'cb-window-vtabs',
         fields: [{
             xtype: 'hidden',
             name: 'id'
@@ -36,7 +36,8 @@ ContentBlocksComponent.window.RepeaterField = function(config) {
                 cls: 'main-wrapper',
                 deferredRender: false,
                 forceLayout: true,
-                hideMode: 'offsets'
+                hideMode: 'offsets',
+                bodyStyle: 'max-height: ' + (Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 150) + 'px;'
             },
             items: [{
                 title: _('contentblocks.general'),
@@ -151,9 +152,10 @@ Ext.extend(ContentBlocksComponent.window.RepeaterField, MODx.Window, {
 
         var id = this.config.id + '-input',
             input = Ext.getCmp(id);
-        setTimeout(function() {
-            input.fireEvent('blur', input);
-        }, 500);
+
+        input.getStore().on('load', function() {
+            input.fireEvent('change', input);
+        });
 
     },
 

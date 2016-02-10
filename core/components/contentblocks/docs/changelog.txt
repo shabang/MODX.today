@@ -1,3 +1,124 @@
+++ ContentBlocks 1.3.2-pl
+++ Released on 2016-02-04
+++++++++++++++++++++++++++
+- Prevent fatal error when trying to edit a non-existent resource (Thanks Johan!)
+- Fix error when running rebuild_content as a Scheduler task
+
+++ ContentBlocks 1.3.1-pl
+++ Released on 2016-02-01
+++++++++++++++++++++++++++
+- Fix image with title bug causing the canvas to never show up
+- Fix issue with multiple 100% cols not resizing properly
+- Fix broken canvas if thumbnail_size property isn't set on a gallery
+- Set a border-bottom on empty columns for more consistency in layouts
+
+++ ContentBlocks 1.3.0-pl
+++ Released on 2016-01-28
+++++++++++++++++++++++++++
+- Add missing plugin event relation for FileSluggy compatibility
+- Remove duplicate "Show Link Field" property on Gallery fields
+- Prevent various E_NOTICE and E_WARN errors (Undefined indexes: link, process_tags, unchecked getimagesize() calls)
+- Fix column heights not getting reset upon removing a repeater row (#360)
+- Move "Add Layout" button to a full width bar (#359)
+- Update to Alpacka 0.2.0 (fixes context-specific settings in manager-side js)
+
+++ ContentBlocks 1.3.0-rc6
+++ Released on 2016-01-20
+++++++++++++++++++++++++++
+- Fix broken thumbnail generation (introduced in rc5)
+- Fix Repeaters not showing saved content (introduced in rc5)
+- Add missing contentblocks.base_url_mode setting needed to control image url generation on multi context sites
+- Fix templates always inserting at the bottom
+- Update to Alpacka 0.1.2 (fixes [[+resource]] path variable)
+
+++ ContentBlocks 1.3.0-rc5
+++ Released on 2016-01-19
+++++++++++++++++++++++++++
+- Fix issue in multi-context sites where images may not show up [S7665]
+- Fix unexpected results in the chunk input when empty values are not passed to the tag [S7659]
+- Remove Add Layout button overlaying delete/field settings on layout fields [#356]
+- Fix positioning of Add Layout button in layout fields
+- Fix control over the sortorder of subfields in a repeater [S7719]
+- Fix loading a RTE for the template builder in the component
+- Fix issue accessing resizeimage processor on case-sensitive server environments
+
+++ ContentBlocks 1.3.0-rc4
+++ Released on 2016-01-14
+++++++++++++++++++++++++++
+- Improve compatibility with FileSluggy (and similar extras) that sanitize and rename files on upload
+
+++ ContentBlocks 1.3.0-rc3
+++ Released on 2016-01-06
+++++++++++++++++++++++++++
+- Add schema defaults for icons so strict mysql doesn't fail to create repeater subfields
+- Fix incorrect display of availability and settings grids
+- Add pointer cursor to the radio and checkbox labels
+
+++ ContentBlocks 1.3.0-rc2
+++ Released on 2016-01-04
+++++++++++++++++++++++++++
+- Prevent Repeater subfields from showing up in the Add Content modal [S7545]
+
+++ ContentBlocks 1.3.0-rc1
+++ Released on 2015-12-23
+++++++++++++++++++++++++++
+New features:
+- New "Add Layout" button to insert layouts at any point in the canvas (#103)
+- Allow more than one row of columns per layout (#310)
+- Click a layout title in the Canvas to give it a different title on that specific row (#272)
+- Add [[+width]] and [[+height]] placeholders to image and gallery inputs (#274)
+- Repeater input now also has a "Add Item" button at the top for inserting new items before existing ones (#242)
+- Add expandAllLayouts and collapseAllLayouts methods to the js class
+- Parse Resource tags (e.g. [[*pagetitle]]) on save and rebuild (#252)
+- Make all settings context-aware for context-specific overrides
+- Upload path placeholders now include all resource fields, tvs (with tv. prefix), some settings and (ultimate) parent id and alias (#196, #247)
+- Allow template properties to grow in height for all input types
+- Add checkbox and radio setting types for fields and layouts
+- Image fields can now automatically create thumbnails for improved back-end performance (#257)
+- Image and gallery fields will now store the urls as relative urls when possible, increasing portability (#286)
+- Add ContentBlocks_RebuildContent, AfterRebuildContent and RenderContent system events (#132, #243, #283)
+- Add option to set a minimum number of repeater items (#308)
+- Add single-field, single-layout, and single-template exporting (#255)
+- Add .contentblocks-field-richtext class to richtext field wrapper template
+
+Improvements:
+- Better keyboard accessibility through additional focus styles
+- Make sure the default value field for settings is a textarea instead of textfield (#256)
+- Make the rebuild time guesstimate slightly more accurate
+- Add ability to set the number of decimals on cbFileFormatSize [#320]
+- Add ability to set an inner limit and/or offset for repeaters in cbGetFieldContent (#330, thanks Thomas Jakobi!)
+- Filter out revisions from Extras.io Preview/Workflow extras in the link input [#317]
+- Autogrow TinyRTE to make sure it shows all the content without scrollbars [#341]
+- Make use of the modmore/Alpacka composer package for standard, shared functionality.
+- Make sure all vtab panels can scroll if their content is too large to fit
+
+Fixed:
+- Fix loading of field properties within a repeater group [#315]
+- Fix usage of [[+idx]] within cbGetFieldContent
+- Fix table input going nuts with more than 10 rows (thanks Luk!) [#277]
+- Fix table context menu hiding behind other elements [#339]
+- Fix CSS conflict with SimpleCart causing scroll issues in vtabs
+
+++ ContentBlocks 1.2.7-pl
+++ Released on 2015-07-23
+++++++++++++++++++++++++++
+- Hardened XHR security to prevent leaking session IDs cross-domain (#304)
+- Fix hardcoded "Insert Content" and "Insert Layout" modal titles (#313)
+- Fix jump in positioning of layout options by hidden up/down buttons for ordering layouts (#311)
+- Fix issue where nested layout fields caused the regular parser being restored, which then parsed subsequent tags that should be left untouched during the save (#302)
+- Center "Add Item" button on repeaters to be more consistent with other actions (#293)
+
+++ ContentBlocks 1.2.6-pl
+++ Released on 2015-06-09
+++++++++++++++++++++++++++
+- Fix issue where removing layouts did not affect the layouts-per-page calculation
+- Fix ultimate parent-based default template selection (#291)
+- Fix TinyRTE missing styling and buttons bar on Windows/Firefox (#287)
+- Add some missing indices to the database tables (#290)
+- Make sure select option recognises an empty string as value (#288)
+- Fix upload to media sources with a full url as baseUrl
+- Set Ace minLines option to 1 for smaller code inputs
+
 ++ ContentBlocks 1.2.5-pl
 ++ Released on 2015-05-15
 ++++++++++++++++++++++++++

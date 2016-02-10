@@ -31,7 +31,7 @@ MODx.tree.Resource = function(config) {
         }
     });
     MODx.tree.Resource.superclass.constructor.call(this,config);
-    this.addEvents('loadCreateMenus');
+    this.addEvents('loadCreateMenus', 'emptyTrash');
     this.on('afterSort',this._handleAfterDrop,this);
 };
 Ext.extend(MODx.tree.Resource,MODx.tree.Tree,{
@@ -308,7 +308,11 @@ Ext.extend(MODx.tree.Resource,MODx.tree.Tree,{
                     MODx.msg.status({
                         title: _('success')
                         ,message: _('empty_recycle_bin_emptied')
-                    })
+                    });
+                    var trashButton = this.getTopToolbar().findById('emptifier');
+					trashButton.disable();
+					trashButton.setTooltip(_('empty_recycle_bin') + ' (0)');
+                    this.fireEvent('emptyTrash');
                 },scope:this}
             }
         });
@@ -464,12 +468,15 @@ Ext.extend(MODx.tree.Resource,MODx.tree.Tree,{
                         xtype: 'modx-window-quick-update-modResource'
                         ,record: pr
                         ,listeners: {
-                            'success':{fn:function() {
+                            'success':{fn:function(r) {
                                 this.refreshNode(this.cm.activeNode.id);
+                                var newTitle = '<span dir="ltr">' + r.f.findField('pagetitle').getValue() + ' (' + w.record.id + ')</span>';
+                                w.setTitle(w.title.replace(/<span.*\/span>/, newTitle));
                             },scope:this}
                             ,'hide':{fn:function() {this.destroy();}}
                         }
                     });
+                    w.title += ': <span dir="ltr">' + w.record.pagetitle + ' ('+ w.record.id + ')</span>';
                     w.setValues(r.object);
                     w.show(e.target,function() {
                         Ext.isSafari ? w.setPosition(null,30) : w.center();
@@ -534,7 +541,7 @@ Ext.extend(MODx.tree.Resource,MODx.tree.Tree,{
     ,overviewResource: function() {this.loadAction('a=resource/data')}
 
     ,quickUpdateResource: function(itm,e) {
-        Ext.getCmp("modx-resource-tree").quickUpdate(itm,e,itm.classKey);
+        this.quickUpdate(itm,e,itm.classKey);
     }
 
     ,editResource: function() {this.loadAction('a=resource/update');}
@@ -633,7 +640,7 @@ Ext.extend(MODx.tree.Resource,MODx.tree.Tree,{
     ,createResourceHere: function(itm) {
         var at = this.cm.activeNode.attributes;
         var p = itm.usePk ? itm.usePk : at.pk;
-        Ext.getCmp('modx-resource-tree').loadAction(
+        this.loadAction(
             'a=resource/create&class_key=' + itm.classKey + '&parent=' + p + (at.ctx ? '&context_key='+at.ctx : '')
         );
     }
@@ -641,7 +648,7 @@ Ext.extend(MODx.tree.Resource,MODx.tree.Tree,{
     ,createResource: function(itm,e) {
         var at = this.cm.activeNode.attributes;
         var p = itm.usePk ? itm.usePk : at.pk;
-        Ext.getCmp('modx-resource-tree').quickCreate(itm,e,itm.classKey,at.ctx,p);
+        this.quickCreate(itm,e,itm.classKey,at.ctx,p);
     }
 
     ,_getCreateMenus: function(m,pk,ui) {
@@ -689,6 +696,47 @@ Ext.extend(MODx.tree.Resource,MODx.tree.Tree,{
         }
 
         return m;
+    }
+
+    /**
+     * Handles all drag events into the tree.
+     * @param {Object} dropEvent The node dropped on the parent node.
+     */
+    ,_handleDrag: function(dropEvent) {
+        function simplifyNodes(node) {
+            var resultNode = {};
+            var kids = node.childNodes;
+            var len = kids.length;
+            for (var i = 0; i < len; i++) {
+                resultNode[kids[i].id] = simplifyNodes(kids[i]);
+            }
+            return resultNode;
+        }
+
+        var encNodes = Ext.encode(simplifyNodes(dropEvent.tree.root));
+        this.fireEvent('beforeSort',encNodes);
+        MODx.Ajax.request({
+            url: this.config.url
+            ,params: {
+                target: dropEvent.target.attributes.id
+                ,source: dropEvent.source.dragData.node.attributes.id
+                ,point: dropEvent.point
+                ,data: encodeURIComponent(encNodes)
+                ,action: this.config.sortAction || 'sort'
+            }
+            ,listeners: {
+                'success': {fn:function(r) {
+                    var el = dropEvent.dropNode.getUI().getTextEl();
+                    if (el) {Ext.get(el).frame();}
+                    this.fireEvent('afterSort',{event:dropEvent,result:r});
+                },scope:this}
+                ,'failure': {fn:function(r) {
+                    MODx.form.Handler.errorJSON(r);
+                    this.refresh();
+                    return false;
+                },scope:this}
+            }
+        });
     }
 
     ,_getSortMenu: function(){
@@ -994,7 +1042,7 @@ MODx.getQRContentField = function(id,cls) {
                 ,browserEl: 'modx-browser'
                 ,prependPath: false
                 ,prependUrl: false
-                ,hideFiles: true
+                // ,hideFiles: true
                 ,fieldLabel: _('static_resource')
                 ,name: 'content'
                 ,id: 'modx-'+id+'-content'

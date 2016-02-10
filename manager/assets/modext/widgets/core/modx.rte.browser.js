@@ -35,6 +35,19 @@ MODx.browser.RTE = function(config) {
         ,id: this.ident+'-tree'
         ,listeners: {
             'afterUpload': {fn:function() { this.view.run(); },scope:this}
+            ,'changeSource': {fn:function(s) {
+                this.config.source = s;
+                this.view.config.source = s;
+                this.view.baseParams.source = s;
+                this.view.dir = '/';
+                this.view.run();
+            },scope:this}
+            ,afterrender: {
+                fn: function(tree) {
+                    tree.root.expand();
+                }
+                ,scope: this
+            }
         }
     });
     this.tree.on('click',function(node,e) {
@@ -86,7 +99,7 @@ MODx.browser.RTE = function(config) {
                 ,width: 200
             },{
                 text: _('cancel')
-                ,handler: this.hide
+                ,handler: this.closeWindow
                 ,scope: this
                 ,width: 200
             }]
@@ -226,6 +239,13 @@ Ext.extend(MODx.browser.RTE,Ext.Viewport,{
     
     ,onSelectHandler: function(data) {
         Ext.get(this.returnEl).dom.value = unescape(data.url);
+    }
+
+    ,closeWindow: function () {
+        var callback = this.config.onSelect || this.onSelectHandler;
+        var scope = this.config.scope;
+        Ext.callback(callback,scope || this,[null]);
+        this.fireEvent('select',null);
     }
 });
 Ext.reg('modx-browser-rte',MODx.browser.RTE);

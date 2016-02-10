@@ -292,6 +292,7 @@ class modMediaSource extends modAccessibleSimpleObject implements modMediaSource
             'file_remove' => $this->xpdo->hasPermission('file_remove'),
             'file_update' => $this->xpdo->hasPermission('file_update'),
             'file_upload' => $this->xpdo->hasPermission('file_upload'),
+            'file_unpack' => $this->xpdo->hasPermission('file_unpack'),
             'file_view' => $this->xpdo->hasPermission('file_view'),
             'file_create' => $this->xpdo->hasPermission('file_create'),
         );
@@ -669,16 +670,17 @@ class modMediaSource extends modAccessibleSimpleObject implements modMediaSource
 
     /**
      * Allow overriding of checkPolicy to always allow media sources to be loaded
-     * 
+     *
      * @param string|array $criteria
      * @param array $targets
+     * @param modUser $user
      * @return bool
      */
-    public function checkPolicy($criteria, $targets = null) {
+    public function checkPolicy($criteria, $targets = null, modUser $user = null) {
         if ($criteria == 'load') {
             $success = true;
         } else {
-            $success = parent::checkPolicy($criteria,$targets);
+            $success = parent::checkPolicy($criteria,$targets,$user);
         }
         return $success;
     }

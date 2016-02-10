@@ -43,8 +43,10 @@
                     field: input.fieldId
                 },
                 context: this,
-                headers: {
-                    'modAuth': MODx.siteId
+                beforeSend:function(xhr, settings){
+                    if(!settings.crossDomain) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                    }
                 },
                 success: function(result) {
                     if (!result.results) {

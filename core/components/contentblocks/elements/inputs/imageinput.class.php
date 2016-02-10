@@ -7,7 +7,7 @@
  */
 class ImageInput extends cbBaseInput {
     public $defaultIcon = 'heading';
-    public $defaultTpl = '<img src="[[+url]]">';
+    public $defaultTpl = '<img src="[[+url]]" width="[[+width]]" height="[[+height]]">';
     /**
      * @return array
      */
@@ -38,7 +38,7 @@ class ImageInput extends cbBaseInput {
                 'key' => 'directory',
                 'fieldLabel' => $this->modx->lexicon('contentblocks.directory'),
                 'xtype' => 'textfield',
-                'default' => $this->modx->getOption('contentblocks.image.upload_path', null, 'assets/uploads/images/'),
+                'default' => $this->contentBlocks->getOption('contentblocks.image.upload_path', null, 'assets/uploads/images/'),
                 'description' => $this->modx->lexicon('contentblocks.directory.description')
             ),
             array(
@@ -48,6 +48,46 @@ class ImageInput extends cbBaseInput {
                 'default' => 'png,gif,jpg,jpeg',
                 'description' => $this->modx->lexicon('contentblocks.file_types.description')
             ),
+            array(
+                'key' => 'thumbnail_size',
+                'fieldLabel' => $this->modx->lexicon('contentblocks.image.thumbnail_size'),
+                'xtype' => 'textfield',
+                'default' => '0',
+                'description' => $this->modx->lexicon('contentblocks.image.thumbnail_size.description'),
+            ),
         );
+    }
+
+    /**
+     * Process this field based on its template and the received data. For the image input, we also look at the image to
+     * grab the width/height.
+     *
+     * @param cbField $field
+     * @param array $data
+     * @return mixed
+     */
+    public function process(cbField $field, array $data = array())
+    {
+        if (!isset($data['width']) || $data['width'] < 1) {
+            $size = false;
+
+            if (file_exists($data['url']) && is_readable($data['url'])) {
+                $size = getimagesize($data['url']);
+            }
+
+            if (!$size) {
+                // Try it with a normalised path
+                $normalisedPath = str_replace(MODX_BASE_URL.MODX_BASE_URL, MODX_BASE_URL, MODX_BASE_PATH . $data['url']);
+                if (file_exists($normalisedPath) && is_readable($normalisedPath)) {
+                    $size = getimagesize($normalisedPath);
+                }
+            }
+
+            if (!empty($size)) {
+                $data['width'] = $size[0];
+                $data['height'] = $size[1];
+            }
+        }
+        return parent::process($field, $data);
     }
 }

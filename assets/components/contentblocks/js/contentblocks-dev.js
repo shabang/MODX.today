@@ -57,7 +57,6 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
          * Initializing the plugin
          */
         initialize: function () {
-
             // Render the plugin
             this.render();
 
@@ -100,25 +99,39 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
         render: function () {
             // Get the styles for the element, used for ensuring exact same styling in the iframe
             var $el = $(this.element),
+                el = $el.get(0),
+                elStyles = (window.getComputedStyle) ? window.getComputedStyle(el) : false,
                 outerStyles = ["border", "border-radius", "box-shadow", "border-top-width", "border-right-width", "border-bottom-width", "border-left-width", "border-top-style", "border-right-style", "border-bottom-style", "border-left-style", "border-top-color", "border-right-color", "border-bottom-color", "border-left-color"],
-                innerStyles = ["background", "font","padding", "direction", "height", "text-align", "text-decoration", "text-shadow", "word-spacing"],
+                innerStyles = ["background-color", "background-image", "font-family", "font-size", "font-style", "font-weight", "padding-bottom", "padding-left", "padding-top", "padding-right", "direction", "height", "text-align", "text-decoration", "text-shadow", "word-spacing"],
                 outerStylesCss = [],
                 innerStylesCss = [];
 
-            // Outer styles (applied to the iframe)
-            $.each(outerStyles, function (key, property) {
-                var v = $el.css(property);
-                outerStylesCss.push(property + ":" + v + ";");
-            });
+            if (elStyles) {
+                // Outer styles (applied to the iframe)
+                $.each(outerStyles, function (key, property) {
+                    var v = elStyles[property] ? elStyles[property] : null;
+                    if (v !== null) {
+                        outerStylesCss.push(property + ":" + v + ";");
+                    }
+                });
+
+                // Inner styles (applied to the iframe body)
+                $.each(innerStyles, function (key, property) {
+                    var v = elStyles[property] ? elStyles[property] : null;
+                    if (v !== null) {
+                        innerStylesCss.push(property + ":" + v + ";");
+                    }
+                });
+            }
+            else {
+                if (console) console.error("TinyRTE only supports IE9 and up");
+            }
+
+            window.rteEl = $el;
             outerStylesCss.push("width: 100%;");
             outerStylesCss = outerStylesCss.join("");
 
-            // Inner styles (applied to the iframe body)
-            $.each(innerStyles, function (key, property) {
-                var v = $el.css(property);
-                innerStylesCss.push(property + ":" + v + ";");
-            });
-            innerStylesCss.push("white-space: nowrap; overflow-y: hidden;");
+            innerStylesCss.push("overflow: hidden;");
             innerStylesCss = innerStylesCss.join("");
 
             var setFocus = false;
@@ -141,16 +154,24 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                 "height": $el.outerHeight() + 1
             }).appendTo(this.container).get(0);
 
-            // Make the editor work in all browsers
+            // Make the editor work across browsers
             this.editor.contentWindow.document.open();
             this.editor.contentWindow.document.close();
             this.editor.contentWindow.document.designMode = "on";
 
             // Trigger events on the basic input when they occur on the editor
             var input = $(this.element),
-                editor = $(this.editor).contents().find('body');
+                editor = $(this.editor).contents().find('body'),
+                editorFrame = $(this.editor),
+                height = 0;
             editor.on('blur change click contextmenu copy cut dblclick keydown keypress keyup paste resize select textinput unload', function(e) {
                 input.trigger(e);
+                // Reset the inner height, so we can get the natural height
+                editor.css('height', 'auto');
+                height = editor.outerHeight();
+                // Update the inner and outer height
+                editor.css('height', height + 'px');
+                editorFrame.css('height', height + 'px');
             });
 
             // Add styling to the iframe
@@ -167,6 +188,10 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
 
             // Render the buttons
             this.createButtons();
+
+            setTimeout(function() {
+                editor.trigger('blur');
+            }, 30);
 
             if (setFocus) {
                 setTimeout(function() {
@@ -302,9 +327,20 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                 that.setContentToTextarea(that.getContentFromEditor());
             });
 
-            editor.find("body").on("focus", function() {
+            var hideAgain = null;
+            editor.find("body").on("focus input", function() {
                 container.addClass("tinyrte-has-focus");
+                if (hideAgain) {
+                    clearTimeout(hideAgain);
+                }
+                hideAgain = setTimeout(function() {
+                    container.removeClass("tinyrte-has-focus");
+                }, 5000);
+
             }).on("blur", function() {
+                if (hideAgain) {
+                    clearTimeout(hideAgain);
+                }
                 container.removeClass("tinyrte-has-focus");
             });
 
@@ -3945,7 +3981,7 @@ var Hogan = {};
  */
 
 !function(a){var b=function(){"use strict";return{isMsie:function(){return/(msie|trident)/i.test(navigator.userAgent)?navigator.userAgent.match(/(msie |rv:)(\d+(.\d+)?)/i)[2]:!1},isBlankString:function(a){return!a||/^\s*$/.test(a)},escapeRegExChars:function(a){return a.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g,"\\$&")},isString:function(a){return"string"==typeof a},isNumber:function(a){return"number"==typeof a},isArray:a.isArray,isFunction:a.isFunction,isObject:a.isPlainObject,isUndefined:function(a){return"undefined"==typeof a},toStr:function(a){return b.isUndefined(a)||null===a?"":a+""},bind:a.proxy,each:function(b,c){function d(a,b){return c(b,a)}a.each(b,d)},map:a.map,filter:a.grep,every:function(b,c){var d=!0;return b?(a.each(b,function(a,e){return(d=c.call(null,e,a,b))?void 0:!1}),!!d):d},some:function(b,c){var d=!1;return b?(a.each(b,function(a,e){return(d=c.call(null,e,a,b))?!1:void 0}),!!d):d},mixin:a.extend,getUniqueId:function(){var a=0;return function(){return a++}}(),templatify:function(b){function c(){return String(b)}return a.isFunction(b)?b:c},defer:function(a){setTimeout(a,0)},debounce:function(a,b,c){var d,e;return function(){var f,g,h=this,i=arguments;return f=function(){d=null,c||(e=a.apply(h,i))},g=c&&!d,clearTimeout(d),d=setTimeout(f,b),g&&(e=a.apply(h,i)),e}},throttle:function(a,b){var c,d,e,f,g,h;return g=0,h=function(){g=new Date,e=null,f=a.apply(c,d)},function(){var i=new Date,j=b-(i-g);return c=this,d=arguments,0>=j?(clearTimeout(e),e=null,g=i,f=a.apply(c,d)):e||(e=setTimeout(h,j)),f}},noop:function(){}}}(),c=function(){return{wrapper:'<span class="twitter-typeahead"></span>',dropdown:'<span class="tt-dropdown-menu"></span>',dataset:'<div class="tt-dataset-%CLASS%"></div>',suggestions:'<span class="tt-suggestions"></span>',suggestion:'<div class="tt-suggestion"></div>'}}(),d=function(){"use strict";var a={wrapper:{position:"relative",display:"inline-block"},hint:{position:"absolute",top:"0",left:"0",borderColor:"transparent",boxShadow:"none",opacity:"1"},input:{position:"relative",verticalAlign:"top",backgroundColor:"transparent"},inputWithNoHint:{position:"relative",verticalAlign:"top"},dropdown:{position:"absolute",top:"100%",left:"0",zIndex:"100",display:"none"},suggestions:{display:"block"},suggestion:{whiteSpace:"nowrap",cursor:"pointer"},suggestionChild:{whiteSpace:"normal"},ltr:{left:"0",right:"auto"},rtl:{left:"auto",right:" 0"}};return b.isMsie()&&b.mixin(a.input,{backgroundImage:"url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)"}),b.isMsie()&&b.isMsie()<=7&&b.mixin(a.input,{marginTop:"-1px"}),a}(),e=function(){"use strict";function c(b){b&&b.el||a.error("EventBus initialized without el"),this.$el=a(b.el)}var d="typeahead:";return b.mixin(c.prototype,{trigger:function(a){var b=[].slice.call(arguments,1);this.$el.trigger(d+a,b)}}),c}(),f=function(){"use strict";function a(a,b,c,d){var e;if(!c)return this;for(b=b.split(i),c=d?h(c,d):c,this._callbacks=this._callbacks||{};e=b.shift();)this._callbacks[e]=this._callbacks[e]||{sync:[],async:[]},this._callbacks[e][a].push(c);return this}function b(b,c,d){return a.call(this,"async",b,c,d)}function c(b,c,d){return a.call(this,"sync",b,c,d)}function d(a){var b;if(!this._callbacks)return this;for(a=a.split(i);b=a.shift();)delete this._callbacks[b];return this}function e(a){var b,c,d,e,g;if(!this._callbacks)return this;for(a=a.split(i),d=[].slice.call(arguments,1);(b=a.shift())&&(c=this._callbacks[b]);)e=f(c.sync,this,[b].concat(d)),g=f(c.async,this,[b].concat(d)),e()&&j(g);return this}function f(a,b,c){function d(){for(var d,e=0,f=a.length;!d&&f>e;e+=1)d=a[e].apply(b,c)===!1;return!d}return d}function g(){var a;return a=window.setImmediate?function(a){setImmediate(function(){a()})}:function(a){setTimeout(function(){a()},0)}}function h(a,b){return a.bind?a.bind(b):function(){a.apply(b,[].slice.call(arguments,0))}}var i=/\s+/,j=g();return{onSync:c,onAsync:b,off:d,trigger:e}}(),g=function(a){"use strict";function c(a,c,d){for(var e,f=[],g=0,h=a.length;h>g;g++)f.push(b.escapeRegExChars(a[g]));return e=d?"\\b("+f.join("|")+")\\b":"("+f.join("|")+")",c?new RegExp(e):new RegExp(e,"i")}var d={node:null,pattern:null,tagName:"strong",className:null,wordsOnly:!1,caseSensitive:!1};return function(e){function f(b){var c,d,f;return(c=h.exec(b.data))&&(f=a.createElement(e.tagName),e.className&&(f.className=e.className),d=b.splitText(c.index),d.splitText(c[0].length),f.appendChild(d.cloneNode(!0)),b.parentNode.replaceChild(f,d)),!!c}function g(a,b){for(var c,d=3,e=0;e<a.childNodes.length;e++)c=a.childNodes[e],c.nodeType===d?e+=b(c)?1:0:g(c,b)}var h;e=b.mixin({},d,e),e.node&&e.pattern&&(e.pattern=b.isArray(e.pattern)?e.pattern:[e.pattern],h=c(e.pattern,e.caseSensitive,e.wordsOnly),g(e.node,f))}}(window.document),h=function(){"use strict";function c(c){var e,f,g,i,j=this;c=c||{},c.input||a.error("input is missing"),e=b.bind(this._onBlur,this),f=b.bind(this._onFocus,this),g=b.bind(this._onKeydown,this),i=b.bind(this._onInput,this),this.$hint=a(c.hint),this.$input=a(c.input).on("blur.tt",e).on("focus.tt",f).on("keydown.tt",g),0===this.$hint.length&&(this.setHint=this.getHint=this.clearHint=this.clearHintIfInvalid=b.noop),b.isMsie()?this.$input.on("keydown.tt keypress.tt cut.tt paste.tt",function(a){h[a.which||a.keyCode]||b.defer(b.bind(j._onInput,j,a))}):this.$input.on("input.tt",i),this.query=this.$input.val(),this.$overflowHelper=d(this.$input)}function d(b){return a('<pre aria-hidden="true"></pre>').css({position:"absolute",visibility:"hidden",whiteSpace:"pre",fontFamily:b.css("font-family"),fontSize:b.css("font-size"),fontStyle:b.css("font-style"),fontVariant:b.css("font-variant"),fontWeight:b.css("font-weight"),wordSpacing:b.css("word-spacing"),letterSpacing:b.css("letter-spacing"),textIndent:b.css("text-indent"),textRendering:b.css("text-rendering"),textTransform:b.css("text-transform")}).insertAfter(b)}function e(a,b){return c.normalizeQuery(a)===c.normalizeQuery(b)}function g(a){return a.altKey||a.ctrlKey||a.metaKey||a.shiftKey}var h;return h={9:"tab",27:"esc",37:"left",39:"right",13:"enter",38:"up",40:"down"},c.normalizeQuery=function(a){return(a||"").replace(/^\s*/g,"").replace(/\s{2,}/g," ")},b.mixin(c.prototype,f,{_onBlur:function(){this.resetInputValue(),this.trigger("blurred")},_onFocus:function(){this.trigger("focused")},_onKeydown:function(a){var b=h[a.which||a.keyCode];this._managePreventDefault(b,a),b&&this._shouldTrigger(b,a)&&this.trigger(b+"Keyed",a)},_onInput:function(){this._checkInputValue()},_managePreventDefault:function(a,b){var c,d,e;switch(a){case"tab":d=this.getHint(),e=this.getInputValue(),c=d&&d!==e&&!g(b);break;case"up":case"down":c=!g(b);break;default:c=!1}c&&b.preventDefault()},_shouldTrigger:function(a,b){var c;switch(a){case"tab":c=!g(b);break;default:c=!0}return c},_checkInputValue:function(){var a,b,c;a=this.getInputValue(),b=e(a,this.query),c=b?this.query.length!==a.length:!1,this.query=a,b?c&&this.trigger("whitespaceChanged",this.query):this.trigger("queryChanged",this.query)},focus:function(){this.$input.focus()},blur:function(){this.$input.blur()},getQuery:function(){return this.query},setQuery:function(a){this.query=a},getInputValue:function(){return this.$input.val()},setInputValue:function(a,b){this.$input.val(a),b?this.clearHint():this._checkInputValue()},resetInputValue:function(){this.setInputValue(this.query,!0)},getHint:function(){return this.$hint.val()},setHint:function(a){this.$hint.val(a)},clearHint:function(){this.setHint("")},clearHintIfInvalid:function(){var a,b,c,d;a=this.getInputValue(),b=this.getHint(),c=a!==b&&0===b.indexOf(a),d=""!==a&&c&&!this.hasOverflow(),!d&&this.clearHint()},getLanguageDirection:function(){return(this.$input.css("direction")||"ltr").toLowerCase()},hasOverflow:function(){var a=this.$input.width()-2;return this.$overflowHelper.text(this.getInputValue()),this.$overflowHelper.width()>=a},isCursorAtEnd:function(){var a,c,d;return a=this.$input.val().length,c=this.$input[0].selectionStart,b.isNumber(c)?c===a:document.selection?(d=document.selection.createRange(),d.moveStart("character",-a),a===d.text.length):!0},destroy:function(){this.$hint.off(".tt"),this.$input.off(".tt"),this.$hint=this.$input=this.$overflowHelper=null}}),c}(),i=function(){"use strict";function e(d){d=d||{},d.templates=d.templates||{},d.source||a.error("missing source"),d.name&&!j(d.name)&&a.error("invalid dataset name: "+d.name),this.query=null,this.highlight=!!d.highlight,this.name=d.name||b.getUniqueId(),this.source=d.source,this.displayFn=h(d.display||d.displayKey),this.templates=i(d.templates,this.displayFn),this.$el=a(c.dataset.replace("%CLASS%",this.name))}function h(a){function c(b){return b[a]}return a=a||"value",b.isFunction(a)?a:c}function i(a,c){function d(a){return"<p>"+c(a)+"</p>"}return{empty:a.empty&&b.templatify(a.empty),header:a.header&&b.templatify(a.header),footer:a.footer&&b.templatify(a.footer),suggestion:a.suggestion||d}}function j(a){return/^[_a-zA-Z0-9-]+$/.test(a)}var k="ttDataset",l="ttValue",m="ttDatum";return e.extractDatasetName=function(b){return a(b).data(k)},e.extractValue=function(b){return a(b).data(l)},e.extractDatum=function(b){return a(b).data(m)},b.mixin(e.prototype,f,{_render:function(e,f){function h(){return p.templates.empty({query:e,isEmpty:!0})}function i(){function h(b){var e;return e=a(c.suggestion).append(p.templates.suggestion(b)).data(k,p.name).data(l,p.displayFn(b)).data(m,b),e.children().each(function(){a(this).css(d.suggestionChild)}),e}var i,j;return i=a(c.suggestions).css(d.suggestions),j=b.map(f,h),i.append.apply(i,j),p.highlight&&g({className:"tt-highlight",node:i[0],pattern:e}),i}function j(){return p.templates.header({query:e,isEmpty:!o})}function n(){return p.templates.footer({query:e,isEmpty:!o})}if(this.$el){var o,p=this;this.$el.empty(),o=f&&f.length,!o&&this.templates.empty?this.$el.html(h()).prepend(p.templates.header?j():null).append(p.templates.footer?n():null):o&&this.$el.html(i()).prepend(p.templates.header?j():null).append(p.templates.footer?n():null),this.trigger("rendered")}},getRoot:function(){return this.$el},update:function(a){function b(b){c.canceled||a!==c.query||c._render(a,b)}var c=this;this.query=a,this.canceled=!1,this.source(a,b)},cancel:function(){this.canceled=!0},clear:function(){this.cancel(),this.$el.empty(),this.trigger("rendered")},isEmpty:function(){return this.$el.is(":empty")},destroy:function(){this.$el=null}}),e}(),j=function(){"use strict";function c(c){var d,f,g,h=this;c=c||{},c.menu||a.error("menu is required"),this.isOpen=!1,this.isEmpty=!0,this.datasets=b.map(c.datasets,e),d=b.bind(this._onSuggestionClick,this),f=b.bind(this._onSuggestionMouseEnter,this),g=b.bind(this._onSuggestionMouseLeave,this),this.$menu=a(c.menu).on("click.tt",".tt-suggestion",d).on("mouseenter.tt",".tt-suggestion",f).on("mouseleave.tt",".tt-suggestion",g),b.each(this.datasets,function(a){h.$menu.append(a.getRoot()),a.onSync("rendered",h._onRendered,h)})}function e(a){return new i(a)}return b.mixin(c.prototype,f,{_onSuggestionClick:function(b){this.trigger("suggestionClicked",a(b.currentTarget))},_onSuggestionMouseEnter:function(b){this._removeCursor(),this._setCursor(a(b.currentTarget),!0)},_onSuggestionMouseLeave:function(){this._removeCursor()},_onRendered:function(){function a(a){return a.isEmpty()}this.isEmpty=b.every(this.datasets,a),this.isEmpty?this._hide():this.isOpen&&this._show(),this.trigger("datasetRendered")},_hide:function(){this.$menu.hide()},_show:function(){this.$menu.css("display","block")},_getSuggestions:function(){return this.$menu.find(".tt-suggestion")},_getCursor:function(){return this.$menu.find(".tt-cursor").first()},_setCursor:function(a,b){a.first().addClass("tt-cursor"),!b&&this.trigger("cursorMoved")},_removeCursor:function(){this._getCursor().removeClass("tt-cursor")},_moveCursor:function(a){var b,c,d,e;if(this.isOpen){if(c=this._getCursor(),b=this._getSuggestions(),this._removeCursor(),d=b.index(c)+a,d=(d+1)%(b.length+1)-1,-1===d)return void this.trigger("cursorRemoved");-1>d&&(d=b.length-1),this._setCursor(e=b.eq(d)),this._ensureVisible(e)}},_ensureVisible:function(a){var b,c,d,e;b=a.position().top,c=b+a.outerHeight(!0),d=this.$menu.scrollTop(),e=this.$menu.height()+parseInt(this.$menu.css("paddingTop"),10)+parseInt(this.$menu.css("paddingBottom"),10),0>b?this.$menu.scrollTop(d+b):c>e&&this.$menu.scrollTop(d+(c-e))},close:function(){this.isOpen&&(this.isOpen=!1,this._removeCursor(),this._hide(),this.trigger("closed"))},open:function(){this.isOpen||(this.isOpen=!0,!this.isEmpty&&this._show(),this.trigger("opened"))},setLanguageDirection:function(a){this.$menu.css("ltr"===a?d.ltr:d.rtl)},moveCursorUp:function(){this._moveCursor(-1)},moveCursorDown:function(){this._moveCursor(1)},getDatumForSuggestion:function(a){var b=null;return a.length&&(b={raw:i.extractDatum(a),value:i.extractValue(a),datasetName:i.extractDatasetName(a)}),b},getDatumForCursor:function(){return this.getDatumForSuggestion(this._getCursor().first())},getDatumForTopSuggestion:function(){return this.getDatumForSuggestion(this._getSuggestions().first())},update:function(a){function c(b){b.update(a)}b.each(this.datasets,c)},empty:function(){function a(a){a.clear()}b.each(this.datasets,a),this.isEmpty=!0},isVisible:function(){return this.isOpen&&!this.isEmpty},destroy:function(){function a(a){a.destroy()}this.$menu.off(".tt"),this.$menu=null,b.each(this.datasets,a)}}),c}(),k=function(){"use strict";function f(c){var d,f,i;c=c||{},c.input||a.error("missing input"),this.isActivated=!1,this.autoselect=!!c.autoselect,this.minLength=b.isNumber(c.minLength)?c.minLength:1,this.$node=g(c.input,c.withHint),d=this.$node.find(".tt-dropdown-menu"),f=this.$node.find(".tt-input"),i=this.$node.find(".tt-hint"),f.on("blur.tt",function(a){var c,e,g;c=document.activeElement,e=d.is(c),g=d.has(c).length>0,b.isMsie()&&(e||g)&&(a.preventDefault(),a.stopImmediatePropagation(),b.defer(function(){f.focus()}))}),d.on("mousedown.tt",function(a){a.preventDefault()}),this.eventBus=c.eventBus||new e({el:f}),this.dropdown=new j({menu:d,datasets:c.datasets}).onSync("suggestionClicked",this._onSuggestionClicked,this).onSync("cursorMoved",this._onCursorMoved,this).onSync("cursorRemoved",this._onCursorRemoved,this).onSync("opened",this._onOpened,this).onSync("closed",this._onClosed,this).onAsync("datasetRendered",this._onDatasetRendered,this),this.input=new h({input:f,hint:i}).onSync("focused",this._onFocused,this).onSync("blurred",this._onBlurred,this).onSync("enterKeyed",this._onEnterKeyed,this).onSync("tabKeyed",this._onTabKeyed,this).onSync("escKeyed",this._onEscKeyed,this).onSync("upKeyed",this._onUpKeyed,this).onSync("downKeyed",this._onDownKeyed,this).onSync("leftKeyed",this._onLeftKeyed,this).onSync("rightKeyed",this._onRightKeyed,this).onSync("queryChanged",this._onQueryChanged,this).onSync("whitespaceChanged",this._onWhitespaceChanged,this),this._setLanguageDirection()}function g(b,e){var f,g,h,j;f=a(b),g=a(c.wrapper).css(d.wrapper),h=a(c.dropdown).css(d.dropdown),j=f.clone().css(d.hint).css(i(f)),j.val("").removeData().addClass("tt-hint").removeAttr("id name placeholder required").prop("readonly",!0).attr({autocomplete:"off",spellcheck:"false",tabindex:-1}),f.data(l,{dir:f.attr("dir"),autocomplete:f.attr("autocomplete"),spellcheck:f.attr("spellcheck"),style:f.attr("style")}),f.addClass("tt-input").attr({autocomplete:"off",spellcheck:!1}).css(e?d.input:d.inputWithNoHint);try{!f.attr("dir")&&f.attr("dir","auto")}catch(k){}return f.wrap(g).parent().prepend(e?j:null).append(h)}function i(a){return{backgroundAttachment:a.css("background-attachment"),backgroundClip:a.css("background-clip"),backgroundColor:a.css("background-color"),backgroundImage:a.css("background-image"),backgroundOrigin:a.css("background-origin"),backgroundPosition:a.css("background-position"),backgroundRepeat:a.css("background-repeat"),backgroundSize:a.css("background-size")}}function k(a){var c=a.find(".tt-input");b.each(c.data(l),function(a,d){b.isUndefined(a)?c.removeAttr(d):c.attr(d,a)}),c.detach().removeData(l).removeClass("tt-input").insertAfter(a),a.remove()}var l="ttAttrs";return b.mixin(f.prototype,{_onSuggestionClicked:function(a,b){var c;(c=this.dropdown.getDatumForSuggestion(b))&&this._select(c)},_onCursorMoved:function(){var a=this.dropdown.getDatumForCursor();this.input.setInputValue(a.value,!0),this.eventBus.trigger("cursorchanged",a.raw,a.datasetName)},_onCursorRemoved:function(){this.input.resetInputValue(),this._updateHint()},_onDatasetRendered:function(){this._updateHint()},_onOpened:function(){this._updateHint(),this.eventBus.trigger("opened")},_onClosed:function(){this.input.clearHint(),this.eventBus.trigger("closed")},_onFocused:function(){this.isActivated=!0,this.dropdown.open()},_onBlurred:function(){this.isActivated=!1,this.dropdown.empty(),this.dropdown.close()},_onEnterKeyed:function(a,b){var c,d;c=this.dropdown.getDatumForCursor(),d=this.dropdown.getDatumForTopSuggestion(),c?(this._select(c),b.preventDefault()):this.autoselect&&d&&(this._select(d),b.preventDefault())},_onTabKeyed:function(a,b){var c;(c=this.dropdown.getDatumForCursor())?(this._select(c),b.preventDefault()):this._autocomplete(!0)},_onEscKeyed:function(){this.dropdown.close(),this.input.resetInputValue()},_onUpKeyed:function(){var a=this.input.getQuery();this.dropdown.isEmpty&&a.length>=this.minLength?this.dropdown.update(a):this.dropdown.moveCursorUp(),this.dropdown.open()},_onDownKeyed:function(){var a=this.input.getQuery();this.dropdown.isEmpty&&a.length>=this.minLength?this.dropdown.update(a):this.dropdown.moveCursorDown(),this.dropdown.open()},_onLeftKeyed:function(){"rtl"===this.dir&&this._autocomplete()},_onRightKeyed:function(){"ltr"===this.dir&&this._autocomplete()},_onQueryChanged:function(a,b){this.input.clearHintIfInvalid(),b.length>=this.minLength?this.dropdown.update(b):this.dropdown.empty(),this.dropdown.open(),this._setLanguageDirection()},_onWhitespaceChanged:function(){this._updateHint(),this.dropdown.open()},_setLanguageDirection:function(){var a;this.dir!==(a=this.input.getLanguageDirection())&&(this.dir=a,this.$node.css("direction",a),this.dropdown.setLanguageDirection(a))},_updateHint:function(){var a,c,d,e,f,g;a=this.dropdown.getDatumForTopSuggestion(),a&&this.dropdown.isVisible()&&!this.input.hasOverflow()?(c=this.input.getInputValue(),d=h.normalizeQuery(c),e=b.escapeRegExChars(d),f=new RegExp("^(?:"+e+")(.+$)","i"),g=f.exec(a.value),g?this.input.setHint(c+g[1]):this.input.clearHint()):this.input.clearHint()},_autocomplete:function(a){var b,c,d,e;b=this.input.getHint(),c=this.input.getQuery(),d=a||this.input.isCursorAtEnd(),b&&c!==b&&d&&(e=this.dropdown.getDatumForTopSuggestion(),e&&this.input.setInputValue(e.value),this.eventBus.trigger("autocompleted",e.raw,e.datasetName))},_select:function(a){this.input.setQuery(a.value),this.input.setInputValue(a.value,!0),this._setLanguageDirection(),this.eventBus.trigger("selected",a.raw,a.datasetName),this.dropdown.close(),b.defer(b.bind(this.dropdown.empty,this.dropdown))},open:function(){this.dropdown.open()},close:function(){this.dropdown.close()},setVal:function(a){a=b.toStr(a),this.isActivated?this.input.setInputValue(a):(this.input.setQuery(a),this.input.setInputValue(a,!0)),this._setLanguageDirection()},getVal:function(){return this.input.getQuery()},destroy:function(){this.input.destroy(),this.dropdown.destroy(),k(this.$node),this.$node=null}}),f}();!function(){"use strict";var c,d,f;c=a.fn.typeahead,d="ttTypeahead",f={initialize:function(c,f){function g(){var g,h,i=a(this);b.each(f,function(a){a.highlight=!!c.highlight}),h=new k({input:i,eventBus:g=new e({el:i}),withHint:b.isUndefined(c.hint)?!0:!!c.hint,minLength:c.minLength,autoselect:c.autoselect,datasets:f}),i.data(d,h)}return f=b.isArray(f)?f:[].slice.call(arguments,1),c=c||{},this.each(g)},open:function(){function b(){var b,c=a(this);(b=c.data(d))&&b.open()}return this.each(b)},close:function(){function b(){var b,c=a(this);(b=c.data(d))&&b.close()}return this.each(b)},val:function(b){function c(){var c,e=a(this);(c=e.data(d))&&c.setVal(b)}function e(a){var b,c;return(b=a.data(d))&&(c=b.getVal()),c}return arguments.length?this.each(c):e(this.first())},destroy:function(){function b(){var b,c=a(this);(b=c.data(d))&&(b.destroy(),c.removeData(d))}return this.each(b)}},a.fn.typeahead=function(b){var c;return f[b]&&"initialize"!==b?(c=this.filter(function(){return!!a(this).data(d)}),f[b].apply(c,[].slice.call(arguments,1))):f.initialize.apply(this,arguments)},a.fn.typeahead.noConflict=function(){return a.fn.typeahead=c,this}}()}(window.jQuery);
-var ContentBlocksFields, ContentBlocksLayouts, ContentBlocksContents, ContentBlocksConfig, ContentBlocksWrapperCls, ContentBlocksExtraSelectors, ContentBlocksTemplates;
+var ContentBlocksFields, ContentBlocksLayouts, ContentBlocksContents, ContentBlocksConfig, ContentBlocksWrapperCls, ContentBlocksExtraSelectors, ContentBlocksTemplates, ContentBlocksResource;
 
 var vcJquery = $.noConflict();
 (function ($) {
@@ -3957,6 +3993,7 @@ var vcJquery = $.noConflict();
     window.ContentBlocks = {
         debug: ContentBlocksConfig.debug,
         $: $,
+        cbWrapper: {},
         fldId: 0,
         layoutId: 0,
         addField: function (container, fldId, placeholders, position) {
@@ -4032,6 +4069,8 @@ var vcJquery = $.noConflict();
             container.removeClass('contentblocks-column-is-empty');
 
             ContentBlocks.fixColumnHeights();
+
+            return dom;
         },
 
         deleteField: function(e, field, noConfirm) {
@@ -4073,6 +4112,10 @@ var vcJquery = $.noConflict();
         },
 
         fixColumnHeights: function() {
+            // Make sure ContentBlocks is done initialising, otherwise we don't have the dom ready
+            if (!ContentBlocks.initialized) {
+                return;
+            }
             var $column = null,
                 container = $('.contentblocks-layout-wrapper'),
                 layouts = container.find('.contentblocks-region-content'),
@@ -4085,16 +4128,42 @@ var vcJquery = $.noConflict();
                 var highest = 0,
                     height = 0,
                     $layout = $(layout),
-                    regions = $layout.find('.contentblocks-region').not($layout.find('.contentblocks-region .contentblocks-region'));
+                    regions = $layout.find('.contentblocks-region').not($layout.find('.contentblocks-region .contentblocks-region')),
+                    layoutWidth = $layout.width(),
+                    columnWidths = 0,
+                    affectedColumns = [];
 
                 $.each(regions, function(index, column) {
                     $column = $(column);
+                    columnWidths = columnWidths + $column.outerWidth();
+
+                    affectedColumns.push($column);
+
                     height = $column.outerHeight();
                     if (height > highest) {
                         highest = height;
                     }
+
+                    if (columnWidths >= layoutWidth) {
+                        $.each(affectedColumns, function(index, $affColumn) {
+                            $affColumn.css('min-height', highest + 'px');
+                            if (!$affColumn.hasClass('contentblocks-region-middle')) {
+                                $affColumn.addClass('contentblocks-region-middle');
+
+                                if ((index + 1) === affectedColumns.length) {
+                                    $affColumn.addClass('contentblocks-region-last');
+                                }
+                            }
+                        });
+                        affectedColumns = [];
+                        highest = 0;
+                        columnWidths = 0;
+                    }
                 });
-                regions.css('min-height', highest + 'px');
+
+                $.each(affectedColumns, function(index, $affColumn) {
+                    $affColumn.css('min-height', highest + 'px');
+                });
             });
         },
 
@@ -4109,14 +4178,14 @@ var vcJquery = $.noConflict();
             container = container ? container : $('.contentblocks-wrapper > .contentblocks-layout-wrapper');
             this.$.each(content, function (index, region) {
                 // actually build the layout with the correct container
-                ContentBlocks.buildLayout(region.layout, region.content, region.settings || {}, container);
+                ContentBlocks.buildLayout(region.layout, region.content, region.settings || {}, container, region.title);
             });
         },
 
-        buildLayout: function (layoutId, content, settings, container) {
+        buildLayout: function (layoutId, content, settings, container, title, position) {
+            position = (position || position === 0) ? position : 'bottom';
             ContentBlocks.layoutId++;
-            var meta = $.extend(true, {}, ContentBlocksLayouts['_'+layoutId]),
-                columns = [];
+            var meta = $.extend(true, {}, ContentBlocksLayouts['_'+layoutId]);
 
             container = container || $('.contentblocks-wrapper > .contentblocks-layout-wrapper');
 
@@ -4129,7 +4198,7 @@ var vcJquery = $.noConflict();
             // Still not?
             if (!meta)
             {
-                container.append('<li><p class="error">Uh oh - tried to add a layout with ID "'+layoutId+'" but it was not found. We also tried to use the default layout (), but it was also not found. This probably means you either have no layouts defined yet in the ContentBlocks component, or they could not be loaded, or the contentblocks.default_layout setting is not defined properly. Contents of the layout: </p><textarea>' + Ext.encode(content) + '</textarea></li>');
+                container.append('<li><p class="error">Uh oh - tried to add a layout with ID "'+layoutId+'" but it was not found. We also tried to use the default layout ("+ContentBlocksConfig.default_layout+"), but it was also not found. This probably means you either have no layouts defined yet in the ContentBlocks component, or they could not be loaded, or the contentblocks.default_layout setting is not defined properly. Contents of the layout: </p><textarea>' + Ext.encode(content) + '</textarea></li>');
                 return false;
             }
 
@@ -4140,9 +4209,12 @@ var vcJquery = $.noConflict();
                 meta.name = nameLex;
             }
 
+            // Support for adding per-layout titles to the layout
+            meta.title = title || meta.name;
+
             // Decode the columns
-            columns = Ext.decode(meta.columns);
-            var columnCount = columns.length,
+            var columns = Ext.decode(meta.columns),
+                columnCount = columns.length,
                 columnsHtml = [],
                 columnIndex = 1;
 
@@ -4158,7 +4230,9 @@ var vcJquery = $.noConflict();
             var html = tmpl('contentblocks-layout-wrapper', meta);
 
             // Add layout to container
-            container.append(html);
+            if (position == 'top') container.prepend(html);
+            else if (position == 'bottom') container.append(html);
+            else container.children('li').eq(position).before(html);
 
             // Get the injected layout
             var layout = container.find('#' + meta.generated_id);
@@ -4182,8 +4256,8 @@ var vcJquery = $.noConflict();
             
             var addContentHere = tmpl('contentblocks-empty-field');
             
-            var columns = layout.find('.contentblocks-region-content').first().children('.contentblocks-region[data-part]');
-            $.each(columns, function(index, column) {
+            var markupColumns = layout.find('.contentblocks-region-content').first().children('.contentblocks-region[data-part]');
+            $.each(markupColumns, function(index, column) {
                 var container = $(column).find('.contentblocks-content');
                 container.prepend(addContentHere);
             });
@@ -4246,7 +4320,7 @@ var vcJquery = $.noConflict();
             return layout;
         },
 
-        buildTemplate: function (templateId, container) {
+        buildTemplate: function (templateId, container, position) {
             var meta = $.extend(true, {}, ContentBlocksTemplates['_'+templateId]);
             if (!meta) {
                 if (console) console.error('Error, template with ID ' + templateId + ' not found.');
@@ -4256,7 +4330,7 @@ var vcJquery = $.noConflict();
             container = container || $('.contentblocks-wrapper > .contentblocks-layout-wrapper').first();
 
             $.each(meta.content, function(i, layout) {
-                ContentBlocks.buildLayout(layout.layout, layout.content, layout.settings, container);
+                ContentBlocks.buildLayout(layout.layout, layout.content, layout.settings, container, layout.title, position);
             });
         },
         
@@ -4291,12 +4365,13 @@ var vcJquery = $.noConflict();
             layoutWrap.append(html);
 
             $(layout).find('.contentblocks-exposed-fields-wrapper .contentblocks-setting-link input[id]').each(function() {
-                ContentBlocks.initializeLinkField(this);
+                ContentBlocks.initializeLinkField(this)//, {properties : { limit_to_current_context : $(this).data('limitToCurrentContext')}});
             });
                         
-            $(layout).find('.contentblocks-exposed-fields-wrapper :input').on('change blur keyup', function() {
+            $(layout).find('.contentblocks-exposed-fields-wrapper :input[data-name]').on('change blur keyup', function() {
                 var settings = Ext.decode(layout.data('settings')) || {}; // this means we get any data from the modal fields
                 settings[$(this).data('name')] = $(this).val();
+
                 layout.data('settings', Ext.encode(settings));
                 ContentBlocks.fireChange();
             });
@@ -4318,7 +4393,7 @@ var vcJquery = $.noConflict();
 
             for (var key in ContentBlocksFields) {
                 if (ContentBlocksFields.hasOwnProperty(key)) {
-                    if (ContentBlocksFields[key].layouts.length > 0) {
+                    if (ContentBlocksFields[key].layouts && ContentBlocksFields[key].layouts.length > 0) {
                         var ia = $.inArray(layout, ContentBlocksFields[key].layouts);
                         if (ia < 0) {
                             continue;
@@ -4345,6 +4420,11 @@ var vcJquery = $.noConflict();
                     return;
                 }
 
+                // Hide subfields from the window
+                if (data.parent !== 0) {
+                    return;
+                }
+
                 // I18N
                 var lexName = _(data.name),
                     lexDescription = _(data.description);
@@ -4364,7 +4444,7 @@ var vcJquery = $.noConflict();
                 fields: fields
             });
 
-            ContentBlocks.openModal('Insert Content', html, {
+            ContentBlocks.openModal(_('contentblocks.add_content'), html, {
                 initCallback: function(modal) {
                     var list = modal.find('.contentblocks-add-field-list'),
                         highest = 0;
@@ -4414,7 +4494,8 @@ var vcJquery = $.noConflict();
 
         generateSettingFields: function(settings, defaultSettings, currentData, fieldDisplayType) {
             fieldDisplayType = (typeof fieldDisplayType === "undefined") ? 'modal' : fieldDisplayType;
-            var fields = [];
+            var fields = []
+                fieldHasOptions = ['select', 'radio', 'checkbox'];
             $.each(settings, function(id, setting) {
                 defaultSettings[setting.reference] = setting.default_value;
                 if(
@@ -4429,19 +4510,25 @@ var vcJquery = $.noConflict();
                         setting.title = lexTitle;
                     }
 
-                    if (setting.fieldtype == 'select' && setting.fieldoptions.length) {
+                    if (fieldHasOptions.indexOf(setting.fieldtype) >= 0 && setting.fieldoptions.length) {
+                        var settingType = setting.fieldtype,
+                            settingValues = setting.value.split(',');
                         setting.options = [];
                         $.each(setting.fieldoptions, function(idx, opt) {
+                            var hasValue = opt.indexOf('=') !== -1;
                             opt = opt.split('=');
-                            var value = opt[1] || opt[0],
-                                selected = (setting.value == value) ? ' selected="selected"' : '',
+                            var value = (hasValue) ? opt[1] : opt[0],
+                                selected = (settingValues.indexOf(value) !== -1) ? ' selected="selected"' : '',
+                                checked = (settingValues.indexOf(value) !== -1) ? ' checked="checked"' : '',
                                 display = opt[0],
-                                displayLex = _(display);
+                                displayLex = _(display),
+                                option = {value : value, selected : selected, checked: checked, display: display, reference: setting.reference},
+                                tpl = 'contentblocks-modal-layout-setting-' + settingType + '-option';
 
                             if (displayLex && displayLex.length > 0) {
                                 display = displayLex;
                             }
-                            setting.options.push('<option value="' + value + '" '+ selected +'>' + display + '</option>');
+                            setting.options.push(tmpl(tpl, option));
                         });
                         setting.options = setting.options.join('');
                     }
@@ -4471,6 +4558,7 @@ var vcJquery = $.noConflict();
             ContentBlocks.openModal(_('contentblocks.layout_settings.modal_header', {name: layoutMeta.name}), html, {
                 width: '450px',
                 initCallback: function(modal) {
+                    modal.on('click', '.contentblocks-setting-radio input, .contentblocks-setting-checkbox input', ContentBlocks.storeSettingValuesInHiddenField);
                     modal.find('.contentblocks-setting-link input[id]').each(function() {
                         ContentBlocks.initializeLinkField(this);
                     });
@@ -4478,7 +4566,7 @@ var vcJquery = $.noConflict();
                         e.preventDefault();
 
                         var settings = currentData;
-                        modal.find('input,textarea,select').each(function(i, fld) {
+                        modal.find(':input[data-name]').each(function(i, fld) {
                             settings[$(fld).data('name')] = $(fld).val();
                         });
                         l.data('settings', Ext.encode(settings));
@@ -4523,9 +4611,12 @@ var vcJquery = $.noConflict();
                 ContentBlocks.initializeLinkField(this);
             });
             
-            $(fieldWrap).children('.contentblocks-exposed-fields-wrapper').find(':input').on('change blur keyup', function() {
-                var settings = Ext.decode(fld.data('settings')) || {}; // this means we get any data from the modal fields
-                settings[$(this).data('name')] = $(this).val();
+            $(fieldWrap).children('.contentblocks-exposed-fields-wrapper').find(':input[data-name]').on('change blur keyup', function() {
+                var settings = Ext.decode(fld.data('settings')) || {}, // this means we get any data from the modal fields
+                    value = $(this).val(),
+                    name = $(this).data('name');
+                settings[name] = value;
+
                 fld.data('settings', Ext.encode(settings));
                 ContentBlocks.fireChange();
             });
@@ -4553,13 +4644,14 @@ var vcJquery = $.noConflict();
             ContentBlocks.openModal(_('contentblocks.field_settings.modal_header', {name: fieldMeta.name}), html, {
                 width: '450px',
                 initCallback: function(modal) {
+                    modal.on('click', '.contentblocks-setting-radio input, .contentblocks-setting-checkbox input', ContentBlocks.storeSettingValuesInHiddenField);
                     modal.find('.contentblocks-setting-link input[id]').each(function() {
                         ContentBlocks.initializeLinkField(this);
                     });
                     modal.find('.save-field_settings-button').on('click', function(e) {
                         e.preventDefault();
                         var settings = currentData; // this means we get any data from the modal fields
-                        modal.find('input,textarea,select').each(function(i, fld) {
+                        modal.find(':input[data-name]').each(function(i, fld) {
                             settings[$(fld).data('name')] = $(fld).val();
                         });
                         fld.data('settings', Ext.encode(settings));
@@ -4571,17 +4663,23 @@ var vcJquery = $.noConflict();
         },
 
         addLayoutModal: function() {
-            var layoutDef = [],
+            var btn = $(this),
+                layoutDef = [],
                 allPageLayouts = [],
                 // set container so that we can pass it to buildLayout
-                container = $(this).prevAll('.contentblocks-layout-wrapper'),
+                container = btn.prevAll('.contentblocks-layout-wrapper'),
                 // get data for field, primarily to make sure that we only allow specified layouts on nested layouts
                 parentData = container.closest('li.contentblocks-field-outer').data() || false,
                 allowedLayouts = [],
                 allowedTemplates = [],
-
                 layouts = [],
-                templates = [];
+                templates = [],
+                position = 'bottom';
+
+            if (btn.hasClass('contentblocks-add-layout-here')) {
+                container = btn.closest('.contentblocks-layout-wrapper');
+                position = btn.closest('li.contentblocks-layout').index();
+            }
 
             if(parentData && parentData.layouts) {
                 allowedLayouts = parentData.layouts;
@@ -4686,14 +4784,14 @@ var vcJquery = $.noConflict();
                 templates: templates
             });
 
-            ContentBlocks.openModal('Insert Layout', html, {
+            ContentBlocks.openModal(_('contentblocks.add_layout'), html, {
                 initCallback: function(modal) {
                     // Initiate the layouts
                     var layoutList = modal.find('.contentblocks-add-layout-list'),
                         layoutHighest = 0;
                     layoutList.find('a').on('click', function() {
                         var layout = $(this);
-                        ContentBlocks.buildLayout(layout.data('id'), [], [], container);
+                        ContentBlocks.buildLayout(layout.data('id'), [], [], container, false, position);
                         ContentBlocks.closeModal();
                     }).each(function(i, layout) {
                         layout = $(layout);
@@ -4706,7 +4804,7 @@ var vcJquery = $.noConflict();
                         templateHighest = 0;
                     templatesList.find('a').on('click', function() {
                         var template = $(this);
-                        ContentBlocks.buildTemplate(template.data('id'), container);
+                        ContentBlocks.buildTemplate(template.data('id'), container, position);
                         ContentBlocks.closeModal();
                     }).each(function(i, template) {
                         template = $(template);
@@ -4744,10 +4842,12 @@ var vcJquery = $.noConflict();
             noConfirm = noConfirm || false;
 
             var layoutId = layout.data('layout'),
-                layoutMeta = ContentBlocksLayouts['_'+layoutId] || {name: ''};
+                layoutMeta = ContentBlocksLayouts['_'+layoutId] || {name: ''},
+                layoutInstanceWrapperId = layout.attr('id'),
+                layoutInstanceId = layoutInstanceWrapperId.substr(0, layoutInstanceWrapperId.length - 8);
                 
             if (noConfirm || confirm(_('contentblocks.delete_layout.confirm.js', {layoutName: layoutMeta.name}))) {
-                delete ContentBlocks.generatedLayouts[layoutMeta.generated_id];
+                delete ContentBlocks.generatedLayouts[layoutInstanceId];
                 layout.remove();
             }
         },
@@ -4800,8 +4900,20 @@ var vcJquery = $.noConflict();
                         layout: layoutId,
                         content: {},
                         settings: Ext.decode($region.data('settings')) || {},
-                        parent: parent
+                        parent: parent,
+                        title: ''
                     };
+
+                // Custom titles per layout requires a bit of processing and ugly searching
+                var title = $region.find('> .contentblocks-region-container > .contentblocks-region-container-header .contentblocks-layout-title').text(),
+                    originalTitle = (ContentBlocksLayouts['_' + layoutId]) ? ContentBlocksLayouts['_' + layoutId].name : '';
+
+                if (_(originalTitle)) {
+                    originalTitle = _(originalTitle);
+                }
+                if (title && title.length && title !== originalTitle) {
+                    regionData.title = title;
+                }
                 
                 // have to filter to account for nested layouts. can't use children() because .contentblocks-content is buried.    
                 var children = $region.find('.contentblocks-content').not($(this).find('.contentblocks-content .contentblocks-content'));
@@ -4826,9 +4938,9 @@ var vcJquery = $.noConflict();
 
                     regionData.content[partName] = partFields;
                 });
-                if(!parent) {
+                if (!parent) {
                     data.push(regionData);
-                    }
+                }
             });
 
              if (!JSON) {
@@ -4939,6 +5051,80 @@ var vcJquery = $.noConflict();
         },
 
         fieldTypes: {},
+        utilities: {
+            getThumbnailUrl: function(url, size) {
+                // Get the normalised urls, forcing it to relative mode so phpthumb can use the cleaned, relative url
+                var normalised = ContentBlocks.utilities.normaliseUrls(url, 'relative');
+                if (size > 0 || size.length > 0) {
+                    var width = size.split('x')[0],
+                        height = size.split('x')[1] || width,
+                        thumbUrl = MODx.config.connectors_url + 'system/phpthumb.php';
+
+                    // Only return a thumbnail if the width and height are larget than 0
+                    if (width > 0 && height > 0) {
+                        thumbUrl += '?src=' + normalised.cleanedSrc;
+                        thumbUrl += '&w=' + width + '&h=' + height + '&zc=1';
+                        thumbUrl += '&HTTP_MODAUTH=' + MODx.siteId;
+                        return thumbUrl;
+                    }
+                }
+                return normalised.displaySrc;
+            },
+            normaliseUrls: function(url, mode) {
+                mode = mode || ContentBlocksConfig.base_url_mode || 'relative';
+                var baseUrl = ContentBlocksConfig.modx_base_url,
+                    siteUrl = ContentBlocksConfig.modx_site_url;
+
+                var imageSrc = url,
+                    hasBaseUrl = (imageSrc.substr(0, baseUrl.length) === baseUrl);
+
+                if ((imageSrc.substr(0, 4) === 'http') || (imageSrc.substr(0, 2) === '//')) {
+                    if (imageSrc.substr(0, siteUrl.length) === siteUrl) {
+                        imageSrc = imageSrc.substr(siteUrl.length);
+                        hasBaseUrl = false;
+                    }
+                    else {
+                        return {
+                            'displaySrc': url,
+                            'cleanedSrc': url
+                        };
+                    }
+                }
+
+                var displaySrc = imageSrc,
+                    cleanedSrc = imageSrc;
+
+                switch (mode) {
+                    case 'full':
+                        if (!hasBaseUrl) {
+                            displaySrc = cleanedSrc = siteUrl + imageSrc;
+                        } else {
+                            cleanedSrc = siteUrl + imageSrc.substr(baseUrl.length);
+                        }
+                        break;
+
+                    case 'absolute':
+                        if (!hasBaseUrl) {
+                            displaySrc = baseUrl + imageSrc;
+                            cleanedSrc = baseUrl + imageSrc;
+                        }
+                        break;
+
+                    case 'relative':
+                    default:
+                        if (!hasBaseUrl) {
+                            displaySrc = baseUrl + imageSrc;
+                        } else {
+                            cleanedSrc = imageSrc.substr(baseUrl.length);
+                        }
+                        break;
+                }
+                return {
+                    'displaySrc': displaySrc,
+                    'cleanedSrc': cleanedSrc
+                };
+            }
+        },
         generatedContentFields: {},
         toBoolean: function (v) {
             return !(v == 'No' || !v || v == '0' || v == 'false');
@@ -4953,8 +5139,47 @@ var vcJquery = $.noConflict();
             $(this).removeClass('contentblocks-layout-expanded').addClass('contentblocks-layout-collapsed').text('+').closest('.contentblocks-region-container').children('.contentblocks-region-content').slideUp(300, function() {
                 ContentBlocks.fixColumnHeights();
             });
-
         },
+        expandAllLayouts: function() {
+            ContentBlocks.cbWrapper.find('.contentblocks-layout-collapsed').removeClass('contentblocks-layout-collapsed').addClass('contentblocks-layout-expanded').text('-').closest('.contentblocks-region-container').children('.contentblocks-region-content').slideDown(300, function() {
+                ContentBlocks.fixColumnHeights();
+            });
+        },
+        collapseAllLayouts: function() {
+            ContentBlocks.cbWrapper.find('.contentblocks-layout-expanded').removeClass('contentblocks-layout-expanded').addClass('contentblocks-layout-collapsed').text('+').closest('.contentblocks-region-container').children('.contentblocks-region-content').slideUp(300, function() {
+                ContentBlocks.fixColumnHeights();
+            });
+        },
+        editLayoutTitle: function() {
+            var $this = $(this),
+                $parent = $(this).parent();
+            $this.replaceWith('<input type="text" value="' + $this.text() + '" class="contentblocks-layout-title-edit">');
+            $parent.find('.contentblocks-layout-title-edit').focus();
+        },
+        updateLayoutTitle: function() {
+            var $input = $(this);
+            $input.replaceWith('<span class="contentblocks-layout-title">' + $input.val() + '</span>');
+        },
+        maybeUpdateLayoutTitle: function(e) {
+            var key = e.which || e.keyCode;
+            if (key == 13) {
+                e.preventDefault();
+                e.stopPropagation();
+                var $input = $(this);
+                $input.replaceWith('<span class="contentblocks-layout-title">' + $input.val() + '</span>');
+                return false;
+            }
+        },
+
+        storeSettingValuesInHiddenField: function() {
+            var options_container = $(this).closest('.contentblocks-modal-field'),
+                value_container = options_container.find('input[type=hidden]'),
+                value = options_container.find(':checked').map(function() {
+                    return this.value;
+                }).get().join(',');
+            value_container.val(value).change();
+        },
+
         initDelegates: function(dom) {
             // Field functions
             dom.on('click', '.contentblocks-field-settings', this.openFieldSettings);
@@ -4965,11 +5190,18 @@ var vcJquery = $.noConflict();
 
             // Layout functions
             dom.on('click', '.contentblocks-add-layout', this.addLayoutModal);
+            dom.on('click', '.contentblocks-add-layout-here', this.addLayoutModal);
             dom.on('click', '.contentblocks-layout-delete', this.deleteLayout);
             dom.on('click', '.contentblocks-layout-settings', this.openLayoutSettings);
             dom.on('click', '.contentblocks-repeat-layout',  this.repeatLayout);
             dom.on('click', '.contentblocks-layout-expanded', this.collapseLayout);
             dom.on('click', '.contentblocks-layout-collapsed', this.expandLayout);
+            dom.on('click', '.contentblocks-layout-title', this.editLayoutTitle);
+            dom.on('blur', '.contentblocks-layout-title-edit', this.updateLayoutTitle);
+            dom.on('keydown', '.contentblocks-layout-title-edit', this.maybeUpdateLayoutTitle);
+
+            // Setting functions
+            dom.on('click', '.contentblocks-setting-radio input, .contentblocks-setting-checkbox input', this.storeSettingValuesInHiddenField);
 
             // Layout moves
             dom.on('click', '.contentblocks-layout-move-up', function() {
@@ -5124,12 +5356,13 @@ var vcJquery = $.noConflict();
                 linkVal = ($link.val() != 'undefined') ? $link.val() : '',
                 showDisplayText = function($displayText) { $displayText.css({'opacity' : '1', 'z-index' : '1'}); },
                 hideDisplayText = function($displayText) { $displayText.css({'opacity' : '0', 'z-index' : '-1' }); },
-                linkPattern = (data.properties && data.properties.link_detection_pattern_override != '') ? data.properties.link_detection_pattern_override : ContentBlocksConfig['link.link_detection_pattern'],
+                linkPattern = (data.properties && typeof data.properties.link_detection_pattern_override !== 'undefined' && data.properties.link_detection_pattern_override != '') ? data.properties.link_detection_pattern_override : ContentBlocksConfig['link.link_detection_pattern'],
+                limitContext = (data.properties && data.properties.limit_to_current_context || $(input).data('limitToCurrentContext')) ? 1 : 0,
                 linkRE = new RegExp(linkPattern, 'i'),
                 resourceRE = /^\[\[~\d*\]\]/,
                 linkType = ContentBlocks.getLinkFieldDataType(linkVal);
-                
-            // remove mailto: from email links    
+
+            // remove mailto: from email links
             linkVal = linkVal.replace('mailto:', '');
             
             // find out if it's mostly numbers, i.e. a resource ID
@@ -5143,7 +5376,6 @@ var vcJquery = $.noConflict();
                 // set this so that the mailto: is replaced in email links. Esp. helpful in tinyrte
                 $link.val(linkVal);
             }
-            
             
             var displayTextHolder = $('<div />', {class : 'contentblocks-field-link-displaytext'}).on('click', function() {
                 $link.focus().select();
@@ -5190,6 +5422,9 @@ var vcJquery = $.noConflict();
                     showDisplayText(displayTextHolder);
                 }
             }).on('focus', function() {
+                if(typeof ContentBlocksResource !== 'undefined') {
+                    ContentBlocks.resourcesSource.remote.url = ContentBlocksConfig.connectorUrl + '?action=content/resources/search&query=%TERM%&limitToContext=' + limitContext + "&context=" + ContentBlocksResource.context_key;
+                }
                 hideDisplayText(displayTextHolder);
               
             }).after('<span/>');
@@ -5200,9 +5435,11 @@ var vcJquery = $.noConflict();
         initialize: function(contentBody) {
             // for typeahead
             $.ajaxSetup({
-                 headers: {
-                    'modAuth': MODx.siteId
-                 }
+                beforeSend:function(xhr, settings){
+                    if(!settings.crossDomain) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                    }
+                }
             });
             ContentBlocks.resourcesSource.initialize();
 
@@ -5213,6 +5450,7 @@ var vcJquery = $.noConflict();
             // Hide the wrapper first before generating the content
             cbWrapper.hide();
             cbWrapper.addClass(ContentBlocksWrapperCls);
+            ContentBlocks.cbWrapper = cbWrapper;
 
             // Build the content and build the fields
             ContentBlocks.buildContents(ContentBlocksContents);
@@ -5231,16 +5469,18 @@ var vcJquery = $.noConflict();
             cbWrapper.show();
             // .. and hide the loading message
             contentBody.find('#contentblocks_loading').remove();
-            // and fix the height
-            setTimeout(function() {
-                ContentBlocks.fixColumnHeights();
-            }, 1500);
 
             // For good measure we wait another few seconds for setting initialized to true
             setTimeout(function() {
                 ContentBlocks.initialized = true;
+                ContentBlocks.fixColumnHeights();
+                cbWrapper.trigger('ContentBlocks.initialized');
             }, 2500);
-            
+
+            setTimeout(function() {
+                ContentBlocks.fixColumnHeights();
+            }, 3000);
+
         },
         
         getLinkFieldDataType: function(val) {
@@ -5260,7 +5500,7 @@ var vcJquery = $.noConflict();
         // set up the resource source for resource link typeahead
         resourcesSource: new Bloodhound({
             prefetch: {
-                url: ContentBlocksConfig.connectorUrl + '?action=content/resources/prefetch',
+                url: (typeof ContentBlocksResource !== 'undefined') ? ContentBlocksConfig.connectorUrl + '?action=content/resources/prefetch&context=' + ContentBlocksResource.context_key : ContentBlocksConfig.connectorUrl + '?action=content/resources/prefetch',
                 ttl: 3600000
             },
             remote: {

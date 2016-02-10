@@ -49,7 +49,20 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
          */
         $file = reset($_FILES);
         $name = $fileName = pathinfo($file['name'], PATHINFO_FILENAME);
-        $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        if ($file['error'] > 0) {
+            return $this->modx->lexicon('moregallery.error_upload_failed', array('error' => $file['error']));
+        }
+
+        $allowedExtensions = strtolower($this->modx->getOption('upload_images'));
+        $allowedExtensions = explode(',', $allowedExtensions);
+        $allowedExtensions = array_map('trim', $allowedExtensions);
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            $charset = $this->modx->getOption('modx_charset');
+            $ext = htmlentities($fileExtension, ENT_QUOTES, $charset);
+            return $this->modx->lexicon('moregallery.error_invalid_filetype', array('extension' => $ext));
+        }
 
         /**
          * Try to load the image name from IPTC data on the image fiel
@@ -129,20 +142,7 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
         /**
          * Attempt to increase the memory limit as we're about to do some heavy image stuff
          */
-        $before = ini_get('memory_limit');
-        $unit = strtoupper(substr($before, -1));
-        $number = substr($before, 0, -1);
-        $newLimit = $this->modx->moregallery->getOption('moregallery.upload_memory_limit', null, '256M', true);
-        $newLimitNumber = substr($newLimit, 0, -1);
-        if ($unit !== 'G' && $number < $newLimitNumber) {
-            @ini_set('memory_limit', $newLimit);
-            $after = ini_get('memory_limit');
-
-            if ($before === $after)
-            {
-                $this->modx->log(modX::LOG_LEVEL_ERROR, '[moregallery] Attempted to up the memory limit from ' . $before . ' to ' . $newLimit . ', but failed. You may run out of memory while resizing the uploaded image.');
-            }
-        }
+        $this->modx->moregallery->setMemoryLimit();
 
         /**
          * Resize the image to a smaller one. Before we do this, we register a shutdown

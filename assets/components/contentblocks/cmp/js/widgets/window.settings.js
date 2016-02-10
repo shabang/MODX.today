@@ -1,6 +1,7 @@
 ContentBlocksComponent.window.Settings = function(config) {
     config = config || {};
     config.id = config.id || Ext.id(),
+    fieldHasOptions = ['select', 'radio', 'checkbox'],
     Ext.applyIf(config,{
         title: (config.isUpdate) ?
             _('contentblocks.edit_setting') :
@@ -37,7 +38,7 @@ ContentBlocksComponent.window.Settings = function(config) {
                 },
                 change: function(fld, value) {
                     var fldOpts = Ext.getCmp(config.id + '-fieldoptions');
-                    if (value != 'select') {
+                    if (fieldHasOptions.indexOf(value) == -1) {
                         fldOpts.hide();
                     }
                     else {
@@ -46,7 +47,7 @@ ContentBlocksComponent.window.Settings = function(config) {
                 }
             }
         },{
-            xtype: 'textfield',
+            xtype: 'textarea',
             name: 'default_value',
             fieldLabel: _('contentblocks.default_value'),
             allowBlank: true,
@@ -62,7 +63,7 @@ ContentBlocksComponent.window.Settings = function(config) {
             grow: true,
             growMin: 50,
             growMax: 150,
-            hidden: (config.record) ? ( config.record.fieldtype != 'select' ) : true
+            hidden: (config.record) ? ( fieldHasOptions.indexOf(config.record.fieldtype) == -1 ) : true
         },{
             xtype: 'contentblocks-combo-field_is_exposed',
             fieldLabel : _('contentblocks.field_is_exposed'),
@@ -72,6 +73,16 @@ ContentBlocksComponent.window.Settings = function(config) {
             anchor: '100%',
             value: 'modal',
             id: config.id + '-field_is_exposed'
+        },{
+            xtype: 'checkbox',
+            boxLabel : _('contentblocks.link.limit_to_current_context'), //_('contentblocks.process_tags'),
+            description: _('contentblocks.link.limit_to_current_context.description'),
+            name: 'limit_to_current_context',
+            allowBlank: true,
+            anchor: '100%',
+            inputValue: 1,
+            id: config.id + '-limit_to_current_context',
+            hidden: (config.record) ? ( config.record.fieldtype != 'link' ) : true
         },{
             xtype: 'checkbox',
             boxLabel : 'Process tags', //_('contentblocks.process_tags'),

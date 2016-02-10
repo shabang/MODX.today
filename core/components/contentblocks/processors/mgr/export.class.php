@@ -7,6 +7,23 @@ abstract class ContentBlocksExportProcessor extends modProcessor
 {
     public $classKey;
     public $sortKey = 'sortorder';
+    public $items;
+    /** @var ContentBlocks */
+    public $contentBlocks;
+
+    /**
+     * @return bool|null|string
+     */
+    public function initialize() {
+        $corePath = $this->modx->getOption('contentblocks.core_path', null, $this->modx->getOption('core_path') . 'components/contentblocks/');
+        $this->contentBlocks =& $this->modx->getService('contentblocks', 'ContentBlocks', $corePath . 'model/contentblocks/');
+
+        $items = $this->getProperty('items');
+        if(!empty($items)) {
+            $this->items = array_map('trim', explode(',', $items));
+        }
+        return true;
+    }
 
     /**
      * Fetches the data, generates XML and tells the browser to download it.
@@ -17,14 +34,34 @@ abstract class ContentBlocksExportProcessor extends modProcessor
     {
         $c = $this->modx->newQuery($this->classKey);
         $c->sortby($this->sortKey, 'ASC');
+        if($this->items) {
+            $c->where(array('id:in' => $this->items));
+        }
+
+        $parent = $this->getProperty('parent', 0);
+        if ($this->classKey === 'cbField' && $parent > 0) {
+            $c->where(array('parent' => $parent));
+        }
 
         $collection = $this->modx->getCollection($this->classKey, $c);
         $xml = $this->generateXml($collection);
-        $name = $this->classKey . '_' . strtolower(str_replace(' ', '-', $this->modx->getOption('site_name'))) . '_' .  date('Y-m-d@H:i:s') . '.xml';
+        $name = $this->classKey . '_' . strtolower(str_replace(' ', '-', $this->contentBlocks->getOption('site_name'))) . '_' .  date('Y-m-d@H:i:s') . '.xml';
 
-        header('Content-Disposition: attachment; filename="'.$name);
-        header('Content-Type: text/xml');
-        return $xml;
+        if ($this->getProperty('save', false)) {
+            file_put_contents(MODX_CORE_PATH . 'export/' . $name, $xml);
+            return array (
+                'success' => true,
+                'message' => 'Created export in core/export/' . $name,
+                'total' => 0,
+                'errors' => array(),
+                'object' => array('file' => MODX_CORE_PATH . 'export/' . $name),
+            );
+        }
+        else {
+            header('Content-Disposition: attachment; filename="' . $name);
+            header('Content-Type: text/xml');
+            return $xml;
+        }
     }
 
     /**

@@ -1,3 +1,26 @@
+Ext.dd.DragDropMgr.getZIndex = function(element) {
+    var body = document.body,
+        z,
+        zIndex = -1;
+    var overTargetEl = element;
+ 
+    element = Ext.getDom(element);
+    while (element !== body) {
+ 
+        // this fixes the problem
+        if(!element) {
+            this._remove(overTargetEl); // remove the drop target from the manager
+            break;
+        }
+        // fix end
+ 
+        if (!isNaN(z = Number(Ext.fly(element).getStyle('zIndex')))) {
+            zIndex = z;
+        }
+        element = element.parentNode;
+    }
+    return zIndex;
+};
 MODx.TreeDrop = function(config) {
     config = config || {};
     Ext.applyIf(config,{
@@ -177,6 +200,8 @@ MODx.insertIntoContent = function(v,opt) {
 
 MODx.window.InsertElement = function(config) {
     config = config || {};
+    var resourceCmp = Ext.get('modx-resource-id');
+    var resourceId = resourceCmp !== null ? resourceCmp.getValue() : 0;
     Ext.applyIf(config,{
         title: _('select_el_opts')
         ,id: 'modx-window-insert-element'
@@ -213,7 +238,8 @@ MODx.window.InsertElement = function(config) {
                 ,elementType: config.record.classKey
             }
             ,listeners: {
-                'select': {fn:this.changePropertySet,scope:this}
+                'render': {fn:function() {Ext.getCmp('modx-dise-propset').getStore().load(); Ext.getCmp('modx-dise-propset').value = '0';},scope:this} 
+                ,'select': {fn:this.changePropertySet,scope:this}
             }
         },{
             id: 'modx-dise-proplist'
@@ -223,6 +249,7 @@ MODx.window.InsertElement = function(config) {
                    'action': 'element/getinsertproperties'
                    ,classKey: config.record.classKey
                    ,pk: config.record.pk
+                   ,resourceId: resourceId
                    ,propertySet: 0
                 }
                 ,scripts: true
@@ -244,6 +271,7 @@ MODx.window.InsertElement = function(config) {
                 // ,autoScroll: true
             }]
         }]
+        ,modps: []
     });
     MODx.window.InsertElement.superclass.constructor.call(this,config);
     this.on('show',function() {
@@ -256,7 +284,8 @@ Ext.extend(MODx.window.InsertElement,MODx.Window,{
     changePropertySet: function(cb) {
         var fp = Ext.getCmp('modx-iprops-fp');
         if (fp) fp.destroy();
-
+        var resourceCmp = Ext.get('modx-resource-id');
+        var resourceId = resourceCmp !== null ? resourceCmp.getValue() : 0;
         var u = Ext.getCmp('modx-dise-proplist').getUpdater();
         u.update({
             url: MODx.config.connector_url
@@ -264,6 +293,7 @@ Ext.extend(MODx.window.InsertElement,MODx.Window,{
                 'action': 'element/getinsertproperties'
                 ,classKey: this.config.record.classKey
                 ,pk: this.config.record.pk
+                ,resourceId: resourceId
                 ,propertySet: cb.getValue()
             }
             ,scripts: true
@@ -314,19 +344,19 @@ Ext.extend(MODx.window.InsertElement,MODx.Window,{
             case 'modTemplateVar': v = v+'*'+n; break;
         }
         var ps = f.findField('propertyset').getValue();
-        if (ps !== 0 && ps !== '') {
+        if (ps != 0 && ps !== '') {
             v = v+'@'+f.findField('propertyset').getRawValue();
         }
         v = v+'?';
 
         for (var i=0;i<this.modps.length;i++) {
             var fld = this.modps[i];
-            var val = Ext.getCmp('modx-iprop-'+fld).getValue();
+            var val = typeof(Ext.getCmp('modx-iprop-'+fld).getValue) === 'function' ? Ext.getCmp('modx-iprop-'+fld).getValue() : Ext.getCmp('modx-iprop-'+fld).value;
             if (val == true) val = 1;
             if (val == false) val = 0;
-            v = v+' &'+fld+'=`'+val+'`';
+            v = v+'\n\t&'+fld+'=`'+val+'`';
         }
-        v = v+']]';
+        v = v+'\n]]';
 
         if (this.config.record.iframe) {
             MODx.insertForRTE(v,this.config.record.cfg);
@@ -336,7 +366,6 @@ Ext.extend(MODx.window.InsertElement,MODx.Window,{
         this.hide();
         return true;
     }
-    ,modps: []
     ,changeProp: function(k) {
         if (this.modps.indexOf(k) == -1) {
             this.modps.push(k);

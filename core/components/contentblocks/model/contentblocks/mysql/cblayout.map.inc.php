@@ -84,7 +84,8 @@ $xpdo_meta_map['cbLayout']= array (
     ),
     'layout_only_nested' => 
     array (
-      'dbtype' => 'bool',
+      'dbtype' => 'tinyint',
+      'precision' => '1',
       'phptype' => 'bool',
       'null' => true,
       'default' => 0,
@@ -94,6 +95,41 @@ $xpdo_meta_map['cbLayout']= array (
       'dbtype' => 'text',
       'phptype' => 'string',
       'null' => true,
+    ),
+  ),
+  'indexes' => 
+  array (
+    'name' => 
+    array (
+      'alias' => 'name',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'name' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'sortorder' => 
+    array (
+      'alias' => 'sortorder',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'sortorder' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
     ),
   ),
 );

@@ -138,8 +138,8 @@ $_lang['setting_redactor.linkProtocol_desc'] = 'Protokol (<code>http://</code>, 
 $_lang['setting_redactor.mobile'] = 'Mobilní';
 $_lang['setting_redactor.mobile_desc'] = 'Pokud je povoleno a uživatel bude identifikován jako telefon nebo tablet (používá se barebones UA), Redaktor zobrazí zjednodušenou verzi editoru ve formě obyčejného textového pole místo polí upravujících obsah.';
 
-$_lang['setting_redactor.observeImages'] = 'Pozorovat obrázky';
-$_lang['setting_redactor.observeImages_desc'] = 'Pokud je povoleno, po kliknutí na obrázek v editační oblasti se otevře modální okno s nastavením zarovnání a parametry alt a title.';
+$_lang['setting_redactor.imageEditable'] = 'Pozorovat obrázky';
+$_lang['setting_redactor.imageEditable_desc'] = 'Pokud je povoleno, po kliknutí na obrázek v editační oblasti se otevře modální okno s nastavením zarovnání a parametry alt a title.';
 
 $_lang['setting_redactor.browse_recursive'] = 'Procházev rekurzivně';
 $_lang['setting_redactor.browse_recursive_desc'] = 'Pokud je povoleno, prohlížeč obrázků bude rekurzivně zobrazovat podsložky pro image_upload_path ve zdrojích médií. Tuto volbu budete možná chtít vypnout pokud máte velké množství podsložek, které nejsou používány k procházení.';
@@ -245,8 +245,8 @@ $_lang['setting_redactor.searchImages_desc'] = "Pokud je povoleno, vyhledávací
 //$_lang['setting_redactor.tidyHtml'] = 'Tidy HTML';
 //$_lang['setting_redactor.tidyHtml_desc'] = 'Set to false to turn off nice output code formatting.';
 
-//$_lang['setting_redactor.observeLinks'] = 'Observe Links';
-//$_lang['setting_redactor.observeLinks_desc'] = 'Set to true to allow follow/edit links by putting cursor to the link right in Redactor.';
+//$_lang['setting_redactor.linkTooltip'] = 'Observe Links';
+//$_lang['setting_redactor.linkTooltip_desc'] = 'Set to true to allow follow/edit links by putting cursor to the link right in Redactor.';
 
 //$_lang['setting_redactor.imageFloatMargin'] = 'Image Float Margin';
 //$_lang['setting_redactor.imageFloatMargin_desc'] = 'Custom margin for images setting.';

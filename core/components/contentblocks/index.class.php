@@ -43,6 +43,24 @@ abstract class ContentblocksManagerController extends modExtraManagerController 
     public function checkPermissions() {
         return true;
     }
+
+    public function loadRichTextEditor() {
+        $useEditor = $this->modx->getOption('use_editor');
+        $whichEditor = $this->modx->getOption('which_editor');
+        if ($useEditor && !empty($whichEditor))
+        {
+            // invoke the OnRichTextEditorInit event
+            $onRichTextEditorInit = $this->modx->invokeEvent('OnRichTextEditorInit',array(
+                'editor' => $whichEditor, // Not necessary for Redactor
+                'elements' => array('foo'), // Not necessary for Redactor
+            ));
+            if (is_array($onRichTextEditorInit))
+            {
+                $onRichTextEditorInit = implode('', $onRichTextEditorInit);
+            }
+            $this->setPlaceholder('onRichTextEditorInit', $onRichTextEditorInit);
+        }
+    }
 }
 
 /**

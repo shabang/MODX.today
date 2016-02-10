@@ -23,14 +23,20 @@ class cbFieldGetListProcessor extends modObjectGetListProcessor {
      * @return xPDOQuery
      */
     public function prepareQueryBeforeCount(xPDOQuery $c) {
-        if($ids = $this->getProperty('ids')) {
+        $parent = (int)$this->getProperty('parent', 0);
+        $c->where(array(
+            'parent' => $parent,
+        ));
+
+        if ($ids = $this->getProperty('ids')) {
             $ids = array_map('trim',explode(",",$ids));
 
             $c->where(array(
                 'cbField.id:IN' => $ids,
             ));
         }
-        if($inputs = $this->getProperty('inputs')) {
+
+        if ($inputs = $this->getProperty('inputs')) {
             $inputs = array_map('trim',explode(",",$inputs));
             $c->where(array(
                 'cbField.input:IN' => $inputs,
@@ -56,6 +62,7 @@ class cbFieldGetListProcessor extends modObjectGetListProcessor {
 
         // Turn into JSON so the JS can easily interact with the data
         $array['properties'] = $this->modx->fromJSON($array['properties']);
+        $array['parent_properties'] = $this->modx->fromJSON($array['parent_properties']);
         $array['availability'] = $this->modx->fromJSON($array['availability']);
         $array['settings'] = $this->modx->fromJSON($array['settings']);
         return $array;

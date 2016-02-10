@@ -1,7 +1,7 @@
 id: 28
 name: GitifyWatch
 description: 'Watches for changes in resources and elements to automatically run Gitify and git to commit & push changes.'
-category: 'Gitify Watch'
+category: ''
 properties: 'a:0:{}'
 
 -----

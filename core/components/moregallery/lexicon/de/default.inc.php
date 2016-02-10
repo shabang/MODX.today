@@ -13,8 +13,8 @@ $_lang['moregallery.please_save_first'] = 'Um Bilder hochzuladen, speichern Sie 
 
 
 
-$_lang['moregallery.inherit'] = 'Inherit';
-$_lang['moregallery.inherit.desc'] = 'Use the system defaults.';
+$_lang['moregallery.inherit'] = 'Vererbt';
+$_lang['moregallery.inherit.desc'] = 'Standard-Systemeinstellungen benutzen.';
 $_lang['moregallery.source'] = 'Medienquelle';
 $_lang['moregallery.source.desc'] = 'Die Medienquelle in der Bilder gespeichert werden sollen. <b>Hinweis:</b> Wenn Sie diese Einstellungen nach dem Hochladen von Bildern ändern, werden bereits hochgeladene Bilder NICHT zum neuen Ort verschoben. Bitte übernehmen Sie das Verschieben selbst.';
 $_lang['moregallery.relative_url'] = 'Relative URL';
@@ -29,8 +29,8 @@ $_lang['moregallery.content_position.hide'] = 'Versteckt';
 
 $_lang['moregallery.view_full_size_image'] = 'Originalgröße anzeigen';
 $_lang['moregallery.delete_image'] = 'Bild löschen';
-$_lang['moregallery.deactivate_image'] = 'Hide image from the Gallery';
-$_lang['moregallery.activate_image'] = 'Mark image as visible';
+$_lang['moregallery.deactivate_image'] = 'Bild ausblenden';
+$_lang['moregallery.activate_image'] = 'Bild als sichtbar markieren';
 $_lang['moregallery.upload_image'] = 'Bilder hochladen';
 $_lang['moregallery.upload'] = 'Hochladen';
 $_lang['moregallery.import_image'] = 'Bilder aus anderen Quellen importieren';
@@ -53,36 +53,38 @@ $_lang['moregallery.model_error'] = 'Es trat ein unerwarteter Fehler auf: Das Bi
 
 $_lang['moregallery.error_invalid_resource'] = 'Es trat ein unerwarteter Fehler auf: Die Ressource "[[+resource]]" ist keine gültige Galerie.';
 $_lang['moregallery.error_loading_source'] = 'Es trat ein Fehler beim Laden der Medienquelle auf.';
+$_lang['moregallery.error_invalid_filetype'] = 'Sorry, .[[+extension]] files are not allowed.';
+$_lang['moregallery.error_upload_failed'] = 'the file could not be uploaded (Error [[+error]]).';
 
 // Tags related, for MoreGallery 1.1
 $_lang['moregallery.tags'] = 'Tags';
 $_lang['moregallery.tags.add'] = 'Hinzufügen';
 // Imports, also new in 1.1
 $_lang['moregallery.file_doesnt_exist'] = 'Die zu kopierende Datei existiert nicht oder ist nicht lesbar';
-$_lang['moregallery.edit_crop'] = 'Edit Crop';
-$_lang['moregallery.save_crop'] = 'Save Crop';
-$_lang['moregallery.preview_crop'] = 'Preview crop';
-$_lang['moregallery.processing_crop'] = 'Processing...';
+$_lang['moregallery.edit_crop'] = 'Ausschnitt bearbeiten';
+$_lang['moregallery.save_crop'] = 'Ausschnitt speichern';
+$_lang['moregallery.preview_crop'] = 'Ausschnitt ansehen';
+$_lang['moregallery.processing_crop'] = 'Verarbeitung...';
 
 /**
  * Settings
  */
-$_lang['setting_moregallery.source_relative_url'] = 'Source Relative URL';
-$_lang['setting_moregallery.source_relative_url_desc'] = 'The URL relative to the root of the selected media source to upload images to. Can be overridden per Gallery resource on its Settings tab.';
+$_lang['setting_moregallery.source_relative_url'] = 'Relative URL zur Quelle';
+$_lang['setting_moregallery.source_relative_url_desc'] = 'Die URL relativ zum Root der ausgewählten Medienquelle für Bilder-Uploads. Kann überschrieben werden für jede Galerie im Setting-Tab.';
 
-$_lang['setting_moregallery.source'] = 'Media Source';
-$_lang['setting_moregallery.source_desc'] = 'Choose a Media Source to upload images to. Can be overridden per Gallery resource on its Settings tab.';
+$_lang['setting_moregallery.source'] = 'Medienquelle';
+$_lang['setting_moregallery.source_desc'] = 'Wählen Sie eine Medienquelle, um Bilder zu laden. Kann pro Galerie-Ressource auf der Registerkarte Einstellungen überschrieben werden.';
 
-$_lang['setting_moregallery.image_id_in_name'] = 'Image ID in Filename';
-$_lang['setting_moregallery.image_id_in_name_desc'] = 'Set to either "prefix" or "suffix" to add the image ID to the file name on upload. This ensures the filename is unique.';
-$_lang['setting_moregallery.resource_id_in_path'] = 'Resource ID in Path';
-$_lang['setting_moregallery.resource_id_in_path_desc'] = 'When enabled, the Gallery Resource ID will be suffixed to the Source Relative URL so each gallery has its own directory.';
-$_lang['setting_moregallery.content_position'] = 'Content Position';
-$_lang['setting_moregallery.content_position_desc'] = 'Set to "above", "below", "tab" or "hide" to determine how the Content field will be displayed, if at all.';
-$_lang['setting_moregallery.use_rte_for_images'] = 'Use Rich Text Editor';
+$_lang['setting_moregallery.image_id_in_name'] = 'Bild-ID im Dateinamen';
+$_lang['setting_moregallery.image_id_in_name_desc'] = 'Auf "prefix" oder "suffix" setzen, um beim Upload die Bild-ID zum Dateinamen hinzuzufügen. Dadurch wird sichergestellt, dass der Dateiname eindeutig ist.';
+$_lang['setting_moregallery.resource_id_in_path'] = 'ID der Ressource im Pfad';
+$_lang['setting_moregallery.resource_id_in_path_desc'] = 'Wenn aktiviert, wird die ID der Galerie-Ressource der Quell-URL hinzugefügt, so dass jede Galerie ihr eigenes Verzeichnis bekommt.';
+$_lang['setting_moregallery.content_position'] = 'Position des Content-Felds';
+$_lang['setting_moregallery.content_position_desc'] = '"Oben", "unten", "tab" oder "ausblenden", um zu bestimmen, wie das Inhaltsfeld angezeigt wird, wenn überhaupt.';
+$_lang['setting_moregallery.use_rte_for_images'] = 'Rich-Text-Editor verwenden';
 $_lang['setting_moregallery.use_rte_for_images_desc'] = 'When enabled, the currently active rich text editor will be loaded into the Image Description field. We recommend using Redactor, but other editors are also supported.';
-$_lang['setting_moregallery.crops'] = 'Crops';
-$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/">full Crops documentation</a> for more information about syntax and functionality.';
+$_lang['setting_moregallery.crops'] = 'Ausschnitte';
+$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">full Crops documentation</a> for more information about syntax and functionality.';
 $_lang['setting_moregallery.single_image_url_param'] = 'Single Image URL Parameter';
 $_lang['setting_moregallery.single_image_url_param_desc'] = 'Used with the mgGetImages snippet, the single image url parameter determines whether a listing or single image is displayed. This URL parameter will contain the image ID and, if not found, it will send the user to the configured 404 page. ';
 $_lang['setting_moregallery.add_icon_to_toolbar'] = 'Add Icon to Toolbar';
@@ -127,7 +129,7 @@ $_lang['moregallery.mggettags.resource_desc'] = 'Specify a resource ID to get ta
 $_lang['moregallery.mggettags.sortby_desc'] = 'The field to sort by. Valid values: display, createdon';
 $_lang['moregallery.mggettags.sortdir_desc'] = 'The direction to sort tags by. This can be "asc" or "desc".';
 $_lang['moregallery.mggettags.tpl_desc'] = 'The name of a Chunk to load for templating tags.';
-$_lang['moregallery.mggettags.separator_desc'] = 'A string to separate tags with.';
+$_lang['moregallery.mggettags.separator_desc'] = 'Text, um Tags durch.';
 $_lang['moregallery.mggettags.wrappertpl_desc'] = 'When not empty, the specified Chunk will be used to wrap the entire output in.';
 $_lang['moregallery.mggettags.toplaceholder_desc'] = 'When not empty, the snippet will set a placeholder with the output and will not output content directly.';
 $_lang['moregallery.mggettags.totalvar_desc'] = 'Used for getPage pagination, set this to a placeholder to set for the total number of results.';

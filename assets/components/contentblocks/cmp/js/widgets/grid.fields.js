@@ -8,17 +8,22 @@ ContentBlocksComponent.grid.Fields = function(config) {
         expandOnEnter: false,
         expandOnDblClick: false
     });
+    config.parent = config.parent || 0;
+    config.parent_properties = config.parent_properties || [];
     Ext.applyIf(config,{
 		url: ContentBlocksComponent.config.connectorUrl,
 		id: 'contentblocks-grid-fields',
 		baseParams: {
-            action: 'mgr/fields/getlist'
+            action: 'mgr/fields/getlist',
+            parent: config.parent
         },
         autosave: true,
         save_action: 'mgr/fields/update_from_grid',
         emptyText: _('no_results'),
 		fields: [
             {name: 'id', type: 'int'},
+            {name: 'parent', type: 'int'},
+            {name: 'parent_properties', type: 'object'},
             {name: 'input', type: 'string'},
             {name: 'input_display', type: 'string'},
             {name: 'name', type: 'string'},
@@ -56,9 +61,9 @@ ContentBlocksComponent.grid.Fields = function(config) {
 			header: _('contentblocks.name'),
 			dataIndex: 'name',
 			sortable: true,
-			width: .3,
+			width: config.parent === 0 ? .3 : .15,
             renderer: function(v, cell, record) {
-                if (record.data.icon.length > 0) {
+                if (record.data.icon.length > 0 && config.parent === 0) {
                     var icon_type = (record.data.icon_type != '') ? record.data.icon_type : 'core',
                         icon_base_url = (icon_type == 'core') ? ContentBlocksComponent.config.assetsUrl + 'img/icons/' : ContentBlocksComponent.config.customIconUrl;
                     v = '<img class="contentblocks-icon" src="' + icon_base_url + record.data.icon + '.png" alt="' + record.data.icon + '" style=""> ' + v + ' <span class="contentblocks-id">(' + record.data.id + ')</span>';
@@ -88,7 +93,7 @@ ContentBlocksComponent.grid.Fields = function(config) {
             scope: this
         }, '->', {
             text: _('contentblocks.export_fields'),
-            handler: this.exportFields,
+            handler: this.exportAllFields,
             scope: this
         }, '-', {
             text: _('contentblocks.import_fields'),
@@ -100,33 +105,71 @@ ContentBlocksComponent.grid.Fields = function(config) {
 };
 Ext.extend(ContentBlocksComponent.grid.Fields,MODx.grid.Grid,{
     addField: function() {
-        var win = MODx.load({
+        var addWindow = {
             xtype: 'contentblocks-window-field',
+            parent: this.config.parent,
             listeners: {
                 success: {fn: function() {
                     this.refresh();
                 },scope: this},
                 scope: this
             }
-        });
+        };
+
+        // If the grid is showing subfields, enhance it with the parent properties and extra config options
+        if (this.config.parent !== 0) {
+            this.enhanceSubfieldWindow(addWindow);
+        }
+
+        var win = MODx.load(addWindow);
         win.show();
     },
 
     editField: function() {
-        var record = this.menu.record;
-        var win = MODx.load({
-            xtype: 'contentblocks-window-field',
-            record: record,
-            isUpdate: true,
-            listeners: {
-                success: {fn: function() {
-                    this.refresh();
-                },scope: this},
-                scope: this
-            }
-        });
+        var record = this.menu.record,
+            editWindow = {
+                xtype: 'contentblocks-window-field',
+                record: record,
+                isUpdate: true,
+                listeners: {
+                    success: {fn: function() {
+                        this.refresh();
+                    },scope: this},
+                    scope: this
+                }
+            };
+
+        // If the grid is showing subfields, enhance it with the parent properties and extra config options
+        if (this.config.parent !== 0) {
+            this.enhanceSubfieldWindow(editWindow);
+        }
+
+        var win = MODx.load(editWindow);
         win.setValues(record);
         win.show();
+    },
+
+    enhanceSubfieldWindow: function(window) {
+        window.parent = this.config.parent;
+        window.parent_name = this.config.parent_name;
+        // get the parent properties for the input type selected in this window
+        var id = this.config.id.substr(0, this.config.id.indexOf('-contentblocks-grid-fields')) + '-input',
+            inputSelect = Ext.getCmp(id);
+
+        if (inputSelect) {
+            // Get the selected record
+            var selectedValue = inputSelect.getValue(),
+                selectedIndex = inputSelect.store.find('value', selectedValue),
+                selectedRecord = inputSelect.getStore().getAt(selectedIndex);
+
+            // Found it? Then pass along the parent properties
+            if (selectedRecord) {
+                window.parent_properties = selectedRecord.data.parent_properties;
+            }
+        }
+        else {
+            if (console) console.error('Input not found with id ', id);
+        }
     },
 
     duplicateField: function() {
@@ -148,7 +191,6 @@ Ext.extend(ContentBlocksComponent.grid.Fields,MODx.grid.Grid,{
         win.setValues(record);
         win.show();
     },
-
 
     deleteField: function() {
         var record = this.menu.record;
@@ -180,6 +222,10 @@ Ext.extend(ContentBlocksComponent.grid.Fields,MODx.grid.Grid,{
             text: _('contentblocks.duplicate_field'),
             handler: this.duplicateField,
             scope: this
+        }, {
+            text: _('contentblocks.export_field'),
+            handler: this.exportField,
+            scope: this
         }, '-', {
             text: _('contentblocks.delete_field'),
             handler: this.deleteField,
@@ -188,10 +234,20 @@ Ext.extend(ContentBlocksComponent.grid.Fields,MODx.grid.Grid,{
         return m;
     },
 
-    exportFields: function() {
+    exportField: function() {
+        var record = this.menu.record;
+        window.location = ContentBlocksComponent.config.connectorUrl + '?action=mgr/fields/export&items=' + record.id + '&HTTP_MODAUTH=' + MODx.siteId;
+    },
+
+    exportAllFields: function() {
+        var that = this;
         Ext.Msg.confirm(_('contentblocks.export_fields'), _('contentblocks.export_fields.confirm'), function(e) {
             if (e == 'yes') {
-                window.location = ContentBlocksComponent.config.connectorUrl + '?action=mgr/fields/export&HTTP_MODAUTH=' + MODx.siteId;
+                var url = ContentBlocksComponent.config.connectorUrl + '?action=mgr/fields/export&HTTP_MODAUTH=' + MODx.siteId;
+                if (that.config.parent && that.config.parent > 0) {
+                    url = url + '&parent=' + that.config.parent;
+                }
+                window.location = url;
             }
         });
     },

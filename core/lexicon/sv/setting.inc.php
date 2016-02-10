@@ -51,7 +51,7 @@ $_lang['settings_after_install'] = 'Eftersom detta är en ny installation, måst
 $_lang['settings_desc'] = 'Här gör du allmänna inställningar och konfigurationer för användargränssnittet i MODX hanterare, samt för hur din MODX-webbplats fungerar. Dubbelklicka i värdekolumnen för den inställning som du vill redigera för att göra ändringarna dynamiskt i rutnätet eller högerklicka på en inställning för att se fler val. Du kan också klicka på plustecknet för att få en beskrivning av inställningen';
 $_lang['settings_furls'] = 'Vänliga URL:er';
 $_lang['settings_misc'] = 'Övrigt';
-$_lang['settings_site'] = 'Webbplatsen';
+$_lang['settings_site'] = 'Webbplats';
 $_lang['settings_ui'] = 'Gränssnitt &amp; funktioner';
 $_lang['settings_users'] = 'Användare';
 $_lang['system_settings'] = 'Systeminställningar';
@@ -94,6 +94,9 @@ $_lang['setting_allow_manager_login_forgot_password_desc'] = 'Om denna sätts ti
 
 $_lang['setting_allow_tags_in_post'] = 'Tillåt taggar i POST';
 $_lang['setting_allow_tags_in_post_desc'] = 'Om denna sätts till "Nej" kommer alla POST-händelser i hanteraren att rensas från HTML-taggar. MODX rekommenderar att denna lämnas satt till "Nej" för andra kontexter än mgr, där den är satt till "Ja" som standard.';
+
+$_lang['setting_anonymous_sessions'] = 'Anonyma sessioner';
+$_lang['setting_anonymous_sessions'] = 'Anonyma sessioner';
 
 $_lang['setting_archive_with'] = 'Tvinga användning av PCLZip-arkiv';
 $_lang['setting_archive_with_desc'] = 'Om denna sätts till "Ja" kommer PCLZip att användas för zip-filer istället för ZipArchive. Aktivera den här om du får extractTo-fel eller har problem med uppackning i pakethanteraren.';
@@ -308,6 +311,9 @@ $_lang['setting_friendly_alias_lowercase_only_desc'] = 'Anger om enbart gemena t
 $_lang['setting_friendly_alias_max_length'] = 'Maximal längd på FURL-alias';
 $_lang['setting_friendly_alias_max_length_desc'] = 'Om större än noll, det maximala antalet tecken som tillåts i ett resursalias. Noll är det samma som obegränsat.';
 
+$_lang['setting_friendly_alias_realtime'] = 'FURL-alias i realtid';
+$_lang['setting_friendly_alias_realtime_desc'] = 'Anger om ett resursalias ska skapas i farten när man skriver sidtiteln eller om det ska skapas när resursen sparas (automatic_alias måste vara aktiverat för att det här ska hända).';
+
 $_lang['setting_friendly_alias_restrict_chars'] = 'Metod för teckenbegränsning i FURL-alias';
 $_lang['setting_friendly_alias_restrict_chars_desc'] = 'Den metod som ska användas för att begränsa antalet tecken i ett resursalias. "pattern" tillåter att ett RegEx anges, "legal" tillåter bara giltiga tecken för URL:er, "alpha" tillåter bara bokstäver från alfabetet och "alphanumeric" tillåter bara bokstäver och siffror.';
 
@@ -405,6 +411,9 @@ $_lang['setting_mail_smtp_timeout_desc'] = 'Anger SMTP-serverns timeout i sekund
 $_lang['setting_mail_smtp_user'] = 'SMTP-användare';
 $_lang['setting_mail_smtp_user_desc'] = 'Användaren som ska autentiseras mot SMTP.';
 
+$_lang['setting_main_nav_parent'] = 'Huvudmenyns förälder';
+$_lang['setting_main_nav_parent_desc'] = 'Den behållare som används för att hämta alla uppgifter till huvudmenyn.';
+
 $_lang['setting_manager_direction'] = 'Textriktning i hanteraren';
 $_lang['setting_manager_direction_desc'] = 'Välj textriktning i hanteraren: antingen vänster-till-höger eller höger-till-vänster.';
 
@@ -450,11 +459,24 @@ $_lang['setting_manager_use_tabs_desc'] = 'Om denna aktiveras kommer hanteraren 
 $_lang['setting_manager_week_start'] = 'Veckostart';
 $_lang['setting_manager_week_start_desc'] = 'Ange den dag som inleder en vecka. Använd 0 (eller lämna tom) för söndag eller 1 för måndag och så vidare...';
 
+$_lang['setting_mgr_tree_icon_context'] = 'Ikon för kontextträd';
+$_lang['setting_mgr_tree_icon_context_desc'] = 'Ange en CSS-klass här som ska användas för att visa kontextikonen i trädet. Du kan använda den här inställningen för varje kontext för att anpassa ikonen per kontext.';
+
+$_lang['setting_mgr_source_icon'] = 'Ikon för mediakälla';
+$_lang['setting_mgr_source_icon_desc'] = 'Ange en CSS-klass som ska användas för att visa mediakällans ikoner i filträdet. Standard är "icon-folder-open-o".';
+
 $_lang['setting_modRequest.class'] = 'Anropshanterarens klass';
 $_lang['setting_modRequest.class_desc'] = '';
 
+$_lang['setting_modx_browser_tree_hide_files'] = 'Dölj filer i mediaträdet';
+$_lang['setting_modx_browser_tree_hide_files_desc'] = 'Om denna sätts till "Ja" kommer filer som ligger i mappar inte att visas i medialäsarens träd. Standard är "Nej".';
+
+$_lang['setting_modx_browser_tree_hide_tooltips'] = 'Dölj bildbubblor i mediaträdet';
+$_lang['setting_modx_browser_tree_hide_tooltips_desc'] = 'Om denna sätts till "Ja" kommer inte bilder att förhandsvisas i bildbubblor när man håller muspekaren över en fil i mediaträdet. Standard är "Ja".';
+
 $_lang['setting_modx_browser_default_sort'] = 'Standardsortering i filutforskare';
 $_lang['setting_modx_browser_default_sort_desc'] = 'Den sorteringsmetod som ska användas som standard när popup-filutforskaren används i hanteraren. Tillgängliga värden är: name (namn), size (storlek), lastmod (senast modifierad).';
+
 $_lang['setting_modx_browser_default_viewmode'] = 'Standardvisning i filhanteraren';
 $_lang['setting_modx_browser_default_viewmode_desc'] = 'Anger hur filer ska visas som standard i hanterarens popup-filhanterare. Tillgängliga val: rutnät, lista.';
 
@@ -490,6 +512,9 @@ $_lang['setting_proxy_port_desc'] = 'Porten för din proxyserver.';
 
 $_lang['setting_proxy_username'] = 'Användarnamn för proxy';
 $_lang['setting_proxy_username_desc'] = 'Användarnamnet som ska användas för att autentisera mot proxyservern.';
+
+$_lang['setting_photo_profile_source'] = 'Mediakälla för användarfoto';
+$_lang['setting_photo_profile_source_desc'] = 'Den mediakälla där användarnas profilbilder sparas. Om inget annat anges används standardmediakällan.';
 
 $_lang['setting_phpthumb_allow_src_above_docroot'] = 'Tillåt sökväg ovanför dokumentrot för phpThumb';
 $_lang['setting_phpthumb_allow_src_above_docroot_desc'] = 'Anger om det är tillåtet med sökvägar utanför dokumentroten. Det här är användbart vid multikontext-installationer med flera virtuella hostar.';
@@ -648,7 +673,7 @@ $_lang['setting_show_tv_categories_header_desc'] = 'Om denna sätts till "Ja" ko
 
 $_lang['setting_signupemail_message'] = 'Registreringsmeddelande';
 $_lang['setting_signupemail_message_desc'] = 'Här kan du ange det meddelande som skickas till användare när du skapar ett konto för dem och låta MODX skicka e-post till dom med deras användarnamn och lösenord.<br /><strong>Notera:</strong> Följande begrepp ersätts av innehållshanteraren när meddelandet sänds:<br /><br />[[+sname]] - Namnet på din webbplats<br />[[+saddr]] - Webbplatsens e-postadress<br />[[+surl]] - Webbplatsens adress<br />[[+uid]] - Användarens login eller ID<br />[[+pwd]] - Användarens lösenord<br />[[+ufn]] - Användarens namn<br /><br /><strong>Låt [[+uid]] och [[+pwd]] stå kvar i meddelandet, annars innehåller mailet inte användarnamn och lösenord, vilket gör att dina användare inte kan logga in!</strong>';
-$_lang['setting_signupemail_message_default'] = 'Hej [[+uid]] \\n\\nHär kommer dina inloggningsuppgifter för [[+sname]] ([[+surl]]) innehållshanterare:\\n\\nAnvändarnamn: [[+uid]]\\nLösenord: [[+pwd]]\\n\\nDu kan ändra ditt lösenord när du loggat in i innehållshanteraren.\\n\\nVänliga hälsningar\\nWebmastern';
+$_lang['setting_signupemail_message_default'] = 'Hej [[+uid]] \n\nHär kommer dina inloggningsuppgifter för [[+sname]] ([[+surl]]) innehållshanterare:\n\nAnvändarnamn: [[+uid]]\nLösenord: [[+pwd]]\n\nDu kan ändra ditt lösenord när du loggat in i innehållshanteraren.\n\nVänliga hälsningar\nWebmastern';
 
 $_lang['setting_site_name'] = 'Webbplatsens namn';
 $_lang['setting_site_name_desc'] = 'Skriv in namnet på din webbplats här.';
@@ -727,19 +752,25 @@ $_lang['setting_use_editor'] = 'Aktivera richtext-editor';
 $_lang['setting_use_editor_desc'] = 'Vill du aktivera en richtext-editor? Om du trivs bättre med att skriva HTML, kan du stänga av editorn genom att ändra denna inställning.<br /><strong>OBS: Denna inställning gäller för samtliga dokument och alla användare!</strong>';
 $_lang['setting_use_editor_err'] = 'Ange om du vill använda en RTE-editor eller inte.';
 
+$_lang['setting_use_frozen_parent_uris'] = 'Använd frysta föräldra-URI:er';
+$_lang['setting_use_frozen_parent_uris_desc'] = 'När den här är aktiverad blir URI:er för barnresurser realtiva till den frusna URI:n för deras föräldrar. Alias högre upp i trädet ignoreras.';
+
 $_lang['setting_use_multibyte'] = 'Använd multibyte-tillägget';
 $_lang['setting_use_multibyte_desc'] = 'Sätt till "Ja" om du vill använda mbstring-tillägget för multibyte-tecken i din MODX-installation. Sätt den till "Ja" endast om du har PHP-tillägget mbstring installerat.';
 
 $_lang['setting_use_weblink_target'] = 'Använd webblänkmål';
 $_lang['setting_use_weblink_target_desc'] = 'Om du aktiverar den här inställningen kommer länkar för webblänkresurser att renderas som målets URL istället för den interna MODX-URL:en. Det här gäller oavsett om du använder länktaggar eller API-metoden modX::makeUrl().';
 
+$_lang['setting_user_nav_parent'] = 'Användarmenyns förälder';
+$_lang['setting_user_nav_parent_desc'] = 'Den behållare som används för att hämta alla uppgifter till användarmenyn.';
+
 $_lang['setting_webpwdreminder_message'] = 'E-post för webbpåminnelse';
 $_lang['setting_webpwdreminder_message_desc'] = 'Skriv ett meddelande som skickas till dina webbanvändare när de begärt ett nytt lösenord via e-post. Innehållshanteraren kommer att skicka ett e-postmeddelande med deras nya lösenord och aktiveringsinformation.<br /><strong>Notera:</strong> Följande platshållare ersätts av innehållshanteraren när ett meddelande skickas:<br /><br />[[+sname]] - Namnet på din webbplats<br />[[+saddr]] - E-postadressen till din webbplats<br />[[+surl]] - Adressen till din webbplats<br />[[+uid]] - Användarens inloggningsnamn eller ID<br />[[+pwd]] - Användarens lösenord<br />[[+ufn]] - Användarens namn<br /><br /><b>Lämna [[+uid]] och [[+pwd]] i meddelandet, annars får inte mottagaren av e-posten reda på sitt nya användarnamn och lösenord!</b>';
-$_lang['setting_webpwdreminder_message_default'] = 'Hej [[+uid]]\\n\\nKlicka på följande länk för att aktivera ditt nya lösenord:\\n\\n[[+surl]]\\n\\nOm allt går bra använder du följande lösenord för att logga in:\\n\\nLösenord:[[+pwd]]\\n\\nOm du inte har bett om det här brevet så kan du strunta i det.\\n\\nVänliga hälsningar\\nWebmastern';
+$_lang['setting_webpwdreminder_message_default'] = 'Hej [[+uid]]\n\nKlicka på följande länk för att aktivera ditt nya lösenord:\n\n[[+surl]]\n\nOm allt går bra använder du följande lösenord för att logga in:\n\nLösenord:[[+pwd]]\n\nOm du inte har bett om det här brevet så kan du strunta i det.\n\nVänliga hälsningar\nWebmastern';
 
 $_lang['setting_websignupemail_message'] = 'E-post för webbregistreringar';
 $_lang['setting_websignupemail_message_desc'] = 'Här kan du ange det meddelande som skickas till dina webbanvändare när du skapar ett webbkonto för dem, och låter innehållshanteraren skicka ett e-postmeddelande med användarnamn och lösenord.<br /><strong>Notera:</strong> Följande platshållare ersätts av innehållshanteraren när meddelandet skickas:<br /><br />[[+sname]] - Namnet på din webbplats<br />[[+saddr]] - E-postadressen till din webbplats<br />[[+surl]] - Adressen till din webbplats<br />[[+uid]] - Användarens inloggningsnamn eller ID<br />[[+pwd]] - Användarens lösenord<br />[[+ufn]] - Användarens namn<br /><br /><strong>Lämna [[+uid]] och [[+pwd]] i meddelandet, annars får inte mottagaren av e-posten reda på sitt användarnamn och lösenord!</strong>';
-$_lang['setting_websignupemail_message_default'] = 'Hej [[+uid]] \\n\\nHär kommer dina inloggningsuppgifter för [[+sname]] ([[+surl]]):\\n\\nAnvändarnamn: [[+uid]]\\nLösenord: [[+pwd]]\\n\\nDu kan ändra ditt lösenord när du loggat in i [[+sname]].\\n\\nVänliga hälsningar\\nWebmastern';
+$_lang['setting_websignupemail_message_default'] = 'Hej [[+uid]] \n\nHär kommer dina inloggningsuppgifter för [[+sname]] ([[+surl]]):\n\nAnvändarnamn: [[+uid]]\nLösenord: [[+pwd]]\n\nDu kan ändra ditt lösenord när du loggat in i [[+sname]].\n\nVänliga hälsningar\nWebmastern';
 
 $_lang['setting_welcome_screen'] = 'Visa välkomstmeddelande';
 $_lang['setting_welcome_screen_desc'] = 'Om denna sätts till "Ja" kommer ett välkomstmeddelande att visas vid nästa laddning av välkomstsidan och sedan inte visas mer efter det.';
@@ -767,3 +798,9 @@ $_lang['setting_default_context_desc'] = 'Ange den kontext som du vill använda 
 
 $_lang['setting_auto_isfolder'] = 'Sätt som behållare automatiskt';
 $_lang['setting_auto_isfolder_desc'] = 'Om denna sätts till "Ja" kommer behållarinställningen att ändras automatiskt.';
+
+$_lang['setting_default_username'] = 'Standardanvändarnamn';
+$_lang['setting_default_username_desc'] = 'Användarnamn för en oautentiserad användare.';
+
+$_lang['setting_manager_use_fullname'] = 'Visa fullständigt namn i hanterarens sidhuvud ';
+$_lang['setting_manager_use_fullname_desc'] = 'Om denna sätts till "Ja" kommer användarens fullständiga namn att visas i hanteraren istället för användarnamnet.';

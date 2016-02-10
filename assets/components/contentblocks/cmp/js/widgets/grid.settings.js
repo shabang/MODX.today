@@ -110,6 +110,7 @@ Ext.extend(ContentBlocksComponent.grid.Settings,MODx.grid.LocalGrid,{
                     rec.set('title',r.title);
                     rec.set('default_value',r.default_value);
                     rec.set('field_is_exposed',r.field_is_exposed);
+                    rec.set('limit_to_current_context',r.limit_to_current_context);
                     rec.set('process_tags',r.process_tags);
                     this.getView().refresh();
                 },scope: this},

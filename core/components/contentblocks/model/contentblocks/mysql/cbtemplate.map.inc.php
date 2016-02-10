@@ -8,8 +8,8 @@ $xpdo_meta_map['cbTemplate']= array (
     'name' => NULL,
     'description' => NULL,
     'sortorder' => 0,
-    'icon' => NULL,
-    'icon_type' => NULL,
+    'icon' => '',
+    'icon_type' => 'core',
     'content' => NULL,
     'availability' => NULL,
   ),
@@ -43,6 +43,7 @@ $xpdo_meta_map['cbTemplate']= array (
       'precision' => '255',
       'phptype' => 'string',
       'null' => false,
+      'default' => '',
     ),
     'icon_type' => 
     array (
@@ -50,6 +51,7 @@ $xpdo_meta_map['cbTemplate']= array (
       'precision' => '255',
       'phptype' => 'string',
       'null' => false,
+      'default' => 'core',
     ),
     'content' => 
     array (
@@ -62,6 +64,41 @@ $xpdo_meta_map['cbTemplate']= array (
       'dbtype' => 'text',
       'phptype' => 'string',
       'null' => true,
+    ),
+  ),
+  'indexes' => 
+  array (
+    'name' => 
+    array (
+      'alias' => 'name',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'name' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'sortorder' => 
+    array (
+      'alias' => 'sortorder',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'sortorder' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
     ),
   ),
 );

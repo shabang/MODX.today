@@ -1,4 +1,4 @@
-<div class="contentblocks-field contentblocks-field-textarea">
+<div class="contentblocks-field contentblocks-field-textarea contentblocks-field-richtext">
     <div class="contentblocks-field-actions"></div>
 
     <label for="{%=o.generated_id%}_textarea">{%=o.name%}</label>

@@ -4,96 +4,98 @@
  * Last updated: 2013-10-30
  */
 
-$_lang['moregallery'] = 'MoreGallery';
-$_lang['moregallery.new'] = 'New Gallery';
-$_lang['moregallery.new_description'] = 'Create a new Gallery that lets you upload images.';
-$_lang['moregallery.name'] = 'Gallery';
-$_lang['moregallery.name_here'] = 'Create a Gallery Here';
-$_lang['moregallery.please_save_first'] = 'In order to start adding images, please save the Gallery first. After saving the Gallery, you can upload images here.';
+$_lang['moregallery'] = 'Galeria MoreGallery';
+$_lang['moregallery.new'] = 'Nowy dokument z galerią';
+$_lang['moregallery.new_description'] = 'Utwórz nową galerię aby móc wgrywać zdjęcia';
+$_lang['moregallery.name'] = 'Dokument z galerią';
+$_lang['moregallery.name_here'] = 'Utwórz nowy dokument z galerią';
+$_lang['moregallery.please_save_first'] = 'Zapisz nowy dokument, aby móc wgrać zdjęcia do galerii';
 
 
 
-$_lang['moregallery.inherit'] = 'Inherit';
-$_lang['moregallery.inherit.desc'] = 'Use the system defaults.';
-$_lang['moregallery.source'] = 'Media Source';
-$_lang['moregallery.source.desc'] = 'The media source to store images in. <b>Note:</b> When changing this after uploading, uploaded images will NOT be moved to their new source automatically; please do this yourself.';
-$_lang['moregallery.relative_url'] = 'Relative URL';
-$_lang['moregallery.relative_url.desc'] = 'The relative URL to store images in for the media source. Don\'t start with a slash. <b>Note:</b> When changing this after uploading, uploaded images will NOT be moved to their new location automatically; please do this yourself.';
-$_lang['moregallery.content_position'] = 'Content Position';
-$_lang['moregallery.content_position.desc'] = 'Moves the Resource Content field to a different, more convenient location.';
+$_lang['moregallery.inherit'] = 'Odziedzicz (użyj domyślnych)';
+$_lang['moregallery.inherit.desc'] = 'Użyj domyślnych ustawień systemowych.';
+$_lang['moregallery.source'] = 'Źródło plików';
+$_lang['moregallery.source.desc'] = 'Źródło plików do przechowywania obrazów. <b>Uwaga:</b> Po zmianie źródła plików wcześniej wgrane obrazy nie zostaną automatycznie przeniesione - prosimy zrobić to ręcznie';
+$_lang['moregallery.relative_url'] = 'Relatywny URL';
+$_lang['moregallery.relative_url.desc'] = 'Relatywny URL do przechowywania obrazów w źródle plików. Ścieżka nie może zaczynać od ukośnika (/).';
+$_lang['moregallery.content_position'] = 'Położenie treści';
+$_lang['moregallery.content_position.desc'] = 'Przenosi edycję dokumentu do oddzielnej zakładki.';
 
-$_lang['moregallery.content_position.above'] = 'Above Images';
-$_lang['moregallery.content_position.below'] = 'Below Images';
-$_lang['moregallery.content_position.tab'] = 'In Content Tab';
-$_lang['moregallery.content_position.hide'] = 'Hide';
+$_lang['moregallery.content_position.above'] = 'Powyżej obrazów';
+$_lang['moregallery.content_position.below'] = 'Poniżej obrazów';
+$_lang['moregallery.content_position.tab'] = 'Jako zakładka';
+$_lang['moregallery.content_position.hide'] = 'Ukryj';
 
-$_lang['moregallery.view_full_size_image'] = 'View full-size image';
-$_lang['moregallery.delete_image'] = 'Delete image';
-$_lang['moregallery.deactivate_image'] = 'Hide image from the Gallery';
-$_lang['moregallery.activate_image'] = 'Mark image as visible';
-$_lang['moregallery.upload_image'] = 'Upload Images to the Gallery';
-$_lang['moregallery.upload'] = 'Upload';
-$_lang['moregallery.import_image'] = 'Import Images from other Sources';
-$_lang['moregallery.import'] = 'Import';
-$_lang['moregallery.refresh'] = 'Refresh';
-$_lang['moregallery.drop_to_upload'] = 'Drop Images to upload them to the Gallery';
-$_lang['moregallery.images_count'] = 'images';
-$_lang['moregallery.edit_image_header'] = 'Edit Image';
-$_lang['moregallery.name_field'] = 'Name';
-$_lang['moregallery.description'] = 'Description';
-$_lang['moregallery.url'] = 'Link (or Resource ID)';
-$_lang['moregallery.save'] = 'Save';
-$_lang['moregallery.saving'] = 'Saving..';
-$_lang['moregallery.saved_at'] = 'Saved (at [[+time]])';
-$_lang['moregallery.confirm_remove'] = 'Are you sure you want to remove "[[+name]]"? The image will be removed from the server.';
-$_lang['moregallery.preupload_very_big'] = 'The file "[[+file]]" is very big. Uploading could take some time, and the server may not have enough memory to process it once uploaded. Are you sure you want to continue?';
-$_lang['moregallery.upload_error'] = 'Uh oh, an error occurred trying to upload [[+file]]: [[+message]]';
-$_lang['moregallery.upload_error_huge'] = 'The uploaded image was over [[+size]]MB in size, which may have been too much for the server to upload and process. Try resizing the image before uploading.';
-$_lang['moregallery.model_error'] = 'An unexpected error occurred, the image model could not be found. Try refreshing the page.';
+$_lang['moregallery.view_full_size_image'] = 'Pokaż obraz w pełnych rozmiarach';
+$_lang['moregallery.delete_image'] = 'Usuń obraz';
+$_lang['moregallery.deactivate_image'] = 'Ukryj obraz z galerii';
+$_lang['moregallery.activate_image'] = 'Zaznacz obraz jako widoczny';
+$_lang['moregallery.upload_image'] = 'Wgraj obrazy do galerii';
+$_lang['moregallery.upload'] = 'Wgraj';
+$_lang['moregallery.import_image'] = 'Importuj obrazy z innych źródeł';
+$_lang['moregallery.import'] = 'Importuj';
+$_lang['moregallery.refresh'] = 'Odśwież';
+$_lang['moregallery.drop_to_upload'] = 'Przeciągnij tu obrazy aby wgrać je do galerii';
+$_lang['moregallery.images_count'] = 'obrazy/obrazów';
+$_lang['moregallery.edit_image_header'] = 'Edytuj obraz';
+$_lang['moregallery.name_field'] = 'Nazwa';
+$_lang['moregallery.description'] = 'Opis';
+$_lang['moregallery.url'] = 'Odnośnik (lub Id)';
+$_lang['moregallery.save'] = 'Zapisz';
+$_lang['moregallery.saving'] = 'Zapisywanie..';
+$_lang['moregallery.saved_at'] = 'Zapisane (w ciągu [[+time]])';
+$_lang['moregallery.confirm_remove'] = 'Czy na pewno chcesz usunąć "[[+name]]"? Obraz zostanie usunięty z serwera';
+$_lang['moregallery.preupload_very_big'] = 'Plik "[[+file]]" jest bardzo duży. Wgrywanie może zając dużo czasu oraz serwer może nie mieć wystarczającej ilości pamięci aby obsłużyć proces. Czy na pewno chcesz kontynuować?';
+$_lang['moregallery.upload_error'] = 'Podczas wgrywania pliku [[+file]] pojawił się błąd: [[+message]]';
+$_lang['moregallery.upload_error_huge'] = 'Wgrywany obraz przekracza rozmiar [[+size]]MB. Zmniejsz obraz przed wgrywaniem';
+$_lang['moregallery.model_error'] = 'Nieznany błąd. Nie można załadować modelu obrazu. Spróbuj odświeżyć stronę. ';
 
-$_lang['moregallery.error_invalid_resource'] = 'An unexpected error occurred, resource "[[+resource]]" is not a valid Gallery.';
-$_lang['moregallery.error_loading_source'] = 'An error occurred loading the Media Source for this Gallery.';
+$_lang['moregallery.error_invalid_resource'] = 'Pojawił się nieoczekiwany błąd. Dokument "[[+resource]]" nie jest Dokumentem z galerią';
+$_lang['moregallery.error_loading_source'] = 'Pojawił się błąd podczas ładowania Źródła plików dla tego zasobu';
+$_lang['moregallery.error_invalid_filetype'] = 'Sorry, .[[+extension]] files are not allowed.';
+$_lang['moregallery.error_upload_failed'] = 'the file could not be uploaded (Error [[+error]]).';
 
 // Tags related, for MoreGallery 1.1
-$_lang['moregallery.tags'] = 'Tags';
-$_lang['moregallery.tags.add'] = 'Add';
+$_lang['moregallery.tags'] = 'Tagi';
+$_lang['moregallery.tags.add'] = 'Dodaj';
 // Imports, also new in 1.1
-$_lang['moregallery.file_doesnt_exist'] = 'The file to be imported does not seem to exist or is not readable: [[+file]]';
-$_lang['moregallery.edit_crop'] = 'Edit Crop';
-$_lang['moregallery.save_crop'] = 'Save Crop';
-$_lang['moregallery.preview_crop'] = 'Preview crop';
-$_lang['moregallery.processing_crop'] = 'Processing...';
+$_lang['moregallery.file_doesnt_exist'] = 'Plik "[[+file]]" nie istnieje lub nie da się go odczytać';
+$_lang['moregallery.edit_crop'] = 'Edytuj kadr';
+$_lang['moregallery.save_crop'] = 'Zapisz kadr';
+$_lang['moregallery.preview_crop'] = 'Podgląd kadru';
+$_lang['moregallery.processing_crop'] = 'Przetwarzanie...';
 
 /**
  * Settings
  */
-$_lang['setting_moregallery.source_relative_url'] = 'Source Relative URL';
-$_lang['setting_moregallery.source_relative_url_desc'] = 'The URL relative to the root of the selected media source to upload images to. Can be overridden per Gallery resource on its Settings tab.';
+$_lang['setting_moregallery.source_relative_url'] = 'URL w obrębie źródła plików';
+$_lang['setting_moregallery.source_relative_url_desc'] = 'Ścieżka w obrębie źródła plików zasobu, do której mają być wgrywane pliki.  Wartość ta może być nadpisana w dokumencie galerii w zakładc e ustawienia.';
 
-$_lang['setting_moregallery.source'] = 'Media Source';
-$_lang['setting_moregallery.source_desc'] = 'Choose a Media Source to upload images to. Can be overridden per Gallery resource on its Settings tab.';
+$_lang['setting_moregallery.source'] = 'Źródło plików';
+$_lang['setting_moregallery.source_desc'] = 'Wybierz źródło plików gdzie mają być wgrywane obrazy. Ustawienie może być zmieniane dla każdego dokumentu w zakładce Ustawienia';
 
-$_lang['setting_moregallery.image_id_in_name'] = 'Image ID in Filename';
-$_lang['setting_moregallery.image_id_in_name_desc'] = 'Set to either "prefix" or "suffix" to add the image ID to the file name on upload. This ensures the filename is unique.';
-$_lang['setting_moregallery.resource_id_in_path'] = 'Resource ID in Path';
-$_lang['setting_moregallery.resource_id_in_path_desc'] = 'When enabled, the Gallery Resource ID will be suffixed to the Source Relative URL so each gallery has its own directory.';
-$_lang['setting_moregallery.content_position'] = 'Content Position';
-$_lang['setting_moregallery.content_position_desc'] = 'Set to "above", "below", "tab" or "hide" to determine how the Content field will be displayed, if at all.';
-$_lang['setting_moregallery.use_rte_for_images'] = 'Use Rich Text Editor';
-$_lang['setting_moregallery.use_rte_for_images_desc'] = 'When enabled, the currently active rich text editor will be loaded into the Image Description field. We recommend using Redactor, but other editors are also supported.';
-$_lang['setting_moregallery.crops'] = 'Crops';
-$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/">full Crops documentation</a> for more information about syntax and functionality.';
-$_lang['setting_moregallery.single_image_url_param'] = 'Single Image URL Parameter';
-$_lang['setting_moregallery.single_image_url_param_desc'] = 'Used with the mgGetImages snippet, the single image url parameter determines whether a listing or single image is displayed. This URL parameter will contain the image ID and, if not found, it will send the user to the configured 404 page. ';
-$_lang['setting_moregallery.add_icon_to_toolbar'] = 'Add Icon to Toolbar';
-$_lang['setting_moregallery.add_icon_to_toolbar_desc'] = 'When enabled, a "New Gallery" icon will be added to resource toolbar providing quick access to create new Galleries.';
+$_lang['setting_moregallery.image_id_in_name'] = 'ID obrazu w nazwie pliku';
+$_lang['setting_moregallery.image_id_in_name_desc'] = 'Ustaw gdzie ma być dodane ID w nazwie pliku podczas wgrywania (wartość "prefix" lub "suffix"). Dzięki temu nazwa pliku będzie unikalna';
+$_lang['setting_moregallery.resource_id_in_path'] = 'ID dokumentu w ścieżce';
+$_lang['setting_moregallery.resource_id_in_path_desc'] = 'Gdy aktywne, ID dokumentu będzie dodane do URL w obrębie źródła plików';
+$_lang['setting_moregallery.content_position'] = 'Pozycja treści w panelu';
+$_lang['setting_moregallery.content_position_desc'] = 'Ustaw "above", "below", "tab" lub "hide" aby zdefiniowac jak ma być wyświetlana treść';
+$_lang['setting_moregallery.use_rte_for_images'] = 'Użyj edytora RTE';
+$_lang['setting_moregallery.use_rte_for_images_desc'] = 'Aktywuje edytor RTE w polu opis obrazu';
+$_lang['setting_moregallery.crops'] = 'Kadrowanie';
+$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">full Crops documentation</a> for more information about syntax and functionality.';
+$_lang['setting_moregallery.single_image_url_param'] = 'Parametr URL pojedynczego obrazu ';
+$_lang['setting_moregallery.single_image_url_param_desc'] = 'Parametr używany ze snippetem mgGetImages. Określa czy jest wyświetlana lista, czy pojedynczy obraz. Parametr URL będzie zawierał ID obrazu i jeśli nie zostanie odnaleziony,. użytkownik będzie przeniesiony do strony 404';
+$_lang['setting_moregallery.add_icon_to_toolbar'] = 'Dodaj ikonę na pasku narzędzi';
+$_lang['setting_moregallery.add_icon_to_toolbar_desc'] = 'Gdy aktywne, w pasku narzędzi (lewe menu ) zostanie dodana ikona Nowy dokument z galerią';
 
-$_lang['setting_moregallery.sanitize_replace'] = 'Sanitize Replacement';
-$_lang['setting_moregallery.sanitize_replace_desc'] = 'Any characters in the uploaded filenames that do not match the sanitize pattern will be replaced with this character.';
-$_lang['setting_moregallery.sanitize_pattern'] = 'Sanitize Pattern';
-$_lang['setting_moregallery.sanitize_pattern_desc'] = 'A RegEx pattern for cleaning up filenames on upload.';
-$_lang['setting_mgr_tree_icon_mgresource'] = 'Gallery Tree Icon';
-$_lang['setting_mgr_tree_icon_mgresource_desc'] = 'The Font Awesome icon class to add to MoreGallery Resources in the file tree. ';
+$_lang['setting_moregallery.sanitize_replace'] = 'Znak transliteracji';
+$_lang['setting_moregallery.sanitize_replace_desc'] = 'Niedozwolone znaki w nazwach plików zostaną zastąpione tym znakiem';
+$_lang['setting_moregallery.sanitize_pattern'] = 'Wzór transliteracji';
+$_lang['setting_moregallery.sanitize_pattern_desc'] = 'Wzór RegEx do zmiany nazw plików przy wgrywaniu';
+$_lang['setting_mgr_tree_icon_mgresource'] = 'Ikonka galerii w drzewie plików';
+$_lang['setting_mgr_tree_icon_mgresource_desc'] = 'Klasa ikony Font Awesome dodawana w drzewie plików przed folderem galerii ';
 
 /**
  * Snippet properties

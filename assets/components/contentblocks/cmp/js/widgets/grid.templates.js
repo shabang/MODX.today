@@ -67,7 +67,7 @@ ContentBlocksComponent.grid.Templates = function (config) {
             '->',
             {
                 text: _('contentblocks.export_templates'),
-                handler: this.exportTemplates,
+                handler: this.exportAllTemplates,
                 scope: this
             },
             '-',
@@ -162,6 +162,10 @@ Ext.extend(ContentBlocksComponent.grid.Templates, MODx.grid.Grid, {
             text: _('contentblocks.duplicate_template'),
             handler: this.duplicateTemplate,
             scope: this
+        }, {
+            text: _('contentblocks.export_template'),
+            handler: this.exportTemplate,
+            scope: this
         }, '-', {
             text: _('contentblocks.delete_template'),
             handler: this.deleteTemplate,
@@ -170,7 +174,12 @@ Ext.extend(ContentBlocksComponent.grid.Templates, MODx.grid.Grid, {
         return m;
     },
 
-    exportTemplates: function () {
+    exportTemplate: function() {
+        var record = this.menu.record;
+        window.location = ContentBlocksComponent.config.connectorUrl + '?action=mgr/templates/export&items=' + record.id + '&HTTP_MODAUTH=' + MODx.siteId;
+    },
+
+    exportAllTemplates: function () {
         Ext.Msg.confirm(_('contentblocks.export_templates'), _('contentblocks.export_templates.confirm'), function (e) {
             if (e == 'yes') {
                 window.location = ContentBlocksComponent.config.connectorUrl + '?action=mgr/templates/export&HTTP_MODAUTH=' + MODx.siteId;

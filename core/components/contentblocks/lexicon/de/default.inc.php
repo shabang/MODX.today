@@ -16,15 +16,17 @@ $_lang['contentblocks.link.email'] = "E-Mail-Adresse";
 $_lang['contentblocks.link.link_new_tab'] = "In neuem Tab öffnen";
 $_lang['contentblocks.link.add'] = "Link hinzufügen";
 $_lang['contentblocks.link.remove'] = "Link entfernen";
-$_lang['contentblocks.link.placeholder'] = "Start typing the name of a resource, external link or email address";
+$_lang['contentblocks.link.placeholder'] = "Fangen Sie an den Namen einer Ressource, externen Links oder e-Mail-Adresse einzugeben";
 $_lang['contentblocks.link.link_detection_pattern_override'] = 'Link-Erkennungsmuster überschreiben';
 $_lang['contentblocks.link.link_detection_pattern_override.description'] = 'Regex um festzustellen, ob ein Link gültig ist; falls nicht, wird http:// vorangestellt.';
+$_lang['contentblocks.link.limit_to_current_context'] = 'Ressource-Ergebnisse auf aktuellen Kontext limitieren';
+$_lang['contentblocks.link.limit_to_current_context.description'] = 'Beschränkt die Typeahead Ergebnisse auf Ressourcen, die sich im gleichen Kontext befinden';
 
 $_lang['setting_contentblocks.link.link_detection_pattern'] = 'Link-Erkennungs-Muster';
 $_lang['setting_contentblocks.link.link_detection_pattern_desc'] = 'Regex um festzustellen, ob ein Link gültig ist; falls nicht, wird http:// vorangestellt.';
 
 $_lang['setting_contentblocks.typeahead.include_introtext'] = 'Introtext in Typeahead aufnehmen';
-$_lang['setting_contentblocks.typeahead.include_introtext_desc'] = 'When enabled, the typeahead will include the introtext for each of the resources, providing you with more information about the resource.';
+$_lang['setting_contentblocks.typeahead.include_introtext_desc'] = 'Wenn aktiviert, wird typeahead die Introtexte für jede der Ressourcen einbinden, um Ihnen mehr Informationen zu der Ressource bereitzustellen.';
 
 $_lang['contentblocks.error.not_an_export'] = "Diese Datei scheint kein ContentBlocks-Export zu sein";
 $_lang['contentblocks.error.importing_row'] = "Fehler beim Import der Zeile: ";
@@ -74,6 +76,7 @@ $_lang['contentblocks.duplicate_field'] = "Feld duplizieren";
 $_lang['contentblocks.delete_field'] = "Feld löschen";
 $_lang['contentblocks.delete_field.confirm'] = "Sind Sie sicher, dass Sie dieses Feld löschen möchten? Es können unschöne Dinge mit Inhalten passieren, die dieses Feld noch verwenden! ";
 $_lang['contentblocks.delete_field.confirm.js'] = "Sind Sie sicher, dass Sie dieses Feld löschen möchten?";
+$_lang['contentblocks.export_field'] = "Feld exportieren";
 $_lang['contentblocks.export_fields'] = "Exportieren";
 $_lang['contentblocks.export_fields.confirm'] = "Wenn Sie unten Ja klicken, wird ein XML-Export aller Felder erzeugt. Dieser kann dazu genutzt werden, Felder später oder in einer anderen Installation wieder importieren zu können. Die Generierung kann abhängig von der Anzahl der konfigurierten Felder ein paar Sekunden in Anspruch nehmen.";
 $_lang['contentblocks.import_fields'] = "Importieren";
@@ -85,6 +88,7 @@ $_lang['contentblocks.add_layout'] = "Layout hinzufügen";
 $_lang['contentblocks.repeat_layout'] = "Layout wiederholen";
 $_lang['contentblocks.edit_layout'] = "Layout bearbeiten";
 $_lang['contentblocks.duplicate_layout'] = "Layout duplizieren";
+$_lang['contentblocks.export_layout'] = "Layout exportieren";
 $_lang['contentblocks.delete_layout'] = "Layout löschen";
 $_lang['contentblocks.delete_layout.confirm'] = "Sind Sie sichder, dass dieses Layout gelöscht werden soll? Es können unschöne Dinge mit Inhalten passieren, die dieses Layout noch verwenden! ";
 $_lang['contentblocks.delete_layout.confirm.js'] = "Sind Sie sicher, dass dieses Layout [[+layoutName]] gelöscht werden soll? Auch sein Inhalt wird gelöscht, wenn Sie fortfahren.";
@@ -110,17 +114,17 @@ $_lang['contentblocks.delete_setting'] = "Einstellung löschen";
 $_lang['contentblocks.delete_setting.confirm'] = "Sind Sie sicher, dass diese Einstellung gelöscht werden soll?";
 
 $_lang['contentblocks.defaults'] = 'Standardwerte';
-$_lang['contentblocks.defaults.intro'] = 'With Defaults, you can configure how resources that have not yet been edited with ContentBlocks (such as new resources, or pages that existed prior to installing ContentBlocks) are managed. This works by parsing the defined Default Rules defined below, from top to bottom, until a match is found and it inserts the defined template.';
-$_lang['contentblocks.constraint_field'] = 'Constraint Field';
-$_lang['contentblocks.constraint_value'] = 'Constraint Value';
+$_lang['contentblocks.defaults.intro'] = 'Mit Standardwerten können Sie festlegen, wie die Ressourcen, die noch nicht mit ContentBlocks (wie beispielsweise neue Ressourcen, oder Seiten, die vor der Installation von ContentBlocks bestanden) bearbeitet wurden, verwaltet werden. Dies funktioniert durch von oben nach unten durchlaufen der definierten Standardregeln welche unten definiert sind, bis eine Übereinstimmung gefunden wird und das definierte Template einfügt wird.';
+$_lang['contentblocks.constraint_field'] = 'Einschränkung-Feld';
+$_lang['contentblocks.constraint_value'] = 'Einschränkungswert';
 $_lang['contentblocks.default_template'] = 'Standard Template';
 $_lang['contentblocks.target_layout'] = 'Ziel-Layout';
 $_lang['contentblocks.target_field'] = 'Zielfeld';
 $_lang['contentblocks.target_column'] = 'Zielspalte';
 $_lang['contentblocks.add_default'] = 'Standardregel hinzufügen';
-$_lang['contentblocks.edit_default'] = 'Edit Default Rule';
+$_lang['contentblocks.edit_default'] = 'Standardregel bearbeiten';
 $_lang['contentblocks.delete_default'] = 'Standard-Regel löschen';
-$_lang['contentblocks.delete_default.confirm'] = 'Are you sure you want to delete this Default Rule?';
+$_lang['contentblocks.delete_default.confirm'] = 'Sind Sie sicher, dass Sie diese Default-Regel löschen möchten?';
 
 
 $_lang['contentblocks.start_import'] = "Import starten";
@@ -153,11 +157,14 @@ $_lang['contentblocks.description'] = "Beschreibung";
 $_lang['contentblocks.template'] = "Template";
 $_lang['contentblocks.template.description'] = "Im Layout-Template können verschiedene Platzhalter genutzt werden, abhängig von den Spalten und Einstellungen, die Sie über die Tabs links konfiguriert haben. ";
 $_lang['contentblocks.width'] = "Breite";
+$_lang['contentblocks.width.description'] = "Die Breite des Feldes (in Prozent), die dieses Feld in die Bühne verwendet. Felder sind \"floated left\", sodass Sie grundlegende Layouts mit dieser Option erstellen können.";
 $_lang['contentblocks.save'] = "Speichern";
 $_lang['contentblocks.reference'] = "Referenz";
 $_lang['contentblocks.default_value'] = "Standard-Wert";
 $_lang['contentblocks.fieldtype'] = "Feld-Typ";
 $_lang['contentblocks.fieldtype.select'] = "Auswahlfeld";
+$_lang['contentblocks.fieldtype.radio'] = "Radio-Optionen";
+$_lang['contentblocks.fieldtype.checkbox'] = "CheckBox-Optionen";
 $_lang['contentblocks.fieldtype.textfield'] = "Textfeld";
 $_lang['contentblocks.fieldtype.link'] = "Link";
 $_lang['contentblocks.fieldtype.textarea'] = "Mehrzeiliges Textfeld";
@@ -181,6 +188,7 @@ $_lang['contentblocks.templates_desc'] = 'Templates sind vordefinierte Sets von 
 $_lang['contentblocks.add_template'] = 'Template hinzufügen';
 $_lang['contentblocks.edit_template'] = 'Template bearbeiten';
 $_lang['contentblocks.duplicate_template'] = 'Template duplizieren';
+$_lang['contentblocks.export_template'] = 'Template exportieren';
 $_lang['contentblocks.export_templates'] = 'Template exportieren';
 $_lang['contentblocks.import_templates'] = 'Templates importieren';
 $_lang['contentblocks.import_templates.title'] = 'Templates importieren';
@@ -194,7 +202,7 @@ $_lang['contentblocks.chunk'] = "Chunk";
 $_lang['contentblocks.chunk.description'] = "Fügt dem Inhalt einen bestimmten Chunk hinzu.";
 $_lang['contentblocks.chunk.choose_chunk'] = "Chunk wählen";
 $_lang['contentblocks.chunk.choose_chunk.description'] = "Wählen Sie den Chunk der hinzugefügt werden soll.";
-$_lang['contentblocks.chunk_template.description'] = "A template for the chunk. Available placeholders: <code>[[+tag]]</code>, <code>[[+chunk_name]]</code>";
+$_lang['contentblocks.chunk_template.description'] = "Vorlage für einen Chunk. Verfügbaren Platzhalter: <code>[[+tag]]</code>, <code>[[+chunk_name]]</code>";
 $_lang['contentblocks.chunk.custom_preview'] = "Angepasste Vorschau";
 $_lang['contentblocks.chunk.custom_preview.description'] = "Wenn dieses Feld leer ist, wird der eigentliche Chunk als Vorschau im Manager angezeigt. Alternativ können Sie hier auch eigenen HTML-Code angeben, der zur Vorschau im Manager verwendet werden soll. ";
 $_lang['contentblocks.chunk.no_chunk_set'] = "Hoppla... Für dieses Feld wurde kein Chunk angegeben.";
@@ -219,14 +227,14 @@ $_lang['contentblocks.code.entities'] = "Entities kodieren?";
 $_lang['contentblocks.code.entities.description'] = "Falls aktiviert wird der eingegebene Code und MODX tags umgeschrieben, sodass er angezeigt und nicht ausgeführt wird.";
 
 $_lang['contentblocks.file'] = 'Datei-Eingabe';
-$_lang['contentblocks.file.description'] = 'Add files for linking';
-$_lang['contentblocks.file_template.description'] = 'Valid placeholders are <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code> (in bytes), <code>[[+upload_date]]</code>, and <code>[[+extension]]</code>';
+$_lang['contentblocks.file.description'] = 'Hinzufügen von Dateien zur Verlinkung';
+$_lang['contentblocks.file_template.description'] = 'Gültige Platzhalter sind <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code> (in Bytes), <code>[[+upload_date]]</code> und <code>[[+extension]]</code>';
 $_lang['contentblocks.file.remove_file'] = 'Datei entfernen';
 $_lang['contentblocks.file.max_files'] = 'Maximale Dateianzahl';
 $_lang['contentblocks.file.file.or_drop_files'] = 'oder Dateien per Drag & Drop hier hinziehen';
 $_lang['contentblocks.file.max_files'] = 'Maximale Dateianzahl';
-$_lang['contentblocks.file.max_files.description'] = 'Defines the maximum number of files allowed per upload field. Additional files over the limit will be refused.';
-$_lang['contentblocks.file.max_files.reached'] = 'Sorry, you cannot use more than [[+max]] files in this section.';
+$_lang['contentblocks.file.max_files.description'] = 'Definiert die maximale Anzahl der pro Upload Feld zulässigen Dateien. Zusätzliche Dateien über dem Limit werden abgelehnt.';
+$_lang['contentblocks.file.max_files.reached'] = 'Leider können nicht mehr als [[+max]] Dateien in dieser Sektion nutzen.';
 $_lang['contentblocks.file.directory'] = 'Ordner';
 $_lang['contentblocks.file.directory.description'] = 'Ein Unterordner in einer Medienquelle (ob überschrieben oder unter Verwendung der ContentBlocks-Systemeinstellung)';
 $_lang['contentblocks.file.file_types'] = 'Erlaubte Dateierweiterungen';
@@ -271,11 +279,11 @@ $_lang['contentblocks.image'] = "Bild";
 $_lang['contentblocks.image.description'] = "Ein Eingabetyp zum einfachen Upload oder zur Auswahl eines Bildes. ";
 $_lang['contentblocks.image.source'] = "Medienquelle";
 $_lang['contentblocks.image.source.description'] = "Belassen Sie diese Einstellung auf (keine), um die Standard-Medienquelle des Systems für Bilder zu verwenden, oder geben Sie eine bestimmte Medienquelle an, um die Medienquelle für dieses spezifische Feld zu überschreiben.";
-$_lang['contentblocks.image_template.description'] = "Das Template für den Bild-Eingabetyp sollte wahrscheinlich ein <code>&lt;img&gt;</code>-Tag enthalten. Mögliche Platzhalter: <code>[[+url]]</code>, <code>[[+size]]</code>, <code>[[+extension]]</code>";
+$_lang['contentblocks.image_template.description'] = "Vorlage für den Eingabetyp Bild. Sollte einen <code>&lt; Img &gt;</code>-Tag enthalten. Verfügbare Platzhalter: <code>[[+url]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 $_lang['contentblocks.imagewithtitle'] = "Bild mit Titel";
 $_lang['contentblocks.imagewithtitle.description'] = "Dasselbe wie der Bild-Eingabetyp, aber zusätzlich mit einem Textfeld, über das ein alt- oder title-Attribut angegeben werden kann.";
 $_lang['contentblocks.image_with_title'] = $_lang['contentblocks.imagewithtitle'];
-$_lang['contentblocks.image_with_title_template.description'] = "Das Template für den Bild-Eingabetyp sollte wahrscheinlich ein <code>&lt;img&gt;</code>-Tag enthalten. Mögliche Platzhalter: <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code>, <code>[[+extension]]</code>";
+$_lang['contentblocks.image_with_title_template.description'] = "Vorlage für den Eingabetyp Bild. Sollte einen <code>&lt;Img&gt;</code>-Tag enthalten. Verfügbare Platzhalter: <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 
 $_lang['contentblocks.list'] = "Liste";
 $_lang['contentblocks.list.description'] = "Eingabetyp zur einfachen Erstellung (beliebig verschachtelbarer) ungeordneter Aufzählungslisten. ";
@@ -296,20 +304,23 @@ $_lang['contentblocks.quote_template.description'] = "Das Template für das Zita
 $_lang['contentblocks.quote.author'] = "Autor";
 
 $_lang['contentblocks.repeater'] = "Repeater";
-$_lang['contentblocks.repeater.description'] = "Allows you to define a group of fields, that the editor can then repeat as a group.";
-$_lang['contentblocks.repeater_template.description'] = "The template for each individual row in the repeater. There is no default as it completely depends on your groups configuration! For each of the Fields you define, you also need to set a key. The repeater will first parse all of the defined fields through their own processor (so an image field is first parsed as if it were a standalone image field), and the result of that is set into the placeholder based on the key. Please consult the documentation at modmore.com for a more in-depth instruction of how the repeater field works.";
+$_lang['contentblocks.repeater.description'] = "Erlaubt es eine Gruppe von Feldern zu definieren, welche der Editor als Gruppe wiederholen kann.";
+$_lang['contentblocks.repeater_template.description'] = "Die Vorlage für jede einzelne Zeile in dem Repeater-Feld. Es gibt keine Standardwerte, da diese ausschließlich von Ihrer Gruppen-Konfiguration abhängig sind! Für jedes der Felder, welches Sie festlegen, müssen Sie auch einen Schlüssel-Wert setzen. Der Repeater wird zuerst alle definierten Felder mit ihrem eigenen Prozessor durchlaufen (z.B. wird ein Bildfeld zunächst so geparst, als ob es ein einzelnes Bildfeld wäre), und das Ergebnis wird im Platzhalter mit dem Namen des Schlüssels gespeichert. Bitte lesen Sie die Dokumentation auf modmore.com für eine ausführlichere Anleitung dafür, wie das Repeater-Feld arbeitet.";
 $_lang['contentblocks.repeater.width'] = "Breite (in %)";
 $_lang['contentblocks.repeater.key'] = "Schlüssel";
+$_lang['contentblocks.repeater.key.description'] = "Der Schlüssel bei denen der Wert dieses Feldes in der Repeater-Vorlage zur Verfügung steht. ";
 $_lang['contentblocks.repeater.group'] = "Gruppe";
-$_lang['contentblocks.repeater.group.description'] = "The Repeater field lets you repeat a group of fields. This is where you define the fields that are repeated.";
+$_lang['contentblocks.repeater.group.description'] = "Mit dem Repeater-Feld können Sie eine Gruppe von Feldern wiederholen. Hier können Sie die Felder definieren welche sich wiederholen sollen.";
 $_lang['contentblocks.repeater.max_items'] = "Maximale Anzahl von Elementen";
-$_lang['contentblocks.repeater.max_items.description'] = "When set to a number larger than 0, additional rows cannot be added beyond this limit.";
+$_lang['contentblocks.repeater.max_items.description'] = "Wann Sie eine Zahl größer als 0 wählen, können keine zusätzlichen Zeilen über diese Grenze hinaus hinzugefügt werden.";
 $_lang['contentblocks.repeater.max_items_reached'] = "Tut mir leid, Sie dürfen dieses Element nicht mehr als [[+ max]] mal hinzufügen.";
+$_lang['contentblocks.repeater.min_items'] = "Minimale Anzahl Elemente";
+$_lang['contentblocks.repeater.min_items.description'] = "Wenn der Wert auf eine Zahl größer als 0 gesetzt wird, können Zeilen über diese Grenze hinaus nicht entfernt werden.";
 $_lang['contentblocks.repeater.add_item'] = "Eintrag hinzufügen";
 $_lang['contentblocks.repeater.delete_item'] = "Eintrag löschen";
-$_lang['contentblocks.repeater.wrapper_template.description'] = "Outer template to wrap all other parsed rows in. Should contain the <code>[[+rows]]</code> placeholder.";
+$_lang['contentblocks.repeater.wrapper_template.description'] = "Die äußere Vorlagen, die alle anderen geparsten Zeilen umschließt. Sollte den <code>[[+row]]</code> Platzhalter enthalten, kann aber auch <code>[[+total]]</code> enthalten.";
 $_lang['contentblocks.repeater.row_separator'] = "Zeilentrennzeichen";
-$_lang['contentblocks.repeater.row_separator.description'] = "A string to glue together individual rows. This could just be some line breaks, like in the default, or it could be a bunch of html you want in between rows.";
+$_lang['contentblocks.repeater.row_separator.description'] = "Eine Zeichenkette zum zusammenfügen individueller Reihen. Dies könnte nur ein paar Zeilenumbrüche sein, wie in der Standardvorgabe, oder es könnten html-Tags sein die Sie zwischen den Zeilen einfügen möchten.";
 
 
 $_lang['contentblocks.richtext'] = "Formatierter Text";
@@ -318,10 +329,10 @@ $_lang['contentblocks.richtext_template.description'] = "Da Rich-Text-Felder typ
 
 $_lang['contentblocks.table'] = "Tabelle";
 $_lang['contentblocks.table.description'] = "Interaktives Widget für Tabellen. ";
-$_lang['contentblocks.table_template.description'] = "Template for each of the table cells. Should probably include a &lt;td&gt; tag. Available placeholder: <code>[[+cell]]</code>, <code>[[+colIdx]]</code>, <code>[[+colTotal]]</code>";
+$_lang['contentblocks.table_template.description'] = "Vorlage für jede der Tabellenzellen. Sollte einen &lt;td&gt; tag enthalten. Verfügbare Platzhalter: <code>[[+cell]]</code>, <code>[[+colIdx]]</code>, <code>[[+colTotal]]</code>";
 $_lang['contentblocks.table.row_template'] = "Zeilen-Template";
-$_lang['contentblocks.table.row_template.description'] = "The template for each of the rows in the table, probably contains a <code>&lt;tr&gt;</code> tag. Available placeholder: <code>[[+row]]</code> (contains each of the cells in this row), <code>[[+idx]]</code>";
-$_lang['contentblocks.table.wrapper_template.description'] = "The wrapper template for the entire table. Available placeholder: <code>[[+body]]</code>, <code>[[+total]]</code>.";
+$_lang['contentblocks.table.row_template.description'] = "Die Vorlage für jede der Zeilen in der Tabelle, enthält wahrscheinlich einen <code>&lt;tr&gt;</ code> -Tag. Verfügbare Platzhalter: <code>[[+ row]]</ code> (enthält jede der Zellen in dieser Zeile), <code>[[+ idx]]</ code>";
+$_lang['contentblocks.table.wrapper_template.description'] = "Der Wrapper-Vorlage für die gesamte Tabelle. Verfügbare Platzhalter: <code>[[+body]]</ code>, <code>[[+total]]</ code>.";
 
 $_lang['contentblocks.textarea'] = "Textbereich";
 $_lang['contentblocks.textarea.description'] = "Ein einfaches, mehrzeiliges Textfeld.";
@@ -360,7 +371,7 @@ $_lang['contentblocks.snippet.uncached_0'] = "Ja";
 $_lang['contentblocks.snippet.uncached_1'] = "Nein, dieses Snippet nicht cachen";
 $_lang['contentblocks.snippet.none_available'] = "Für dieses Feld sind keine Snippets verfügbar. ";
 
-$_lang['contentblocks.layout_template.description'] = 'The template for this nested layout field. Keep in mind that any layouts contained within will also have their templates parsed. Available placeholder: <code>[[+value]]</code> (the fully parsed HTML from the contained layouts)';
+$_lang['contentblocks.layout_template.description'] = 'Die Vorlage für dieses innere Layout. Denken Sie daran, dass alle darin enthaltenen Layouts auch ihre Templates durchlaufen. Verfügbare Platzhalter: <code>[[+ value]] </code> (der voll geparsten HTML-Code von den enthaltenen Layouts)';
 $_lang['contentblocks.layoutfield.available_layouts'] = "Verfügbare(s) Layout(s)";
 $_lang['contentblocks.layoutfield.available_layouts.description'] = "Durch Kommata getrennte Liste von erlaubten Layouts. Um keine Layouts zu erlauben, beispielsweise, um nur das Einfügen von Templates zu erlauben, setzen Sie hier -1.";
 $_lang['contentblocks.layoutfield.available_templates'] = "Verfügbare Template(s)";
@@ -373,7 +384,9 @@ $_lang['contentblocks.nested_template'] = "Inneres Template";
 $_lang['contentblocks.max_images'] = "Maximale Anzahl zulässiger Bilder";
 $_lang['contentblocks.max_images_reached'] = "Entschuldigung, Sie können nicht mehr als [[+max]] Bilder in dieser Galerie platzieren.";
 $_lang['contentblocks.upload_error'] = "Hoppla, beim Upload der Datei [[+file]] ist etwas schiefgelaufen: [[+message]]";
-$_lang['contentblocks.upload_error.file_too_big'] = "\"\\n\\nDie Datei könnte zu groß gewesen sein.";
+$_lang['contentblocks.upload_error.file_too_big'] = "\"\n\nDie Datei könnte zu groß gewesen sein.";
+$_lang['contentblocks.image.thumbnail_size'] = "Manager-Thumbnail-Größe";
+$_lang['contentblocks.image.thumbnail_size.description'] = "Abmessungen für Manager-Tumbnails. Freilassen Sie für keine, einen numerischen Wert für quadratische Bilder und Abmessungen BxH für rechteckige Bilder zum Beispiel: 100 oder 100 x 50";
 
 // Misc
 $_lang['contentblocks.use_contentblocks'] = "ContentBlocks benutzen?";
@@ -406,7 +419,7 @@ $_lang['contentblocks.rebuild_content.loaded_dependencies'] = "Abhängigkeiten g
 $_lang['contentblocks.rebuild_content.skipping_not_allowed'] = "Überspringe #[[+id]] ([[+pagetitle]]), da in der Ressource angegeben wurde, ContentBlocks dafür nicht zu verwenden (Typ: [[+class_key]])";
 $_lang['contentblocks.rebuild_content.skipping_not_used'] = "Überspringe #[[+id]] ([[+pagetitle]]), diese Ressource verwendet ContentBlocks aktuell nicht.";
 $_lang['contentblocks.rebuild_content.skipping_corrupt'] = "Überspringe #[[+id]] ([[+pagetitle]]), der Inhalt ist ungültig oder fehlt.";
-$_lang['contentblocks.rebuild_content.done'] = "Done rebuilding content! [[+total_rebuild]] resources were rebuilt, [[+total_skipped]] were skipped and [[+total_skipped_broken]] were skipped because of invalid content.";
+$_lang['contentblocks.rebuild_content.done'] = "Fertig mit dem Neuaufbau des Contents! [[+total_rebuild]] Ressourcen wurden wieder aufgebaut, [[+total_skipped]] wurden übersprungen und [[+ total_skipped_broken]] wurden wegen ungültigem Inhalt übersprungen.";
 $_lang['contentblocks.rebuild_content.clear_cache'] = "Löschen des Caches für Kontext(e): [[+contexts]]";
 $_lang['contentblocks.rebuild_content.clear_cache_complete'] = "Cache gelöscht. Alles fertig!";
 $_lang['contentblocks.generating_canvas'] = "Erzeuge Ihren Inhaltsbereich … das sollte nur einen Moment dauern.";
@@ -434,13 +447,13 @@ $_lang['setting_contentblocks.implode_string'] = "Zeichenkette zusammenfügen";
 $_lang['setting_contentblocks.implode_string_desc'] = "Die Zeichen zwischen einzelnem Feld und Layout-Ausgabe, wenn der Inhalt geparst wird. ";
 
 $_lang['setting_contentblocks.default_layout'] = "Standardlayout";
-$_lang['setting_contentblocks.default_layout_desc'] = "Specify the ID of the default layout to use on new resources, or resources that have not yet been used with ContentBlocks. As of 1.2, this only applies when no Default Template is found.";
+$_lang['setting_contentblocks.default_layout_desc'] = "Geben Sie die ID des Standard-Layouts an welches neue Ressourcen oder Ressourcen die noch nicht mit ContentBlocks verwendet wurden erhalten. Ab 1.2 gilt dies nur, wenn keine Standardvorlage gefunden wird.";
 
 $_lang['setting_contentblocks.default_layout_part'] = "Standardspalte";
-$_lang['setting_contentblocks.default_layout_part_desc'] = "Specify the reference of a column in the Default Layout you specified. On new resources or resources that have not yet been used with ContentBlocks, a field (defined with the Default Field setting) will be inserted into this column with the content. As of 1.2, this only applies when no Default Template is found.";
+$_lang['setting_contentblocks.default_layout_part_desc'] = "Geben Sie die Referenz einer Spalte in dem von Ihnen festgelegten Standard-Layout an. Bei neuen Ressourcen oder Ressourcen die noch nicht mit ContentBlocks verwendet worden sind, wird ein Feld (welches durch die Standardfeldeinstellung definiert wird) in dieser Spalte mit dem Inhalt eingefügt werden. Ab 1.2 gilt dies nur, wenn keine Standardvorlage gefunden wird.";
 
 $_lang['setting_contentblocks.default_field'] = "Standardfeld";
-$_lang['setting_contentblocks.default_field_desc'] = "Specify the ID of a field to insert into the default column of the default layout you specified. When set to 0, a simple rich text or textarea field will be used. As of 1.2, this only applies when no Default Template is found.";
+$_lang['setting_contentblocks.default_field_desc'] = "Geben Sie die ID des Feldes an, welches in der default Spalte des von Ihnen definierten default Layouts eingefügt werden soll. Wenn die ID auf 0 gesetzt ist, wird eine einfaches Rich-Text oder textarea-Feld verwendet. Ab 1.2 wird dies nur angewendet, wenn keine Standardvorlage gefunden wird.";
 
 $_lang['setting_contentblocks.code.theme'] = "Code-Thema";
 $_lang['setting_contentblocks.code.theme_desc'] = "Das Thema für Code-Eingabe. Lesen Sie die Ace-Dokumentation für mögliche Eingaben.";
@@ -459,6 +472,12 @@ $_lang['setting_contentblocks.image.source_desc'] = "Wählen Sie die Medienquell
 
 $_lang['setting_contentblocks.image.upload_path'] = "Upload-Pfad";
 $_lang['setting_contentblocks.image.upload_path_desc'] = "Der Pfad innerhalb der definierten Medienquelle, auf den die Dateien hochgeladen werden sollen. Dieser unterstützt die Platzhalter: [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] und [[+resource]].";
+
+$_lang['setting_contentblocks.cache_source'] = "Cachequelle";
+$_lang['setting_contentblocks.cache_source.description'] = "Wählen Sie die Medienquelle für zur verwendung für Bild und Galerie-Thumbnail-Cache-Dateien.";
+
+$_lang['setting_contentblocks.cache_path'] = "Cachepfad";
+$_lang['setting_contentblocks.cache_path.description'] = "Der Pfad innerhalb der definierten Medien-Quelle in den Thumbnail-Cache-Dateien hochgeladen werden.";
 
 $_lang['setting_contentblocks.sanitize_pattern'] = "Sanitize Pattern";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Ein RegEx-Pattern, welches zum Säubern von säuberungsbedürftigen Dateinamen verwendet wird.";

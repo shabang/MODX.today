@@ -10,6 +10,11 @@
         input.init = function () {
             this.initUpload();
 
+            // override the thumbnail size classname if we're specifying thumbnail dimensions
+            if (data.properties.thumbnail_size > 0 || (data.properties.thumbnail_size && data.properties.thumbnail_size.length > 1)) {
+                data.properties.thumb_size = 'specified';
+            }
+
             dom.find('.contentblocks-field-gallery-list').addClass('gallery-size-' + data.properties.thumb_size);
 
             dom.find('.contentblocks-field-upload').on('click', function() {
@@ -23,7 +28,9 @@
                 $.each(data.images, function(idx, img) {
                     input.imageCount++;
                     img.id = data.generated_id + '-image' + input.imageCount;
-                    input.addImage(img);
+                    img.width = img.width || 0;
+                    img.height = img.height || 0;
+                    input.addImage(img, 'init');
                 });
             }
             dom.find('.gallery-image-holder').sortable({
@@ -98,18 +105,24 @@
                 link: '',
                 id: imageId,
                 size: size,
+                width: imageData.image_width,
+                height: imageData.image_height,
                 extension: extension
-            });
+            }, 'choose');
         };
 
-        input.addImage = function(values) {
-            var holder = dom.find('.gallery-image-holder');
+        input.addImage = function(values, source) {
+            var holder = dom.find('.gallery-image-holder'),
+                urls = ContentBlocks.utilities.normaliseUrls(values.url);
+            values.url = urls.cleanedSrc;
             values.description = values.description || '';
             values.link = values.link || '';
+            values.thumbDisplay = (data.properties.thumbnail_size)
+                ? ContentBlocks.utilities.getThumbnailUrl(values.url, data.properties.thumbnail_size)
+                : urls.displaySrc;
 
             holder.append(tmpl('contentblocks-field-gallery-item', values));
             var inserted = $('#' + values.id);
-
             inserted.find('.contentblocks-gallery-image-delete').on('click', function() {
                 inserted.fadeOut(function() {
                     inserted.remove();
@@ -119,7 +132,7 @@
             });
             
             if (ContentBlocks.toBoolean(data.properties.show_link_field)) {
-                ContentBlocks.initializeLinkField(inserted.find('.linkfield'));
+                ContentBlocks.initializeLinkField(inserted.find('.linkfield'), data);
             }
         };
 
@@ -163,7 +176,7 @@
                         id: imageId,
                         size: data.files[0].size,
                         extension: data.files[0].ext
-                    });
+                    }, 'upload');
                     data.domId = '#' + imageId;
 
                     var img = $(data.domId);
@@ -191,19 +204,27 @@
                  * When the image has been uploaded add it to the collection.
                  *
                  */
-                done: function(e, data) {
-                    var dom = $(data.domId);
-                    if (data.result.success) {
-                        var record = data.result.object;
-                        dom.find('.url').val(record.url);
-                        dom.find('img').attr('src', record.url);
+                done: function(e, responseData) {
+                    var dom = $(responseData.domId);
+                    if (responseData.result.success) {
+                        var record = responseData.result.object,
+                            urls = ContentBlocks.utilities.normaliseUrls(record.url);
+                        dom.find('.url').val(urls.cleanedSrc);
                         dom.find('.size').val(record.size);
+                        dom.find('.width').val(record.width);
+                        dom.find('.height').val(record.height);
                         dom.find('.extension').val(record.extension);
+
+                        var url = (data.properties.thumbnail_size)
+                            ? ContentBlocks.utilities.getThumbnailUrl(record.url, data.properties.thumbnail_size)
+                            : urls.displaySrc;
+                        dom.find('img').attr('src', url);
+
                         dom.removeClass('uploading');
                     }
                     else {
-                        var message = _('contentblocks.upload_error', {file: data.files[0].filename, message:  data.result.message});
-                        if (data.files[0].size > 1048576*1.5) {
+                        var message = _('contentblocks.upload_error', {file: responseData.files[0].filename, message: responseData.result.message});
+                        if (responseData.files[0].size > 1048576*1.5) {
                             message += _('contentblocks.upload_error.file_too_big');
                         }
                         ContentBlocks.alert(message);
@@ -261,7 +282,7 @@
             var images = [];
             dom.find('.gallery-image-holder li').each(function(idx, img) {
                 var $img = $(img),
-                    $link = $img.find('input[id].linkfield'),
+                    $link = $img.find('input[id].settfield'),
                     data = {
                         url: $img.find('.url').val(),
                         title: $img.find('.title').val(),
@@ -269,6 +290,8 @@
                         link: $link.val(),
                         linkType: ContentBlocks.getLinkFieldDataType($link.val()),
                         size: $img.find('.size').val(),
+                        width: $img.find('.width').val(),
+                        height: $img.find('.height').val(),
                         extension: $img.find('.extension').val()
                     };
                 images.push(data);

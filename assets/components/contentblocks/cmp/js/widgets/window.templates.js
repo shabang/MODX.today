@@ -16,7 +16,7 @@ ContentBlocksComponent.window.Template = function (config) {
             },
             width: 750,
             y: 20,
-            bodyCssClass: 'window-vtabs',
+            bodyCssClass: 'cb-window-vtabs',
             fields: [
                 {
                     xtype: 'hidden',
@@ -37,7 +37,8 @@ ContentBlocksComponent.window.Template = function (config) {
                         cls: 'main-wrapper',
                         deferredRender: false,
                         forceLayout: true,
-                        hideMode: 'offsets'
+                        hideMode: 'offsets',
+                        bodyStyle: 'max-height: ' + (Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 150) + 'px;'
                     },
                     items: [
                         {

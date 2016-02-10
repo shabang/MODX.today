@@ -1,4 +1,5 @@
 <?php
+require_once dirname(dirname(__FILE__)) . '/vendor/autoload.php';
 /**
  * ContentBlocks
  *
@@ -9,27 +10,20 @@
  * @package contentblocks
 */
 
-class ContentBlocks {
-    /**
-     * @var modX|null $modx
-     */
-    public $modx = null;
-    /**
-     * @var modResource|null $resource
-     */
-    public $resource = null;
-    /**
-     * @var array
-     */
-    public $config = array();
+use modmore\Alpacka\Alpacka;
+
+/**
+ * Class ContentBlocks
+ *
+ * Main Service Class for ContentBlocks.
+ */
+class ContentBlocks extends Alpacka {
+    protected $namespace = 'contentblocks';
+
     /**
      * @var int
      */
     public $uniqueIdx = 0;
-    /**
-     * @var array
-     */
-    public $chunks = array();
     /**
      * @var null|array
      */
@@ -82,21 +76,40 @@ class ContentBlocks {
     /** @var modParser $normalParser */
     public $normalParser;
 
-    public $version = '1.2.5-pl';
+    /**
+     * This array keeps track of renamed file uploads in order to make sure image links don't break when
+     * something like FileSluggy is active on the site as well.
+     *
+     * @var array
+     */
+    public $renames = array();
+    protected $coreIconUrl;
+    protected $customIconUrl;
 
     /**
-     * @param \modX $modx
+     * The main constructor for ContentBlocks. This doesn't hardcode the instance to the modX class as that might change in
+     * the future, and we don't want to manually update all derivative service classes when that happens.
+     *
+     * @param \modX $instance
      * @param array $config
      */
-    function __construct(modX &$modx,array $config = array()) {
-        $this->modx =& $modx;
+    public function __construct($instance, array $config = array())
+    {
+        parent::__construct($instance, $config);
+        $this->setVersion(1, 3, 2, 'pl');
 
+        /**
+         * @deprecated
+         *
+         * The config loading below is from the pre-Alpacka era. Leaving it in for backwards compatibility, but
+         * these should be removed in a future iteration (2.0). Use the snake_case_format where possible.
+         */
         $corePath = $this->modx->getOption('contentblocks.core_path',$config,$this->modx->getOption('core_path').'components/contentblocks/');
         $assetsUrl = $this->modx->getOption('contentblocks.assets_url',$config,$this->modx->getOption('assets_url').'components/contentblocks/');
         $assetsPath = $this->modx->getOption('contentblocks.assets_path',$config,$this->modx->getOption('assets_path').'components/contentblocks/');
-        $customIconPath = $this->modx->getOption('contentblocks.custom_icon_path',$config,false);
-        $customIconUrl = $this->modx->getOption('contentblocks.custom_icon_url',$config,false);
-        $this->config = array_merge(array(
+        $customIconPath = $this->getOption('contentblocks.custom_icon_path',$config,false);
+        $customIconUrl = $this->getOption('contentblocks.custom_icon_url',$config,false);
+        $this->config = array_merge($this->config, array(
             'basePath' => $corePath,
             'corePath' => $corePath,
             'modelPath' => $corePath.'model/',
@@ -111,25 +124,19 @@ class ContentBlocks {
             'cssUrl' => $assetsUrl.'css/',
             'assetsUrl' => $assetsUrl,
             'connectorUrl' => $assetsUrl.'connector.php',
-            'linkDetectionPattern' => $this->modx->getOption('contentblocks.link_detection_pattern'),
-            'hideLogo' => (bool)$this->modx->getOption('contentblocks.hide_logo', null, false),
+            'linkDetectionPattern' => $this->getOption('contentblocks.link_detection_pattern'),
+            'hideLogo' => (bool)$this->getOption('contentblocks.hide_logo', null, false),
+            'modx_base_url' => $this->modx->getOption('base_url'),
+            'modx_site_url' => $this->modx->getOption('site_url'),
         ),$config);
+        /**
+         * /end @deprecated
+         */
 
-        // Get all contentblocks settings
-        $c = $this->modx->newQuery('modSystemSetting');
-        $c->where(array(
-            'namespace' => 'contentblocks'
-        ));
-        foreach ($this->modx->getIterator('modSystemSetting', $c) as $setting) {
-            /** @var modSystemSetting $setting */
-            $key = substr($setting->key, strlen('contentblocks.'));
-            if (!isset($this->config[$key])) $this->config[$key] = $setting->value;
-        }
+        $this->debug = (bool)$this->getOption('contentblocks.debug',null,false);
 
-        $this->modx->addPackage('contentblocks',$this->config['modelPath']);
-        $this->modx->lexicon->load('contentblocks:default');
-
-        $this->config['debug'] = $this->debug = (bool)$this->modx->getOption('contentblocks.debug',null,false);
+        $this->coreIconUrl = $this->config['assetsUrl'].'img/icons/';
+        $this->customIconUrl = $this->config['customIconUrl'];
     }
 
     /**
@@ -139,17 +146,8 @@ class ContentBlocks {
     public function useContentBlocks(modResource $resource)
     {
         // Default settings
-        $disabled = (int)$this->modx->getOption('contentblocks.disabled', null, false);
-        $acceptedResourceTypes = $this->modx->getOption('contentblocks.accepted_resource_types', null, 'modDocument,mgResource');
-
-        // Fake the wctx variable for loading the working context to get settings
-        if (!isset($_GET['wctx'])) $_GET['wctx'] = $resource->get('context_key');
-
-        // If we got the working context, get some settings
-        if ($this->modx->controller && $this->modx->controller->loadWorkingContext()) {
-            $disabled = (int)$this->modx->controller->workingContext->getOption('contentblocks.disabled', $disabled);
-            $acceptedResourceTypes = $this->modx->controller->workingContext->getOption('contentblocks.accepted_resource_types', $acceptedResourceTypes);
-        }
+        $disabled = (int)$this->getOption('contentblocks.disabled', null, false);
+        $acceptedResourceTypes = $this->getOption('contentblocks.accepted_resource_types', null, 'modDocument,mgResource');
 
         $acceptedType = false;
         $acceptedResourceTypes = explode(',', $acceptedResourceTypes);
@@ -163,63 +161,12 @@ class ContentBlocks {
     }
 
     /**
-    * Gets a Chunk and caches it; defaults to file based chunks.
-    *
-    * @access public
-    * @param string $name The name of the Chunk
-    * @param array $properties The properties for the Chunk
-    * @return string The processed content of the Chunk
-    * @author Shaun "splittingred" McCormick
-    */
-    public function getChunk($name,$properties = array()) {
-        $chunk = null;
-        if (!isset($this->chunks[$name])) {
-            $chunk = $this->_getTplChunk($name);
-            if (empty($chunk)) {
-                $chunk = $this->modx->getObject('modChunk',array('name' => $name),true);
-                if ($chunk == false) return false;
-            }
-            $this->chunks[$name] = $chunk->getContent();
-        } else {
-            $o = $this->chunks[$name];
-            $chunk = $this->modx->newObject('modChunk');
-            $chunk->setContent($o);
-        }
-        $chunk->setCacheable(false);
-        return $chunk->process($properties);
-    }
-
-    /**
-    * Returns a modChunk object from a template file.
-    *
-    * @access private
-    * @param string $name The name of the Chunk. Will parse to name.chunk.tpl
-    * @param string $postFix The postfix to append to the name
-    * @return modChunk/boolean Returns the modChunk object if found, otherwise false.
-    * @author Shaun "splittingred" McCormick
-    */
-    private function _getTplChunk($name, $postFix = '.tpl') {
-        $chunk = false;
-        $f = $this->config['templatesPath'] . strtolower($name) . $postFix;
-        if (file_exists($f)) {
-            $o = file_get_contents($f);
-            /* @var modChunk $chunk */
-            $chunk = $this->modx->newObject('modChunk');
-            $chunk->set('name',$name);
-            $chunk->setContent($o);
-        }
-        return $chunk;
-    }
-
-    /**
      * Gets fields and layouts ready to be used in the manager javascript
      *
      * @param modResource|null $resource
      * @return array
      */
     public function getObjectsForCanvas($resource = null) {
-        $customIconUrl = $this->config['customIconUrl'];
-        $coreIconUrl = $this->config['assetsUrl'].'img/icons/';
         // Load input classes
         $this->loadInputs();
         // make sure the parser is available, so we can process tags later on if needed
@@ -227,28 +174,17 @@ class ContentBlocks {
 
         $fields = array(); ;
         $c = $this->modx->newQuery('cbField');
+        $c->where(array(
+            'parent' => 0
+        ));
         $c->sortby('sortorder', 'ASC');
         foreach ($this->modx->getIterator('cbField') as $field) {
             /** @var cbField $field */
             $key = '_' . $field->get('id');
             $input = $field->get('input');
-            $icon_type = $field->get('icon_type');
-            $icon_base_url = ($icon_type == 'core' || $icon_type == '') ? $coreIconUrl : $customIconUrl;
-            $fields[$key] = $field->get(array('id', 'input', 'name', 'description', 'sortorder', 'icon', 'icon_type', 'properties', 'availability', 'layouts', 'settings', 'times_per_layout', 'times_per_page', 'process_tags'));
-            $fields[$key]['icon'] =  $icon_base_url . $field->get('icon') . '--DPR--.png';
-            $fields[$key]['properties'] = $this->modx->fromJSON($fields[$key]['properties']);
-            $fields[$key]['available'] = ($resource) ? $this->isAvailable($fields[$key]['availability'], $resource) : true;
-            $fields[$key]['layouts'] = (!empty($fields[$key]['layouts'])) ? array_map('intval', explode(',', $fields[$key]['layouts'])) : array();
-            $fields[$key]['settings'] = $this->modx->fromJSON($fields[$key]['settings']);
-            if (is_array($fields[$key]['settings'])) {
-                foreach ($fields[$key]['settings'] as $idx => $setting) {
-                    if(isset($setting['process_tags']) && $setting['process_tags']) {
-                        $this->modx->parser->processElementTags('', $setting['fieldoptions']);
-                    }
-                    $fields[$key]['settings'][$idx]['fieldoptions'] = explode("\n", $setting['fieldoptions']);
-                }
-            }
-            if ($this->inputs[$input] instanceof cbBaseInput) {
+            $fields[$key] = $this->_prepareFieldForCanvas($field, $resource);
+
+            if (array_key_exists($input, $this->inputs) && $this->inputs[$input] instanceof cbBaseInput) {
                 $topics = $this->inputs[$input]->getLexiconTopics();
                 foreach ($topics as $topic) $this->modx->controller->addLexiconTopic($topic);
             }
@@ -261,14 +197,14 @@ class ContentBlocks {
             /** @var cbLayout $layout */
             $key = '_' . $layout->get('id');
             $icon_type = $layout->get('icon_type');
-            $icon_base_url = ($icon_type == 'core' || $icon_type == '') ? $coreIconUrl : $customIconUrl;
+            $icon_base_url = ($icon_type === 'core' || $icon_type === '') ? $this->coreIconUrl : $this->customIconUrl;
             $layouts[$key] = $layout->get(array('id', 'name', 'description', 'sortorder', 'icon', 'columns', 'availability', 'settings', 'times_per_page', 'layout_only_nested'));
             $layouts[$key]['icon'] =  $icon_base_url . $layout->get('icon') . '--DPR--.png';
-            $layouts[$key]['available'] = ($resource) ? $this->isAvailable($layouts[$key]['availability'], $resource) : true;
+            $layouts[$key]['available'] = $resource ? $this->isAvailable($layouts[$key]['availability'], $resource) : true;
             $layouts[$key]['settings'] = $this->modx->fromJSON($layouts[$key]['settings']);
             if (is_array($layouts[$key]['settings'])) {
                 foreach ($layouts[$key]['settings'] as $idx => $setting) {
-                    if($setting['process_tags']) {
+                    if (array_key_exists('process_tags', $setting) && $setting['process_tags']) {
                         $this->modx->parser->processElementTags('', $setting['fieldoptions']);
                     }
                     $layouts[$key]['settings'][$idx]['fieldoptions'] = explode("\n", $setting['fieldoptions']);
@@ -283,7 +219,7 @@ class ContentBlocks {
             /** @var cbTemplate $template */
             $key = '_' . $template->get('id');
             $icon_type = $template->get('icon_type');
-            $icon_base_url = ($icon_type == 'core' || $icon_type == '') ? $coreIconUrl : $customIconUrl;
+            $icon_base_url = ($icon_type === 'core' || $icon_type === '') ? $this->coreIconUrl : $this->customIconUrl;
             $templates[$key] = $template->get(array('id', 'name', 'description', 'sortorder', 'icon', 'content', 'availability'));
             $templates[$key]['icon'] =  $icon_base_url . $template->get('icon') . '--DPR--.png';
             $templates[$key]['available'] = ($resource) ? $this->isAvailable($templates[$key]['availability'], $resource) : true;
@@ -297,6 +233,47 @@ class ContentBlocks {
         );
     }
 
+    /**
+     * Turns a cbField object into something the frontend canvas can use. This for example prepares icon urls,
+     * decodes json objects into php arrays and adds subfields to the return value.
+     *
+     * @param cbField $field
+     * @param null|modResource $resource
+     * @return mixed
+     */
+    protected function _prepareFieldForCanvas(cbField $field, $resource = null)
+    {
+        $icon_type = $field->get('icon_type');
+        $icon_base_url = ($icon_type === 'core' || $icon_type === '') ? $this->coreIconUrl : $this->customIconUrl;
+
+        $tmpField = $field->get(array('id', 'input', 'parent', 'parent_properties', 'name', 'description', 'sortorder', 'icon', 'icon_type', 'properties', 'availability', 'layouts', 'settings', 'times_per_layout', 'times_per_page', 'process_tags'));
+        $tmpField['icon'] =  $icon_base_url . $field->get('icon') . '--DPR--.png';
+        $tmpField['properties'] = $this->modx->fromJSON($tmpField['properties']);
+        $tmpField['parent_properties'] = $this->modx->fromJSON($tmpField['parent_properties']);
+        $tmpField['available'] = $resource ? $this->isAvailable($tmpField['availability'], $resource) : true;
+        $tmpField['layouts'] = (!empty($tmpField['layouts'])) ? array_map('intval', explode(',', $tmpField['layouts'])) : array();
+        $tmpField['settings'] = $this->modx->fromJSON($tmpField['settings']);
+        if (is_array($tmpField['settings'])) {
+            foreach ($tmpField['settings'] as $idx => $setting) {
+                if(isset($setting['process_tags']) && $setting['process_tags']) {
+                    $this->modx->parser->processElementTags('', $setting['fieldoptions']);
+                }
+                $tmpField['settings'][$idx]['fieldoptions'] = explode("\n", $setting['fieldoptions']);
+            }
+        }
+        $tmpField['subfields'] = array();
+        $subfields = $field->getSubfields();
+        foreach ($subfields as $subf) {
+            $tmpField['subfields'][] = $this->_prepareFieldForCanvas($subf, $resource);
+        }
+        return $tmpField;
+    }
+
+    /**
+     * Returns the required assets to load ContentBlocks
+     *
+     * @return array|string
+     */
     public function getAssets()
     {
         $cbv = $this->version;
@@ -348,7 +325,7 @@ class ContentBlocks {
 
 
         $newContentField = $this->modx->newObject('modChunk', array(
-            'content' => file_get_contents($this->config['corePath'] . 'templates/prerender.tpl'),
+            'content' => file_get_contents($this->config['core_path'] . 'templates/prerender.tpl'),
         ));
         $replacement = $newContentField->process(array(
             'assetsUrl' => $assetsUrl
@@ -360,12 +337,15 @@ class ContentBlocks {
 
     /**
      * @param array $vcContent
+     * @param array $globalPhs
      * @return string
+     * @throws Exception
      */
     public function generateHtml(array $vcContent = array(), $globalPhs = array())
     {
-        // Load the custom cbParser that only processes placeholders
-        $this->loadParser();
+        if (!($this->modx->parser instanceof cbParser)) {
+            throw new Exception('$modx->parser is an instance of ' . get_class($this->modx->parser) . ', expected cbParser.');
+        }
         try {
             $this->loadInputs();
             $allFields = $this->getFields();
@@ -379,7 +359,7 @@ class ContentBlocks {
             $content = array();
 
             // Some options for clean output
-            $implosion = ($this->modx->getOption('contentblocks.implode_string', null, "\n\n"));
+            $implosion = ($this->getOption('contentblocks.implode_string', null, "\n\n"));
 
             $layoutIdx = 0;
             foreach ($vcContent as $layout) {
@@ -396,9 +376,9 @@ class ContentBlocks {
                         $fieldData['layout_id'] = $layout['layout'];
                         $fieldData['layout_column'] = $column;
                         $fieldData['layout_idx'] = $layoutIdx;
-                
+
                         /** @var cbField|false $field */
-                        $field = (isset($allFields[$fieldData['field']])) ? $allFields[$fieldData['field']] : false;                        
+                        $field = (isset($allFields[$fieldData['field']])) ? $allFields[$fieldData['field']] : false;
 
                         $columns[$column][] = $this->generateFieldHtml($fieldData, $field, $fieldIdx);
                     }
@@ -426,15 +406,9 @@ class ContentBlocks {
                 $content[] = $this->parse($tpl, $columns);
             }
             $content = implode($implosion, $content);
-
-            // Restore the normal parser
-            $this->restoreParser();
             return $content;
         } catch (Exception $e) {
             $this->modx->log(modX::LOG_LEVEL_ERROR, '[ContentBlocks.generateHtml] Exception while attempting to generate html. vcContent Data: ' . $vcContent);
-
-            // Restore the normal parser
-            $this->restoreParser();
             return '<p class="error">Uh oh, something went wrong generating the page content. </p>';
         }
     }
@@ -445,8 +419,10 @@ class ContentBlocks {
      * @param int $idx
      * @return string
      */
-    
     public function generateFieldHtml($fieldData, $field = false, $idx) {
+        if (!isset($fieldData['idx'])) {
+            $fieldData['idx'] = $idx;
+        }
         // Load the default settings as placeholders
         $settingTypes = array();
         if ($field) {
@@ -466,13 +442,13 @@ class ContentBlocks {
             foreach ($settings as $key => $value) {
                 if (isset($settingTypes[$key]) && $settingTypes[$key] == 'link' && $value != '') {
                     $fieldData[$key . '_raw'] = $value;
-                    
+
                     // if it's numeric, it's a resource
                     if(preg_replace("/\D/", "", $value) == $value) {
                         $value = "[[~$value]]";
                         $fieldData[$key . '_linkType'] = 'resource';
                     }
-                    
+
                     // maybe it's an email address
                     else if(preg_match('/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$/i', $value)) {
                         $value = "mailto:$value";
@@ -498,7 +474,7 @@ class ContentBlocks {
             $output = $fieldData['value'];
             $this->modx->log(modX::LOG_LEVEL_ERROR, '[ContentBlocks] Could not find input ' . $fieldData['field'] . ' for parsing.');
         }
-        return $output;      
+        return $output;
     }
 
     /**
@@ -524,7 +500,7 @@ class ContentBlocks {
                 if (substr($key, 0, 1) == '+') {
                     unset($this->modx->placeholders[$key]);
                 }
-            }            
+            }
             $this->modx->toPlaceholders($phs, '', '.', true);
             $this->modx->parser->processElementTags('', $tpl, false, false, '[[', ']]', array('+'), 1);
             $this->modx->placeholders = $oldphs;
@@ -742,48 +718,6 @@ class ContentBlocks {
     }
 
     /**
-     * @param $name
-     * @return string
-     */
-    public function sanitize($name) {
-        $iconv = function_exists('iconv');
-        $charset = strtoupper((string) $this->modx->getOption('modx_charset', null, 'UTF-8'));
-        $translit = $this->modx->getOption('contentblocks.translit', null, $this->modx->getOption('friendly_alias_translit', null, 'none'), true);
-        $translitClass = $this->modx->getOption('contentblocks.translit_class', null, $this->modx->getOption('friendly_alias_translit_class', null, 'translit.modTransliterate'), true);
-        $translitClassPath = $this->modx->getOption('contentblocks.translit_class_path', null, $this->modx->getOption('friendly_alias_translit_class_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/'), true);
-        switch ($translit) {
-            case '':
-            case 'none':
-                // no transliteration
-                break;
-
-            case 'iconv':
-                // if iconv is available, use the built-in transliteration it provides
-                if ($iconv) {
-                    $name = iconv($charset, 'ASCII//TRANSLIT//IGNORE', $name);
-                }
-                break;
-
-            default:
-                // otherwise look for a transliteration service class (i.e. Translit package) that will accept named transliteration tables
-                if ($this->modx instanceof modX) {
-                    if ($this->modx->getService('translit', $translitClass, $translitClassPath)) {
-                        $name = $this->modx->translit->translate($name, $translit);
-                    }
-                }
-                break;
-        }
-
-        $replace = $this->modx->getOption('contentblocks.sanitize_replace', null, '_');
-        $pattern = $this->modx->getOption('contentblocks.sanitize_pattern', null, '/([[:alnum:]_\.-]*)/');
-        $name = str_replace(str_split(preg_replace($pattern, $replace, $name)), $replace, $name);
-        $name = preg_replace('/[\/_|+ -]+/', $replace, $name);
-        $name = trim(trim($name, $replace));
-        return $name;
-    }
-
-
-    /**
      * Parses through availability conditions to see if a field should be available or not.
      *
      * @param $availability
@@ -849,18 +783,6 @@ class ContentBlocks {
     }
 
     /**
-     * @param int $resource
-     * @param string $context
-     * @return mixed
-     */
-    public function getUltimateParent($resource = 0, $context = '')
-    {
-        $parents = $this->modx->getParentIds($resource, 10, array('context' => $context));
-        $parents = array_reverse($parents);
-        return isset($parents[1]) ? $parents[1] : 0;
-    }
-
-    /**
      * @return cbParser|null|object
      */
     public function loadParser()
@@ -896,11 +818,6 @@ class ContentBlocks {
         return array('linear' => $linear, 'fieldcounts' => $counts, 'summaryVersion' => '1.1');
     }
 
-    public function setResource(modResource $resource)
-    {
-        $this->resource = $resource;
-    }
-
     /**
      * @param bool $resource
      * @param string $content
@@ -908,9 +825,9 @@ class ContentBlocks {
      */
     public function getDefaultCanvas($resource = false, $content = '') {
         $default = $this->getDefaultTemplate($resource);
-        $defaultLayout = $this->modx->getOption('contentblocks.default_layout', null, 1);
-        $defaultLayoutPart = $this->modx->getOption('contentblocks.default_layout_part', null, 'main');
-        $defaultField = $this->modx->getOption('contentblocks.default_field', null, 0);
+        $defaultLayout = $this->getOption('contentblocks.default_layout', null, 1);
+        $defaultLayoutPart = $this->getOption('contentblocks.default_layout_part', null, 'main');
+        $defaultField = $this->getOption('contentblocks.default_field', null, 0);
 
         if ($default['template'] === 0 ||
             !$template = $this->modx->getObject('cbTemplate', $default['template'])
@@ -1013,6 +930,9 @@ class ContentBlocks {
 
             case $constraintField == 'ultimateparent':
                 $value = $this->getUltimateParent($resource->get('id'), $resource->get('context_key'));
+                if ($value < 1) {
+                    $value = $this->getUltimateParent($resource->get('parent'), $resource->get('context_key'));
+                }
                 break;
 
             case $constraintField == 'usergroup':
@@ -1035,7 +955,30 @@ class ContentBlocks {
             return true;
         }
         return false;
+    }
 
+    /**
+     * @param $bytes
+     * @param int $decimals
+     * @return string
+     */
+    public function formatBytes($bytes, $decimals = 2)
+    {
+        if ($bytes >= 1073741824) {
+            $bytes = number_format($bytes / 1073741824, $decimals) . ' GB';
+        } elseif ($bytes >= 1048576) {
+            $bytes = number_format($bytes / 1048576, $decimals) . ' MB';
+        } elseif ($bytes >= 1024) {
+            $bytes = number_format($bytes / 1024, $decimals) . ' KB';
+        } elseif ($bytes > 1) {
+            $bytes = $bytes . ' bytes';
+        } elseif ($bytes == 1) {
+            $bytes = $bytes . ' byte';
+        } else {
+            $bytes = '0 bytes';
+        }
+
+        return $bytes;
     }
 }
 

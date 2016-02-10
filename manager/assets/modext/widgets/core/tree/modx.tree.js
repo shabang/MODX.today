@@ -40,6 +40,7 @@ MODx.tree.Tree = function(config) {
         root = {
             nodeType: 'async'
             ,text: config.root_name || config.rootName || ''
+            ,qtip: config.root_qtip || config.rootQtip || ''
             ,draggable: false
             ,id: config.root_id || config.rootId || 'root'
             ,pseudoroot: true
@@ -47,6 +48,7 @@ MODx.tree.Tree = function(config) {
                 pseudoroot: true
             }
             ,cls: 'tree-pseudoroot-node'
+            ,iconCls: config.root_iconCls || config.rootIconCls || ''
         };
     } else {
         tl = new Ext.tree.TreeLoader({
@@ -55,7 +57,6 @@ MODx.tree.Tree = function(config) {
                 uiProvider: MODx.tree.CheckboxNodeUI
             }
         });
-        console.log('else');
         root = new Ext.tree.TreeNode({
             text: this.config.rootName || ''
             ,draggable: false
@@ -95,8 +96,9 @@ MODx.tree.Tree = function(config) {
                 },
                 hide: function() {
                     var node = this.activeNode;
-                    if (node)
+                    if (node){
                         node.isSelected() || node.ui.removeClass('x-tree-selected');
+                    }
                 }
             }
         }
@@ -144,11 +146,14 @@ Ext.extend(MODx.tree.Tree,Ext.tree.TreePanel,{
     ,disableHref: false
 
     ,onLoad: function(ldr,node,resp) {
+        // no select() here, just addClass, using Active Input Cookie Value to set focus
         Ext.each(node.childNodes, function(node){
             if (node.attributes.selected) {
-                node.select();
+                //node.select();
+                node.ui.addClass('x-tree-selected');
             }
         });
+        
         var r = Ext.decode(resp.responseText);
         if (r.message) {
             var el = this.getTreeEl();
@@ -215,7 +220,7 @@ Ext.extend(MODx.tree.Tree,Ext.tree.TreePanel,{
         if (Ext.isEmpty(treeState) && this.root) {
             this.root.expand();
             if (this.root.firstChild && this.config.expandFirst) {
-                this.root.firstChild.select();
+                //this.root.firstChild.select();
                 this.root.firstChild.expand();
             }
         } else {
@@ -454,7 +459,9 @@ Ext.extend(MODx.tree.Tree,Ext.tree.TreePanel,{
         if (n.attributes.page && n.attributes.page !== '') {
             if (e.button == 1) return window.open(n.attributes.page,'_blank');
             else if (e.ctrlKey == 1 || e.metaKey == 1 || e.shiftKey == 1) return window.open(n.attributes.page);
-            MODx.loadPage(n.attributes.page);
+            else if (e.target.tagName == 'SPAN') MODx.loadPage(n.attributes.page); // only open the edit page when clicking on the text and nothing else (e.g. icon/empty space)
+            else if (n.isExpandable()) n.toggle(); // when clicking anything except the node-text, just open (if available) the node
+            else MODx.loadPage(n.attributes.page); // for non container nodes, they can be edited by clicking anywhere on the node
         } else if (n.isExpandable()) {
             n.toggle();
         }

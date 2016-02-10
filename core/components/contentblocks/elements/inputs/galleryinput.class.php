@@ -9,7 +9,7 @@
  */
 class GalleryInput extends cbBaseInput {
     public $defaultIcon = 'gallery';
-    public $defaultTpl = '<li><a href="[[+url]]" title="[[+title]]"><img src="[[+url]]" alt="[[+title]]"></a></li>';
+    public $defaultTpl = '<li><a href="[[+url]]" title="[[+title]]"><img src="[[+url]]" width="[[+width]]" height="[[+height]]" alt="[[+title]]"></a></li>';
     public $defaultWrapperTpl = '<ul class="gallery">[[+images]]</ul>';
     /**
      * @return array
@@ -64,6 +64,13 @@ class GalleryInput extends cbBaseInput {
                 'description' => $this->modx->lexicon('contentblocks.gallery.thumb_size.description'),
             ),
             array(
+                'key' => 'thumbnail_size',
+                'fieldLabel' => $this->modx->lexicon('contentblocks.image.thumbnail_size'),
+                'xtype' => 'textfield',
+                'default' => '0',
+                'description' => $this->modx->lexicon('contentblocks.image.thumbnail_size.description'),
+            ),
+            array(
                 'key' => 'source',
                 'fieldLabel' => $this->modx->lexicon('contentblocks.image.source'),
                 'xtype' => 'contentblocks-combo-mediasource',
@@ -85,10 +92,17 @@ class GalleryInput extends cbBaseInput {
                 'description' => $this->modx->lexicon('contentblocks.gallery.show_link_field.description')
             ),
             array(
+                'key' => 'limit_to_current_context',
+                'fieldLabel' => $this->modx->lexicon('contentblocks.link.limit_to_current_context'),
+                'xtype' => 'contentblocks-combo-boolean',
+                'default' => '1',
+                'description' => $this->modx->lexicon('contentblocks.link.limit_to_current_context.description')
+            ),
+            array(
                 'key' => 'directory',
                 'fieldLabel' => $this->modx->lexicon('contentblocks.directory'),
                 'xtype' => 'textfield',
-                'default' => $this->modx->getOption('contentblocks.image.upload_path', null, 'assets/uploads/images/'),
+                'default' => $this->contentBlocks->getOption('contentblocks.image.upload_path', null, 'assets/uploads/images/'),
                 'description' => $this->modx->lexicon('contentblocks.directory.description')
             ),
             array(
@@ -121,14 +135,33 @@ class GalleryInput extends cbBaseInput {
         foreach ($data['images'] as $img) {
             $img = array_merge($settings, $img);
             $img['idx'] = $idx;
-            if($img['link']) {
+            if(isset($img['link']) && !empty($img['link'])) {
                 $img['link_raw'] = $img['link'];
                 
-                if($img['linkType'] == 'email') {
+                if($img['linkType'] === 'email') {
                     $img['link'] = 'mailto:' . $img['link'];
                 }
-                if($img['linkType'] == 'resource') {
+                if($img['linkType'] === 'resource') {
                     $img['link'] = '[[~' . $img['link'] . ']]';
+                }
+            }
+
+            // grab image sizes
+            if (!isset($img['width']) || $img['width'] < 1) {
+                $size = false;
+                if (file_exists($img['url'])) {
+                    $size = getimagesize($img['url']);
+                }
+
+                if (!$size) {
+                    $normalisedPath = str_replace(MODX_BASE_URL.MODX_BASE_URL, MODX_BASE_URL, MODX_BASE_PATH . $img['url']);
+                    if (file_exists($normalisedPath)) {
+                        $size = getimagesize($normalisedPath);
+                    }
+                }
+                if (!empty($size)) {
+                    $img['width'] = $size[0];
+                    $img['height'] = $size[1];
                 }
             }
             $output[] = $this->contentBlocks->parse($rowTpl, $img);

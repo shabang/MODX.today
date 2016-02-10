@@ -10,6 +10,7 @@ class ContentblocksMgrHomeManagerController extends ContentblocksManagerControll
      * @param array $scriptProperties
      */
     public function process(array $scriptProperties = array()) {
+        $this->loadRichTextEditor();
     }
 
     /**

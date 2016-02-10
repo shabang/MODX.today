@@ -30,6 +30,9 @@ ContentBlocksComponent.combo.Inputs = function(config) {
         fields: ['value', 'display', 'description', {
             name: 'properties',
             type: 'object'
+        }, {
+            name: 'parent_properties',
+            type: 'object'
         }, 'defaultIcon', 'defaultTpl'],
         hiddenName: config.name,
         paging: false,
@@ -216,7 +219,9 @@ ContentBlocksComponent.combo.FieldTypes = function(config) {
                 [_('contentblocks.fieldtype.textfield'), 'textfield'],
                 [_('contentblocks.fieldtype.link'), 'link'],
                 [_('contentblocks.fieldtype.textarea'), 'textarea'],
-                [_('contentblocks.fieldtype.select'), 'select']
+                [_('contentblocks.fieldtype.select'), 'select'],
+                [_('contentblocks.fieldtype.radio'), 'radio'],
+                [_('contentblocks.fieldtype.checkbox'), 'checkbox']
             ]
         }),
         fields: ['value','display'],

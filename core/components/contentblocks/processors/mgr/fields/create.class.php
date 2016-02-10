@@ -27,6 +27,12 @@ class cbFieldCreateProcessor extends modObjectCreateProcessor {
         $prop = $this->modx->toJSON($prop);
         $this->setProperty('properties', $prop);
 
+        $parentProps = $this->getProperty('parent_properties');
+        if (!empty($parentProps)) {
+            $parentProps = $this->modx->toJSON($parentProps);
+            $this->setProperty('parent_properties', $parentProps);
+        }
+
         $av = $this->getProperty('availability');
         $av = $this->modx->toJSON($av);
         $this->setProperty('availability', $av);

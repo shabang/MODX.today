@@ -1,27 +1,34 @@
-(function($, RedactorPlugins) {
-    RedactorPlugins.fontsize = {
-        init: function()
-        {
-            var fonts = [10, 11, 12, 14, 16, 18, 20, 24, 28, 30];
-            var that = this;
-            var dropdown = {};
+if (!RedactorPlugins) var RedactorPlugins = {};
 
-            $.each(fonts, function(i, s)
-            {
-                dropdown['s' + i] = { title: s + 'px', callback: function() { that.setFontsize(s); } };
-            });
+(function($)
+{
+	RedactorPlugins.fontsize = function()
+	{
+		return {
+			init: function()
+			{
+				var fonts = [10, 11, 12, 14, 16, 18, 20, 24, 28, 30];
+				var that = this;
+				var dropdown = {};
 
-            dropdown['remove'] = { title: 'Remove font size', callback: function() { that.resetFontsize(); } };
+				$.each(fonts, function(i, s)
+				{
+					dropdown['s' + i] = { title: s + 'px', func: function() { that.fontsize.set(s); } };
+				});
 
-            this.buttonAdd('fontsize', 'Change font size', false, dropdown);
-        },
-        setFontsize: function(size)
-        {
-            this.inlineSetStyle('font-size', size + 'px');
-        },
-        resetFontsize: function()
-        {
-            this.inlineRemoveStyle('font-size');
-        }
-    };
-})(jQuery, window.RedactorPlugins || {});
+				dropdown.remove = { title: 'Remove Font Size', func: that.fontsize.reset };
+
+				var button = this.button.add('fontsize', 'Change Font Size');
+				this.button.addDropdown(button, dropdown);
+			},
+			set: function(size)
+			{
+				this.inline.format('span', 'style', 'font-size: ' + size + 'px;');
+			},
+			reset: function()
+			{
+				this.inline.removeStyleRule('font-size');
+			}
+		};
+	};
+})(jQuery);

@@ -1,7 +1,7 @@
 id: 13
 name: MoreGallery
 description: 'Registers CSS to the manager for proper display of the custom resource. (Part of MoreGallery)'
-category: MoreGallery
+category: ''
 properties: null
 
 -----

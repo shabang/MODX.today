@@ -65,9 +65,9 @@ jQuery(function($) {
             '<div class="edit-form">' +
             '   <a href="javascript:void(0);" class="close">&times;</a>' +
             '   <h3><%= moreGallery.lang("edit_image_header") %></h3>' +
-            '   <label><%= moreGallery.lang("name_field") %> <br /><input type="text" id="mgimage-name" value="<%= name %>"></label><br />' +
+            '   <label><%= moreGallery.lang("name_field") %> <br /><input type="text" id="mgimage-name" value="<%- name %>"></label><br />' +
             '   <label for="mgimage-description"><%= moreGallery.lang("description") %></label> <br />' +
-            '   <textarea id="mgimage-description" rows="5"><%= description %></textarea> <br />' +
+            '   <textarea id="mgimage-description" rows="5"><%- description %></textarea> <br />' +
             '' +
             '   <div class="mgimage-tags">' +
             '       <label for="mgimage-new-tag"><%= moreGallery.lang("tags") %></label>' +
@@ -80,7 +80,7 @@ jQuery(function($) {
             '       </div>' +
             '   </div>' +
             '' +
-            '   <label><%= moreGallery.lang("url") %> <br /><input type="text" id="mgimage-url" value="<%= url %>"></label>' +
+            '   <label><%= moreGallery.lang("url") %> <br /><input type="text" id="mgimage-url" value="<%- url %>"></label>' +
             '   <div class="edit-form-buttons">' +
         '           <a href="javascript:void(0);" class="save">' +
         '               <span class="headline"><%= moreGallery.lang("save") %></span>' +

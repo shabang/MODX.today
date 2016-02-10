@@ -1,7 +1,7 @@
 id: 8
 name: ContentBlocks
 description: 'The main plugin for ContentBlocks, responsible for handling generating the form as well as saving the resource. (Part of ContentBlocks)'
-category: ContentBlocks
+category: ''
 properties: null
 
 -----
@@ -14,8 +14,8 @@ properties: null
  * @package contentblocks
  */
 
-$corePath = $modx->getOption('contentblocks.core_path', null, $modx->getOption('core_path').'components/contentblocks/');
-$assetsUrl = $modx->getOption('contentblocks.assets_url', null, $modx->getOption('assets_url').'components/contentblocks/');
+$corePath = $modx->getOption('contentblocks.core_path', null, $modx->getOption('core_path') . 'components/contentblocks/');
+$assetsUrl = $modx->getOption('contentblocks.assets_url', null, $modx->getOption('assets_url') . 'components/contentblocks/');
 
 /**
  * @var ContentBlocks $ContentBlocks
@@ -23,13 +23,16 @@ $assetsUrl = $modx->getOption('contentblocks.assets_url', null, $modx->getOption
  * @var modX $modx
  * @var array $scriptProperties
  */
-$ContentBlocks = $modx->getService('contentblocks','ContentBlocks', $corePath.'model/contentblocks/');
+$ContentBlocks = $modx->getService('contentblocks', 'ContentBlocks', $corePath . 'model/contentblocks/');
 
 switch ($modx->event->name) {
     case 'OnDocFormPrerender':
-        if ($modx->controller && $modx->controller->resource) {
+        if ($modx->controller && isset($modx->controller->resource) && $modx->controller->resource instanceof modResource) {
             $resource = $modx->controller->resource;
             $ContentBlocks->setResource($modx->controller->resource);
+        }
+        else {
+            return;
         }
 
         // Default settings
@@ -110,6 +113,7 @@ switch ($modx->event->name) {
         $templates = $modx->toJSON($objects['templates']);
 
         $contents = $modx->toJSON($contents);
+        $resourceInfo = $modx->toJSON($resource->get(array('id', 'pagetitle', 'context_key')));
         $config = $modx->toJSON($ContentBlocks->config);
 
         $modx->controller->addHtml(<<<HTML
@@ -119,7 +123,8 @@ switch ($modx->event->name) {
         ContentBlocksTemplates = $templates,
         ContentBlocksContents = $contents,
         ContentBlocksConfig = $config,
-        ContentBlocksWrapperCls = "$wrapperCls";
+        ContentBlocksWrapperCls = "$wrapperCls",
+        ContentBlocksResource = $resourceInfo;
 
     var cbGenerated = false;
     MODx.on('ready', function () {
@@ -142,7 +147,7 @@ switch ($modx->event->name) {
     });
 </script>
 HTML
-);
+        );
         $scriptTags = $ContentBlocks->getAssets();
         $modx->controller->addHtml($scriptTags);
 
@@ -150,10 +155,24 @@ HTML
 
     case 'OnDocFormSave':
         $ContentBlocks->setResource($resource);
+        $modx->resource = $resource;
 
         $cbJson = $resource->get('contentblocks');
 
         $cbContent = $modx->fromJSON($cbJson);
+
+        // RenderContent Event
+        $response = $modx->invokeEvent('ContentBlocks_RenderContent', array(
+            'vcContent' => $cbContent,
+            'vc' => $cbJson,
+            'resource' => $resource
+        ));
+        // check if customized content was returned
+        if (!empty($response) && is_array($response) && json_encode($response) !== '[""]') {
+            $cbContent = $response[0]['vcContent'];
+            $cbJson = $response[0]['vc'];
+        }
+
         if (!empty($cbJson) && $cbContent !== false && is_array($cbContent)) {
             $summary = $ContentBlocks->summarizeContent($cbContent);
             $resource->setProperties(array(
@@ -166,7 +185,13 @@ HTML
             // We save the CB data as soon as possible ...
             $resource->save();
             // ... then we parse it to HTML which is stored in the content ...
-            $resource->setContent($ContentBlocks->generateHtml($cbContent));
+            try {
+                $ContentBlocks->loadParser();
+                $resource->setContent($ContentBlocks->generateHtml($cbContent));
+                $ContentBlocks->restoreParser();
+            } catch (Exception $e) {
+                $modx->log(modX::LOG_LEVEL_ERROR, 'Exception while trying to parse the content of resource ' . $resource->id . ': ' . $e->getMessage());
+            }
             // ... to make sure parse errors don't lose the content.
         }
         $resource->set('contentblocks', '');
@@ -179,6 +204,12 @@ HTML
         $resource->save();
         break;
 
+    /**
+     * @var string $path
+     */
+    case 'OnFileManagerFileRename':
+        $ContentBlocks->renames[] = $path;
+        break;
 }
 
 return;

@@ -18,6 +18,15 @@ class cbFieldUpdateProcessor extends modObjectUpdateProcessor {
         else {
             $this->setProperty('properties', $this->object->get('properties'));
         }
+
+        $parentProps = $this->getProperty('parent_properties');
+        if (!empty($parentProps)) {
+            $parentProps = $this->modx->toJSON($parentProps);
+            $this->setProperty('parent_properties', $parentProps);
+        }
+        else {
+            $this->setProperty('parent_properties', $this->object->get('parent_properties'));
+        }
         return parent::beforeSet();
     }
 }

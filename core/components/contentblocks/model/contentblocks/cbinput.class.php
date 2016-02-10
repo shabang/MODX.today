@@ -141,6 +141,16 @@ class cbBaseInput implements cbInput {
     }
 
     /**
+     * Similar to {@see self::getFieldProperties}, except this is used when creating subfields to modify the edit panel.
+     *
+     * @return array
+     */
+    public function getParentProperties()
+    {
+        return array();
+    }
+
+    /**
      * Get an array of CSS files to load for this input.
      *
      * @return array

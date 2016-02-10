@@ -16,9 +16,11 @@ $_lang['contentblocks.link.email'] = "Adresse email";
 $_lang['contentblocks.link.link_new_tab'] = "Ouvrir dans un nouvel onglet";
 $_lang['contentblocks.link.add'] = "Ajouter un lien";
 $_lang['contentblocks.link.remove'] = "Supprimer le lien";
-$_lang['contentblocks.link.placeholder'] = "Start typing the name of a resource, external link or email address";
+$_lang['contentblocks.link.placeholder'] = "Commencez à taper le nom d'une ressource, d'un lien externe ou une adresse email";
 $_lang['contentblocks.link.link_detection_pattern_override'] = '"Surcharge" de pattern de détection de lien';
 $_lang['contentblocks.link.link_detection_pattern_override.description'] = 'Regex pour détecter si un lien est valide ; Si ce n\'est pas le cas, http:// va être ajouté au début.';
+$_lang['contentblocks.link.limit_to_current_context'] = 'Restreindre les résultats de la ressource au contexte actuel';
+$_lang['contentblocks.link.limit_to_current_context.description'] = 'Limite les résultats en typeahead aux ressources contenues dans le même contexte que la page en cours d\'édition';
 
 $_lang['setting_contentblocks.link.link_detection_pattern'] = 'Pattern de détection de lien';
 $_lang['setting_contentblocks.link.link_detection_pattern_desc'] = 'Regex pour détecter si un lien est valide ; Si ce n\'est pas le cas, http:// va être ajouté au début.';
@@ -74,6 +76,7 @@ $_lang['contentblocks.duplicate_field'] = "Dupliquer le Champs";
 $_lang['contentblocks.delete_field'] = "Supprimer le Champs";
 $_lang['contentblocks.delete_field.confirm'] = "Êtes-vous sûr de vouloir supprimer ce Champs? Des événements potentiellement désastreux peuvent arriver à du contenu utilisant ce Champs.";
 $_lang['contentblocks.delete_field.confirm.js'] = "Êtes-vous sûr de vouloir supprimer ce Champs?";
+$_lang['contentblocks.export_field'] = "Exporter le champ";
 $_lang['contentblocks.export_fields'] = "Exporter";
 $_lang['contentblocks.export_fields.confirm'] = "En cliquant Oui ci-dessous, nous préparerons un export XML de tous les Champs. Ceci peut-être utilisé pour importer les Champs plus tard ou dans une autre installation. La génération du fichier XML peut prendre quelques secondes, selon le nombre de Champs que vous avez configurés.";
 $_lang['contentblocks.import_fields'] = "Importer";
@@ -85,6 +88,7 @@ $_lang['contentblocks.add_layout'] = "Ajouter un agencement";
 $_lang['contentblocks.repeat_layout'] = "Répéter l'agencement";
 $_lang['contentblocks.edit_layout'] = "Editer l'agencement";
 $_lang['contentblocks.duplicate_layout'] = "Dupliquer l'agencement";
+$_lang['contentblocks.export_layout'] = "Exporter le layout";
 $_lang['contentblocks.delete_layout'] = "Supprimer l'agencement";
 $_lang['contentblocks.delete_layout.confirm'] = "Êtes-vous sûr de vouloir supprimer cet agencement? Des événements potentiellement désastreux peuvent arriver à du contenu utilisant cet agencement.";
 $_lang['contentblocks.delete_layout.confirm.js'] = "Êtes-vous sûr de vouloir supprimer cet agencement [[+layoutName]] ? Tous ses contenus seront supprimés avec si vous confirmez.";
@@ -153,11 +157,14 @@ $_lang['contentblocks.description'] = "Description";
 $_lang['contentblocks.template'] = "Modèle";
 $_lang['contentblocks.template.description'] = "Le modèle pour l'agencement a plusieurs placeholders disponibles, selon les colonnes et les paramètres que vous avez définis dans les onglets sur la gauche.";
 $_lang['contentblocks.width'] = "Largeur";
+$_lang['contentblocks.width.description'] = "La largeur du champ (en pourcentage) que prendra ce champ dans le canvas. Les champs sont en float à gauche, vous pouvez donc créer des mises en page de base avec cette option.";
 $_lang['contentblocks.save'] = "Enregistrer";
 $_lang['contentblocks.reference'] = "Référence";
 $_lang['contentblocks.default_value'] = "Valeur par défaut";
 $_lang['contentblocks.fieldtype'] = "Type de Champ";
 $_lang['contentblocks.fieldtype.select'] = "Sélectionner";
+$_lang['contentblocks.fieldtype.radio'] = "Options bouton radio";
+$_lang['contentblocks.fieldtype.checkbox'] = "Options case à cocher";
 $_lang['contentblocks.fieldtype.textfield'] = "Texte";
 $_lang['contentblocks.fieldtype.link'] = "Lien";
 $_lang['contentblocks.fieldtype.textarea'] = "Zone de Texte";
@@ -181,6 +188,7 @@ $_lang['contentblocks.templates_desc'] = 'Les templates sont des modèles pré-d
 $_lang['contentblocks.add_template'] = 'Ajouter un template';
 $_lang['contentblocks.edit_template'] = 'Editer le template';
 $_lang['contentblocks.duplicate_template'] = 'Dupliquer le template';
+$_lang['contentblocks.export_template'] = 'Exporter le modèle';
 $_lang['contentblocks.export_templates'] = 'Exporter les templates';
 $_lang['contentblocks.import_templates'] = 'Importer les templates';
 $_lang['contentblocks.import_templates.title'] = 'Importer les templates';
@@ -272,11 +280,11 @@ $_lang['contentblocks.image'] = "Image";
 $_lang['contentblocks.image.description'] = "Type d'entrée avec sélection ou upload facile d'images.";
 $_lang['contentblocks.image.source'] = "Surcharge du Media Source";
 $_lang['contentblocks.image.source.description'] = "Laisser sur (none) pour utiliser le Media Source par défaut du système pour les images, ou choisir un Media Source spécifique pour passer outre ce paramètre pour un Champ spécifique.";
-$_lang['contentblocks.image_template.description'] = "Modèle pour l'entrée image. Doit probablement inclure un tag <code>&lt;img&gt;</code>. Espaces réservés (placeholders) disponibles : <code>[[+url]]</code>, <code>[[+size]]</code>, <code>[[+extension]]</code>";
+$_lang['contentblocks.image_template.description'] = "Modèle pour le type d'entrée image. Devrait probablement inclure une balise <code>&lt; img &gt;</code>. Espaces réservés disponibles: <code>[[+ url]]</code> <code>[[+ Taille]]</code>, <code>[[+ Largeur]]</code>, <code>[[+ hauteur]]</code>, <code>[[+ extension]]</code>";
 $_lang['contentblocks.imagewithtitle'] = "Image avec Titre";
 $_lang['contentblocks.imagewithtitle.description'] = "Identique à Image, mais avec en plus un champ texte pour ajouter un attribut Alt ou Title.";
 $_lang['contentblocks.image_with_title'] = $_lang['Image avec titre'];
-$_lang['contentblocks.image_with_title_template.description'] = "Modèle pour l'entrée image. Doit probablement inclure un tag <code>&lt;img&gt;</code>. Espaces réservés (placeholders) disponibles : <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code>, <code>[[+extension]]</code>";
+$_lang['contentblocks.image_with_title_template.description'] = "Modèle pour le type d'entrée image. Devrait probablement inclure une balise <code>&lt; img &gt;</code>. Espaces réservés disponibles: <code>[[+ url]]</code> <code>[[+ title]]</code>, <code>[[+ Taille]]</code>, <code>[[+ Largeur]]</code>, <code>[[+ hauteur]]</code>, <code>[[+ extension]]</code>";
 
 $_lang['contentblocks.list'] = "Liste";
 $_lang['contentblocks.list.description'] = "Type d'entrée pour la création facile de listes non-ordonnées (imbriquées).";
@@ -298,17 +306,20 @@ $_lang['contentblocks.quote.author'] = "Auteur";
 
 $_lang['contentblocks.repeater'] = "Répéteur";
 $_lang['contentblocks.repeater.description'] = "Permet de définir un groupe de champs, que l'éditeur pourra alors \"répéter\" comme une seule entité.";
-$_lang['contentblocks.repeater_template.description'] = "Le modèle pour chaque ligne du \"répéteur\". Il n'y a pas de défaut car cela dépend entièrement de la configuration des groupes! Pour chacun des champs définis, vous devrez indiquer une clé. Le \"répéteur\" procédera en premier lieu à l'analyse des champs via leurs processeurs dédiés (un champ image sera donc \"analysé\" en premier lieu, comme s'il s'agissait d'un champ image indépendant), et le résultat sera stocké dans le placeholder (la clé que vous aurez défini). Veuillez consulter la documentation sur modmore.com pour une explication plus approfondie du fonctionnement des champs \"répéteur\".";
+$_lang['contentblocks.repeater_template.description'] = "Le modèle pour chaque ligne du \"répéteur\". Il n'y a pas de défaut car il dépend entièrement de la configuration des groupes ! Pour chacun des champs définis, vous devrez indiquer une clé. Le \"répéteur\" procédera en premier lieu à l'analyse des champs via leurs processeurs dédiés (un champ image sera donc \"analysé\" en premier lieu, comme s'il s'agissait d'un champ image indépendant), et le résultat sera stocké dans le champ basé sur la clé que vous aurez défini. Veuillez consulter la documentation sur modmore.com pour une explication plus approfondie du fonctionnement des champs \"répéteur\". Supporte aussi un placeholder <code>[[+idx]]</code>.";
 $_lang['contentblocks.repeater.width'] = "Largeur (en %)";
 $_lang['contentblocks.repeater.key'] = "Clé";
+$_lang['contentblocks.repeater.key.description'] = "La clé par lequel la valeur de ce champ est accessible dans le modèle de Répéteur. ";
 $_lang['contentblocks.repeater.group'] = "Groupe";
 $_lang['contentblocks.repeater.group.description'] = "Le champ \"répéteur\" permet de répéter un groupe de champs. C'est où vous indiquez les champs qui sont à répéter.";
 $_lang['contentblocks.repeater.max_items'] = "Nombre maximal d'éléments";
 $_lang['contentblocks.repeater.max_items.description'] = "Lorsque la valeur d'un nombre supérieur à 0, il sera impossible d'ajouter des éléments au-delà de cette limite.";
 $_lang['contentblocks.repeater.max_items_reached'] = "Désolé, vous n'êtes pas autorisé à ajouter plus de [[+max]] éléments.";
+$_lang['contentblocks.repeater.min_items'] = "Nombre minimal d'éléments";
+$_lang['contentblocks.repeater.min_items.description'] = "Si vous sélectionnez un nombre supérieur à 0, les lignes ne peuvent être enlevées au-delà de cette limite.";
 $_lang['contentblocks.repeater.add_item'] = "Ajouter une entrée";
 $_lang['contentblocks.repeater.delete_item'] = "Supprimer l'entrée";
-$_lang['contentblocks.repeater.wrapper_template.description'] = "Modèle contenant toutes les autres lignes. Doit contenir le placeholder <code>[[+rows]]</code>.";
+$_lang['contentblocks.repeater.wrapper_template.description'] = "Modèle externe contenant toutes les lignes traitées. Doit contenir le code <code>[[+rows]]</code>, peux aussi contenir <code>[[+total]]</code>.";
 $_lang['contentblocks.repeater.row_separator'] = "Séparateur de ligne";
 $_lang['contentblocks.repeater.row_separator.description'] = "Une chaîne joindre les lignes. Cela peut être simplement quelques sauts de ligne (par défaut) ou tout code HTML que vous souhaitez entre chaque ligne.";
 
@@ -374,7 +385,9 @@ $_lang['contentblocks.nested_template'] = "Modèle imbriqué";
 $_lang['contentblocks.max_images'] = "Nombre d'images maximum";
 $_lang['contentblocks.max_images_reached'] = "Désolé, vous ne pouvez utiliser plus de [[+max]] images dans cette galerie.";
 $_lang['contentblocks.upload_error'] = "Tiens, tiens, quelque chose s'est mal passé lors de l'envoi de [[+file]] : [[+message]]";
-$_lang['contentblocks.upload_error.file_too_big'] = "\"\\n\\nLe fichier est peut-être trop grand.";
+$_lang['contentblocks.upload_error.file_too_big'] = "\"\n\nLe fichier est peut-être trop grand.";
+$_lang['contentblocks.image.thumbnail_size'] = "Taille des vignettes dans le Manager";
+$_lang['contentblocks.image.thumbnail_size.description'] = "Dimensions pour les vignettes dans le Manager. Laissez vide pour aucune, une valeur numérique pour les images carrées et des dimensions LxH pour les images rectangulaires. Exemple : 100 ou 100 x 50";
 
 // Misc
 $_lang['contentblocks.use_contentblocks'] = "Utiliser ContentBlocks?";
@@ -462,6 +475,12 @@ assainir
 
 $_lang['setting_contentblocks.image.upload_path'] = "Chemin pour l'Upload";
 $_lang['setting_contentblocks.image.upload_path_desc'] = "Le chemin, dans le Media Source défini, vers lequel les fichiers doivent être uploadés. Cela supporte les espaces réservés  (placeholders) [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]].";
+
+$_lang['setting_contentblocks.cache_source'] = "Source du cache";
+$_lang['setting_contentblocks.cache_source.description'] = "Choisissez le média source à utiliser pour les fichiers de cache des miniatures de galerie d'images.";
+
+$_lang['setting_contentblocks.cache_path'] = "Chemin d'accès du cache";
+$_lang['setting_contentblocks.cache_path.description'] = "Le chemin d'accès, au sein du media source, dans lequel les fichiers cache de miniatures doivent être téléchargés.";
 
 $_lang['setting_contentblocks.sanitize_pattern'] = "Assainir le modèle";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Un modèle d'expression rationnelle (RegEx) à utiliser pour assainir les noms de fichiers qui doivent être assainis.";

@@ -1,3 +1,33 @@
+++ MoreGallery 1.3.7-pl
+++ Released on 2015-10-08
++++++++++++++++++++++++++
+- Fix loading crop information from resource settings, was causing images to not get cropped properly automatically
+- Improve how the manager thumbs are created to ensure crisp images, even for very tall/wide images
+- Strip out invalid control/hidden characters from EXIF data on upload to prevent errors
+
+++ MoreGallery 1.3.6-pl
+++ Released on 2015-09-28
++++++++++++++++++++++++++
+- Make sure the memory limit is consistently increased when generating crops [S6583]
+- Fix case sensitive extension check to be case insensitive [#134]
+- Fix undefined variable error and broken image_count wrapper placeholder in mgGetImages
+- Make sure description field is big enough when rich text is disabled [#128]
+- Fix background of crops preview with transparent images
+- Fix unnecessary hardcoded PNG format for crops, now only used when source image is png as well
+
+++ MoreGallery 1.3.5-pl
+++ Released on 2015-09-02
++++++++++++++++++++++++++
+- Make sure only valid image extensions are allowed to be uploaded [S6405]
+- Catch failed uploads when server limits caused the error rather than MODX [#122]
+
+++ MoreGallery 1.3.4-pl
+++ Released on 2015-07-13
++++++++++++++++++++++++++
+- Updated translations, contributions are welcome via https://crowdin.com/project/modmore-moregallery
+- Hardened XHR security to prevent leaking session IDs cross-domain (#114)
+- Fix issue with double quotes in image fields not working as expected (potential self-XSS)
+
 ++ MoreGallery 1.3.3-pl
 ++ Released on 2015-05-16
 +++++++++++++++++++++++++

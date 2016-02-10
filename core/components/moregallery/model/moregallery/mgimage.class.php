@@ -133,7 +133,6 @@ class mgImage extends xPDOSimpleObject
                         'crop' => $key,
                     )
                 );
-                $crop->getThumb($source, $relativeUrl);
                 $url = $crop->getThumb($source, $relativeUrl);
                 $crop->set('thumbnail_url', $url);
                 $path = $crop->getThumb($source, $relativeUrl, true);
@@ -333,6 +332,14 @@ class mgImage extends xPDOSimpleObject
             require_once dirname(dirname(dirname(__FILE__))).'/model/phpthumb/ThumbLib.inc.php';
             $thumb = PhpThumbFactory::create($content, array(), true);
             $thumb->setFormat('PNG');
+            $size = $thumb->getCurrentDimensions();
+            // Make sure wide images don't get blurry
+            if ($size['width'] > $size['height']) {
+                $width = ceil(($size['width'] / $size['height']) * $width);
+            }
+            else {
+                $height = ceil(($size['height'] / $size['width']) * $height);
+            }
             $thumb->resize($width, $height);
             $thumbContents = $thumb->getImageAsString();
 
@@ -359,7 +366,12 @@ class mgImage extends xPDOSimpleObject
             try {
                 // Fetch EXIF data if we have it.
                 $exif = exif_read_data($file, NULL, false, false);
-                if (is_array($exif)) $this->set('exif', $exif);
+                if (is_array($exif)) {
+                    foreach ($exif as $key => $value) {
+                        $exif[$key] = $this->_cleanExifData($value);
+                    }
+                    $this->set('exif', $exif);
+                }
             } catch (Exception $e) {
                 $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, '[moreGallery] Exception while trying to read exif data: ' . $e->getMessage());
             }
@@ -411,6 +423,23 @@ class mgImage extends xPDOSimpleObject
         $moreGallery = $this->xpdo->getService('moregallery', 'moreGallery', $corePath . 'model/moregallery/');
         if (!($moreGallery instanceof moreGallery)) {
             $this->xpdo->log(modX::LOG_LEVEL_ERROR, 'Error loading moreGallery class from ' . $corePath, '', __METHOD__, __FILE__, __LINE__);
+        }
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    protected function _cleanExifData($value)
+    {
+        if (is_array($value)) {
+            foreach ($value as $key => $subValue) {
+                $value[$key] = $this->_cleanExifData($subValue);
+            }
+            return $value;
+        }
+        else {
+            return preg_replace('/[^\PC\s]/u', '', $value);
         }
     }
 }

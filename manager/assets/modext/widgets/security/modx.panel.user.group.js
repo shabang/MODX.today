@@ -266,6 +266,29 @@ MODx.panel.UserGroup = function(config) {
                                 ,'createAcl': {fn:this.markDirty,scope:this}
                             }
                         }]
+                    },{
+                        title: _('user_group_namespace_access')
+                        ,hidden: config.record.id === 0
+                        ,hideMode: 'offsets'
+                        ,layout: 'form'
+                        ,items: [{
+                            html: '<p>' + _('user_group_namespace_access_desc') + '</p>'
+                            ,bodyCssClass: 'panel-desc'
+                            ,border: false
+                        },{
+                            xtype: 'modx-grid-user-group-namespace'
+                            ,cls:'main-wrapper'
+                            ,preventRender: true
+                            ,usergroup: config.record.id
+                            ,autoHeight: true
+                            ,width: '97%'
+                            //,listeners: {
+                            //    'afterRemoveRow': {fn:this.markDirty,scope:this}
+                            //    ,'afteredit': {fn:this.markDirty,scope:this}
+                            //    ,'updateAcl': {fn:this.markDirty,scope:this}
+                            //    ,'createAcl': {fn:this.markDirty,scope:this}
+                            //}
+                        }]
                     }]
                 }]
             }]
@@ -390,14 +413,14 @@ Ext.extend(MODx.grid.UserGroupUsers,MODx.grid.Grid,{
     ,searchUser: function(tf,nv,ov) {
         this.getStore().baseParams['username'] = Ext.getCmp('modx-ugu-filter-username').getValue();
         this.getBottomToolbar().changePage(1);
-        this.refresh();
+        //this.refresh();
     }
 
     ,clearFilter: function(btn,e) {
         Ext.getCmp('modx-ugu-filter-username').setValue('');
         this.getStore().baseParams['username'] = '';
         this.getBottomToolbar().changePage(1);
-        this.refresh();
+        //this.refresh();
     }
 
     ,updateRole: function(btn,e) {
@@ -417,16 +440,25 @@ Ext.extend(MODx.grid.UserGroupUsers,MODx.grid.Grid,{
         });
     }
     ,addMember: function(btn,e) {
-        this.loadWindow(btn,e,{
-            xtype: 'modx-window-user-group-adduser'
-            ,record: {usergroup:this.config.usergroup}
-            ,listeners: {
-                'success': {fn:function(r) {
-                    this.refresh();
-                    this.fireEvent('addMember',r);
-                },scope:this}
-            }
-        });
+        var r = {usergroup:this.config.usergroup};
+        
+        if (!this.windows['modx-window-user-group-adduser']) {
+            this.windows['modx-window-user-group-adduser'] = Ext.ComponentMgr.create({
+                xtype: 'modx-window-user-group-adduser'
+                ,record: r
+                ,grid: this
+                ,listeners: {
+                    'success': {fn:function(r) {
+                        this.refresh();
+                        this.fireEvent('addMember',r);
+                    },scope:this}
+                }
+            });
+        }
+        
+        this.windows['modx-window-user-group-adduser'].setValues(r);
+        this.windows['modx-window-user-group-adduser'].show(e.target);
+        
     }
     ,removeUser: function(btn,e) {
         var r = this.menu.record;
@@ -523,27 +555,3 @@ MODx.window.AddUserToUserGroup = function(config) {
 };
 Ext.extend(MODx.window.AddUserToUserGroup,MODx.Window);
 Ext.reg('modx-window-user-group-adduser',MODx.window.AddUserToUserGroup);
-
-
-
-MODx.combo.Authority = function(config) {
-    config = config || {};
-    Ext.applyIf(config,{
-        name: 'authority'
-        ,hiddenName: 'authority'
-        ,forceSelection: true
-        ,typeAhead: false
-        ,editable: false
-        ,allowBlank: false
-        // ,listWidth: 300
-        ,pageSize: 20
-        ,url: MODx.config.connector_url
-        ,baseParams: {
-            action: 'security/role/getAuthorityList'
-            ,addNone: true
-        }
-    });
-    MODx.combo.Authority.superclass.constructor.call(this,config);
-};
-Ext.extend(MODx.combo.Authority,MODx.combo.ComboBox);
-Ext.reg('modx-combo-authority',MODx.combo.Authority);

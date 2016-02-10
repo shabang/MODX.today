@@ -7,8 +7,13 @@ abstract class ContentBlocksImportProcessor extends modProcessor
 {
     public $classKey;
     public $mode = 'insert';
+    /** @var ContentBlocks */
+    public $contentBlocks;
 
     public function initialize() {
+        $corePath = $this->modx->getOption('contentblocks.core_path', null, $this->modx->getOption('core_path') . 'components/contentblocks/');
+        $this->contentBlocks =& $this->modx->getService('contentblocks', 'ContentBlocks', $corePath . 'model/contentblocks/');
+
         $mode = $this->getProperty('mode');
         if (in_array($mode, array('insert', 'overwrite', 'replace'))) {
             $this->mode = $mode;
@@ -35,7 +40,7 @@ abstract class ContentBlocksImportProcessor extends modProcessor
 
         // Make sure this is a contentblocks export
         $package = (string) $xml->attributes()->{'package'};
-        if ($package != 'contentblocks') {
+        if ($package !== 'contentblocks') {
             return $this->failure($this->modx->lexicon('contentblocks.error.not_an_export'));
         }
 
@@ -49,7 +54,7 @@ abstract class ContentBlocksImportProcessor extends modProcessor
             $data[] = $a;
         }
 
-        if ($this->mode == 'replace') {
+        if ($this->mode === 'replace') {
             $this->modx->removeCollection($this->classKey, array());
         }
 

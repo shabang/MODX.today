@@ -53,6 +53,8 @@ $_lang['moregallery.model_error'] = 'Der er sket en uventet fejl, billedemodelle
 
 $_lang['moregallery.error_invalid_resource'] = 'Der er sket en uventet fejl, ressourcen "[[+resource]]" er ikke et gyldigt galleri.';
 $_lang['moregallery.error_loading_source'] = 'An error occurred loading the Media Source for this Gallery.';
+$_lang['moregallery.error_invalid_filetype'] = 'Sorry, .[[+extension]] files are not allowed.';
+$_lang['moregallery.error_upload_failed'] = 'the file could not be uploaded (Error [[+error]]).';
 
 // Tags related, for MoreGallery 1.1
 $_lang['moregallery.tags'] = 'Tags';
@@ -82,7 +84,7 @@ $_lang['setting_moregallery.content_position_desc'] = 'Set to "above", "below", 
 $_lang['setting_moregallery.use_rte_for_images'] = 'Use Rich Text Editor';
 $_lang['setting_moregallery.use_rte_for_images_desc'] = 'When enabled, the currently active rich text editor will be loaded into the Image Description field. We recommend using Redactor, but other editors are also supported.';
 $_lang['setting_moregallery.crops'] = 'Crops';
-$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/">full Crops documentation</a> for more information about syntax and functionality.';
+$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">full Crops documentation</a> for more information about syntax and functionality.';
 $_lang['setting_moregallery.single_image_url_param'] = 'Single Image URL Parameter';
 $_lang['setting_moregallery.single_image_url_param_desc'] = 'Used with the mgGetImages snippet, the single image url parameter determines whether a listing or single image is displayed. This URL parameter will contain the image ID and, if not found, it will send the user to the configured 404 page. ';
 $_lang['setting_moregallery.add_icon_to_toolbar'] = 'Add Icon to Toolbar';

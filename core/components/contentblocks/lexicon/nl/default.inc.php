@@ -16,14 +16,16 @@ $_lang['contentblocks.link.email'] = "E-mailadres";
 $_lang['contentblocks.link.link_new_tab'] = "Open in nieuw tabblad";
 $_lang['contentblocks.link.add'] = "Link toevoegen";
 $_lang['contentblocks.link.remove'] = "Link verwijderen";
-$_lang['contentblocks.link.placeholder'] = "Start typing the name of a resource, external link or email address";
+$_lang['contentblocks.link.placeholder'] = "Typ de naam van een document, externe link of e-mailadres";
 $_lang['contentblocks.link.link_detection_pattern_override'] = 'Link detectie patroon override';
 $_lang['contentblocks.link.link_detection_pattern_override.description'] = 'RegEx om te detecteren of een link geldig is; mocht dat niet het geval zijn dan wordt http:// voor de koppeling geplaatst.';
+$_lang['contentblocks.link.limit_to_current_context'] = 'Beperk resultaten tot resources in de huidige context';
+$_lang['contentblocks.link.limit_to_current_context.description'] = 'De resultaten voor de resource typeahead zullen gelimiteerd worden tot resources die zich in dezelfde context bevinden als de pagina die bewerkt wordt.';
 
 $_lang['setting_contentblocks.link.link_detection_pattern'] = 'Link detectie patroon';
 $_lang['setting_contentblocks.link.link_detection_pattern_desc'] = 'RegEx om te detecteren of een link geldig is; mocht dat niet het geval zijn dan wordt http:// voor de koppeling geplaatst.';
 
-$_lang['setting_contentblocks.typeahead.include_introtext'] = 'Samenvatting opnemen in typeahead functionalitit';
+$_lang['setting_contentblocks.typeahead.include_introtext'] = 'Samenvatting opnemen in typeahead functionaliteit';
 $_lang['setting_contentblocks.typeahead.include_introtext_desc'] = 'Wanneer deze instelling is ingeschakeld zal de zoekbox ook de introtekst van documenten tonen, waarbij je meer informatie over de gevonden documenten te zien krijgt.';
 
 $_lang['contentblocks.error.not_an_export'] = "Het bestand lijkt geen ContentBlocks export te zijn.";
@@ -55,7 +57,7 @@ $_lang['contentblocks.condition_field.ultimateparent'] = "Uiterst Bovenliggend I
 $_lang['contentblocks.condition_field.class_key'] = "Document Type";
 $_lang['contentblocks.condition_field.context'] = "Context";
 $_lang['contentblocks.condition_field.template'] = "Template (ID)";
-$_lang['contentblocks.condition_field.usergroup'] = "Gebruiekrsgroep (naam)";
+$_lang['contentblocks.condition_field.usergroup'] = "Gebruikersgroep (naam)";
 $_lang['contentblocks.condition_value'] = "Waarde(s)";
 $_lang['contentblocks.availibility.layouts'] = "Layout(s)";
 $_lang['contentblocks.availibility.layouts.description'] = "Beperk het gebruik van dit Veld tot één of meer (komma gescheiden) Layouts. Indien leeg zal dit veld beschikbaar zijn voor alle Layouts, anders wordt deze beperkt tot degene die je specificeerd. ";
@@ -74,6 +76,7 @@ $_lang['contentblocks.duplicate_field'] = "Veld dupliceren";
 $_lang['contentblocks.delete_field'] = "Verwijder veld";
 $_lang['contentblocks.delete_field.confirm'] = "Weet je zeker dat je dit veld wilt verwijderen? Potentieel rampzalige dingen kunnen gebeuren met alle content die dit Veld gebruiken.";
 $_lang['contentblocks.delete_field.confirm.js'] = "Weet je zeker dat je dit veld wilt verwijderen?";
+$_lang['contentblocks.export_field'] = "Exporteer veld";
 $_lang['contentblocks.export_fields'] = "Exporteer";
 $_lang['contentblocks.export_fields.confirm'] = "Na het klikken op Ja hieronder, zullen wij een XML export voorbereiden van alle Velden. Deze kan gebruikt worden om Velden te importeren in een andere installatie. Het genereren van deze XML kan enkele seconden duren, afhankelijk van het aantal Velden dat je hebt geconfigureerd.";
 $_lang['contentblocks.import_fields'] = "Importeer";
@@ -85,6 +88,7 @@ $_lang['contentblocks.add_layout'] = "Layout toevoegen";
 $_lang['contentblocks.repeat_layout'] = "Herhaal Layout";
 $_lang['contentblocks.edit_layout'] = "Layout bewerken";
 $_lang['contentblocks.duplicate_layout'] = "Layout dupliceren";
+$_lang['contentblocks.export_layout'] = "Exporteer layout";
 $_lang['contentblocks.delete_layout'] = "Verwijder Layout";
 $_lang['contentblocks.delete_layout.confirm'] = "Weet je zeker dat je dit Layout wilt verwijderen? Potentieel rampzalige dingen kunnen gebeuren met alle content die dit Veld gebruiken.";
 $_lang['contentblocks.delete_layout.confirm.js'] = "Weet je zeker dat je de [[+layoutName]] layout wilt verwijderen? Alle inhoud zal worden verwijderd als je doorgaat.";
@@ -100,7 +104,7 @@ $_lang['contentblocks.layout_settings.modal_header'] = "[[+name]] Instellingen";
 $_lang['contentblocks.field_settings'] = "Content Instellingen";
 $_lang['contentblocks.field_settings.modal_header'] = "[[+name]] Instellingen";
 
-$_lang['contentblocks.add_layoutcolumn'] = "Kolom tovoegen";
+$_lang['contentblocks.add_layoutcolumn'] = "Kolom toevoegen";
 $_lang['contentblocks.edit_layoutcolumn'] = "Kolom bewerken";
 $_lang['contentblocks.delete_layoutcolumn'] = "Verwijder kolom";
 $_lang['contentblocks.delete_layoutcolumn.confirm'] = "Weet je zeker dat je deze kolom wilt verwijderen? Potentieel rampzalige dingen kunnen gebeuren met alle content die dit Veld gebruiken.";
@@ -153,11 +157,14 @@ $_lang['contentblocks.description'] = "Omschrijving";
 $_lang['contentblocks.template'] = "Template";
 $_lang['contentblocks.template.description'] = "De template voor het Layout heeft verschillende beschikbare placeholders, afhankelijk van de Kolommen en Instellingen die je definieert in de tabs aan de linkerkant.";
 $_lang['contentblocks.width'] = "Breedte";
+$_lang['contentblocks.width.description'] = "De breedte van het veld (in procenten) dat dit veld in het canvas zal innemen. Velden worden door middel van een float: left getoond, dus je kunt hiermee simpele layouts samenstellen.";
 $_lang['contentblocks.save'] = "Opslaan";
 $_lang['contentblocks.reference'] = "Referentie";
 $_lang['contentblocks.default_value'] = "Standaard waarde";
 $_lang['contentblocks.fieldtype'] = "Veld Type";
 $_lang['contentblocks.fieldtype.select'] = "Selecteer";
+$_lang['contentblocks.fieldtype.radio'] = "Radio opties";
+$_lang['contentblocks.fieldtype.checkbox'] = "Checkbox opties";
 $_lang['contentblocks.fieldtype.textfield'] = "Tekstveld";
 $_lang['contentblocks.fieldtype.link'] = "Koppeling";
 $_lang['contentblocks.fieldtype.textarea'] = "Tekstvak";
@@ -181,6 +188,7 @@ $_lang['contentblocks.templates_desc'] = 'Templates zijn vooraf gedefinieerde se
 $_lang['contentblocks.add_template'] = 'Template toevoegen';
 $_lang['contentblocks.edit_template'] = 'Template bewerken';
 $_lang['contentblocks.duplicate_template'] = 'Template dupliceren';
+$_lang['contentblocks.export_template'] = 'Exporteer template';
 $_lang['contentblocks.export_templates'] = 'Templates Exporteren';
 $_lang['contentblocks.import_templates'] = 'Templates Importeren';
 $_lang['contentblocks.import_templates.title'] = 'Templates Importeren';
@@ -204,7 +212,7 @@ $_lang['contentblocks.chunk_selector_template.description'] = 'Het template voor
 $_lang['contentblocks.chunkselector.description'] = 'Kies een chunk om te tonen';
 $_lang['contentblocks.chunkselector.available_chunks'] = "Naam of ID's voor toegestane Chunks (Optioneel)";
 $_lang['contentblocks.chunkselector.available_chunks.description'] = "Om de beschikbare chunks te limiteren kun je hier een kommagescheiden lijst van chunk namen of IDs invullen. Chunks in deze lijst zullen altijd beschikbaar zijn, onafhankelijk van overige properties.";
-$_lang['contentblocks.chunkselector.available_categories'] = "Categoriën";
+$_lang['contentblocks.chunkselector.available_categories'] = "Categorieën";
 $_lang['contentblocks.chunkselector.available_categories.description'] = "Specificeer een lijst met categorienamen of IDs om de beschikbare chunks te limiteren.";
 
 $_lang['contentblocks.code'] = "Code";
@@ -271,11 +279,11 @@ $_lang['contentblocks.image'] = "Afbeelding";
 $_lang['contentblocks.image.description'] = "Invoer type met een eenvoudige afbeelding upload of selectie.";
 $_lang['contentblocks.image.source'] = "Overschrijf Media Source";
 $_lang['contentblocks.image.source.description'] = "Laat deze op (geen) om de standaard media source van het systeem te gebruiken voor afbeeldingen, of kies een specifieke media source om deze instelling te overschrijven voor dit veld.";
-$_lang['contentblocks.image_template.description'] = "Template voor het afbeelding invoer type. Zal waarschijnlijk een <code>&lt;img&gt;</code> tag bevatten. Beschikbare placeholders: <code>[[+url]]</code> (de link van de afbeelding), <code>[[+size]]</code>, <code>[[+extension]]</code>";
+$_lang['contentblocks.image_template.description'] = "Template voor de afbeelding. Hier wil je waarschijnlijk een <code>&lt;img&gt;</code> tag gebruiken. Beschikbare placeholders: <code>[[+url]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 $_lang['contentblocks.imagewithtitle'] = "Afbeelding met Titel";
 $_lang['contentblocks.imagewithtitle.description'] = "Hetzelfde als Afbeelding, maar deze keer met een tekstveld om een alt of titel attribuut toe te voegen.";
 $_lang['contentblocks.image_with_title'] = $_lang['Afbeelding met titel'];
-$_lang['contentblocks.image_with_title_template.description'] = "Template voor het afbeelding invoer type. Zal waarschijnlijk een <code>&lt;img&gt;</code> tag bevatten. Beschikbare placeholders: <code>[[+url]]</code> (de link van de afbeelding), <code>[[+title]]</code> (de ingevoerde titel tekst), <code>[[+size]]</code>, <code>[[+extension]]</code>";
+$_lang['contentblocks.image_with_title_template.description'] = "Template voor de afbeelding met titel. Hier wil je waarschijnlijk een <code>&lt;img&gt;</code> tag gebruiken. Beschikbare placeholders: <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 
 $_lang['contentblocks.list'] = "Lijst";
 $_lang['contentblocks.list.description'] = "Invoer type voor, gemakkelijk te maken, ongesoorteerde (geneste) lijsten.";
@@ -297,17 +305,20 @@ $_lang['contentblocks.quote.author'] = "Auteur";
 
 $_lang['contentblocks.repeater'] = "Repeater";
 $_lang['contentblocks.repeater.description'] = "Maakt het mogelijk om een groep van velden te definiëren, welke vervolgens door de gebruiker als groep herhaalt kan worden.";
-$_lang['contentblocks.repeater_template.description'] = "De template voor elke individuele rij in de repeater. Er is geen standaard template aangezien het compleet afhankelijk is van je groep configuratie! Voor elk veld wordt onder andere een Key ingesteld. De repeater zal eerst alle velden door hun eigen processor parsen (dus een afbeelding veld wordt eerst geparsed alsof het een stand alone afbeelding is), en het resultaat daarvan wordt als placeholder op basis van de key ingesteld. Raadpleeg de online documentatie op modmore.com voor uitgebreidere documentatie over hoe de repeater precies werkt.";
+$_lang['contentblocks.repeater_template.description'] = "Template voor individuele rijen in de repeater. Er is geen standaard template beschikbaar aangezien dit compleet afhangt van je repeater configuratie. Voor elk veld definieer je een key. De repeater zal elk ondergeschikt veld eerst normaal verwerken (alsof het een losstaand veld is), en het resultaat daarvan wordt beschikbaar in een placeholder met de key die je per veld hebt geconfigureerd. Op modmore.com is uitgebreide documentatie te vinden over hoe de repeater werkt en wat je ermee kunt bereiken. Er is standaard een <code>[[+idx]]</code> placeholder beschikbaar.";
 $_lang['contentblocks.repeater.width'] = "Breedte (in %)";
 $_lang['contentblocks.repeater.key'] = "Key";
+$_lang['contentblocks.repeater.key.description'] = "De key waarmee je de waarde van het veld in de repeater template kunt aanroepen. ";
 $_lang['contentblocks.repeater.group'] = "Groep";
 $_lang['contentblocks.repeater.group.description'] = "De repeater maakt het mogelijk om een groep van velden in te stellen. Deze grid is waar je deze veld configureert.";
 $_lang['contentblocks.repeater.max_items'] = "Maximum aantal items";
 $_lang['contentblocks.repeater.max_items.description'] = "Indien ingesteld op een getal groter dan 0, dan zullen extra rijen boven dat aantal niet toegestaan worden.";
 $_lang['contentblocks.repeater.max_items_reached'] = "Sorry, je kunt maximaal [[+max]] items toevoegen.";
+$_lang['contentblocks.repeater.min_items'] = "Minimum aantal items";
+$_lang['contentblocks.repeater.min_items.description'] = "Als dit een nummer groter dan 0 is, dan zal het niet mogelijk zijn om rijen onder dit limiet te verwijderen.";
 $_lang['contentblocks.repeater.add_item'] = "Item toevoegen";
 $_lang['contentblocks.repeater.delete_item'] = "Item verwijderen";
-$_lang['contentblocks.repeater.wrapper_template.description'] = "Template waarin het resultaat van alle andere rijen in getoond worden. Bevat waarschijnlijk een <code>[[+rows]]</code> placeholder.";
+$_lang['contentblocks.repeater.wrapper_template.description'] = "Buitenste template waarin het resultaat van de rijen wordt getoond. Hierin moet de <code>[[+rows]]</code> placeholder gebruikt worden om de resultaten te zien. Er is ook een <code>[[+total]]</code> placeholder beschikbaar.";
 $_lang['contentblocks.repeater.row_separator'] = "Rijscheidingsteken";
 $_lang['contentblocks.repeater.row_separator.description'] = "Een tekenreeks waarmee de afzonderlijke rijen aan elkaar worden gelijmd. Dit kan zoals de standaard een regeleinde zijn, maar het is ook mogelijk om uitgebreidere HTML te gebruiken.";
 
@@ -373,7 +384,9 @@ $_lang['contentblocks.nested_template'] = "Geneste Template";
 $_lang['contentblocks.max_images'] = "Maximaal aantal Afbeeldingen";
 $_lang['contentblocks.max_images_reached'] = "Sorry, je kunt niet meer dan [[+max]] afbeeldingen gebruiken.";
 $_lang['contentblocks.upload_error'] = "Oeps, er ging iets mis met uploaden van [[+file]]: [[+message]]";
-$_lang['contentblocks.upload_error.file_too_big'] = "\\n\\nHet bestand zal mogelijk te groot zijn geweest.";
+$_lang['contentblocks.upload_error.file_too_big'] = "\n\nHet bestand zal mogelijk te groot zijn geweest.";
+$_lang['contentblocks.image.thumbnail_size'] = "Thumbnailgrootte in de manager";
+$_lang['contentblocks.image.thumbnail_size.description'] = "Dimensies voor thumbnails die in de manager voor je worden aangemaakt. Laat leeg voor geen thumbnails, geef een enkele numerieke waarde voor vierkante thumbnails of specifieer dimensies als bxh voor rechthoekige thumbnails. Bijvoorbeeld 100 of 100x50. ";
 
 // Misc
 $_lang['contentblocks.use_contentblocks'] = "Gebruik ContentBlocks?";
@@ -459,6 +472,12 @@ $_lang['setting_contentblocks.image.source_desc'] = "Kies de standaard media sou
 
 $_lang['setting_contentblocks.image.upload_path'] = "Upload Pad";
 $_lang['setting_contentblocks.image.upload_path_desc'] = "Het pad, binnen de gekozen media source, waar bestanden naar geupload moeten worden. Dit ondersteunt [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] en [[+resource]] placeholders";
+
+$_lang['setting_contentblocks.cache_source'] = "Cache Media Source";
+$_lang['setting_contentblocks.cache_source.description'] = "Kies de Media Source om te gebruiken voor afbeelding en gallery thumbnail cache bestanden.";
+
+$_lang['setting_contentblocks.cache_path'] = "Cache Path";
+$_lang['setting_contentblocks.cache_path.description'] = "Het pad binnen de gekozen media source waarin de thumbnail cache files worden opgeslagen.";
 
 $_lang['setting_contentblocks.sanitize_pattern'] = "Opschoon Patroon";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Een RegEx patroon met tekens die opgeschoond moeten worden bij bestandsnamen.";

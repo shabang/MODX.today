@@ -19,7 +19,7 @@
                 enterBeginsEditing: false,
                 contextMenu: true,
                 autoWrapCol: true,
-                nativeScrollbars: true,
+                nativeScrollbars: false,
 
                 afterChange: function() {
                     ContentBlocks.fireChange();

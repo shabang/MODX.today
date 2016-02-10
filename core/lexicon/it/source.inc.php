@@ -6,7 +6,7 @@
  * @package modx
  * @subpackage lexicon
  */
-$_lang['access'] = 'Permessi di Accesso';
+$_lang['access'] = 'Permessi d\'Accesso';
 $_lang['base_path'] = 'Percorso base';
 $_lang['base_path_relative'] = 'Percorso base relativo?';
 $_lang['base_url'] = 'URL di base';
@@ -48,25 +48,40 @@ $_lang['sources.intro_msg'] = 'Gestisci tutte le tue Media Sources qui.';
 $_lang['user_group'] = 'Gruppo Utenti';
 
 /* file source type */
+$_lang['allowedFileTypes'] = 'allowedFileTypes';
 $_lang['prop_file.allowedFileTypes_desc'] = 'Se impostato, restringerà i file visualizzati alle estensioni specificate. Si prega di specificarle in un elenco separato da virgole, senza il .';
+$_lang['basePath'] = 'basePath';
 $_lang['prop_file.basePath_desc'] = 'Il percorso del file a cui far puntare l\'Origine.';
+$_lang['basePathRelative'] = 'basePathRelative';
 $_lang['prop_file.basePathRelative_desc'] = 'Se l\'impostazione del percorso di Base qui sopra non è relativa al percorso di installazione MODX, impostare su No.';
+$_lang['baseUrl'] = 'baseUrl';
 $_lang['prop_file.baseUrl_desc'] = 'L\'URL da cui questa origine può essere accessibile.';
+$_lang['baseUrlPrependCheckSlash'] = 'baseUrlPrependCheckSlash';
 $_lang['prop_file.baseUrlPrependCheckSlash_desc'] = 'Se vero, MODX anteporrà solo il baseUrl se nessuno slash (/) si trova all\'inizio dell\'URL durante il rendering della TV. Utile per l\'impostazione di un valore di TV esterno al baseUrl.';
+$_lang['baseUrlRelative'] = 'baseUrlRelative';
 $_lang['prop_file.baseUrlRelative_desc'] = 'Se l\'impostazione di Base URL qui sopra non è relativo all\'URL di installazione MODX, impostare su NO.';
+$_lang['imageExtensions'] = 'imageExtensions';
 $_lang['prop_file.imageExtensions_desc'] = 'Un elenco delimitato da virgole di estensioni di file da utilizzare per le immagini. MODX tenterà di fare le miniature dei file con queste estensioni.';
+$_lang['skipFiles'] = 'skipFiles';
 $_lang['prop_file.skipFiles_desc'] = 'Un elenco delimitato da virgole. MODX salterà e nasconderà files e cartelle che corrispondono a uno qualsiasi di questi.';
+$_lang['thumbnailQuality'] = 'thumbnailQuality';
 $_lang['prop_file.thumbnailQuality_desc'] = 'La qualità delle miniature create, in una scala da 0-100.';
+$_lang['thumbnailType'] = 'thumbnailType';
 $_lang['prop_file.thumbnailType_desc'] = 'Il tipo di immagine da usare per le miniature.';
 
 /* s3 source type */
 $_lang['bucket'] = 'Bucket';
 $_lang['prop_s3.bucket_desc'] = 'Il bucket di S3 da cui caricare i tuoi dati.';
 $_lang['prop_s3.key_desc'] = 'La chiave di Amazon per l\'autenticazione al bucket.';
-$_lang['prop_s3.imageExtensions_desc'] = 'Un elenco delimitato da virgole di estensioni di file da utilizzare come immagini. MODX tenterà di fare le miniature dei file con queste estensioni.';
+$_lang['prop_s3.imageExtensions_desc'] = 'Un elenco delimitato da virgole di estensioni di file da utilizzare per le immagini. MODX tenterà di fare le miniature dei file con queste estensioni.';
 $_lang['prop_s3.secret_key_desc'] = 'La chiave segreta di Amazon per l\'autenticazione al bucket.';
 $_lang['prop_s3.skipFiles_desc'] = 'Un elenco delimitato da virgole. MODX salterà e nasconderà files e cartelle che corrispondono a uno qualsiasi di questi.';
 $_lang['prop_s3.thumbnailQuality_desc'] = 'La qualità delle miniature create, in una scala da 0-100.';
 $_lang['prop_s3.thumbnailType_desc'] = 'Il tipo di immagine da usare per le miniature.';
 $_lang['prop_s3.url_desc'] = 'L\'URL dell\'istanza Amazon S3.';
 $_lang['s3_no_move_folder'] = 'Il driver S3 non supporta lo spostamento delle cartelle in questo momento.';
+
+/* file type */
+$_lang['PNG'] = 'PNG';
+$_lang['JPG'] = 'JPG';
+$_lang['GIF'] = 'GIF';

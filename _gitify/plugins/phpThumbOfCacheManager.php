@@ -1,7 +1,7 @@
 id: 24
 name: phpThumbOfCacheManager
 description: 'Handles cache cleaning when clearing the Site Cache.'
-category: pThumb
+category: ''
 properties: null
 
 -----

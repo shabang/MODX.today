@@ -9,7 +9,7 @@
             this.editor.setTheme('ace/theme/' + ContentBlocksConfig['code.theme']);
             this.editor.setValue(data.value || '', 1);
             this.editor.setOptions({
-                minLines: 4,
+                minLines: 1,
                 maxLines: Infinity,
                 wrap: 'free'
             });

@@ -89,7 +89,7 @@ ContentBlocksComponent.grid.Layouts = function(config) {
             scope: this
         }, '->', {
             text: _('contentblocks.export_layouts'),
-            handler: this.exportLayouts,
+            handler: this.exportAllLayouts,
             scope: this
         }, '-', {
             text: _('contentblocks.import_layouts'),
@@ -181,6 +181,10 @@ Ext.extend(ContentBlocksComponent.grid.Layouts,MODx.grid.Grid,{
             text: _('contentblocks.duplicate_layout'),
             handler: this.duplicateLayout,
             scope: this
+        }, {
+            text: _('contentblocks.export_layout'),
+            handler: this.exportLayout,
+            scope: this
         }, '-', {
             text: _('contentblocks.delete_layout'),
             handler: this.deleteLayout,
@@ -189,7 +193,12 @@ Ext.extend(ContentBlocksComponent.grid.Layouts,MODx.grid.Grid,{
         return m;
     },
 
-    exportLayouts: function() {
+    exportLayout: function() {
+        var record = this.menu.record;
+        window.location = ContentBlocksComponent.config.connectorUrl + '?action=mgr/layouts/export&items=' + record.id + '&HTTP_MODAUTH=' + MODx.siteId;
+    },
+
+    exportAllLayouts: function() {
         Ext.Msg.confirm(_('contentblocks.export_layouts'), _('contentblocks.export_layouts.confirm'), function(e) {
             if (e == 'yes') {
                 window.location = ContentBlocksComponent.config.connectorUrl + '?action=mgr/layouts/export&HTTP_MODAUTH=' + MODx.siteId;

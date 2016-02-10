@@ -89,11 +89,14 @@ $_lang['setting_access_policies_version_desc'] = 'Verze systému přístupové p
 $_lang['setting_allow_forward_across_contexts'] = 'Povolit přesměrování mezi kontexty';
 $_lang['setting_allow_forward_across_contexts_desc'] = 'Tímto lze povolit, aby symbolický odkaz nebo API metoda modX::sendForward() mohla přesměrovat na dokument z jiného kontextu.';
 
-$_lang['setting_allow_manager_login_forgot_password'] = 'Zobrazit možnost "Zapomněli jste své přihlašovací údaje?" na přihlašovací obrazovce správce obsahu';
+$_lang['setting_allow_manager_login_forgot_password'] = 'Zobrazit možnost "Zapomněli jste?" pro reset hesla na přihlašovací obrazovce správce obsahu';
 $_lang['setting_allow_manager_login_forgot_password_desc'] = 'Nastavení na "Ne", znemožníte možnost nechat si zaslat zapomenuté hesla na přihlašovací obrazovce správce obsahu.';
 
 $_lang['setting_allow_tags_in_post'] = 'Povolit tagy v POST';
 $_lang['setting_allow_tags_in_post_desc'] = 'Je-li nastaveno "Ne", z obsahu POST proměnných v rámci správce obsahu budou odstraněny všechny HTML tagy, číselné entity a MODX tagy. Doporučujeme nechat tuto hodnotu na "Ne" pro jiné kontexty než "mgr", kde je ve výchozím stavu povolen.';
+
+$_lang['setting_anonymous_sessions'] = 'Anonymous Sessions';
+$_lang['setting_anonymous_sessions'] = 'Anonymous Sessions';
 
 $_lang['setting_archive_with'] = 'Používat PCLZip archivaci';
 $_lang['setting_archive_with_desc'] = 'Pokud Ano, PCLZip bude používán namísto ZipArchive pro soubory zip. Tuto volbu povolte pokud se Vám zobrazují chyby extractTo nebo máte problémy s rozbalováním ve Správě balíčků.';
@@ -263,7 +266,7 @@ $_lang['setting_extension_packages_desc'] = 'Čárkou oddělený seznam balíčk
 $_lang['setting_enable_gravatar'] = 'Povolit Gravatar';
 $_lang['setting_enable_gravatar_desc'] = 'Je-li povoleno, jako profilový obrázek se použije obrázek ze služby Gravatar (pokud uživatel nenahrál vlastní fotografii v rámci MODX).';
 
-$_lang['setting_failed_login_attempts'] = 'Počet neúspěšných pokusů o přihlášení';
+$_lang['setting_failed_login_attempts'] = 'Počet neúspěšných přihlášení';
 $_lang['setting_failed_login_attempts_desc'] = 'Počet neúspěšných pokusů o přihlášení předtím než bude uživatel zablokován.';
 
 $_lang['setting_fe_editor_lang'] = 'Jazyk frontend editoru';
@@ -307,6 +310,9 @@ $_lang['setting_friendly_alias_lowercase_only_desc'] = 'Určuje zda se mají pou
 
 $_lang['setting_friendly_alias_max_length'] = 'Maximální délka aliasu';
 $_lang['setting_friendly_alias_max_length_desc'] = 'Je-li hodnota větší než 0, maximální délku aliasu dokumentu bude omezena na tuto hodnotu. Nula pro neomezenou délku.';
+
+$_lang['setting_friendly_alias_realtime'] = 'Generovat FURL alias v reálném čase';
+$_lang['setting_friendly_alias_realtime_desc'] = 'Určuje, zda má být alias dokumentu vytvářen za běhu při zadávání Názvu dokumentu nebo se tak stane až po uložení dokumentu ("automatic_alias" musí být povolen, aby toto fungovalo).';
 
 $_lang['setting_friendly_alias_restrict_chars'] = 'Metoda odstranění nechtěných znaků z aliasu';
 $_lang['setting_friendly_alias_restrict_chars_desc'] = 'Metoda omezující použití znaků v aliasech dokumentů. Možnosti: "pattern" povoluje RegEx filtr, "legal" povoluje všechny platné URL znaky, "alpha" povoluje pouze pismena abecedy a "alphanumeric" povoluje pouze znaky a čísla.';
@@ -405,6 +411,9 @@ $_lang['setting_mail_smtp_timeout_desc'] = 'Nastavení délky timeoutu SMTP serv
 $_lang['setting_mail_smtp_user'] = 'SMTP uživatelské jméno';
 $_lang['setting_mail_smtp_user_desc'] = 'Uživatelské jméno pro autentizaci k SMTP.';
 
+$_lang['setting_main_nav_parent'] = 'Složka hlavního menu';
+$_lang['setting_main_nav_parent_desc'] = 'Složka pro načítání všech položek hlavního menu.';
+
 $_lang['setting_manager_direction'] = 'Směr zobrazení textu ve správci obsahu';
 $_lang['setting_manager_direction_desc'] = 'Zvolte směr textu, kterým bude zobrazen obsah správce obsahu, zleva do prava nebo zprava do leva.';
 
@@ -450,11 +459,24 @@ $_lang['setting_manager_use_tabs_desc'] = 'Je-li aktivní, správce obsahu použ
 $_lang['setting_manager_week_start'] = 'Začátek týdne';
 $_lang['setting_manager_week_start_desc'] = 'Určuje den, kterým začíná týden. 0 nebo prázdné pole je neděle, 1 pondělí, atd. ';
 
+$_lang['setting_mgr_tree_icon_context'] = 'Ikona kontextu';
+$_lang['setting_mgr_tree_icon_context_desc'] = 'Definujte CSS třídu, která se použije k zobrazení ikony kontextu ve stromu dokumentů. Toto nastavení můžete použít v rámci každého kontextu, tedy každý kontext může mít jinou ikonu.';
+
+$_lang['setting_mgr_source_icon'] = 'Ikona zdroje médií';
+$_lang['setting_mgr_source_icon_desc'] = 'CSS třída, která se použije k zobrazení ikony Zdroje médií ve stromu souborů. Výchozí nastavení je "icon-folder-open-o"';
+
 $_lang['setting_modRequest.class'] = 'Třída obsluhy dotazu';
 $_lang['setting_modRequest.class_desc'] = '';
 
+$_lang['setting_modx_browser_tree_hide_files'] = 'Skrýt soubory ve stromu Prohlížeče médií';
+$_lang['setting_modx_browser_tree_hide_files_desc'] = 'Je-li toto povoleno, soubory uvnitř složky nejsou zobrazeny ve stromu v rámci Prohlížeče médií. Výchozí nastavení je Ne.';
+
+$_lang['setting_modx_browser_tree_hide_tooltips'] = 'Skrýt náhledy v rámci stromu v Prohlížeči médií';
+$_lang['setting_modx_browser_tree_hide_tooltips_desc'] = 'Je-li toto povoleno, nebudou se ve stromu v Prohlížeči médií zobrazovat náhledy souborů po najetí kurzorem myši. Výchozí nastavení je Ano.';
+
 $_lang['setting_modx_browser_default_sort'] = 'Výchozí řazení v Průzkumníku zdrojů';
 $_lang['setting_modx_browser_default_sort_desc'] = 'Výchozí nastavení řazení v Průzkumníku zdrojů (vkládání obrázků atp.). Možné hodnoty jsou: name, size, lastmod (poslední změna).';
+
 $_lang['setting_modx_browser_default_viewmode'] = 'Výchozí pohled v Průzkmníku zdrojů';
 $_lang['setting_modx_browser_default_viewmode_desc'] = 'Výchozí pohled při používání modálního okna Průzkmníku zdrojů. Povolené hodnoty: grid, list.';
 
@@ -490,6 +512,9 @@ $_lang['setting_proxy_port_desc'] = 'Port proxy serveru.';
 
 $_lang['setting_proxy_username'] = 'Proxy uživatelské jméno';
 $_lang['setting_proxy_username_desc'] = 'Uživatelské jméno pro autentizaci k proxy serveru.';
+
+$_lang['setting_photo_profile_source'] = 'Zdroj médií pro profilové fotografie uživatelů';
+$_lang['setting_photo_profile_source_desc'] = 'Zdroj médií sloužící k ukládání fotografií uživatelských profilů. Výchozí nastavení je výchozí zdroj médií.';
 
 $_lang['setting_phpthumb_allow_src_above_docroot'] = 'Povolit soubory mimo root';
 $_lang['setting_phpthumb_allow_src_above_docroot_desc'] = 'Indikuje zda může být cesta src mimo root. Tato volba je užitečná při multi-kontextovém vývoji s více virtuálními hosty.';
@@ -648,7 +673,7 @@ $_lang['setting_show_tv_categories_header_desc'] = 'Je-li nasteveno na "Ano", MO
 
 $_lang['setting_signupemail_message'] = 'Registrační e-mail';
 $_lang['setting_signupemail_message_desc'] = 'Šablona zprávy, která bude poslána uživateli pokud mu vytvoříte účet a necháte MODX zaslat mu e-mail obsahujicí jeho uživatelské jméno a heslo. <br /><strong>Poznámka:</strong> Následující placeholdery jsou před odesláním nahrazeny správcem obsahu: <br /><br />[[+sname]] - Název portálu, <br />[[+saddr]] - E-mailová adresa portálu, <br />[[+surl]] - URL adresa portálu, <br />[[+uid]] - Jméno nebo ID uživatele, <br />[[+pwd]] - Heslo uživatele, <br />[[+ufn]] - Celé jméno uživatele. <br /><br /><strong>Ponechte placeholdery [[+uid]] a [[+pwd]] v e-mailu nebo nebude uživatelské jméno a heslo obsaženo v e-mailu a uživatel nebude znát své uživatelské jméno a heslo!</strong>';
-$_lang['setting_signupemail_message_default'] = 'Dobrý den [[+uid]] \\n\\nZde jsou Vaše přihlašovací údaje pro [[+sname]] Správce obsahu:\\n\\nUživatelské jméno: [[+uid]]\\nHeslo: [[+pwd]]\\n\\nJakmile se přihlásíte do správce obsahu ([[+surl]]) můžete si změnit heslo.\\n\\S pozdravem,\\nadministrátor portálu.';
+$_lang['setting_signupemail_message_default'] = 'Dobrý den [[+uid]] \n\nZde jsou Vaše přihlašovací údaje pro [[+sname]] Správce obsahu:\n\nUživatelské jméno: [[+uid]]\nHeslo: [[+pwd]]\n\nJakmile se přihlásíte do správce obsahu ([[+surl]]) můžete si změnit heslo.\n\\S pozdravem,\nadministrátor portálu.';
 
 $_lang['setting_site_name'] = 'Název portálu';
 $_lang['setting_site_name_desc'] = 'Zadejte název Vašeho portálu.';
@@ -675,9 +700,9 @@ $_lang['setting_strip_image_paths_desc'] = 'Pokud je nastaveno na "Ne", MODX bud
 $_lang['setting_symlink_merge_fields'] = 'Sloučit políčka dokumentů v symbolických odkazech';
 $_lang['setting_symlink_merge_fields_desc'] = 'JeIf nastaveno "Ano", dojde k automatickému sloučení neprázdných políček při přesměrování pomocí symbolických odkazů.';
 
-$_lang['setting_syncsite_default'] = 'Empty Cache default';
-$_lang['setting_syncsite_default_desc'] = 'Select \'Yes\' to empty the cache after you save a resource by default.';
-$_lang['setting_syncsite_default_err'] = 'Please state whether or not you want to empty the cache after saving a resource by default.';
+$_lang['setting_syncsite_default'] = 'Výchozí stav smazání cache po uložení';
+$_lang['setting_syncsite_default_desc'] = 'Vyberte "Ano" pokud chcete ve výchozím stavu smazat cache dokumentu po jeho uložení.';
+$_lang['setting_syncsite_default_err'] = 'Prosím zvolte, zda chcete ve výchozím nastavení smazat cache po uložení dokumentu.';
 
 $_lang['setting_topmenu_show_descriptions'] = 'Zobrazovat popisky v horním menu';
 $_lang['setting_topmenu_show_descriptions_desc'] = 'Je-li nastaveno na "Ne", MODX skryje popisky u položek horního menu v rámci správce obsahu.';
@@ -727,19 +752,25 @@ $_lang['setting_use_editor'] = 'Povolit WYSIWYG editor';
 $_lang['setting_use_editor_desc'] = 'Chcete aktivovat WYSIWYG editor? Pokud je Vám pohodlnější psát přímo HTML, pak ponechte toto nastavení neaktivní. Poznámka: toto nastavení je globálním, tzn. že bude aplikováno na všechny dokumenty a uživatele!';
 $_lang['setting_use_editor_err'] = 'Uveďte zda chcete použít WYSIWYG editor nebo ne';
 
+$_lang['setting_use_frozen_parent_uris'] = 'Používat statické URI rodičů';
+$_lang['setting_use_frozen_parent_uris_desc'] = 'Pokud je povoleno, URI pro potomky dokumentů bude generovaná oproti statické URI jednoho z jeho rodičů, ignoruje aliasy dokumentů v rámci stromu.';
+
 $_lang['setting_use_multibyte'] = 'Použít Multibyte extenzi pro PHP';
 $_lang['setting_use_multibyte_desc'] = 'Nastavte na "Ano", pokud chcete používat extenzi mbstring pro multibyte znaky ve Vaší instalaci MODXu. Nastavte pouze pokud máte extenzi instalovanou v PHP. Silně doporučujeme nastavit "Ano" pro použití s češtinou.';
 
 $_lang['setting_use_weblink_target'] = 'Použít cíl jako webový odkaz';
 $_lang['setting_use_weblink_target_desc'] = 'Nastavte na "Ano" pokud chcete, aby MODX tagy odkazů a makeUrl() generovali odkazy jako cílové URL pro webové odkazy. Nastavením "Ne" budou generovány interní MODX URL.';
 
+$_lang['setting_user_nav_parent'] = 'Složka uživatelského menu';
+$_lang['setting_user_nav_parent_desc'] = 'Složka pro načítání všech položek uživatelského menu.';
+
 $_lang['setting_webpwdreminder_message'] = 'E-mail pro vyžádání nového hesla';
 $_lang['setting_webpwdreminder_message_desc'] = 'Šablona zprávy, která se odešle pokud zažádá webový uživatel o zaslání nového hesla e-mailem. Správce obsahu mu odešle e-mail obsahující nové heslo a aktivační informace. <br /><strong>Poznámka:</strong> Následující placeholdery jsou nahrazeny správcem obsahu než je správa odeslána: <br /><br />[[+sname]] - Název portálu, <br />[[+saddr]] - E-mailová adresa portálu, <br />[[+surl]] - URL adresa portálu, <br />[[+uid]] - Jméno nebo ID uživatele, <br />[[+pwd]] - Heslo uživatele, <br />[[+ufn]] - Celé jméno uživatele. <br /><br /><strong>Ponechte placeholdery [[+uid]] a [[+pwd]] v e-mailu nebo nebude uživatelské jméno a heslo obsaženo v e-mailu a uživatel nebude znát své uživatelské jméno a heslo!</strong>';
-$_lang['setting_webpwdreminder_message_default'] = 'Dobrý den [[+uid]]\\n\\nPro aktivaci nového heslo klikněte na odkaz:\\n\\n[[+surl]]\\n\\nPokud vše proběhlo úspěšně můžete použít následující heslo pro přihlášení:\\n\\nHeslo:[[+pwd]]\\n\\nPokud jste o změnu hesla nežádali tak tento e-mail ignorujte.\\n\\nS pozdravem,\\nadministrátor portálu.';
+$_lang['setting_webpwdreminder_message_default'] = 'Dobrý den [[+uid]]\n\nPro aktivaci nového heslo klikněte na odkaz:\n\n[[+surl]]\n\nPokud vše proběhlo úspěšně můžete použít následující heslo pro přihlášení:\n\nHeslo:[[+pwd]]\n\nPokud jste o změnu hesla nežádali tak tento e-mail ignorujte.\n\nS pozdravem,\nadministrátor portálu.';
 
 $_lang['setting_websignupemail_message'] = 'E-mail po registraci z webu';
 $_lang['setting_websignupemail_message_desc'] = 'Šablona zprávy odesílané webovým uživatelům, pokud jim vytvoříte účet webového uživatele a necháte správce obsahu, aby jim odeslal e-mail obsahující jejich uživatelské jméno a heslo. <br /><strong>Poznámka:</strong> Následující placeholdery jsou nahrazeny správcem obsahu než je správa odeslána: <br /><br />[[+sname]] - Název portálu, <br />[[+saddr]] - E-mailová adresa portálu, <br />[[+surl]] - URL adresa portálu, <br />[[+uid]] - Jméno nebo ID uživatele, <br />[[+pwd]] - Heslo uživatele, <br />[[+ufn]] - Celé jméno uživatele. <br /><br /><strong>Ponechte placeholdery [[+uid]] a [[+pwd]] v e-mailu nebo nebude uživatelské jméno a heslo obsaženo v e-mailu a uživatel nebude znát své uživatelské jméno a heslo!</strong>';
-$_lang['setting_websignupemail_message_default'] = 'Dobrý den [[+uid]] \\n\\nZde jsou Vaše přihlašovací údaje pro portál [[+sname]]:\\n\\nUživatelské jméno: [[+uid]]\\nHeslo: [[+pwd]]\\n\\nJakmile se přihlásíte na [[+sname]] ([[+surl]]) můžete si změnit své heslo.\\n\\nS pozdravem,\\nadministrátor portálu.';
+$_lang['setting_websignupemail_message_default'] = 'Dobrý den [[+uid]] \n\nZde jsou Vaše přihlašovací údaje pro portál [[+sname]]:\n\nUživatelské jméno: [[+uid]]\nHeslo: [[+pwd]]\n\nJakmile se přihlásíte na [[+sname]] ([[+surl]]) můžete si změnit své heslo.\n\nS pozdravem,\nadministrátor portálu.';
 
 $_lang['setting_welcome_screen'] = 'Zobrazit uvítací obrazovku';
 $_lang['setting_welcome_screen_desc'] = 'Je-li nastaveno na "Ano", uvítací obrazovka se zobrazí při dalším načtení úvodní stránky a pak se již nezobrazí.';
@@ -767,3 +798,9 @@ $_lang['setting_default_context_desc'] = 'Zvolte jaký kontext má být předvyb
 
 $_lang['setting_auto_isfolder'] = 'Automaticky označit dokument jako složkou';
 $_lang['setting_auto_isfolder_desc'] = 'Pokud Ano, tak bude automaticky zaškrtnut parametr Složka.';
+
+$_lang['setting_default_username'] = 'Výchozí uživatelské jméno';
+$_lang['setting_default_username_desc'] = 'Výchozí uživatelské jméno pro nepřihlášeného uživatele.';
+
+$_lang['setting_manager_use_fullname'] = 'V záhlaví manageru zobrazovat celé jméno uživatele ';
+$_lang['setting_manager_use_fullname_desc'] = 'Pokud je nastavena na hodnotu Ano, obsah pole "Celé jméno" z uživatelova profilu bude zobrazeno namísto "Uživatelského jména" v záhlaví manageru';

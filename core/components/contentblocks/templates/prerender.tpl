@@ -9,6 +9,9 @@
 
 <script type="text/x-tmpl" id="contentblocks-layout-wrapper">
 <li data-layout="{%=o.id%}" class="contentblocks-layout" id="{%=o.generated_id%}-wrapper">
+    <div class="contentblocks-add-layout contentblocks-add-layout-here">
+        <h3><a href="javascript:void(0);">+ {%=_('contentblocks.add_layout')%}</a></h3>
+    </div>
     <div class="contentblocks-region-container" id="{%=o.generated_id%}">
         <div class="contentblocks-region-container-header">
             <div class="contentblocks-region-container-tools">
@@ -26,7 +29,10 @@
                 </div>
             </div>
 
-            <h3><a class="contentblocks-collapser contentblocks-layout-collapser contentblocks-layout-expanded" href="javascript:void(0)">-</a> {%=o.name%}</h3>
+            <h3>
+                <a class="contentblocks-collapser contentblocks-layout-collapser contentblocks-layout-expanded" href="javascript:void(0)">-</a>
+                <span class="contentblocks-layout-title">{%=o.title%}</span>
+            </h3>
         </div>
         <div class="contentblocks-region-settings"></div>
         <div class="contentblocks-region-content">
@@ -76,17 +82,49 @@
     <a href="javascript:void(0);" class="big contentblocks-field-button save-layout_settings-button">{%=_('contentblocks.save')%}</a>
 </div>
 </script>
+
 <script type="text/x-tmpl" id="contentblocks-modal-layout-setting-select">
 <div class="contentblocks-modal-field">
-    <label for="setting-{%=o.reference%}">{%=o.title%}</label>
+    <label class="field-label" for="setting-{%=o.reference%}">{%=o.title%}</label>
     <select data-name="{%=o.reference%}" id="setting-{%=o.reference%}">
         {%#o.options%}
     </select>
 </div>
 </script>
+<script type="text/x-tmpl" id="contentblocks-modal-layout-setting-select-option">
+    <option value="{%=o.value%}" {%=o.selected%}>{%=o.display%}</option>
+</script>
+
+<script type="text/x-tmpl" id="contentblocks-modal-layout-setting-radio">
+<div class="contentblocks-modal-field contentblocks-setting-radio">
+    <label class="field-label" for="setting-{%=o.reference%}">{%=o.title%}</label>
+    <input type="hidden" name="setting-{%=o.reference%}" data-name="{%=o.reference%}" value="{%=o.value%}" />
+    <div class="contentblocks-options">
+    {%#o.options%}
+    </div>
+</div>
+</script>
+
+<script type="text/x-tmpl" id="contentblocks-modal-layout-setting-checkbox">
+<div class="contentblocks-modal-field contentblocks-setting-checkbox">
+    <label class="field-label" for="setting-{%=o.reference%}">{%=o.title%}</label>
+    <input type="hidden" name="setting-{%=o.reference%}" data-name="{%=o.reference%}" value="{%=o.value%}" />
+    <div class="contentblocks-options">
+      {%#o.options%}
+    </div>
+</div>
+</script>
+
+<script type="text/x-tmpl" id="contentblocks-modal-layout-setting-radio-option">
+    <label class="value-label"><input type="radio" name="setting-{%=o.reference%}" value="{%=o.value%}" {%=o.checked%}> {%=o.display%}</label>
+</script>
+<script type="text/x-tmpl" id="contentblocks-modal-layout-setting-checkbox-option">
+    <label class="value-label"><input type="checkbox" name="setting-{%=o.reference%}" value="{%=o.value%}" {%=o.checked%}> {%=o.display%}</label>
+</script>
+
 <script type="text/x-tmpl" id="contentblocks-modal-layout-setting-textfield">
 <div class="contentblocks-modal-field">
-    <label for="setting-{%=o.reference%}">{%=o.title%}</label>
+    <label class="field-label" for="setting-{%=o.reference%}">{%=o.title%}</label>
     <input type="text" data-name="{%=o.reference%}" id="setting-{%=o.reference%}" value="{%=o.value%}">
 </div>
 </script>
@@ -94,20 +132,20 @@
 <div class="contentblocks-modal-field contentblocks-modal-field-link">
     <label for="setting-{%=o.reference%}">{%=o.title%}</label>
     <div class="contentblocks-setting-link">
-        <input type="text" class="linkfield" data-name="{%=o.reference%}" id="setting-{%=o.reference%}" value="{%=o.value%}" placeholder="{%=_('contentblocks.link.placeholder')%}">
+        <input type="text" class="linkfield" data-name="{%=o.reference%}" data-limit-to-current-context="{%=o.limit_to_current_context%}" id="setting-{%=o.reference%}" value="{%=o.value%}" placeholder="{%=_('contentblocks.link.placeholder')%}">
     </div>
 </div>
 </script>
 <script type="text/x-tmpl" id="contentblocks-modal-layout-setting-textarea">
 <div class="contentblocks-modal-field">
-    <label for="setting-{%=o.reference%}">{%=o.title%}</label>
+    <label class="field-label" for="setting-{%=o.reference%}">{%=o.title%}</label>
     <textarea data-name="{%=o.reference%}" id="setting-{%=o.reference%}">{%=o.value%}</textarea>
 </div>
 </script>
 
 <script type="text/x-tmpl" id="contentblocks-modal-tinyrte-link">
 <div class="contentblocks-modal-field contentblocks-modal-field-link">
-    <label>{%=o.title%}</label>
+    <label class="field-label">{%=o.title%}</label>
     <div class="contentblocks-setting-link">
         <input type="text" id="tinyrte-link" class="linkfield" value="{%=o.value%}" placeholder="{%=_('contentblocks.link.placeholder')%}">
     </div>

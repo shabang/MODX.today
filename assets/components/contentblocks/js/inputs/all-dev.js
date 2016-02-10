@@ -51,7 +51,8 @@
         return {
             init: function () {
                 setTimeout(function() {
-                    dom.find('.contentblocks-field-textarea textarea').autoGrow();
+                    dom.find('.contentblocks-field-textarea textarea').autoGrow()
+                        .on('change', ContentBlocks.fixColumnHeights);
                 }, 100);
             },
             getData: function () {
@@ -65,17 +66,19 @@
     ContentBlocks.fieldTypes.richtext = function(dom, data) {
         return {
             init: function () {
+                var textarea = dom.find('.contentblocks-field-textarea textarea');
                 if (MODx.loadRTE) {
-                    MODx.loadRTE(dom.find('.contentblocks-field-textarea textarea').attr('id'));
+                    MODx.loadRTE(textarea.attr('id'));
                     setTimeout(function() {
                         ContentBlocks.fixColumnHeights();
                     }, 100);
                 }
                 else {
                     setTimeout(function() {
-                        dom.find('.contentblocks-field-textarea textarea').autoGrow();
+                        textarea.autoGrow();
                     }, 100);
                 }
+                textarea.on('change', ContentBlocks.fixColumnHeights);
             },
             getData: function () {
                 return {
@@ -99,7 +102,7 @@
         return {
             init: function () {
                 setTimeout(function() {
-                    dom.find('.contentblocks-field-textarea textarea').autoGrow();
+                    dom.find('.contentblocks-field-textarea textarea').autoGrow().on('change', ContentBlocks.fixColumnHeights);
                 }, 100);
                 if (data.cite) {
                     dom.find('.contentblocks-field-text input').val(data.cite);
@@ -157,7 +160,7 @@
                 enterBeginsEditing: false,
                 contextMenu: true,
                 autoWrapCol: true,
-                nativeScrollbars: true,
+                nativeScrollbars: false,
 
                 afterChange: function() {
                     ContentBlocks.fireChange();
@@ -216,10 +219,15 @@
 
         input.init = function() {
             if (data.url && data.url.length) {
-                dom.find('.url').val(data.url);
+                var urls = ContentBlocks.utilities.normaliseUrls(data.url);
+                dom.find('.url').val(urls.cleanedSrc);
                 dom.find('.size').val(data.size);
+                dom.find('.width').val(data.width);
+                dom.find('.height').val(data.height);
                 dom.find('.extension').val(data.extension);
-                dom.find('img').attr('src', data.url);
+                dom.find('img').attr('src', (data.properties.thumbnail_size)
+                    ? ContentBlocks.utilities.getThumbnailUrl(data.url, data.properties.thumbnail_size)
+                    : urls.displaySrc);
                 dom.addClass('preview');
             }
 
@@ -227,6 +235,8 @@
                 dom.removeClass('preview');
                 dom.find('.url').val('');
                 dom.find('.size').val('');
+                dom.find('.width').val('');
+                dom.find('.height').val('');
                 dom.find('.extension').val('');
                 dom.find('img').attr('src', '');
 
@@ -287,20 +297,24 @@
                  * When the image has been uploaded add it to the collection.
                  *
                  */
-                done: function(e, data) {
-                    if (data.result.success) {
-                        var record = data.result.object;
-
-                        dom.find('.url').val(record.url);
+                done: function(e, responseData) {
+                    if (responseData.result.success) {
+                        var record = responseData.result.object,
+                            urls = ContentBlocks.utilities.normaliseUrls(record.url);
+                        dom.find('.url').val(urls.cleanedSrc);
                         dom.find('.size').val(record.size);
+                        dom.find('.width').val(record.width);
+                        dom.find('.height').val(record.height);
                         dom.find('.extension').val(record.extension);
-                        dom.find('img').attr('src', record.url);
+                        dom.find('img').attr('src', (data.properties.thumbnail_size)
+                            ? ContentBlocks.utilities.getThumbnailUrl(record.url, data.properties.thumbnail_size)
+                            : urls.displaySrc);
                         dom.addClass('preview');
                         input.loadTinyRTE();
                     }
                     else {
-                        var message = _('contentblocks.upload_error', {file: data.files[0].filename, message:  data.result.message});
-                        if (data.files[0].size > 1048576*1.5) {
+                        var message = _('contentblocks.upload_error', {file: responseData.files[0].filename, message: responseData.result.message});
+                        if (responseData.files[0].size > 1048576*1.5) {
                             message += _('contentblocks.upload_error.file_too_big');
                         }
                         ContentBlocks.alert(message);
@@ -380,14 +394,15 @@
             if (url.substr(0, 4) != 'http' && url.substr(0,1) != '/' ) {
                 url = MODx.config.base_url + url;
             }
-            dom.find('.url').val(url);
+            var urls = ContentBlocks.utilities.normaliseUrls(url);
+            dom.find('.url').val(urls.cleanedSrc);
             dom.find('.size').val(imageData.size);
+            dom.find('.width').val(imageData.image_width);
+            dom.find('.height').val(imageData.image_height);
             dom.find('.extension').val(imageData.ext);
-            dom.find('img').attr('src', url).on('load', function() {
-                setTimeout(function() {
-                    ContentBlocks.fixColumnHeights();
-                }, 50);
-            });
+            dom.find('img').attr('src', (data.properties.thumbnail_size)
+                ? ContentBlocks.utilities.getThumbnailUrl(url, data.properties.thumbnail_size)
+                : urls.displaySrc);
             dom.addClass('preview');
             ContentBlocks.fireChange();
             this.loadTinyRTE();
@@ -397,6 +412,8 @@
             return {
                 url: dom.find('.url').val(),
                 size: dom.find('.size').val(),
+                width: dom.find('.width').val(),
+                height: dom.find('.height').val(),
                 extension: dom.find('.extension').val()
             };
         };
@@ -411,10 +428,15 @@
 
         input.init = function () {
             if (data.url && data.url.length) {
-                dom.find('.url').val(data.url);
+                var urls = ContentBlocks.utilities.normaliseUrls(data.url);
+                dom.find('.url').val(urls.cleanedSrc);
                 dom.find('.size').val(data.size);
+                dom.find('.width').val(data.width);
+                dom.find('.height').val(data.height);
                 dom.find('.extension').val(data.extension);
-                dom.find('img').attr('src', data.url);
+                dom.find('img').attr('src', (data.properties.thumbnail_size)
+                    ? ContentBlocks.utilities.getThumbnailUrl(data.url, data.properties.thumbnail_size)
+                    : urls.displaySrc);
                 dom.find('.title').val(data.title || '');
                 dom.addClass('preview');
                 this.loadTinyRTE();
@@ -424,6 +446,8 @@
                 dom.removeClass('preview');
                 dom.find('.url').val('');
                 dom.find('.size').val('');
+                dom.find('.width').val('');
+                dom.find('.height').val('');
                 dom.find('.extension').val('');
                 dom.find('.title').val('').removeClass('tinyrte-replaced');
                 dom.find('img').attr('src', '');
@@ -455,6 +479,8 @@
                 url: dom.find('.url').val(),
                 title: dom.find('.title').val(),
                 size: dom.find('.size').val(),
+                width: dom.find('.width').val(),
+                height: dom.find('.height').val(),
                 extension: dom.find('.extension').val()
             };
         };
@@ -840,8 +866,10 @@
                 dataType: 'json',
                 url: MODx.config.connector_url ? MODx.config.connector_url : MODx.config.connectors_url + "/element/chunk.php",
                 type: "POST",
-                headers: {
-                    'modAuth': MODx.siteId
+                beforeSend:function(xhr, settings){
+                    if(!settings.crossDomain) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                    }
                 },
                 data: {
                     action: MODx.config.connector_url ? 'element/chunk/get' : 'get',
@@ -958,8 +986,10 @@
                     field: input.fieldId
                 },
                 context: this,
-                headers: {
-                    'modAuth': MODx.siteId
+                beforeSend:function(xhr, settings){
+                    if(!settings.crossDomain) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                    }
                 },
                 success: function(result) {
                     if (!result.results) {
@@ -1150,8 +1180,10 @@
                     field: input.fieldId
                 },
                 context: this,
-                headers: {
-                    'modAuth': MODx.siteId
+                beforeSend:function(xhr, settings){
+                    if(!settings.crossDomain) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                    }
                 },
                 success: function(result) {
                     if (!result.results) {

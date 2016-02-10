@@ -53,6 +53,8 @@ $_lang['moregallery.model_error'] = 'An unexpected error occurred, the image mod
 
 $_lang['moregallery.error_invalid_resource'] = 'An unexpected error occurred, resource "[[+resource]]" is not a valid Gallery.';
 $_lang['moregallery.error_loading_source'] = 'An error occurred loading the Media Source for this Gallery.';
+$_lang['moregallery.error_invalid_filetype'] = 'Sorry, .[[+extension]] files are not allowed.';
+$_lang['moregallery.error_upload_failed'] = 'the file could not be uploaded (Error [[+error]]).';
 
 // Tags related, for MoreGallery 1.1
 $_lang['moregallery.tags'] = 'Tags';

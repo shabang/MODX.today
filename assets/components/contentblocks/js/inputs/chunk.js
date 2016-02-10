@@ -23,8 +23,10 @@
                 dataType: 'json',
                 url: MODx.config.connector_url ? MODx.config.connector_url : MODx.config.connectors_url + "/element/chunk.php",
                 type: "POST",
-                headers: {
-                    'modAuth': MODx.siteId
+                beforeSend:function(xhr, settings){
+                    if(!settings.crossDomain) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                    }
                 },
                 data: {
                     action: MODx.config.connector_url ? 'element/chunk/get' : 'get',

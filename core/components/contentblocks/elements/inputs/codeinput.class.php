@@ -49,7 +49,7 @@ class CodeInput extends cbBaseInput {
             'name' => 'Ace',
             'disabled' => false,
         ));
-        $aceIsUsed = ($this->modx->getOption('which_element_editor') == 'Ace');
+        $aceIsUsed = ($this->contentBlocks->getOption('which_element_editor') == 'Ace');
 
         $js = array();
         if (!$aceIsInstalled || !$aceIsUsed) {

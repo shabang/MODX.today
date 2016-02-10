@@ -1,6 +1,8 @@
 <div class="contentblocks-field contentblocks-field-image contentblocks-field-image_with_title  contentblocks-drop-target">
     <input type="hidden" class="url" />
     <input type="hidden" class="size" />
+    <input type="hidden" class="width" />
+    <input type="hidden" class="height" />
     <input type="hidden" class="extension" />
     <div class="contentblocks-field-actions">
         <a href="javascript:void(0);" class="contentblocks-field-delete-image">&times; {%=_('contentblocks.delete_image')%}</a>

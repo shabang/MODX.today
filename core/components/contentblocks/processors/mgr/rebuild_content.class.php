@@ -19,8 +19,8 @@ class ContentBlocksRebuildProcessor extends modProcessor {
         return array('contentblocks:default');
     }
     public function initialize() {
-        $this->contentBlocks = $this->modx->contentblocks;
-        $this->modx->getParser();
+        $corePath = $this->modx->getOption('contentblocks.core_path', null, $this->modx->getOption('core_path') . 'components/contentblocks/');
+        $this->contentBlocks =& $this->modx->getService('contentblocks', 'ContentBlocks', $corePath . 'model/contentblocks/');
         return parent::initialize();
     }
 
@@ -32,8 +32,8 @@ class ContentBlocksRebuildProcessor extends modProcessor {
         // Get the total count of resources to inform the user
         $this->total = $this->modx->getCount('modResource');
 
-        // Estimate the time it will take, based on a save time of 2s per resource (which equals a very long save)
-        $estimate = round($this->total * 2 / 60, 0);
+        // Estimate the time it will take, based on a save time of 0.5s per resource
+        $estimate = round($this->total / 2 / 60, 0);
         $this->modx->log(modX::LOG_LEVEL_INFO,
             $this->modx->lexicon('contentblocks.rebuild_content.resources_found', array(
                 'total' => $this->total,
@@ -48,6 +48,7 @@ class ContentBlocksRebuildProcessor extends modProcessor {
         // Grab parser & inputs to prepare for parsing
         $this->modx->log(modX::LOG_LEVEL_INFO, $this->modx->lexicon('contentblocks.rebuild_content.loading_dependencies'));
         $this->modx->getParser();
+        $this->contentBlocks->loadParser();
         $this->contentBlocks->loadInputs();
         $this->modx->log(modX::LOG_LEVEL_INFO, $this->modx->lexicon('contentblocks.rebuild_content.loaded_dependencies'));
 
@@ -85,9 +86,28 @@ class ContentBlocksRebuildProcessor extends modProcessor {
                 continue;
             }
 
+            
             // Grab the raw JSON content
-            $cbContent = $resource->getProperty('content', 'contentblocks');
-            $cbContent = $this->modx->fromJSON($cbContent);
+            $cbJson = $resource->getProperty('content', 'contentblocks');
+            $cbContent = $this->modx->fromJSON($cbJson);
+            
+            // Fire the RenderContent Event that allows plugins to  change the content
+            $response = $this->modx->invokeEvent('ContentBlocks_RenderContent', array(
+                'cbContent' => $cbContent,
+                'cbJson' => $cbJson,
+                'resource' => $resource
+            ));
+            // check if customized content was returned
+            if (!empty($response) && is_array($response) && json_encode($response) !== '[""]') {
+    		    $cbContent = $response[0]['cbContent'];
+    		    $cbJson = $response[0]['cbJson'];
+    	    }
+
+            // Fire the RebuildContent Event to allow plugins to listen to rebuilds specifically
+            $this->modx->invokeEvent('ContentBlocks_RebuildContent', array(
+                'cbContent' => $cbContent,
+                'resource' => $resource
+            ));
 
             // Make sure the raw content is valid before trying to parse it.
             if (empty($cbContent) || !is_array($cbContent)) {
@@ -98,7 +118,6 @@ class ContentBlocksRebuildProcessor extends modProcessor {
                 )));
                 continue;
             }
-
             // Parse the resource again!
             $this->parse($resource, $cbContent);
         }
@@ -110,8 +129,16 @@ class ContentBlocksRebuildProcessor extends modProcessor {
             'total_skipped_broken' => $this->totalSkippedBroken,
             'total_rebuild' => $this->totalRebuild,
         )));
+        
+        // Fire the AfterRebuildContent Event to allow plugins to listen to the completed action
+        $this->modx->invokeEvent('ContentBlocks_AfterRebuildContent', array(
+            'total' => $this->total,
+            'total_skipped' => $this->totalSkipped,
+            'total_skipped_broken' => $this->totalSkippedBroken,
+            'total_rebuild' => $this->totalRebuild,
+        ));
 
-        if (intval($this->modx->getOption('contentblocks.clear_cache_after_rebuild', null, true))) {
+        if (intval($this->modx->contentblocks->getOption('contentblocks.clear_cache_after_rebuild', null, true))) {
             $contexts = array_keys($this->contexts);
             $this->modx->log(modX::LOG_LEVEL_INFO, $this->modx->lexicon('contentblocks.rebuild_content.clear_cache', array(
                 'contexts' => implode(', ', $contexts)
@@ -138,6 +165,7 @@ class ContentBlocksRebuildProcessor extends modProcessor {
     public function parse(modResource $resource, array $content = array())
     {
         $this->contentBlocks->setResource($resource);
+        $this->modx->resource = $resource;
         $summary = $this->contentBlocks->summarizeContent($content);
         $parsedContent = $this->contentBlocks->generateHtml($content);
 

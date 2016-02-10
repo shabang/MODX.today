@@ -29,8 +29,8 @@ $_lang['moregallery.content_position.hide'] = 'Skrýt';
 
 $_lang['moregallery.view_full_size_image'] = 'Zabrazit obrázek v plné velikosti';
 $_lang['moregallery.delete_image'] = 'Odstranit obrázek';
-$_lang['moregallery.deactivate_image'] = 'Hide image from the Gallery';
-$_lang['moregallery.activate_image'] = 'Mark image as visible';
+$_lang['moregallery.deactivate_image'] = 'Skrýt obrázek z galerie';
+$_lang['moregallery.activate_image'] = 'Obrázek označit jako viditelný';
 $_lang['moregallery.upload_image'] = 'Nahrát obrázky do galerie';
 $_lang['moregallery.upload'] = 'Nahrát';
 $_lang['moregallery.import_image'] = 'Importovat obrázky z jiných zdrojů';
@@ -53,46 +53,48 @@ $_lang['moregallery.model_error'] = 'Vyskytla se neočekávaná chyba, obrázek 
 
 $_lang['moregallery.error_invalid_resource'] = 'Vyskytla se neočekávaná chyba, dokument "[[+resource]]" není platná galerie.';
 $_lang['moregallery.error_loading_source'] = 'Vyskytl se chyba při načítání obrázků ze zdroje médií pro tuto galerii.';
+$_lang['moregallery.error_invalid_filetype'] = 'Sorry, .[[+extension]] files are not allowed.';
+$_lang['moregallery.error_upload_failed'] = 'the file could not be uploaded (Error [[+error]]).';
 
 // Tags related, for MoreGallery 1.1
 $_lang['moregallery.tags'] = 'Tagy';
 $_lang['moregallery.tags.add'] = 'Přidat';
 // Imports, also new in 1.1
 $_lang['moregallery.file_doesnt_exist'] = 'Soubor, který chcete importovat, zřejmě neexistuje nebo není čitelný: [[+ file]]';
-$_lang['moregallery.edit_crop'] = 'Edit Crop';
-$_lang['moregallery.save_crop'] = 'Save Crop';
-$_lang['moregallery.preview_crop'] = 'Preview crop';
-$_lang['moregallery.processing_crop'] = 'Processing...';
+$_lang['moregallery.edit_crop'] = 'Upravit oříznutí';
+$_lang['moregallery.save_crop'] = 'Uložit oříznutí';
+$_lang['moregallery.preview_crop'] = 'Náhled oříznutí';
+$_lang['moregallery.processing_crop'] = 'Zpracovávám...';
 
 /**
  * Settings
  */
-$_lang['setting_moregallery.source_relative_url'] = 'Source Relative URL';
+$_lang['setting_moregallery.source_relative_url'] = 'Zdroj relativní URL';
 $_lang['setting_moregallery.source_relative_url_desc'] = 'The URL relative to the root of the selected media source to upload images to. Can be overridden per Gallery resource on its Settings tab.';
 
-$_lang['setting_moregallery.source'] = 'Media Source';
-$_lang['setting_moregallery.source_desc'] = 'Choose a Media Source to upload images to. Can be overridden per Gallery resource on its Settings tab.';
+$_lang['setting_moregallery.source'] = 'Zdroj médií';
+$_lang['setting_moregallery.source_desc'] = 'Zvolte zdroj média pro ukládání obrázků. Toto může být přepsáno v tabu nastavení u každé galerie.';
 
-$_lang['setting_moregallery.image_id_in_name'] = 'Image ID in Filename';
+$_lang['setting_moregallery.image_id_in_name'] = 'Obrázek ID v názvu souboru';
 $_lang['setting_moregallery.image_id_in_name_desc'] = 'Set to either "prefix" or "suffix" to add the image ID to the file name on upload. This ensures the filename is unique.';
-$_lang['setting_moregallery.resource_id_in_path'] = 'Resource ID in Path';
+$_lang['setting_moregallery.resource_id_in_path'] = 'Dokument ID v cestě';
 $_lang['setting_moregallery.resource_id_in_path_desc'] = 'When enabled, the Gallery Resource ID will be suffixed to the Source Relative URL so each gallery has its own directory.';
-$_lang['setting_moregallery.content_position'] = 'Content Position';
+$_lang['setting_moregallery.content_position'] = 'Pozice obsahu';
 $_lang['setting_moregallery.content_position_desc'] = 'Set to "above", "below", "tab" or "hide" to determine how the Content field will be displayed, if at all.';
-$_lang['setting_moregallery.use_rte_for_images'] = 'Use Rich Text Editor';
+$_lang['setting_moregallery.use_rte_for_images'] = 'Použít WYSIWYG editor';
 $_lang['setting_moregallery.use_rte_for_images_desc'] = 'When enabled, the currently active rich text editor will be loaded into the Image Description field. We recommend using Redactor, but other editors are also supported.';
 $_lang['setting_moregallery.crops'] = 'Crops';
-$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/">full Crops documentation</a> for more information about syntax and functionality.';
+$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">full Crops documentation</a> for more information about syntax and functionality.';
 $_lang['setting_moregallery.single_image_url_param'] = 'Single Image URL Parameter';
 $_lang['setting_moregallery.single_image_url_param_desc'] = 'Used with the mgGetImages snippet, the single image url parameter determines whether a listing or single image is displayed. This URL parameter will contain the image ID and, if not found, it will send the user to the configured 404 page. ';
-$_lang['setting_moregallery.add_icon_to_toolbar'] = 'Add Icon to Toolbar';
+$_lang['setting_moregallery.add_icon_to_toolbar'] = 'Přidat ikonu do panelu nástrojů';
 $_lang['setting_moregallery.add_icon_to_toolbar_desc'] = 'When enabled, a "New Gallery" icon will be added to resource toolbar providing quick access to create new Galleries.';
 
-$_lang['setting_moregallery.sanitize_replace'] = 'Sanitize Replacement';
+$_lang['setting_moregallery.sanitize_replace'] = 'Sanitazovat náhradu';
 $_lang['setting_moregallery.sanitize_replace_desc'] = 'Any characters in the uploaded filenames that do not match the sanitize pattern will be replaced with this character.';
-$_lang['setting_moregallery.sanitize_pattern'] = 'Sanitize Pattern';
+$_lang['setting_moregallery.sanitize_pattern'] = 'Sanitizace vzoru';
 $_lang['setting_moregallery.sanitize_pattern_desc'] = 'A RegEx pattern for cleaning up filenames on upload.';
-$_lang['setting_mgr_tree_icon_mgresource'] = 'Gallery Tree Icon';
+$_lang['setting_mgr_tree_icon_mgresource'] = 'Ikona galerie ve stromu';
 $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'The Font Awesome icon class to add to MoreGallery Resources in the file tree. ';
 
 /**

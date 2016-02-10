@@ -66,4 +66,23 @@ $xpdo_meta_map['cbDefault']= array (
       'default' => 0,
     ),
   ),
+  'indexes' => 
+  array (
+    'sortorder' => 
+    array (
+      'alias' => 'sortorder',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'sortorder' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+  ),
 );

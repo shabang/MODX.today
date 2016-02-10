@@ -1,121 +1,200 @@
 <?php
-require_once 'redprocessor.class.php';
+require_once dirname(__FILE__) . '/base.class.php';
+
 /**
- * Choose Redactor Images.
+ * Handles uploading of an image
  *
- * @param string $file The absolute path of the file
- * @param string $name Will rename the file if different
- * @param string $content The new content of the file
- *
- * @package modx
- * @subpackage processors.browser.file
+ * Class RedactorUploadMediaProcessor
  */
-class RedactorMediaUploadProcessor extends redProcessor {
-    public $hash_option = 'redactor.date_files';
-    public $target_path = 'file_upload_path';
-    public $target_path_default = 'assets/uploads/';
-    public $rootPath = '';
+class RedactorUploadMediaProcessor extends RedactorBaseProcessor
+{
+    /**
+     * Only allow uploads when the user has the file_upload permission. (#159)
+     *
+     * @return boolean
+     */
+    public function checkPermissions()
+    {
+        return $this->modx->hasPermission('file_upload');
+    }
 
     /**
-     * @return array|bool|string
+     * Process the request by loading all directories within the configured limit in the media source
+     *
+     * @return string
      */
-    public function process() {
-        /* get base paths and sanitize incoming paths */
-        $loaded = $this->getSource();
-        if (!($this->source instanceof modMediaSource)) return $loaded;
+    public function process()
+    {
+        $path = $this->getPath();
 
-        /**
-         * Get the upload path to upload to.
-         */
-        $path = $this->modx->getOption('redactor.' . $this->target_path,null,'assets/uploads/');
-        if ($this->tv) {
-            $properties = $this->tv->get('input_properties');
-            if (isset($properties[$this->target_path]) && !empty($properties[$this->target_path])) {
-                $path = $properties[$this->target_path];
-            }
-        }
-        $this->rootPath = $path = $this->redactor->parsePathVariables($path);
-
-        $doHash = (bool)$this->modx->getOption($this->hash_option, null, false);
-        $hash = ($doHash) ? date('Y-m-d-H.i.s') . '-' : '';
-
-        /**
-         * Make sure the upload path exists. We unset errors to prevent issues if it already exists.
-         */
-        $this->source->createContainer($path,'/');
+        // Create the path if it doesn't exist yet
+        // Prevent errors from being logged later; most errors here are "folder already exists" errors.
+        $this->source->createContainer($path, '/');
         $this->source->errors = array();
 
         $files = array();
 
-        if(isset($_POST['data'])) {
-            // Paste-upload to S3 is only supported on 2.2.9+
-            $vd = $this->modx->getVersionData();
-            if (!version_compare($vd['full_version'],'2.2.9-pl','>=') && ($this->source instanceof modS3MediaSource)) {
-                return $this->failure('Sorry, raw uploads to Amazon S3 Media sources are not supported in this version of MODX.');
+        // Loop over the uploads (though typically, it's just one) to prepare filenames
+        foreach ($_FILES as $key => $upload) {
+            // Make sure the upload was successful
+            if ($upload['error'] == 0) {
+                $filename = $this->getFilename($upload['name']);
+                $originalFilename = $upload['name'];
+                $_FILES[$key]['name'] = $filename;
+
+                // This is how we'll return this file
+                $files[] = array(
+                    'filelink' => $this->source->getObjectUrl($path . $filename),
+                    'filename' => $originalFilename,
+                );
             }
-
-            // Process if everything is fine
-            $contentType = $_POST['contentType'];
-            $fileExtension = explode('/',$contentType);
-            $fileExtension = (isset($fileExtension[1])) ? $fileExtension[1] : 'png';
-            $fileName = md5(time());
-            $success = $this->source->createObject($path,"$fileName.$fileExtension",base64_decode($_POST['data']));
-            $files[] = array(
-                'filelink' => $this->source->getObjectUrl($this->rootPath . "$fileName.$fileExtension"),
-                'filename' => "$fileName"
-            );
-        } else {
-            /**
-             * Prepare file names.
-             */
-            foreach ($_FILES as $key => $upload) {
-                $originalName = pathinfo('1' . $upload['name'], PATHINFO_FILENAME); // https://github.com/modmore/Redactor/issues/284
-                $originalName = substr($originalName, 1);
-                if((bool)$this->modx->getOption('redactor.cleanFileNames', null, true)) $originalName = $this->sanitizeFileName($originalName);
-                $extension = pathinfo($upload['name'], PATHINFO_EXTENSION);
-                $_FILES[$key]['name'] = $hash . $originalName . '.' . $extension;
-
-                // Make sure we don't try something if the file was not properly uploaded
-                if ($_FILES['error'] == 0) {
-                    $files[] = array(
-                        'filelink' => $this->source->getObjectUrl($this->rootPath . $_FILES[$key]['name']),
-                        'filename' => $originalName,
-                    );
-                }
-            }
-
-            /**
-             * Do the actual upload.
-             */
-            $success = $this->source->uploadObjectsToContainer($path,$_FILES);
-            if (!$success) {
-                $errors = $this->source->getErrors();
-                $errors = implode('<br />', $errors);
-                return $this->failure($errors);
-            }  
         }
 
-        // Sometimes, uploadObjectsToContainer returns true when files did not upload properly
-        // Here we check if we have any files. If not, throw an error.
-        if (empty($files)) {
-            return $this->failure($this->modx->lexicon('file_err_upload'));
+        if (!empty($files)) {
+            $success = $this->source->uploadObjectsToContainer($path, $_FILES);
+            if ($success) {
+                return $this->modx->toJSON($files);
+            }
+
+            $errors = $this->source->getErrors();
+            $errors = implode('<br />', $errors);
+            return $this->failure($errors);
         }
 
-        return $this->outputArray($files);
+        return $this->failure($this->modx->lexicon('file_err_upload'));
     }
 
     /**
-     * Return an error in the way Redactor.js expects it
+     * Grabs and prepares the upload path.
      *
-     * @param string $msg
-     * @param null $object
-     * @return string
+     * @return mixed
      */
-    public function failure($msg = '',$object = null) {
-        return $this->modx->toJSON(array(
-            'error' => $msg
-        ));
+    protected function getPath()
+    {
+        $path = $this->getProperty('dir');
+        if (empty($path)) {
+            $path = $this->getConfiguredPath();
+        }
+        else {
+            $path = str_replace(array('..', '.', '//', '\\'), DIRECTORY_SEPARATOR, $path);
+            $path = trim($path, '/') . '/';
+        }
+
+        return $this->redactor->parsePathVariables($path);
     }
 
+    /**
+     * Gets the configured upload path for the specified type (image or file).
+     *
+     * @return string
+     */
+    protected function getConfiguredPath()
+    {
+        $type = $this->getUploadType();
+        return $this->redactor->getOption('redactor.' . $type . '_upload_path', null, 'assets/uploads/');
+    }
+
+    /**
+     * Sanitises and prepares the file name
+     *
+     * @param $name
+     * @return string
+     */
+    protected function getFilename($name)
+    {
+        $filename = pathinfo($name, PATHINFO_FILENAME);
+
+        // Cleaning up the file name from weird characters and stuff
+        $cleanFileNames = $this->redactor->getBooleanOption('redactor.cleanFileNames', null, true);
+        if ($cleanFileNames) {
+            $filename = $this->sanitizeFileName($filename);
+        }
+
+        // Check if we need to prefix a full timestamp
+        $dateSetting = $this->getUploadType() === 'image' ? 'redactor.date_images' : 'redactor.date_files';
+        $hashFilename = $this->redactor->getBooleanOption($dateSetting, null, false);
+        if ($hashFilename) {
+            $filename = date('Y-m-d-H.i.s') . '-' . $filename;
+        }
+
+        // Preventing overwriting existing images by adding an incremental number to the filename until it is unique
+        $ext = pathinfo($name, PATHINFO_EXTENSION);
+        $increment = $this->redactor->getBooleanOption('redactor.increment_file_names', null, true);
+        if ($increment && $this->source instanceof modFileMediaSource) {
+            $bases = $this->source->getBases($this->getPath());
+
+            $i = 0;
+            $incrementedFilename = $filename;
+            while (file_exists($bases['pathAbsoluteWithPath'] . $incrementedFilename . '.' . $ext)) {
+                $i++;
+                $incrementedFilename = $filename . '_' . $i;
+            }
+            $filename = $incrementedFilename;
+        }
+
+        // Return the file name
+        return $filename . '.' . $ext;
+    }
+
+    /**
+     * Sanitizes the provided file name.
+     *
+     * @param $name
+     *
+     * @return string
+     */
+    protected function sanitizeFileName($name)
+    {
+        $replace = $this->redactor->getOption('redactor.sanitizeReplace', null, '_');
+        $pattern = $this->redactor->getOption('redactor.sanitizePattern', null, "/([[:alnum:]_\.-]*)/");
+        $name = str_replace(str_split(preg_replace($pattern, $replace, $name)), $replace, $name);
+
+        return $name;
+    }
+
+    /**
+     * On top of the "s" query string and TV-based media sources, this will grab the source from the redactor setting.
+     *
+     * @return bool|null|string
+     */
+    protected function getSource() {
+        $result = parent::getSource();
+        if ($result !== true && !$this->source) {
+            $sourceId = false;
+
+            // If we're uploading a file, grab the file media source
+            if ($this->getUploadType() === 'file') {
+                $sourceId = $this->redactor->getOption('redactor.file_mediasource', null, false, true);
+            }
+            // Not a file, or file media source is not configured? Use the media source value
+            if (!$sourceId) {
+                $sourceId = $this->redactor->getOption('redactor.mediasource', null, false, true);
+            }
+            // Still nothing? Then we use the MODX default media source.
+            if (!$sourceId) {
+                $sourceId = $this->redactor->getOption('default_media_source', null, 1);
+            }
+            $this->source = $this->modx->getObject('sources.modMediaSource', $sourceId);
+            return $this->validateSource();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns wether this is a file or image upload.
+     *
+     * @return string
+     */
+    protected function getUploadType()
+    {
+        $type = $this->getProperty('type', false);
+        if (!$type || !in_array($type, array('file', 'image'))) {
+            $type = 'image';
+        }
+
+        return $type;
+    }
 }
-return 'RedactorMediaUploadProcessor';
+
+return 'RedactorUploadMediaProcessor';

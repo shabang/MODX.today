@@ -51,7 +51,8 @@
         return {
             init: function () {
                 setTimeout(function() {
-                    dom.find('.contentblocks-field-textarea textarea').autoGrow();
+                    dom.find('.contentblocks-field-textarea textarea').autoGrow()
+                        .on('change', ContentBlocks.fixColumnHeights);
                 }, 100);
             },
             getData: function () {
@@ -65,17 +66,19 @@
     ContentBlocks.fieldTypes.richtext = function(dom, data) {
         return {
             init: function () {
+                var textarea = dom.find('.contentblocks-field-textarea textarea');
                 if (MODx.loadRTE) {
-                    MODx.loadRTE(dom.find('.contentblocks-field-textarea textarea').attr('id'));
+                    MODx.loadRTE(textarea.attr('id'));
                     setTimeout(function() {
                         ContentBlocks.fixColumnHeights();
                     }, 100);
                 }
                 else {
                     setTimeout(function() {
-                        dom.find('.contentblocks-field-textarea textarea').autoGrow();
+                        textarea.autoGrow();
                     }, 100);
                 }
+                textarea.on('change', ContentBlocks.fixColumnHeights);
             },
             getData: function () {
                 return {
@@ -99,7 +102,7 @@
         return {
             init: function () {
                 setTimeout(function() {
-                    dom.find('.contentblocks-field-textarea textarea').autoGrow();
+                    dom.find('.contentblocks-field-textarea textarea').autoGrow().on('change', ContentBlocks.fixColumnHeights);
                 }, 100);
                 if (data.cite) {
                     dom.find('.contentblocks-field-text input').val(data.cite);

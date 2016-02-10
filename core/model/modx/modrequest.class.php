@@ -73,6 +73,12 @@ class modRequest {
     public function handleRequest() {
         $this->loadErrorHandler();
 
+        // If enabled, send the X-Powered-By header to identify this site as running MODX, per discussion in #12882
+        if ($this->modx->getOption('send_poweredby_header', null, true)) {
+            $version = $this->modx->getVersionData();
+            header("X-Powered-By: MODX {$version['code_name']}");
+        }
+
         $this->sanitizeRequest();
         $this->modx->invokeEvent('OnHandleRequest');
         if (!$this->modx->checkSiteStatus()) {
@@ -89,7 +95,7 @@ class modRequest {
             $this->checkPublishStatus();
             $this->modx->resourceMethod = $this->getResourceMethod();
             $this->modx->resourceIdentifier = $this->getResourceIdentifier($this->modx->resourceMethod);
-            if ($this->modx->resourceMethod == 'id' && $this->modx->getOption('friendly_urls', null, false) && !$this->modx->getOption('request_method_strict', null, false)) {
+            if ($this->modx->resourceMethod == 'id' && $this->modx->getOption('friendly_urls', null, false) && $this->modx->getOption('request_method_strict', null, false)) {
                 $uri = $this->modx->context->getResourceURI($this->modx->resourceIdentifier);
                 if (!empty($uri)) {
                     if ((integer) $this->modx->resourceIdentifier === (integer) $this->modx->getOption('site_start', null, 1)) {

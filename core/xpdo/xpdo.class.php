@@ -116,6 +116,7 @@ class xPDO {
     const OPT_CONNECTIONS = 'connections';
     const OPT_CONN_INIT = 'connection_init';
     const OPT_CONN_MUTABLE = 'connection_mutable';
+    const OPT_OVERRIDE_TABLE_TYPE = 'override_table';
     const OPT_HYDRATE_FIELDS = 'hydrate_fields';
     const OPT_HYDRATE_ADHOC_FIELDS = 'hydrate_adhoc_fields';
     const OPT_HYDRATE_RELATED_OBJECTS = 'hydrate_related_objects';
@@ -682,22 +683,34 @@ class xPDO {
      * @return mixed The configuration option value.
      */
     public function getOption($key, $options = null, $default = null, $skipEmpty = false) {
-        $option= $default;
-        if (is_array($key)) {
+        $option = null;
+        if (is_string($key) && !empty($key)) {
+            $found = false;
+            if (isset($options[$key])) {
+                $found = true;
+                $option = $options[$key];
+            }
+
+            if ((!$found || ($skipEmpty && $option === '')) && isset($this->config[$key])) {
+                $found = true;
+                $option = $this->config[$key];
+            }
+
+            if (!$found || ($skipEmpty && $option === ''))
+                $option = $default;
+        }
+        else if (is_array($key)) {
             if (!is_array($option)) {
-                $default= $option;
-                $option= array();
+                $default = $option;
+                $option = array();
             }
-            foreach ($key as $k) {
-                $option[$k]= $this->getOption($k, $options, $default);
-            }
-        } elseif (is_string($key) && !empty($key)) {
-            if (is_array($options) && !empty($options) && array_key_exists($key, $options) && (!$skipEmpty || ($skipEmpty && $options[$key] !== ''))) {
-                $option= $options[$key];
-            } elseif (is_array($this->config) && !empty($this->config) && array_key_exists($key, $this->config) && (!$skipEmpty || ($skipEmpty && $this->config[$key] !== ''))) {
-                $option= $this->config[$key];
+            foreach($key as $k) {
+                $option[$k] = $this->getOption($k, $options, $default);
             }
         }
+        else
+            $option = $default;
+
         return $option;
     }
 
@@ -1557,9 +1570,11 @@ class xPDO {
             if ($actualClassName= $this->loadClass($className)) {
                 if (isset ($this->map[$actualClassName]['indexes'])) {
                     foreach ($this->map[$actualClassName]['indexes'] as $k => $v) {
-                        if (isset ($this->map[$actualClassName]['fieldMeta'][$k]['phptype'])) {
-                            if (isset ($v['primary']) && $v['primary'] == true) {
-                                $pk[$k]= $k;
+                        if (isset($v['primary']) && ($v['primary'] == true) && isset($v['columns'])) {
+                            foreach ($v['columns'] as $field => $column) {
+                                if (isset ($this->map[$actualClassName]['fieldMeta'][$field]['phptype'])) {
+                                    $pk[$field] = $field;
+                                }
                             }
                         }
                     }
@@ -2008,6 +2023,9 @@ class xPDO {
      * within the indicated file.
      */
     protected function _log($level, $msg, $target= '', $def= '', $file= '', $line= '') {
+        if ($level !== xPDO::LOG_LEVEL_FATAL && $level > $this->logLevel && $this->_debug !== true) {
+            return;
+        }
         if (empty ($target)) {
             $target = $this->logTarget;
         }
@@ -2016,6 +2034,19 @@ class xPDO {
             if (isset($target['options'])) $targetOptions =& $target['options'];
             $target = isset($target['target']) ? $target['target'] : 'ECHO';
         }
+        if (empty($file)) {
+            if (version_compare(phpversion(), '5.4.0', '>=')) {
+                $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+            } elseif (version_compare(phpversion(), '5.3.6', '>=')) {
+                $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            } else {
+                $backtrace = debug_backtrace();
+            }
+            if ($backtrace && isset($backtrace[2])) {
+                $file = $backtrace[2]['file'];
+                $line = $backtrace[2]['line'];
+            }
+        }
         if (empty($file) && isset($_SERVER['SCRIPT_NAME'])) {
             $file= $_SERVER['SCRIPT_NAME'];
         }
@@ -2023,35 +2054,42 @@ class xPDO {
             while (ob_get_level() && @ob_end_flush()) {}
             exit ('[' . strftime('%Y-%m-%d %H:%M:%S') . '] (' . $this->_getLogLevel($level) . $def . $file . $line . ') ' . $msg . "\n" . ($this->getDebug() === true ? '<pre>' . "\n" . print_r(debug_backtrace(), true) . "\n" . '</pre>' : ''));
         }
-        if ($this->_debug === true || $level <= $this->logLevel) {
-            @ob_start();
-            if (!empty ($def)) {
-                $def= " in {$def}";
-            }
-            if (!empty ($file)) {
-                $file= " @ {$file}";
-            }
-            if (!empty ($line)) {
-                $line= " : {$line}";
-            }
-            switch ($target) {
-                case 'HTML' :
-                    echo '<h5>[' . strftime('%Y-%m-%d %H:%M:%S') . '] (' . $this->_getLogLevel($level) . $def . $file . $line . ')</h5><pre>' . $msg . '</pre>' . "\n";
-                    break;
-                default :
-                    echo '[' . strftime('%Y-%m-%d %H:%M:%S') . '] (' . $this->_getLogLevel($level) . $def . $file . $line . ') ' . $msg . "\n";
-            }
-            $content= @ob_get_contents();
-            @ob_end_clean();
-            if ($target=='FILE' && $this->getCacheManager()) {
-                $filename = isset($targetOptions['filename']) ? $targetOptions['filename'] : 'error.log';
-                $filepath = isset($targetOptions['filepath']) ? $targetOptions['filepath'] : $this->getCachePath() . xPDOCacheManager::LOG_DIR;
-                $this->cacheManager->writeFile($filepath . $filename, $content, 'a');
-            } elseif ($target=='ARRAY' && isset($targetOptions['var']) && is_array($targetOptions['var'])) {
-                $targetOptions['var'][] = $content;
-            } else {
-                echo $content;
-            }
+        @ob_start();
+        if (!empty ($def)) {
+            $def= " in {$def}";
+        }
+        if (!empty ($file)) {
+            $file= " @ {$file}";
+        }
+        if (!empty ($line)) {
+            $line= " : {$line}";
+        }
+        switch ($target) {
+            case 'HTML' :
+                echo '<h5>[' . strftime('%Y-%m-%d %H:%M:%S') . '] (' . $this->_getLogLevel($level) . $def . $file . $line . ')</h5><pre>' . $msg . '</pre>' . "\n";
+                break;
+            default :
+                echo '[' . strftime('%Y-%m-%d %H:%M:%S') . '] (' . $this->_getLogLevel($level) . $def . $file . $line . ') ' . $msg . "\n";
+        }
+        $content= @ob_get_contents();
+        @ob_end_clean();
+        if ($target=='FILE' && $this->getCacheManager()) {
+            $filename = isset($targetOptions['filename']) ? $targetOptions['filename'] : 'error.log';
+            $filepath = isset($targetOptions['filepath']) ? $targetOptions['filepath'] : $this->getCachePath() . xPDOCacheManager::LOG_DIR;
+            $this->cacheManager->writeFile($filepath . $filename, $content, 'a');
+        } elseif ($target=='ARRAY' && isset($targetOptions['var']) && is_array($targetOptions['var'])) {
+            $targetOptions['var'][] = $content;
+        } elseif ($target=='ARRAY_EXTENDED' && isset($targetOptions['var']) && is_array($targetOptions['var'])) {
+            $targetOptions['var'][] = array(
+                'content' => $content,
+                'level' => $this->_getLogLevel($level),
+                'msg' => $msg,
+                'def' => $def,
+                'file' => $file,
+                'line' => $line
+            );
+        } else {
+            echo $content;
         }
     }
 
@@ -2672,7 +2710,9 @@ class xPDO {
                     $bound['/:' . $k . '\b/'] = str_replace(array('\\', '$'), array('\\\\', '\$'), $v);
                 }
             }
-            $this->log(xPDO::LOG_LEVEL_INFO, "{$sql}\n" . print_r($bound, true));
+            if ($this->getDebug() === true) {
+                $this->log(xPDO::LOG_LEVEL_DEBUG, "{$sql}\n" . print_r($bound, true));
+            }
             if (!empty($bound)) {
                 $sql= preg_replace(array_keys($bound), array_values($bound), $sql);
             }

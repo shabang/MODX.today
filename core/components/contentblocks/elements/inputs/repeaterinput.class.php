@@ -25,7 +25,7 @@ class RepeaterInput extends cbBaseInput {
             array(
                 'key' => 'group',
                 'fieldLabel' => $this->modx->lexicon('contentblocks.repeater.group'),
-                'xtype' => 'contentblocks-repeater-groups',
+                'xtype' => 'fieldgroup', // special type which creates a grid of fields under the current field
                 'description' => $this->modx->lexicon('contentblocks.repeater.group.description')
             ),
             array(
@@ -42,6 +42,38 @@ class RepeaterInput extends cbBaseInput {
                 'description' => $this->modx->lexicon('contentblocks.repeater.max_items.description'),
                 'default' => 0,
                 'minValue' => 0
+            ),
+            array(
+              'key' => 'min_items',
+              'fieldLabel' => $this->modx->lexicon('contentblocks.repeater.min_items'),
+              'xtype' => 'numberfield',
+              'description' => $this->modx->lexicon('contentblocks.repeater.min_items.description'),
+              'default' => 0,
+              'minValue' => 0
+            ),
+        );
+    }
+
+    /**
+     * Similar to {@see self::getFieldProperties}, except this is used when creating subfields to modify the edit panel.
+     *
+     * @return array
+     */
+    public function getParentProperties()
+    {
+        return array(
+            array(
+                'key' => 'key',
+                'fieldLabel' => $this->modx->lexicon('contentblocks.repeater.key'),
+                'xtype' => 'textfield',
+                'default' => '',
+                'description' => $this->modx->lexicon('contentblocks.repeater.key.description')
+            ),
+            array(
+                'key' => 'width',
+                'fieldLabel' => $this->modx->lexicon('contentblocks.width'),
+                'xtype' => 'numberfield',
+                'description' => $this->modx->lexicon('contentblocks.width.description')
             ),
         );
     }
@@ -118,7 +150,7 @@ class RepeaterInput extends cbBaseInput {
      * Processes a single row of the repeater
      *
      * @param array $row
-     * @param array $group
+     * @param cbField[] $group
      * @param array $data
      * @param string $tpl
      * @return mixed
@@ -128,27 +160,24 @@ class RepeaterInput extends cbBaseInput {
         $rowFields = array();
         // Loop over each key in the row and its value (array)
         foreach ($row as $key => $value) {
-            $input = $group[$key]['input'];
-
-            // Ensure properties are set as JSON, otherwise certain fields can go nuts
-            $group[$key]['properties'] = $this->modx->toJSON($group[$key]['properties']);
+            $field = $group[$key];
+            $inputType = $field->get('input');
 
             // If it's a known input, we try to parse it
-            if (isset($this->contentBlocks->inputs[$input])) {
-
-                // Update the fake field so it has the proper templates and properties as defined in the group field
-                $fakeField = $this->modx->newObject('cbField', $group[$key]);
+            if (isset($this->contentBlocks->inputs[$inputType])) {
+                /** @var cbBaseInput $input */
+                $input = $this->contentBlocks->inputs[$inputType];
 
                 // Attempt to parse the data through that input type
                 try {
-                    $parseData = array_merge($data, $group[$key], $value);
-                    $value = $this->contentBlocks->inputs[$input]->process($fakeField, $parseData);
+                    $parseData = array_merge($data, $field->toArray(), $value);
+                    $value = $input->process($field, $parseData);
                 } catch (Exception $e) {
-                    $value = 'Error parsing ' . $input . ': ' . $e->getMessage();
+                    $value = 'Error parsing ' . $inputType . ': ' . $e->getMessage();
                 }
             }
             else {
-                $value = 'Input ' . $input . ' not found. :( ';
+                $value = 'Input ' . htmlentities($inputType, ENT_QUOTES, 'UTF-8') . ' not found.';
             }
 
             // Set the value as placeholder in $rowFields
@@ -163,19 +192,20 @@ class RepeaterInput extends cbBaseInput {
     }
 
     /**
-     * Gets the group information as array
+     * Gets the repeater sub fields as key => cbField array
      *
      * @param cbField $field
-     * @return array
+     * @return cbField[]
      */
     public function getGroup(cbField $field)
     {
-        $ta = $field->get('group');
-        $ta = $this->modx->fromJSON($ta);
-
         $group = array();
-        foreach ($ta as $grp) {
-            $group[$grp['key']] = $grp;
+        $fields = $field->getSubfields();
+        foreach ($fields as $fld) {
+            $key = $fld->getParentProperty('key');
+            if (!empty($key)) {
+                $group[$key] = $fld;
+            }
         }
         return $group;
     }
@@ -194,14 +224,13 @@ class RepeaterInput extends cbBaseInput {
         $group = $this->getGroup($field);
 
         $dependencies = array();
-        foreach ($group as $fieldInfo) {
-            $dependencies[] = $fieldInfo['input'];
+        foreach ($group as $subField) {
+            $dependencies[] = $subField->get('input');
 
-            if ($fieldInfo['input'] === 'repeater') {
-                $this->modx->log(modX::LOG_LEVEL_ERROR, print_r($fieldInfo, true));
-                $nestedGroup = $this->modx->fromJSON($fieldInfo['properties']['group']);
+            if ($subField->get('input') === 'repeater') {
+                $nestedGroup = $this->getGroup($subField);
                 foreach ($nestedGroup as $nestedField) {
-                    $dependencies[] = $nestedField['input'];
+                    $dependencies[] = $nestedField->get('input');
                 }
             }
         }

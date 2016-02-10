@@ -48,14 +48,15 @@ class mgImageCrop extends xPDOSimpleObject
                 $source->removeObject($relativeUrl . $thumbnail);
             }
 
-            $cropInfo = $this->xpdo->moregallery->getCropInfo($this->get('crop'));
+            $extension = pathinfo($image->get('file'), PATHINFO_EXTENSION);
+            $cropInfo = $this->xpdo->moregallery->getCropInfo($this->get('crop'), $image->get('resource'));
             $file = $source->getObjectContents($relativeUrl . $image->get('file'));
-            $newImage = $this->createThumbnail($file['content'], $cropInfo);
-            $thumbFilename = strtolower($this->get('crop')) . '_' . pathinfo($image->get('file'), PATHINFO_FILENAME) . '.png';
+            $newImage = $this->createThumbnail($file['content'], $cropInfo, $extension);
+            $thumbFilename = strtolower($this->get('crop')) . '_' . pathinfo($image->get('file'), PATHINFO_FILENAME) . '.' . $extension;
 
             $source->createObject($relativeUrl . '_thumbs/', $thumbFilename, $newImage);
             $this->set('thumbnail', '_thumbs/' . $thumbFilename);
-            $this->set('thumbnail_hash', $currentHash);
+            $this->set('thumbnail_hash', $this->getThumbHash());
             $this->save();
 
             if ($source->hasErrors())
@@ -93,9 +94,10 @@ class mgImageCrop extends xPDOSimpleObject
     /**
      * @param $image
      * @param array $cropInfo
+     * @param string $extension
      * @return string
      */
-    public function createThumbnail($image, array $cropInfo = array())
+    public function createThumbnail($image, array $cropInfo = array(), $extension = 'png')
     {
         // Try to extend the time we have to execute in case of long running processing
         $timeSpent = (microtime(true) - $this->xpdo->startTime);
@@ -103,6 +105,8 @@ class mgImageCrop extends xPDOSimpleObject
         {
             set_time_limit(15);
         }
+        // Increase the memory limit too
+        $this->xpdo->moregallery->setMemoryLimit();
 
         $width = $this->get('width');
         $height = $this->get('height');
@@ -184,7 +188,11 @@ class mgImageCrop extends xPDOSimpleObject
         try {
             require_once dirname(dirname(dirname(__FILE__))).'/model/phpthumb/ThumbLib.inc.php';
             $thumb = PhpThumbFactory::create($image, array(), true);
-            $thumb->setFormat('PNG'); // makes sure alpha/transparency remains
+
+            // If we're dealing with a PNG, setting the format like this ensures the image keeps transparency/alpha
+            if ($extension === 'png') {
+                $thumb->setFormat('PNG');
+            }
 
             // Crop the image from the $x and $y defined, for a size of $width and $height.
             $x = $this->get('x');
@@ -205,10 +213,13 @@ class mgImageCrop extends xPDOSimpleObject
              */
             $resizeHeight = 0;
             $resizeWidth = 0;
-            foreach ($cropInfo as $key => $val)
-            {
-                if ($key == 'width') $resizeWidth = (int)$val;
-                if ($key == 'height') $resizeHeight = (int)$val;
+            foreach ($cropInfo as $key => $val) {
+                if ($key == 'width') {
+                    $resizeWidth = (int)$val;
+                }
+                if ($key == 'height') {
+                    $resizeHeight = (int)$val;
+                }
             }
 
             // Do the resizing. This is done after the cropping so we're working with the cropped version and not the original.

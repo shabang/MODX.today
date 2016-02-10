@@ -13,9 +13,7 @@ require_once MODX_CORE_PATH.'config/'.MODX_CONFIG_KEY.'.inc.php';
 require_once MODX_CONNECTORS_PATH . 'index.php';
 
 $corePath = $modx->getOption('contentblocks.core_path',null,$modx->getOption('core_path').'components/contentblocks/');
-require_once $corePath.'model/contentblocks/contentblocks.class.php';
-$modx->contentblocks = new ContentBlocks($modx);
-
+$modx->getService('contentblocks', 'ContentBlocks', $corePath . 'model/contentblocks/');
 $modx->lexicon->load('contentblocks:default');
 
 

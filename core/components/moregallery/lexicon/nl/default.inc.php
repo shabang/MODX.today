@@ -4,7 +4,7 @@
  * Last updated: 2013-10-30
  */
 
-$_lang['moregallery'] = 'MoreGalerij';
+$_lang['moregallery'] = 'MoreGallery';
 $_lang['moregallery.new'] = 'Nieuwe Galerij';
 $_lang['moregallery.new_description'] = 'Maak een nieuwe Galerij aan om afbeeldingen naar te uploaden.';
 $_lang['moregallery.name'] = 'Galerij';
@@ -29,8 +29,8 @@ $_lang['moregallery.content_position.hide'] = 'Verberg Content';
 
 $_lang['moregallery.view_full_size_image'] = 'Bekijk afbeelding op volledige grootte';
 $_lang['moregallery.delete_image'] = 'Verwijder afbeelding';
-$_lang['moregallery.deactivate_image'] = 'Hide image from the Gallery';
-$_lang['moregallery.activate_image'] = 'Mark image as visible';
+$_lang['moregallery.deactivate_image'] = 'Verberg afbeelding';
+$_lang['moregallery.activate_image'] = 'Maak afbeelding zichtbaar';
 $_lang['moregallery.upload_image'] = 'Upload afbeeldingen naar de Galerij';
 $_lang['moregallery.upload'] = 'Upload';
 $_lang['moregallery.import_image'] = 'Importeer afbeeldingen van andere bronnen';
@@ -53,47 +53,49 @@ $_lang['moregallery.model_error'] = 'Een onverwachte fout is opgetreden, de afbe
 
 $_lang['moregallery.error_invalid_resource'] = 'Een onverwachte fout is opgetreden, document "[[+resource]]" is geen Galerij.';
 $_lang['moregallery.error_loading_source'] = 'Er is een fout opgetreden bij het laden van de Media Source voor deze Galerij.';
+$_lang['moregallery.error_invalid_filetype'] = 'Sorry, .[[+extension]] files are not allowed.';
+$_lang['moregallery.error_upload_failed'] = 'the file could not be uploaded (Error [[+error]]).';
 
 // Tags related, for MoreGallery 1.1
 $_lang['moregallery.tags'] = 'Tags';
 $_lang['moregallery.tags.add'] = 'Toevoegen';
 // Imports, also new in 1.1
 $_lang['moregallery.file_doesnt_exist'] = 'Het bestand wat geïmporteerd moet worden lijkt niet te bestaan of is niet leesbaar: [[+file]]';
-$_lang['moregallery.edit_crop'] = 'Edit Crop';
-$_lang['moregallery.save_crop'] = 'Save Crop';
-$_lang['moregallery.preview_crop'] = 'Preview crop';
+$_lang['moregallery.edit_crop'] = 'Bewerk uitsnede';
+$_lang['moregallery.save_crop'] = 'Uitsnede opslaan';
+$_lang['moregallery.preview_crop'] = 'Uitsnede bekijken';
 $_lang['moregallery.processing_crop'] = 'Verwerken...';
 
 /**
  * Settings
  */
-$_lang['setting_moregallery.source_relative_url'] = 'Source Relative URL';
-$_lang['setting_moregallery.source_relative_url_desc'] = 'The URL relative to the root of the selected media source to upload images to. Can be overridden per Gallery resource on its Settings tab.';
+$_lang['setting_moregallery.source_relative_url'] = 'Mediabron Relatieve URL';
+$_lang['setting_moregallery.source_relative_url_desc'] = 'De URL relatief van de root van de geselecteerde media bron waar de afbeeldingen naar geüpload moeten worden. Dit kan per Galerij document overschreven worden op het Instellingen tabje.';
 
-$_lang['setting_moregallery.source'] = 'Media Source';
-$_lang['setting_moregallery.source_desc'] = 'Choose a Media Source to upload images to. Can be overridden per Gallery resource on its Settings tab.';
+$_lang['setting_moregallery.source'] = 'Mediabron';
+$_lang['setting_moregallery.source_desc'] = 'Kies een mediabron om de afbeelding naar toe te uploaden. Dit kan per Galerij document overschreven worden op het tabblad Instellingen.';
 
-$_lang['setting_moregallery.image_id_in_name'] = 'Image ID in Filename';
-$_lang['setting_moregallery.image_id_in_name_desc'] = 'Set to either "prefix" or "suffix" to add the image ID to the file name on upload. This ensures the filename is unique.';
-$_lang['setting_moregallery.resource_id_in_path'] = 'Resource ID in Path';
-$_lang['setting_moregallery.resource_id_in_path_desc'] = 'When enabled, the Gallery Resource ID will be suffixed to the Source Relative URL so each gallery has its own directory.';
-$_lang['setting_moregallery.content_position'] = 'Content Position';
-$_lang['setting_moregallery.content_position_desc'] = 'Set to "above", "below", "tab" or "hide" to determine how the Content field will be displayed, if at all.';
-$_lang['setting_moregallery.use_rte_for_images'] = 'Use Rich Text Editor';
-$_lang['setting_moregallery.use_rte_for_images_desc'] = 'When enabled, the currently active rich text editor will be loaded into the Image Description field. We recommend using Redactor, but other editors are also supported.';
-$_lang['setting_moregallery.crops'] = 'Crops';
-$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/">full Crops documentation</a> for more information about syntax and functionality.';
-$_lang['setting_moregallery.single_image_url_param'] = 'Single Image URL Parameter';
-$_lang['setting_moregallery.single_image_url_param_desc'] = 'Used with the mgGetImages snippet, the single image url parameter determines whether a listing or single image is displayed. This URL parameter will contain the image ID and, if not found, it will send the user to the configured 404 page. ';
-$_lang['setting_moregallery.add_icon_to_toolbar'] = 'Add Icon to Toolbar';
-$_lang['setting_moregallery.add_icon_to_toolbar_desc'] = 'When enabled, a "New Gallery" icon will be added to resource toolbar providing quick access to create new Galleries.';
+$_lang['setting_moregallery.image_id_in_name'] = 'Afbeelding ID in de bestandsnaam';
+$_lang['setting_moregallery.image_id_in_name_desc'] = 'Stel deze instelling in op "prefix" of "suffix" om de afbeelding ID aan de bestandsnaam toe te voegen tijdens de upload. Hierdoor weet je zeker dat de bestandsnaam uniek is. ';
+$_lang['setting_moregallery.resource_id_in_path'] = 'Document ID in pad';
+$_lang['setting_moregallery.resource_id_in_path_desc'] = 'Als dit ingeschakeld is zal het ID van de Galerij aan de Mediabron Relatieve URL worden toegevoegd waardoor elke galerij zijn eigen map heeft. ';
+$_lang['setting_moregallery.content_position'] = 'Content Positie';
+$_lang['setting_moregallery.content_position_desc'] = 'Stel in op "above", "below", "tab" of "hide" om aan te geven hoe het inhoudsveld getoond moet worden, of helemaal niet.';
+$_lang['setting_moregallery.use_rte_for_images'] = 'Gebruik Rich Text Editor';
+$_lang['setting_moregallery.use_rte_for_images_desc'] = 'Als deze instelling ingeschakeld is zal de huidige rich text editor geladen worden voor de omschrijving van afbeeldingen. We raden Redactor aan, maar andere editors zijn ook ondersteund. ';
+$_lang['setting_moregallery.crops'] = 'Uitsneden';
+$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">full Crops documentation</a> for more information about syntax and functionality.';
+$_lang['setting_moregallery.single_image_url_param'] = 'Afbeelding URL parameter';
+$_lang['setting_moregallery.single_image_url_param_desc'] = 'Deze instelling wordt gebruikt met de mgGetImages snippet, waarbij het beschikbaar zijn van de deze parameter aangeeft dat enkel de aangegeven afbeelding getoond  moet worden. Mocht de afbeelding niet gevonden zijn dan wordt de gebruiker naar de 404 pagina gestuurd. ';
+$_lang['setting_moregallery.add_icon_to_toolbar'] = 'Icoon aan Toolbar toevoegen';
+$_lang['setting_moregallery.add_icon_to_toolbar_desc'] = 'Indien ingeschakeld zal een "Nieuwe Galerij" icoon aan de resource toolbar worden toegevoegd, waarmee je eenvoudig een nieuwe galerij kunt aanmaken.';
 
-$_lang['setting_moregallery.sanitize_replace'] = 'Sanitize Replacement';
-$_lang['setting_moregallery.sanitize_replace_desc'] = 'Any characters in the uploaded filenames that do not match the sanitize pattern will be replaced with this character.';
-$_lang['setting_moregallery.sanitize_pattern'] = 'Sanitize Pattern';
-$_lang['setting_moregallery.sanitize_pattern_desc'] = 'A RegEx pattern for cleaning up filenames on upload.';
-$_lang['setting_mgr_tree_icon_mgresource'] = 'Gallery Tree Icon';
-$_lang['setting_mgr_tree_icon_mgresource_desc'] = 'The Font Awesome icon class to add to MoreGallery Resources in the file tree. ';
+$_lang['setting_moregallery.sanitize_replace'] = 'Opschoon Vervanging';
+$_lang['setting_moregallery.sanitize_replace_desc'] = 'Alle tekens in de naam van geüploade afbeeldingen die niet aan het opschoon patroon voldoen worden vervangen door het karakter in deze instelling. ';
+$_lang['setting_moregallery.sanitize_pattern'] = 'Opschoon Patroon';
+$_lang['setting_moregallery.sanitize_pattern_desc'] = 'Een RegEx patroon waar de naam van een afbeelding aan moet voldoen.';
+$_lang['setting_mgr_tree_icon_mgresource'] = 'Galerij Icoon';
+$_lang['setting_mgr_tree_icon_mgresource_desc'] = 'De Font Awesome icoon class om te gebruiken in de document tree om een Galerij toe te voegen. ';
 
 /**
  * Snippet properties
@@ -119,7 +121,7 @@ $_lang['moregallery.mggetimages.totalvar_desc'] = 'Gebruikt voor paginatie met g
 $_lang['moregallery.mggetimages.limit_desc'] = 'Het aantal afbeeldingen dat geladen moet worden.';
 $_lang['moregallery.mggetimages.offset_desc'] = 'Het aantal afbeeldingen dat aan het begin van de resultaten overgeslagen moet worden.';
 $_lang['moregallery.mggetimages.scheme_desc'] = 'Het schema wat gebruikt moet worden voor het generen van URLs; standaard zal dit de waarde zijn van de link_tag_scheme instelling.';
-$_lang['moregallery.mggetimages.where_desc'] = 'A generic condition to add to the query can be added here, in JSON format. For example {"uploadedby":4} or {"name:LIKE":"%train%"} ';
+$_lang['moregallery.mggetimages.where_desc'] = 'Een generieke conditie kan door middel van deze parameter worden toegevoegd aan de query, in JSON formaat. Bijvoorbeeld {"uploadedby":4} of {"name:LIKE":"%train%"} ';
 
 /** mgGetTags */
 $_lang['moregallery.mggettags.cache_desc_desc'] = 'Cache de Tag resultaten?';
@@ -133,4 +135,4 @@ $_lang['moregallery.mggettags.toplaceholder_desc'] = 'Indien opgegeven zal de sn
 $_lang['moregallery.mggettags.totalvar_desc'] = 'Gebruikt voor paginatie met getPage, deze placeholder zal het totaal aantal resultaten bevatten.';
 $_lang['moregallery.mggettags.limit_desc'] = 'Het aantal tags dat geladen moet worden.';
 $_lang['moregallery.mggettags.offset_desc'] = 'Het aantal tags dat aan het begin van de resultaten overgeslagen moet worden.';
-$_lang['moregallery.mggettags.where_desc'] = 'A generic condition to add to the query can be added here, in JSON format. For example {"createdon:>=":1390737600} or {"display:LIKE":"%train%"} ';
+$_lang['moregallery.mggettags.where_desc'] = 'Een generieke conditie kan door middel van deze parameter worden toegevoegd aan de query, in JSON formaat. {"createdon:>=":1390737600} or {"display:LIKE":"%train%"} ';

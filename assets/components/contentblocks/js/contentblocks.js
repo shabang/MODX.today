@@ -1,4 +1,4 @@
-var ContentBlocksFields, ContentBlocksLayouts, ContentBlocksContents, ContentBlocksConfig, ContentBlocksWrapperCls, ContentBlocksExtraSelectors, ContentBlocksTemplates;
+var ContentBlocksFields, ContentBlocksLayouts, ContentBlocksContents, ContentBlocksConfig, ContentBlocksWrapperCls, ContentBlocksExtraSelectors, ContentBlocksTemplates, ContentBlocksResource;
 
 var vcJquery = $.noConflict();
 (function ($) {
@@ -10,6 +10,7 @@ var vcJquery = $.noConflict();
     window.ContentBlocks = {
         debug: ContentBlocksConfig.debug,
         $: $,
+        cbWrapper: {},
         fldId: 0,
         layoutId: 0,
         addField: function (container, fldId, placeholders, position) {
@@ -85,6 +86,8 @@ var vcJquery = $.noConflict();
             container.removeClass('contentblocks-column-is-empty');
 
             ContentBlocks.fixColumnHeights();
+
+            return dom;
         },
 
         deleteField: function(e, field, noConfirm) {
@@ -126,6 +129,10 @@ var vcJquery = $.noConflict();
         },
 
         fixColumnHeights: function() {
+            // Make sure ContentBlocks is done initialising, otherwise we don't have the dom ready
+            if (!ContentBlocks.initialized) {
+                return;
+            }
             var $column = null,
                 container = $('.contentblocks-layout-wrapper'),
                 layouts = container.find('.contentblocks-region-content'),
@@ -138,16 +145,42 @@ var vcJquery = $.noConflict();
                 var highest = 0,
                     height = 0,
                     $layout = $(layout),
-                    regions = $layout.find('.contentblocks-region').not($layout.find('.contentblocks-region .contentblocks-region'));
+                    regions = $layout.find('.contentblocks-region').not($layout.find('.contentblocks-region .contentblocks-region')),
+                    layoutWidth = $layout.width(),
+                    columnWidths = 0,
+                    affectedColumns = [];
 
                 $.each(regions, function(index, column) {
                     $column = $(column);
+                    columnWidths = columnWidths + $column.outerWidth();
+
+                    affectedColumns.push($column);
+
                     height = $column.outerHeight();
                     if (height > highest) {
                         highest = height;
                     }
+
+                    if (columnWidths >= layoutWidth) {
+                        $.each(affectedColumns, function(index, $affColumn) {
+                            $affColumn.css('min-height', highest + 'px');
+                            if (!$affColumn.hasClass('contentblocks-region-middle')) {
+                                $affColumn.addClass('contentblocks-region-middle');
+
+                                if ((index + 1) === affectedColumns.length) {
+                                    $affColumn.addClass('contentblocks-region-last');
+                                }
+                            }
+                        });
+                        affectedColumns = [];
+                        highest = 0;
+                        columnWidths = 0;
+                    }
                 });
-                regions.css('min-height', highest + 'px');
+
+                $.each(affectedColumns, function(index, $affColumn) {
+                    $affColumn.css('min-height', highest + 'px');
+                });
             });
         },
 
@@ -162,14 +195,14 @@ var vcJquery = $.noConflict();
             container = container ? container : $('.contentblocks-wrapper > .contentblocks-layout-wrapper');
             this.$.each(content, function (index, region) {
                 // actually build the layout with the correct container
-                ContentBlocks.buildLayout(region.layout, region.content, region.settings || {}, container);
+                ContentBlocks.buildLayout(region.layout, region.content, region.settings || {}, container, region.title);
             });
         },
 
-        buildLayout: function (layoutId, content, settings, container) {
+        buildLayout: function (layoutId, content, settings, container, title, position) {
+            position = (position || position === 0) ? position : 'bottom';
             ContentBlocks.layoutId++;
-            var meta = $.extend(true, {}, ContentBlocksLayouts['_'+layoutId]),
-                columns = [];
+            var meta = $.extend(true, {}, ContentBlocksLayouts['_'+layoutId]);
 
             container = container || $('.contentblocks-wrapper > .contentblocks-layout-wrapper');
 
@@ -182,7 +215,7 @@ var vcJquery = $.noConflict();
             // Still not?
             if (!meta)
             {
-                container.append('<li><p class="error">Uh oh - tried to add a layout with ID "'+layoutId+'" but it was not found. We also tried to use the default layout (), but it was also not found. This probably means you either have no layouts defined yet in the ContentBlocks component, or they could not be loaded, or the contentblocks.default_layout setting is not defined properly. Contents of the layout: </p><textarea>' + Ext.encode(content) + '</textarea></li>');
+                container.append('<li><p class="error">Uh oh - tried to add a layout with ID "'+layoutId+'" but it was not found. We also tried to use the default layout ("+ContentBlocksConfig.default_layout+"), but it was also not found. This probably means you either have no layouts defined yet in the ContentBlocks component, or they could not be loaded, or the contentblocks.default_layout setting is not defined properly. Contents of the layout: </p><textarea>' + Ext.encode(content) + '</textarea></li>');
                 return false;
             }
 
@@ -193,9 +226,12 @@ var vcJquery = $.noConflict();
                 meta.name = nameLex;
             }
 
+            // Support for adding per-layout titles to the layout
+            meta.title = title || meta.name;
+
             // Decode the columns
-            columns = Ext.decode(meta.columns);
-            var columnCount = columns.length,
+            var columns = Ext.decode(meta.columns),
+                columnCount = columns.length,
                 columnsHtml = [],
                 columnIndex = 1;
 
@@ -211,7 +247,9 @@ var vcJquery = $.noConflict();
             var html = tmpl('contentblocks-layout-wrapper', meta);
 
             // Add layout to container
-            container.append(html);
+            if (position == 'top') container.prepend(html);
+            else if (position == 'bottom') container.append(html);
+            else container.children('li').eq(position).before(html);
 
             // Get the injected layout
             var layout = container.find('#' + meta.generated_id);
@@ -235,8 +273,8 @@ var vcJquery = $.noConflict();
             
             var addContentHere = tmpl('contentblocks-empty-field');
             
-            var columns = layout.find('.contentblocks-region-content').first().children('.contentblocks-region[data-part]');
-            $.each(columns, function(index, column) {
+            var markupColumns = layout.find('.contentblocks-region-content').first().children('.contentblocks-region[data-part]');
+            $.each(markupColumns, function(index, column) {
                 var container = $(column).find('.contentblocks-content');
                 container.prepend(addContentHere);
             });
@@ -299,7 +337,7 @@ var vcJquery = $.noConflict();
             return layout;
         },
 
-        buildTemplate: function (templateId, container) {
+        buildTemplate: function (templateId, container, position) {
             var meta = $.extend(true, {}, ContentBlocksTemplates['_'+templateId]);
             if (!meta) {
                 if (console) console.error('Error, template with ID ' + templateId + ' not found.');
@@ -309,7 +347,7 @@ var vcJquery = $.noConflict();
             container = container || $('.contentblocks-wrapper > .contentblocks-layout-wrapper').first();
 
             $.each(meta.content, function(i, layout) {
-                ContentBlocks.buildLayout(layout.layout, layout.content, layout.settings, container);
+                ContentBlocks.buildLayout(layout.layout, layout.content, layout.settings, container, layout.title, position);
             });
         },
         
@@ -344,12 +382,13 @@ var vcJquery = $.noConflict();
             layoutWrap.append(html);
 
             $(layout).find('.contentblocks-exposed-fields-wrapper .contentblocks-setting-link input[id]').each(function() {
-                ContentBlocks.initializeLinkField(this);
+                ContentBlocks.initializeLinkField(this)//, {properties : { limit_to_current_context : $(this).data('limitToCurrentContext')}});
             });
                         
-            $(layout).find('.contentblocks-exposed-fields-wrapper :input').on('change blur keyup', function() {
+            $(layout).find('.contentblocks-exposed-fields-wrapper :input[data-name]').on('change blur keyup', function() {
                 var settings = Ext.decode(layout.data('settings')) || {}; // this means we get any data from the modal fields
                 settings[$(this).data('name')] = $(this).val();
+
                 layout.data('settings', Ext.encode(settings));
                 ContentBlocks.fireChange();
             });
@@ -371,7 +410,7 @@ var vcJquery = $.noConflict();
 
             for (var key in ContentBlocksFields) {
                 if (ContentBlocksFields.hasOwnProperty(key)) {
-                    if (ContentBlocksFields[key].layouts.length > 0) {
+                    if (ContentBlocksFields[key].layouts && ContentBlocksFields[key].layouts.length > 0) {
                         var ia = $.inArray(layout, ContentBlocksFields[key].layouts);
                         if (ia < 0) {
                             continue;
@@ -398,6 +437,11 @@ var vcJquery = $.noConflict();
                     return;
                 }
 
+                // Hide subfields from the window
+                if (data.parent !== 0) {
+                    return;
+                }
+
                 // I18N
                 var lexName = _(data.name),
                     lexDescription = _(data.description);
@@ -417,7 +461,7 @@ var vcJquery = $.noConflict();
                 fields: fields
             });
 
-            ContentBlocks.openModal('Insert Content', html, {
+            ContentBlocks.openModal(_('contentblocks.add_content'), html, {
                 initCallback: function(modal) {
                     var list = modal.find('.contentblocks-add-field-list'),
                         highest = 0;
@@ -467,7 +511,8 @@ var vcJquery = $.noConflict();
 
         generateSettingFields: function(settings, defaultSettings, currentData, fieldDisplayType) {
             fieldDisplayType = (typeof fieldDisplayType === "undefined") ? 'modal' : fieldDisplayType;
-            var fields = [];
+            var fields = []
+                fieldHasOptions = ['select', 'radio', 'checkbox'];
             $.each(settings, function(id, setting) {
                 defaultSettings[setting.reference] = setting.default_value;
                 if(
@@ -482,19 +527,25 @@ var vcJquery = $.noConflict();
                         setting.title = lexTitle;
                     }
 
-                    if (setting.fieldtype == 'select' && setting.fieldoptions.length) {
+                    if (fieldHasOptions.indexOf(setting.fieldtype) >= 0 && setting.fieldoptions.length) {
+                        var settingType = setting.fieldtype,
+                            settingValues = setting.value.split(',');
                         setting.options = [];
                         $.each(setting.fieldoptions, function(idx, opt) {
+                            var hasValue = opt.indexOf('=') !== -1;
                             opt = opt.split('=');
-                            var value = opt[1] || opt[0],
-                                selected = (setting.value == value) ? ' selected="selected"' : '',
+                            var value = (hasValue) ? opt[1] : opt[0],
+                                selected = (settingValues.indexOf(value) !== -1) ? ' selected="selected"' : '',
+                                checked = (settingValues.indexOf(value) !== -1) ? ' checked="checked"' : '',
                                 display = opt[0],
-                                displayLex = _(display);
+                                displayLex = _(display),
+                                option = {value : value, selected : selected, checked: checked, display: display, reference: setting.reference},
+                                tpl = 'contentblocks-modal-layout-setting-' + settingType + '-option';
 
                             if (displayLex && displayLex.length > 0) {
                                 display = displayLex;
                             }
-                            setting.options.push('<option value="' + value + '" '+ selected +'>' + display + '</option>');
+                            setting.options.push(tmpl(tpl, option));
                         });
                         setting.options = setting.options.join('');
                     }
@@ -524,6 +575,7 @@ var vcJquery = $.noConflict();
             ContentBlocks.openModal(_('contentblocks.layout_settings.modal_header', {name: layoutMeta.name}), html, {
                 width: '450px',
                 initCallback: function(modal) {
+                    modal.on('click', '.contentblocks-setting-radio input, .contentblocks-setting-checkbox input', ContentBlocks.storeSettingValuesInHiddenField);
                     modal.find('.contentblocks-setting-link input[id]').each(function() {
                         ContentBlocks.initializeLinkField(this);
                     });
@@ -531,7 +583,7 @@ var vcJquery = $.noConflict();
                         e.preventDefault();
 
                         var settings = currentData;
-                        modal.find('input,textarea,select').each(function(i, fld) {
+                        modal.find(':input[data-name]').each(function(i, fld) {
                             settings[$(fld).data('name')] = $(fld).val();
                         });
                         l.data('settings', Ext.encode(settings));
@@ -576,9 +628,12 @@ var vcJquery = $.noConflict();
                 ContentBlocks.initializeLinkField(this);
             });
             
-            $(fieldWrap).children('.contentblocks-exposed-fields-wrapper').find(':input').on('change blur keyup', function() {
-                var settings = Ext.decode(fld.data('settings')) || {}; // this means we get any data from the modal fields
-                settings[$(this).data('name')] = $(this).val();
+            $(fieldWrap).children('.contentblocks-exposed-fields-wrapper').find(':input[data-name]').on('change blur keyup', function() {
+                var settings = Ext.decode(fld.data('settings')) || {}, // this means we get any data from the modal fields
+                    value = $(this).val(),
+                    name = $(this).data('name');
+                settings[name] = value;
+
                 fld.data('settings', Ext.encode(settings));
                 ContentBlocks.fireChange();
             });
@@ -606,13 +661,14 @@ var vcJquery = $.noConflict();
             ContentBlocks.openModal(_('contentblocks.field_settings.modal_header', {name: fieldMeta.name}), html, {
                 width: '450px',
                 initCallback: function(modal) {
+                    modal.on('click', '.contentblocks-setting-radio input, .contentblocks-setting-checkbox input', ContentBlocks.storeSettingValuesInHiddenField);
                     modal.find('.contentblocks-setting-link input[id]').each(function() {
                         ContentBlocks.initializeLinkField(this);
                     });
                     modal.find('.save-field_settings-button').on('click', function(e) {
                         e.preventDefault();
                         var settings = currentData; // this means we get any data from the modal fields
-                        modal.find('input,textarea,select').each(function(i, fld) {
+                        modal.find(':input[data-name]').each(function(i, fld) {
                             settings[$(fld).data('name')] = $(fld).val();
                         });
                         fld.data('settings', Ext.encode(settings));
@@ -624,17 +680,23 @@ var vcJquery = $.noConflict();
         },
 
         addLayoutModal: function() {
-            var layoutDef = [],
+            var btn = $(this),
+                layoutDef = [],
                 allPageLayouts = [],
                 // set container so that we can pass it to buildLayout
-                container = $(this).prevAll('.contentblocks-layout-wrapper'),
+                container = btn.prevAll('.contentblocks-layout-wrapper'),
                 // get data for field, primarily to make sure that we only allow specified layouts on nested layouts
                 parentData = container.closest('li.contentblocks-field-outer').data() || false,
                 allowedLayouts = [],
                 allowedTemplates = [],
-
                 layouts = [],
-                templates = [];
+                templates = [],
+                position = 'bottom';
+
+            if (btn.hasClass('contentblocks-add-layout-here')) {
+                container = btn.closest('.contentblocks-layout-wrapper');
+                position = btn.closest('li.contentblocks-layout').index();
+            }
 
             if(parentData && parentData.layouts) {
                 allowedLayouts = parentData.layouts;
@@ -739,14 +801,14 @@ var vcJquery = $.noConflict();
                 templates: templates
             });
 
-            ContentBlocks.openModal('Insert Layout', html, {
+            ContentBlocks.openModal(_('contentblocks.add_layout'), html, {
                 initCallback: function(modal) {
                     // Initiate the layouts
                     var layoutList = modal.find('.contentblocks-add-layout-list'),
                         layoutHighest = 0;
                     layoutList.find('a').on('click', function() {
                         var layout = $(this);
-                        ContentBlocks.buildLayout(layout.data('id'), [], [], container);
+                        ContentBlocks.buildLayout(layout.data('id'), [], [], container, false, position);
                         ContentBlocks.closeModal();
                     }).each(function(i, layout) {
                         layout = $(layout);
@@ -759,7 +821,7 @@ var vcJquery = $.noConflict();
                         templateHighest = 0;
                     templatesList.find('a').on('click', function() {
                         var template = $(this);
-                        ContentBlocks.buildTemplate(template.data('id'), container);
+                        ContentBlocks.buildTemplate(template.data('id'), container, position);
                         ContentBlocks.closeModal();
                     }).each(function(i, template) {
                         template = $(template);
@@ -797,10 +859,12 @@ var vcJquery = $.noConflict();
             noConfirm = noConfirm || false;
 
             var layoutId = layout.data('layout'),
-                layoutMeta = ContentBlocksLayouts['_'+layoutId] || {name: ''};
+                layoutMeta = ContentBlocksLayouts['_'+layoutId] || {name: ''},
+                layoutInstanceWrapperId = layout.attr('id'),
+                layoutInstanceId = layoutInstanceWrapperId.substr(0, layoutInstanceWrapperId.length - 8);
                 
             if (noConfirm || confirm(_('contentblocks.delete_layout.confirm.js', {layoutName: layoutMeta.name}))) {
-                delete ContentBlocks.generatedLayouts[layoutMeta.generated_id];
+                delete ContentBlocks.generatedLayouts[layoutInstanceId];
                 layout.remove();
             }
         },
@@ -853,8 +917,20 @@ var vcJquery = $.noConflict();
                         layout: layoutId,
                         content: {},
                         settings: Ext.decode($region.data('settings')) || {},
-                        parent: parent
+                        parent: parent,
+                        title: ''
                     };
+
+                // Custom titles per layout requires a bit of processing and ugly searching
+                var title = $region.find('> .contentblocks-region-container > .contentblocks-region-container-header .contentblocks-layout-title').text(),
+                    originalTitle = (ContentBlocksLayouts['_' + layoutId]) ? ContentBlocksLayouts['_' + layoutId].name : '';
+
+                if (_(originalTitle)) {
+                    originalTitle = _(originalTitle);
+                }
+                if (title && title.length && title !== originalTitle) {
+                    regionData.title = title;
+                }
                 
                 // have to filter to account for nested layouts. can't use children() because .contentblocks-content is buried.    
                 var children = $region.find('.contentblocks-content').not($(this).find('.contentblocks-content .contentblocks-content'));
@@ -879,9 +955,9 @@ var vcJquery = $.noConflict();
 
                     regionData.content[partName] = partFields;
                 });
-                if(!parent) {
+                if (!parent) {
                     data.push(regionData);
-                    }
+                }
             });
 
              if (!JSON) {
@@ -992,6 +1068,80 @@ var vcJquery = $.noConflict();
         },
 
         fieldTypes: {},
+        utilities: {
+            getThumbnailUrl: function(url, size) {
+                // Get the normalised urls, forcing it to relative mode so phpthumb can use the cleaned, relative url
+                var normalised = ContentBlocks.utilities.normaliseUrls(url, 'relative');
+                if (size > 0 || size.length > 0) {
+                    var width = size.split('x')[0],
+                        height = size.split('x')[1] || width,
+                        thumbUrl = MODx.config.connectors_url + 'system/phpthumb.php';
+
+                    // Only return a thumbnail if the width and height are larget than 0
+                    if (width > 0 && height > 0) {
+                        thumbUrl += '?src=' + normalised.cleanedSrc;
+                        thumbUrl += '&w=' + width + '&h=' + height + '&zc=1';
+                        thumbUrl += '&HTTP_MODAUTH=' + MODx.siteId;
+                        return thumbUrl;
+                    }
+                }
+                return normalised.displaySrc;
+            },
+            normaliseUrls: function(url, mode) {
+                mode = mode || ContentBlocksConfig.base_url_mode || 'relative';
+                var baseUrl = ContentBlocksConfig.modx_base_url,
+                    siteUrl = ContentBlocksConfig.modx_site_url;
+
+                var imageSrc = url,
+                    hasBaseUrl = (imageSrc.substr(0, baseUrl.length) === baseUrl);
+
+                if ((imageSrc.substr(0, 4) === 'http') || (imageSrc.substr(0, 2) === '//')) {
+                    if (imageSrc.substr(0, siteUrl.length) === siteUrl) {
+                        imageSrc = imageSrc.substr(siteUrl.length);
+                        hasBaseUrl = false;
+                    }
+                    else {
+                        return {
+                            'displaySrc': url,
+                            'cleanedSrc': url
+                        };
+                    }
+                }
+
+                var displaySrc = imageSrc,
+                    cleanedSrc = imageSrc;
+
+                switch (mode) {
+                    case 'full':
+                        if (!hasBaseUrl) {
+                            displaySrc = cleanedSrc = siteUrl + imageSrc;
+                        } else {
+                            cleanedSrc = siteUrl + imageSrc.substr(baseUrl.length);
+                        }
+                        break;
+
+                    case 'absolute':
+                        if (!hasBaseUrl) {
+                            displaySrc = baseUrl + imageSrc;
+                            cleanedSrc = baseUrl + imageSrc;
+                        }
+                        break;
+
+                    case 'relative':
+                    default:
+                        if (!hasBaseUrl) {
+                            displaySrc = baseUrl + imageSrc;
+                        } else {
+                            cleanedSrc = imageSrc.substr(baseUrl.length);
+                        }
+                        break;
+                }
+                return {
+                    'displaySrc': displaySrc,
+                    'cleanedSrc': cleanedSrc
+                };
+            }
+        },
         generatedContentFields: {},
         toBoolean: function (v) {
             return !(v == 'No' || !v || v == '0' || v == 'false');
@@ -1006,8 +1156,47 @@ var vcJquery = $.noConflict();
             $(this).removeClass('contentblocks-layout-expanded').addClass('contentblocks-layout-collapsed').text('+').closest('.contentblocks-region-container').children('.contentblocks-region-content').slideUp(300, function() {
                 ContentBlocks.fixColumnHeights();
             });
-
         },
+        expandAllLayouts: function() {
+            ContentBlocks.cbWrapper.find('.contentblocks-layout-collapsed').removeClass('contentblocks-layout-collapsed').addClass('contentblocks-layout-expanded').text('-').closest('.contentblocks-region-container').children('.contentblocks-region-content').slideDown(300, function() {
+                ContentBlocks.fixColumnHeights();
+            });
+        },
+        collapseAllLayouts: function() {
+            ContentBlocks.cbWrapper.find('.contentblocks-layout-expanded').removeClass('contentblocks-layout-expanded').addClass('contentblocks-layout-collapsed').text('+').closest('.contentblocks-region-container').children('.contentblocks-region-content').slideUp(300, function() {
+                ContentBlocks.fixColumnHeights();
+            });
+        },
+        editLayoutTitle: function() {
+            var $this = $(this),
+                $parent = $(this).parent();
+            $this.replaceWith('<input type="text" value="' + $this.text() + '" class="contentblocks-layout-title-edit">');
+            $parent.find('.contentblocks-layout-title-edit').focus();
+        },
+        updateLayoutTitle: function() {
+            var $input = $(this);
+            $input.replaceWith('<span class="contentblocks-layout-title">' + $input.val() + '</span>');
+        },
+        maybeUpdateLayoutTitle: function(e) {
+            var key = e.which || e.keyCode;
+            if (key == 13) {
+                e.preventDefault();
+                e.stopPropagation();
+                var $input = $(this);
+                $input.replaceWith('<span class="contentblocks-layout-title">' + $input.val() + '</span>');
+                return false;
+            }
+        },
+
+        storeSettingValuesInHiddenField: function() {
+            var options_container = $(this).closest('.contentblocks-modal-field'),
+                value_container = options_container.find('input[type=hidden]'),
+                value = options_container.find(':checked').map(function() {
+                    return this.value;
+                }).get().join(',');
+            value_container.val(value).change();
+        },
+
         initDelegates: function(dom) {
             // Field functions
             dom.on('click', '.contentblocks-field-settings', this.openFieldSettings);
@@ -1018,11 +1207,18 @@ var vcJquery = $.noConflict();
 
             // Layout functions
             dom.on('click', '.contentblocks-add-layout', this.addLayoutModal);
+            dom.on('click', '.contentblocks-add-layout-here', this.addLayoutModal);
             dom.on('click', '.contentblocks-layout-delete', this.deleteLayout);
             dom.on('click', '.contentblocks-layout-settings', this.openLayoutSettings);
             dom.on('click', '.contentblocks-repeat-layout',  this.repeatLayout);
             dom.on('click', '.contentblocks-layout-expanded', this.collapseLayout);
             dom.on('click', '.contentblocks-layout-collapsed', this.expandLayout);
+            dom.on('click', '.contentblocks-layout-title', this.editLayoutTitle);
+            dom.on('blur', '.contentblocks-layout-title-edit', this.updateLayoutTitle);
+            dom.on('keydown', '.contentblocks-layout-title-edit', this.maybeUpdateLayoutTitle);
+
+            // Setting functions
+            dom.on('click', '.contentblocks-setting-radio input, .contentblocks-setting-checkbox input', this.storeSettingValuesInHiddenField);
 
             // Layout moves
             dom.on('click', '.contentblocks-layout-move-up', function() {
@@ -1177,12 +1373,13 @@ var vcJquery = $.noConflict();
                 linkVal = ($link.val() != 'undefined') ? $link.val() : '',
                 showDisplayText = function($displayText) { $displayText.css({'opacity' : '1', 'z-index' : '1'}); },
                 hideDisplayText = function($displayText) { $displayText.css({'opacity' : '0', 'z-index' : '-1' }); },
-                linkPattern = (data.properties && data.properties.link_detection_pattern_override != '') ? data.properties.link_detection_pattern_override : ContentBlocksConfig['link.link_detection_pattern'],
+                linkPattern = (data.properties && typeof data.properties.link_detection_pattern_override !== 'undefined' && data.properties.link_detection_pattern_override != '') ? data.properties.link_detection_pattern_override : ContentBlocksConfig['link.link_detection_pattern'],
+                limitContext = (data.properties && data.properties.limit_to_current_context || $(input).data('limitToCurrentContext')) ? 1 : 0,
                 linkRE = new RegExp(linkPattern, 'i'),
                 resourceRE = /^\[\[~\d*\]\]/,
                 linkType = ContentBlocks.getLinkFieldDataType(linkVal);
-                
-            // remove mailto: from email links    
+
+            // remove mailto: from email links
             linkVal = linkVal.replace('mailto:', '');
             
             // find out if it's mostly numbers, i.e. a resource ID
@@ -1196,7 +1393,6 @@ var vcJquery = $.noConflict();
                 // set this so that the mailto: is replaced in email links. Esp. helpful in tinyrte
                 $link.val(linkVal);
             }
-            
             
             var displayTextHolder = $('<div />', {class : 'contentblocks-field-link-displaytext'}).on('click', function() {
                 $link.focus().select();
@@ -1243,6 +1439,9 @@ var vcJquery = $.noConflict();
                     showDisplayText(displayTextHolder);
                 }
             }).on('focus', function() {
+                if(typeof ContentBlocksResource !== 'undefined') {
+                    ContentBlocks.resourcesSource.remote.url = ContentBlocksConfig.connectorUrl + '?action=content/resources/search&query=%TERM%&limitToContext=' + limitContext + "&context=" + ContentBlocksResource.context_key;
+                }
                 hideDisplayText(displayTextHolder);
               
             }).after('<span/>');
@@ -1253,9 +1452,11 @@ var vcJquery = $.noConflict();
         initialize: function(contentBody) {
             // for typeahead
             $.ajaxSetup({
-                 headers: {
-                    'modAuth': MODx.siteId
-                 }
+                beforeSend:function(xhr, settings){
+                    if(!settings.crossDomain) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                    }
+                }
             });
             ContentBlocks.resourcesSource.initialize();
 
@@ -1266,6 +1467,7 @@ var vcJquery = $.noConflict();
             // Hide the wrapper first before generating the content
             cbWrapper.hide();
             cbWrapper.addClass(ContentBlocksWrapperCls);
+            ContentBlocks.cbWrapper = cbWrapper;
 
             // Build the content and build the fields
             ContentBlocks.buildContents(ContentBlocksContents);
@@ -1284,16 +1486,18 @@ var vcJquery = $.noConflict();
             cbWrapper.show();
             // .. and hide the loading message
             contentBody.find('#contentblocks_loading').remove();
-            // and fix the height
-            setTimeout(function() {
-                ContentBlocks.fixColumnHeights();
-            }, 1500);
 
             // For good measure we wait another few seconds for setting initialized to true
             setTimeout(function() {
                 ContentBlocks.initialized = true;
+                ContentBlocks.fixColumnHeights();
+                cbWrapper.trigger('ContentBlocks.initialized');
             }, 2500);
-            
+
+            setTimeout(function() {
+                ContentBlocks.fixColumnHeights();
+            }, 3000);
+
         },
         
         getLinkFieldDataType: function(val) {
@@ -1313,7 +1517,7 @@ var vcJquery = $.noConflict();
         // set up the resource source for resource link typeahead
         resourcesSource: new Bloodhound({
             prefetch: {
-                url: ContentBlocksConfig.connectorUrl + '?action=content/resources/prefetch',
+                url: (typeof ContentBlocksResource !== 'undefined') ? ContentBlocksConfig.connectorUrl + '?action=content/resources/prefetch&context=' + ContentBlocksResource.context_key : ContentBlocksConfig.connectorUrl + '?action=content/resources/prefetch',
                 ttl: 3600000
             },
             remote: {

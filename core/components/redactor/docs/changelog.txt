@@ -1,11 +1,192 @@
-++ Redactor 1.5.4-pl
-++ Released on 2015-05-25
-++++++++++++++++++++++++++
- - Hardened XHR Security
- - #267 Clean up placeholders that don't exist
- - #284 Upload filename correctly when it starts with UTF8
- - #285 Fix issue with setting title on link create
- - #292 Fix additional plugin usage with RedactorTV
+++ Redactor 2.0.7-pl
+++ Released on 2016-02-02
++++++++++++++++++++++++++
+ - Fix Eureka Media Browser Layout flips out completely on Chrome 48 [#399]
+
+++ Redactor 2.0.6-pl
+++ Released on 2016-01-15
++++++++++++++++++++++++++
+- plugin_uploadcare System Setting now defaults to false
+- Respect Selected Text When Inserting Files [#384]
+- Fix Weird Clips Behavior [#388]
+
+++ Redactor 2.0.5-pl
+++ Released on 2015-12-23
++++++++++++++++++++++++++
+- Restore the resource typeahead on image links [#372]
+- Switching redactor.pastePlainText System Setting to default to false [#375]
+- Fix Advanced Attributes don't persist in modal [#392]
+- Insert Images by URL (See plugin_imageurl Setting)
+- Fix issues with Formatting and Custom Formatting options not being used on Redactor TVs [S7400]
+- Fix persistence of plugin-related Redactor TV options [S7400]
+- Fix disabling plugins on specific Redactor TVs if they're enabled globally [S7400]
+- Make sure Redactor TV options use the setting lexicons for better and translated descriptions [#109]
+
+++ Redactor 2.0.4-pl
+++ Released on 2015-11-04
++++++++++++++++++++++++++
+- Fix broken flexbox layout on touch devices [#387]
+- Fix incorrect choose title when eureka upload is enabled [#386]
+- Fix layout when Eureka sidebar is collapsed [#385]
+
+++ Redactor 2.0.3-pl
+++ Released on 2015-10-27
++++++++++++++++++++++++++
+- Fix incorrect link text on convertLink [#374]
+- Fix issue with Clips not inserting inline HTML [#378]
+- Fix incorrect check causing E_NOTICE errors in upload
+- Fix bug with some upload path placeholders not working
+
+++ Redactor 2.0.2-pl
+++ Released on 2015-10-01
++++++++++++++++++++++++++
+- Update Redactor.js to 10.2.5 with several bug fixes
+- Fix Eureka growing beyond available size with lots of directories [#367]
+- Fix email links adding double mailto: [#368]
+- Fix Eureka breaking out of the modal [#370]
+- Improve consistency in modal styling [#371]
+
+++ Redactor 2.0.1-pl
+++ Released on 2015-09-16
++++++++++++++++++++++++++
+- Fix thumbnails not showing in certain environments [S6479]
+- Fix Broken Image Edit Window [#366]
+- Fix various z-index issues when used in MIGX and other components [S6480]
+
+++ Redactor 2.0.0-pl
+++ Released on 2015-09-08
++++++++++++++++++++++++++
+Redactor 2 is here! For the full details of the 2.0 release, please check the changelog for Redactor 2.0.0-rc2 below,
+or visit https://www.modmore.com/blog/2015/announcing-redactor-2.0/ for the official announcement.
+
+Fixes in 2.0.0-pl since 2.0.0-rc8:
+- Fix loading of Eureka with js compression enabled [#354]
+- Fix loadIntrotext not working in certain edge cases
+
+++ Redactor 2.0.0-rc8
+++ Released on 2015-09-05
++++++++++++++++++++++++++
+- Show size of image while resizing [#95]
+- Fix potential E_NOTICE error when dealing with ultimate parent [#353]
+- Fix redactor.date_files not being respected on file uploads [#350]
+- Fix dynamic thumbnail being missing from Eureka [#349]
+- Fix switching back to visual mode with ace editor on TVs [#355]
+- Prevent loading Ace multiple times when used on TVs
+- Load Ace from CDN with fallback
+- Fix missing limiter setting and incorrect format
+- Fix Ace Editor In TVs (and not main content)
+- Ensure un-ordered lists are bulleted with list-style-type:disc
+- Breakout Media Source TV Input into File/Image [#362]
+- Fix marginFloatLeft and marginFloatRight [#360]
+- set redactor.linkTooltip to default to true
+
+++ Redactor 2.0.0-rc7
+++ Released on 2015-08-15
++++++++++++++++++++++++++
+- Fix bug introduced in rc6 that prevented editing chunks
+
+++ Redactor 2.0.0-rc6
+++ Released on 2015-08-15
++++++++++++++++++++++++++
+- Remove searchImages Setting
+- ImagePX Plugin Fix (thanks for the Pull Request YvonneYu)
+- Fix No Eureka on RedactorTVs [#351]
+- Updated Eureka Media Browser localStorage keys to be more specific
+- Allot Media Browser Stage more pixels [#328]
+- Updated Redactor.js to 10.2.3
+
+++ Redactor 2.0.0-rc5
+++ Released on 2015-08-03
++++++++++++++++++++++++++
+- Fix issue where saving a resource duplicated Redactor TVs [#344]
+- Fix issue with Clips plugin causing fatal JavaScript error [#346]
+
+++ Redactor 2.0.0-rc4
+++ Released on 2015-07-30
++++++++++++++++++++++++++
+- Added ability to use different media sources for uploading and browsing files vs images (does not effect Eureka browser) [#331]
+- Fix issue with path placeholders not working as expected [#333]
+- Fix issue where uploading files used the configured image path [#334]
+- Fix issue with opening eureka for inserting files [#335]
+- Fix issue where disabling eureka did not fallback to the legacy browsers [#336]
+- Fix browse issue when using legacy (non-eureka) browser [#338]
+- Fix broken source mode when using CodeMirror and a Redactor TV [#330]
+- Only show images when browsing images in Eureka [S6009]
+- Fix dropdown position when toolbar is fixed [S6009]
+- Improve compatibility with dynamic media source paths using snippets relying on $modx->resource [#322]
+- Fix issue where in some cases TVs that are moved to a new tab with form customizations have no toolbar
+
+++ Redactor 2.0.0-rc3
+++ Released on 2015-07-24
++++++++++++++++++++++++++
+- Fix issue with right-side of the manager not loading after update to 2.0 on certain environments
+- Fix issue with incorrect media source being initially chosen
+- Fix issue where toolbars on TVs were hidden until scrolling [#321]
+- Fix issue with fixed toolbars getting stuck when going to fullscreen mode [#324]
+- Fix Root Directories not Expanding when selected [#326]
+
+++ Redactor 2.0.0-rc2
+++ Released on 2015-07-20
++++++++++++++++++++++++++
+Redactor for MODX v2 is here! Our second major release of Redactor is based on v10.2.2 and ships with a lot of new features and improvements.
+For upgrade notes, please visit https://www.modmore.com/redactor/documentation/upgrading-1.x-to-2.0/
+
+Redactor.js v10 highlights:
+- Largely rewritten with a modular design with 36 core modules and over a dozen plugins
+- Dozens of new settings, callbacks and APIs
+- Fixed 60+ formatting issues and 100+ other core editor bugs
+- See http://imperavi.com/redactor/docs/whats-new-10/ and http://imperavi.com/redactor/log/ for more Imperavi updates
+
+New Features:
+- New, more powerful and better looking Media Browser for inserting images or files
+- Syntax Highlighter Support for the source mode powered by Ace or CodeMirror (#262)
+- Path placeholders now include Template Variables (with [[+tv.name_of_tv]]), parent alias, ultimate parent alias and all resource fields (#199)
+- All settings are now context-aware, allowing per-context overrides on Redactor configuration (#146, #275)
+- New custom formatting baked into the core (#260)
+- Tagging for Clips plugin allows to find specific clips quicker (#250)
+- Ability to set images dimensions in pixels
+- Add subject, CC and BCC field to the Insert Link > Email tab as advanced attributes (#203)
+- Optionally add a Redactor editor to the introtext (#243)
+- Also see the list of Plugins below for more exciting new or improved optional features.
+
+Improvements:
+- Uploading images and files now requires the file_upload permission (#159)
+- Boolean setting values are now properly recognized (#266)
+- Improved handling of image urls, which are now relative to the site base url by default (#288)
+- Updated jQuery to 1.11.3
+- Show context on hover in Insert Link > Resource typeahead (#204)
+- Prevent overwriting existing files by adding an incremental index to filenames instead (file sources only, #198)
+- Better abstraction of MODX/modmore-specific overrides for faster Imperavi updates
+- Fix issue with using typeahead on third party components (#248)
+- Fix issue with attempting to create thumbnails of .svg images (#246)
+
+Includes plugins as of Redactor 2.0:
+- Base URLs: normalizes image src attributes to ensure clean output
+- Breadcrumbs: shows the markup hierarchy from the cursor
+- Clips: easily insert configurable snippets of code or special characters
+- Contrast: hit f5 to inverse the editor colors for high contrast mode, works best in full screen
+- Counter: shows the length of your content, and approximately how long it will take to read
+- Defined Links: allows setting up predefined links that are available in a dropdown when adding a link
+- Download: downloads the html source of what's in the editor to file
+- Eureka: shiny new accessible media browser
+- File manager: upload files or browse existing one with Eureka
+- Font color: change the color of part of the text
+- Font family: change the font family of the text
+- Font size: change the size of the text
+- Fullscreen: make the editor full screen for more immersive writing
+- ImagePX: provides extra options in the image window to specify the size of an image in pixels
+- Limiter: makes sure the content does not exceed a certain limit
+- Norphan: prevents orphaned words at the end of sentences by adding a &nbsp; between the last and second last word
+- Replace: simple find and replace utility (#254)
+- Speek: listen to your written words being spoken with the power of HTML5 speech APIs
+- Syntax: use the Ace syntax editor for the source view; codemirror is also available
+- Table: the table features that were available before are now available as separate plugin
+- Text Direction: set the text direction of a block-level element
+- Text Expander: expend small pieces of text into a larger one
+- UploadCare: as alternative to locally hosting images, UploadCare lets you upload directly to their service from Redactor
+
+Removed features and breaking changes:
+- Please see the upgrade notes at https://www.modmore.com/redactor/documentation/upgrading-1.x-to-2.0/
 
 ++ Redactor 1.5.3-pl
 ++ Released on 2014-12-30

@@ -113,9 +113,15 @@ Ext.extend(MODx,Ext.Component,{
         try {
             r = Ext.decode(r.responseText);
         } catch (e) {
+            var text, matched = r.responseText.match(/<body[^>]*>([\w|\W]*)<\/body>/im);
+            if (typeof(matched[1] !== 'undefined')) {
+                text = '<p>'+e.message+':</p>'+matched[1];
+            } else {
+                text = e.message+': '+ r.responseText;
+            }
             Ext.MessageBox.show({
                 title: _('error')
-                ,msg: e.message+': '+ r.responseText
+                ,msg: text
                 ,buttons: Ext.MessageBox.OK
                 ,cls: 'modx-js-parse-error'
                 ,minWidth: 600
@@ -181,6 +187,11 @@ Ext.extend(MODx,Ext.Component,{
 
     ,refreshURIs: function() {
         var topic = '/refreshuris/';
+        MODx.msg.status({
+            title: _('please_wait'),
+            message: _('refreshuris_desc'),
+            dontHide: true
+        });
         MODx.Ajax.request({
             url: MODx.config.connector_url
             ,params: {
@@ -882,4 +893,3 @@ Ext.extend(MODx.HttpProvider, Ext.state.Provider, {
         Ext.Ajax.request(o);
     }
 });
-

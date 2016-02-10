@@ -16,7 +16,7 @@ ContentBlocksComponent.window.Layout = function(config) {
         },
         width: 750,
         y: 20,
-        bodyCssClass: 'window-vtabs',
+        bodyCssClass: 'cb-window-vtabs',
         fields: [{
             xtype: 'hidden',
             name: 'id'
@@ -33,7 +33,8 @@ ContentBlocksComponent.window.Layout = function(config) {
                 autoHeight: true,
                 cls: 'main-wrapper',
                 deferredRender: false,
-                forceLayout: true
+                forceLayout: true,
+                bodyStyle: 'max-height: ' + (Math.max(document.documentElement.clientHeight, window.innerHeight || 0) - 150) + 'px;'
             },
             items: [{
                 title: _('contentblocks.general'),

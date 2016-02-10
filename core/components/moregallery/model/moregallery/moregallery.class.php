@@ -5,7 +5,7 @@
  * @package moreGallery
  */
 class moreGallery {
-    public $version = '1.3.3-pl';
+    public $version = '1.3.7-pl';
 
     public $cacheOptions = array(
         xPDO::OPT_CACHE_KEY => 'moregallery'
@@ -22,6 +22,7 @@ class moreGallery {
     public $chunks = array();
 
     protected $_resources = array();
+    protected $_memoryLimitIncreased = false;
 
     /**
      * @param \modX $modx
@@ -241,13 +242,13 @@ class moreGallery {
     public function getCrops($resource = null)
     {
         $crops = false;
-        if ($resource instanceof modResource)
-        {
+        if (is_numeric($resource)) {
+            $resource = $this->modx->getObject('modResource', (int)$resource);
+        }
+        if ($resource instanceof modResource) {
             $crops = $resource->getProperty('crops', 'moregallery', 'inherit');
         }
-
-        if (empty($crops) || $crops == 'inherit')
-        {
+        if (empty($crops) || $crops == 'inherit') {
             $crops = $this->getOption('moregallery.crops', null, '');
         }
         return $this->parseCrops($crops);
@@ -257,11 +258,12 @@ class moreGallery {
      * Grab information about a specific crop by its key
      *
      * @param $crop
-     * @return bool|array
+     * @param int|modResource $resource
+     * @return array|bool
      */
-    public function getCropInfo($crop)
+    public function getCropInfo($crop, $resource = null)
     {
-        $crops = $this->getCrops();
+        $crops = $this->getCrops($resource);
         if (isset($crops[$crop])) return $crops[$crop];
         return false;
     }
@@ -308,5 +310,25 @@ class moreGallery {
             $this->_resources[$id] = $this->modx->getObject('mgResource', $id);
         }
         return $this->_resources[$id];
+    }
+
+    public function setMemoryLimit()
+    {
+        if ($this->_memoryLimitIncreased) return;
+        $before = ini_get('memory_limit');
+        $unit = strtoupper(substr($before, -1));
+        $number = substr($before, 0, -1);
+        $newLimit = $this->getOption('moregallery.upload_memory_limit', null, '256M');
+        $newLimitNumber = substr($newLimit, 0, -1);
+        if ($unit !== 'G' && $number < $newLimitNumber) {
+            @ini_set('memory_limit', $newLimit);
+            $after = ini_get('memory_limit');
+
+            if ($before === $after) {
+                $this->modx->log(modX::LOG_LEVEL_ERROR,
+                    '[moregallery] Attempted to up the memory limit from ' . $before . ' to ' . $newLimit . ', but failed. You may run out of memory while resizing the uploaded image.');
+            }
+        }
+        $this->_memoryLimitIncreased = true;
     }
 }

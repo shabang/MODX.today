@@ -55,6 +55,13 @@ class LinkInput extends cbBaseInput {
                 'default' => '',
                 'description' => $this->modx->lexicon('contentblocks.link.link_detection_pattern_override.description')
             ),
+            array(
+              'key' => 'limit_to_current_context',
+              'fieldLabel' => $this->modx->lexicon('contentblocks.link.limit_to_current_context'),
+              'xtype' => 'contentblocks-combo-boolean',
+              'default' => '1',
+              'description' => $this->modx->lexicon('contentblocks.link.limit_to_current_context.description')
+            ),
         );
     }
 

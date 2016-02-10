@@ -5,11 +5,13 @@ $xpdo_meta_map['cbField']= array (
   'table' => 'contentblocks_field',
   'fields' => 
   array (
+    'parent' => 0,
+    'parent_properties' => NULL,
     'input' => 'textfield',
     'name' => NULL,
     'description' => NULL,
     'sortorder' => 0,
-    'icon' => NULL,
+    'icon' => '',
     'icon_type' => 'core',
     'template' => NULL,
     'properties' => NULL,
@@ -21,6 +23,20 @@ $xpdo_meta_map['cbField']= array (
   ),
   'fieldMeta' => 
   array (
+    'parent' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '10',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
+    'parent_properties' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'string',
+      'null' => true,
+    ),
     'input' => 
     array (
       'dbtype' => 'varchar',
@@ -57,6 +73,7 @@ $xpdo_meta_map['cbField']= array (
       'precision' => '255',
       'phptype' => 'string',
       'null' => false,
+      'default' => '',
     ),
     'icon_type' => 
     array (
@@ -112,6 +129,95 @@ $xpdo_meta_map['cbField']= array (
       'dbtype' => 'text',
       'phptype' => 'string',
       'null' => true,
+    ),
+  ),
+  'indexes' => 
+  array (
+    'input' => 
+    array (
+      'alias' => 'input',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'input' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'parent' => 
+    array (
+      'alias' => 'parent',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'parent' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'name' => 
+    array (
+      'alias' => 'name',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'name' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'sortorder' => 
+    array (
+      'alias' => 'sortorder',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'sortorder' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+  ),
+  'composites' => 
+  array (
+    'Children' => 
+    array (
+      'class' => 'cbField',
+      'local' => 'id',
+      'foreign' => 'parent',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
+  ),
+  'aggregates' => 
+  array (
+    'Parent' => 
+    array (
+      'class' => 'cbField',
+      'local' => 'parent',
+      'foreign' => 'id',
+      'cardinality' => 'one',
+      'owner' => 'foreign',
     ),
   ),
 );

@@ -1,10 +1,10 @@
 (function ($, ContentBlocks) {
     ContentBlocks.fieldTypes.repeater = function(dom, data) {
-        var group = Ext.decode(data.properties.group),
-            wrapper = dom.find('.contentblocks-repeater-wrapper'),
+        var wrapper = dom.find('.contentblocks-repeater-wrapper'),
             emptyRowTmpl = tmpl('contentblocks-repeater-item'),
             maxItems = (data.properties && data.properties.max_items) ? data.properties.max_items : 0,
-            buttons = wrapper.next('.contentblocks-field-actions-bottom');
+            minItems = (data.properties && data.properties.min_items) ? data.properties.min_items : 0,
+            buttons = wrapper.siblings('.contentblocks-field-actions-bottom, .contentblocks-field-actions-top');
 
         var input = {
             init: function () {
@@ -14,7 +14,15 @@
                     })
                 }
                 else {
-                    this.addRow();
+                    if(minItems > 0) {
+                        for(var i = 0; i < minItems; i++) {
+                            this.addRow();
+                        }
+                        dom.find('.contentblocks-repeater-delete-row').hide();
+                    }
+                    else {
+                        this.addRow();
+                    }
                 }
 
                 buttons.on('click', '.contentblocks-repeater-add-item', input.addEmptyRow);
@@ -25,6 +33,16 @@
                     });
                 }).on('click', '.contentblocks-repeater-collapsed', function() {
                     $(this).removeClass('contentblocks-repeater-collapsed').addClass('contentblocks-repeater-expanded').text('-').closest('.contentblocks-field-repeater').children('.contentblocks-repeater-wrapper').slideDown(300, function() {
+                        ContentBlocks.fixColumnHeights();
+                    });
+                });
+
+                dom.on('click', '.contentblocks-repeater-item-expanded', function() {
+                    $(this).removeClass('contentblocks-repeater-item-expanded').addClass('contentblocks-repeater-item-collapsed').text('+').closest('.contentblocks-repeater-row').children('.contentblocks-repeater-item-wrapper').slideUp(300, function() {
+                        ContentBlocks.fixColumnHeights();
+                    });
+                }).on('click', '.contentblocks-repeater-item-collapsed', function() {
+                    $(this).removeClass('contentblocks-repeater-item-collapsed').addClass('contentblocks-repeater-item-expanded').text('-').closest('.contentblocks-repeater-row').children('.contentblocks-repeater-item-wrapper').slideDown(300, function() {
                         ContentBlocks.fixColumnHeights();
                     });
                 });
@@ -61,13 +79,23 @@
             },
 
             deleteRow: function() {
-                $(this).closest('.contentblocks-repeater-row').remove();
+                var currentItems = wrapper.children().length;
+
+                if(currentItems > minItems) {
+                    $(this).closest('.contentblocks-repeater-row').remove();
+                    currentItems--;
+                    // current items should never be able to get to be lower than minItems, but who knows?
+                    if(currentItems <= minItems) {
+                        dom.find('.contentblocks-repeater-delete-row').hide();
+                    }
+                }
                 if (maxItems > 0) {
-                    var currentItems = wrapper.children().length;
                     if(currentItems == (maxItems - 1)) {
                         buttons.find('.contentblocks-repeater-add-item').show();
                     }
                 }
+
+                ContentBlocks.fixColumnHeights();
             },
 
             addEmptyRow: function() {
@@ -78,81 +106,55 @@
                         return;
                     }
                 }
-                input.addRow();
+
+                input.addRow({}, $(this).data('target'));
             },
 
-            addRow: function(rowData) {
+            addRow: function(rowData, target) {
                 rowData = rowData || {};
 
+                // Generate the empty row wrapper, and inject it into the page
                 var newRow = $(emptyRowTmpl({}));
-                $.each(group, function(idx, fld) {
+                if (!target || target == 'bottom') {
+                    wrapper.append(newRow);
+                }
+                else {
+                    wrapper.prepend(newRow);
+                }
+
+                // Loop over each of the subfields to generate them individually, added tp the wrapper.
+                $.each(data.subfields, function(idx, fld) {
+                    // First make sure we combine whatever values we have available
                     var values = $.extend(true, {}, fld);
-                    if (rowData[fld.key]) {
-                        values = $.extend(true, {}, values, rowData[fld.key]);
+                    if (rowData[fld.parent_properties.key]) {
+                        values = $.extend(true, {}, values, rowData[fld.parent_properties.key]);
                     }
-                    newRow.children('ul').append(
-                        input.createField(values)
-                    );
+                    // Call the ContentBlocks.addField API to create the subfield and have it injected into the canvas
+                    var generatedField = ContentBlocks.addField(newRow.children('ul'), fld.id, values, 'bottom');
+
+                    // Add a class for the width
+                    if (values.parent_properties.width > 0) {
+                        generatedField.css('width', values.parent_properties.width  + '%');
+                    }
+                    // Keep track of the repeater-key value so we can link it back together later
+                    generatedField.data('repeater-key', values.parent_properties.key);
                 });
 
-                newRow.on('click', '.contentblocks-repeater-item-expanded', function() {
-                    $(this).removeClass('contentblocks-repeater-item-expanded').addClass('contentblocks-repeater-item-collapsed').text('+').closest('.contentblocks-repeater-row').children('.contentblocks-repeater-item-wrapper').slideUp(300, function() {
-                        ContentBlocks.fixColumnHeights();
-                    });
-                }).on('click', '.contentblocks-repeater-item-collapsed', function() {
-                    $(this).removeClass('contentblocks-repeater-item-collapsed').addClass('contentblocks-repeater-item-expanded').text('-').closest('.contentblocks-repeater-row').children('.contentblocks-repeater-item-wrapper').slideDown(300, function() {
-                        ContentBlocks.fixColumnHeights();
-                    });
-                });
-                wrapper.append(newRow);
-
+                // Limit the number of items that can be added
+                var currentItems = wrapper.children().length;
                 if (maxItems > 0) {
-                    var currentItems = wrapper.children().length;
                     if(currentItems == maxItems) {
                         buttons.find('.contentblocks-repeater-add-item').hide();
                     }
                 }
+                if (minItems > 0) {
+                    if(currentItems > minItems) {
+                        dom.find('.contentblocks-repeater-delete-row').show();
+                    }
+                }
+
+                // Ensure the various columns are kept nicely aligned
                 ContentBlocks.fixColumnHeights();
-            },
-
-            createField: function(placeholders) {
-                ContentBlocks.fldId++;
-                placeholders.generated_id = 'contentblocks-field-' + ContentBlocks.fldId;
-                placeholders.field = 0;
-
-                // I18n for the name
-                var nameLex = _(placeholders.name);
-                if (nameLex && nameLex.length) {
-                    placeholders.name = nameLex;
-                }
-
-                // Create the field html
-                var fieldMarkup = $(tmpl('contentblocks-field-' + placeholders.input, placeholders));
-
-                // Add a class for the width
-                if (placeholders.width > 0) {
-                    fieldMarkup.css('width', placeholders.width + '%');
-                }
-                fieldMarkup.data('repeater-key', placeholders.key);
-
-                // Create a new instance of the input js
-                if (typeof ContentBlocks.fieldTypes[placeholders.input] !== 'function') {
-                    ContentBlocks.alert('Uh oh, could not load the input type ' + fieldType.input);
-                    return false;
-                }
-                var inp = ContentBlocks.fieldTypes[placeholders.input](fieldMarkup, placeholders);
-
-                // Set the id on the input
-                inp.id = placeholders.generated_id;
-
-                // Init the input
-                if (inp.init) {
-                    setTimeout(function() { inp.init() }, 150);
-                }
-
-                // Store the input
-                ContentBlocks.generatedContentFields[placeholders.generated_id] = inp;
-                return fieldMarkup;
             },
 
             getData: function () {
@@ -174,6 +176,9 @@
                             // at this point settings are not supported, but maybe in the future
                             // value.settings = Ext.decode($field.data('settings')) || {};
                             rowFields[repeaterKey] = value;
+                        }
+                        else {
+                            if (console) console.error('input not found with id', fldId);
                         }
                     });
 

@@ -1,7 +1,7 @@
 id: 19
 name: 'Updater Notifier'
 description: 'This plugin manages notification mail messages of the updater '
-category: Updater
+category: ''
 properties: null
 static: 1
 static_file: updater/elements/plugins/updater.notifier.plugin.php

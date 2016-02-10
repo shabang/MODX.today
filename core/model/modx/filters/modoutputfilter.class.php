@@ -201,7 +201,7 @@ class modOutputFilter {
                                 $mi= explode("=", $raw[$m]);
                                 $map[$mi[0]]= $mi[1];
                             }
-                            $output= $map[$output];
+                            $output = (isset($map[$output])) ? $map[$output] : '';
                             break;
                             /* #####  End of Conditional Modifiers */
 
@@ -239,6 +239,11 @@ class modOutputFilter {
                             /* See PHP's htmlentities - http://www.php.net/manual/en/function.htmlentities.php */
                             $output = htmlentities($output,ENT_QUOTES,$encoding);
                             break;
+                        case 'htmlspecialchars':
+                        case 'htmlspecial':
+                            /* See PHP's htmlspecialchars - http://www.php.net/manual/en/function.htmlspecialchars.php */
+                            $output = htmlspecialchars($output,ENT_QUOTES,$encoding);
+                            break;
                         case 'esc':
                         case 'escape':
                             $output = preg_replace("/&amp;(#[0-9]+|[a-z]+);/i", "&$1;", htmlspecialchars($output));
@@ -269,6 +274,9 @@ class modOutputFilter {
                             } else {
                                 $output= strip_tags($output);
                             }
+                            break;
+                        case 'stripmodxtags':
+                            $output = preg_replace("/\\[\\[([^\\[\\]]++|(?R))*?\\]\\]/s", '', $input);
                             break;
                         case 'length':
                         case 'len':
@@ -642,7 +650,35 @@ class modOutputFilter {
                             $haystack = explode(',', $m_val);
                             $condition[]= intval(in_array($output, $haystack));
                             break;
-
+                        case 'tvLabel':
+                            $name = $element->get('name');
+                            if (isset($m_val) && strpos($name, $m_val) === 0) {
+                                $name = substr($name, strlen($m_val));
+                            }
+                            $tv = $this->modx->getObject('modTemplateVar', array('name' => $name));
+                            if (!$tv) {
+                                break;
+                            }
+                            $o_prop = $tv->get('output_properties');
+                            $options = explode('||', $tv->get('elements'));
+                            $lookup = array();
+                            foreach ($options as $o) {
+                                list($name, $value) = explode('==', $o);
+                                $lookup[$value] = $name;
+                            }
+                            if (isset($o_prop['delimiter'])) {
+                                $delimiter = $o_prop['delimiter'];
+                                $values = explode($delimiter, $output);
+                            } else {
+                                $delimiter = '';
+                                $values = array($output);
+                            }
+                            $return_values = array();
+                            foreach ($values as $v) {
+                                $return_values[] = $lookup[$v];
+                            }
+                            $output = implode($delimiter, $return_values);
+                            break;
 
                         /* Default, custom modifier (run snippet with modifier name) */
                         default:

@@ -7,6 +7,13 @@ class ContentBlocksResourceSearchProcessor extends modObjectGetListProcessor {
     public $languageTopics = array('resource');
     public $defaultSortField = 'pagetitle';
     public $includeIntrotext = true;
+    public $context;
+
+
+    public function initialize() {
+        $this->context = $this->getProperty('context');
+        return parent::initialize();
+    }
 
     /**
      * Adjust the query prior to the COUNT statement to only get top contenders.
@@ -16,6 +23,8 @@ class ContentBlocksResourceSearchProcessor extends modObjectGetListProcessor {
      */
     public function prepareQueryBeforeCount(xPDOQuery $c) {
         $query = $this->getProperty('query');
+        $limitToContext = $this->getProperty('limitToContext');
+
         $c->where(array(
             'deleted' => false,
         ));
@@ -25,10 +34,31 @@ class ContentBlocksResourceSearchProcessor extends modObjectGetListProcessor {
             'OR:menutitle:LIKE' => "%$query%",
             'OR:introtext:LIKE' => "%$query%",
         ));
+        if($limitToContext && $this->context) {
+            $c->andCondition(array(
+               'context_key' => $this->context
+            ));
+        }
         if (is_numeric($query)) {
             $c->orCondition(array(
                 'id' => (int)$query
             ));
+        }
+
+        /**
+         * Preview and Workflow stores additional copies of resources under specific resources. This block of code
+         * ensures that those revision copies don't show up in the link search.
+         */
+        $previewContainers = $this->modx->getOption('preview.resourceHolder');
+        if (!empty($previewContainers)) {
+            $pcs = $this->modx->fromJSON($previewContainers);
+            $containerIds = array_values($pcs);
+            if (!empty($containerIds)) {
+                $c->andCondition(array(
+                    'parent:NOT IN' => $containerIds,
+                    'and:id:NOT IN' => $containerIds
+                ));
+            }
         }
 
         $c->select($this->modx->getSelectColumns('modResource', 'modResource', '', array(
@@ -37,7 +67,7 @@ class ContentBlocksResourceSearchProcessor extends modObjectGetListProcessor {
             'introtext'
         )));
 
-        $this->includeIntrotext = $this->modx->getOption('contentblocks.typeahead.include_introtext', null, true);
+        $this->includeIntrotext = $this->modx->contentblocks->getOption('contentblocks.typeahead.include_introtext', null, true);
 
         return $c;
     }
@@ -48,7 +78,7 @@ class ContentBlocksResourceSearchProcessor extends modObjectGetListProcessor {
      * @return array
      */
     public function prepareRow(xPDOObject $object) {
-        $charset = $this->modx->getOption('modx_charset', null, 'UTF-8');
+        $charset = $this->modx->contentblocks->getOption('modx_charset', null, 'UTF-8');
         $objectArray = $object->toArray('', false, true);
         $objectArray['pagetitle'] = htmlentities($objectArray['pagetitle'], ENT_COMPAT, $charset);
         $objectArray['id'] = (string)$objectArray['id'];

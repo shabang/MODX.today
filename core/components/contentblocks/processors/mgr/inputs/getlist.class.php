@@ -26,6 +26,7 @@ class ContentBlocksInputsGetListProcessor extends modProcessor {
                 'display' => $input->getName(),
                 'description' => $input->getDescription(),
                 'properties' => $input->getFieldProperties(),
+                'parent_properties' => $input->getParentProperties(),
                 'defaultIcon' => $input->defaultIcon,
                 'defaultTpl' => $input->defaultTpl,
             );

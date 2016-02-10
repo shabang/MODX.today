@@ -52,7 +52,6 @@
          * Initializing the plugin
          */
         initialize: function () {
-
             // Render the plugin
             this.render();
 
@@ -95,25 +94,39 @@
         render: function () {
             // Get the styles for the element, used for ensuring exact same styling in the iframe
             var $el = $(this.element),
+                el = $el.get(0),
+                elStyles = (window.getComputedStyle) ? window.getComputedStyle(el) : false,
                 outerStyles = ["border", "border-radius", "box-shadow", "border-top-width", "border-right-width", "border-bottom-width", "border-left-width", "border-top-style", "border-right-style", "border-bottom-style", "border-left-style", "border-top-color", "border-right-color", "border-bottom-color", "border-left-color"],
-                innerStyles = ["background", "font","padding", "direction", "height", "text-align", "text-decoration", "text-shadow", "word-spacing"],
+                innerStyles = ["background-color", "background-image", "font-family", "font-size", "font-style", "font-weight", "padding-bottom", "padding-left", "padding-top", "padding-right", "direction", "height", "text-align", "text-decoration", "text-shadow", "word-spacing"],
                 outerStylesCss = [],
                 innerStylesCss = [];
 
-            // Outer styles (applied to the iframe)
-            $.each(outerStyles, function (key, property) {
-                var v = $el.css(property);
-                outerStylesCss.push(property + ":" + v + ";");
-            });
+            if (elStyles) {
+                // Outer styles (applied to the iframe)
+                $.each(outerStyles, function (key, property) {
+                    var v = elStyles[property] ? elStyles[property] : null;
+                    if (v !== null) {
+                        outerStylesCss.push(property + ":" + v + ";");
+                    }
+                });
+
+                // Inner styles (applied to the iframe body)
+                $.each(innerStyles, function (key, property) {
+                    var v = elStyles[property] ? elStyles[property] : null;
+                    if (v !== null) {
+                        innerStylesCss.push(property + ":" + v + ";");
+                    }
+                });
+            }
+            else {
+                if (console) console.error("TinyRTE only supports IE9 and up");
+            }
+
+            window.rteEl = $el;
             outerStylesCss.push("width: 100%;");
             outerStylesCss = outerStylesCss.join("");
 
-            // Inner styles (applied to the iframe body)
-            $.each(innerStyles, function (key, property) {
-                var v = $el.css(property);
-                innerStylesCss.push(property + ":" + v + ";");
-            });
-            innerStylesCss.push("white-space: nowrap; overflow-y: hidden;");
+            innerStylesCss.push("overflow: hidden;");
             innerStylesCss = innerStylesCss.join("");
 
             var setFocus = false;
@@ -136,16 +149,24 @@
                 "height": $el.outerHeight() + 1
             }).appendTo(this.container).get(0);
 
-            // Make the editor work in all browsers
+            // Make the editor work across browsers
             this.editor.contentWindow.document.open();
             this.editor.contentWindow.document.close();
             this.editor.contentWindow.document.designMode = "on";
 
             // Trigger events on the basic input when they occur on the editor
             var input = $(this.element),
-                editor = $(this.editor).contents().find('body');
+                editor = $(this.editor).contents().find('body'),
+                editorFrame = $(this.editor),
+                height = 0;
             editor.on('blur change click contextmenu copy cut dblclick keydown keypress keyup paste resize select textinput unload', function(e) {
                 input.trigger(e);
+                // Reset the inner height, so we can get the natural height
+                editor.css('height', 'auto');
+                height = editor.outerHeight();
+                // Update the inner and outer height
+                editor.css('height', height + 'px');
+                editorFrame.css('height', height + 'px');
             });
 
             // Add styling to the iframe
@@ -162,6 +183,10 @@
 
             // Render the buttons
             this.createButtons();
+
+            setTimeout(function() {
+                editor.trigger('blur');
+            }, 30);
 
             if (setFocus) {
                 setTimeout(function() {
@@ -297,9 +322,20 @@
                 that.setContentToTextarea(that.getContentFromEditor());
             });
 
-            editor.find("body").on("focus", function() {
+            var hideAgain = null;
+            editor.find("body").on("focus input", function() {
                 container.addClass("tinyrte-has-focus");
+                if (hideAgain) {
+                    clearTimeout(hideAgain);
+                }
+                hideAgain = setTimeout(function() {
+                    container.removeClass("tinyrte-has-focus");
+                }, 5000);
+
             }).on("blur", function() {
+                if (hideAgain) {
+                    clearTimeout(hideAgain);
+                }
                 container.removeClass("tinyrte-has-focus");
             });
 
