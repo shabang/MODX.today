@@ -294,6 +294,7 @@ foreach ($cbContent as $layoutIdx => $layout) {
 
 $modx->getParser();
 $contentBlocks->loadInputs();
+$contentBlocks->loadParser();
 
 $jsonContent = $modx->toJSON($cbContent);
 $resource->setProperty('content', $jsonContent, 'contentblocks');

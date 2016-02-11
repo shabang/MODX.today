@@ -166,7 +166,7 @@ class modResourceGetNodesProcessor extends modProcessor {
         );
         $this->itemClass= 'modResource';
         $c= $this->modx->newQuery($this->itemClass);
-        $c->leftJoin('modResource', 'Child', array('modResource.id = Child.parent'));
+        $c->leftJoin('modResource', 'Child', array('modResource.id = Child.parent AND Child.show_in_tree = true'));
         $c->select($this->modx->getSelectColumns('modResource', 'modResource', '', $resourceColumns));
         $c->select(array(
             'childrenCount' => 'COUNT(Child.id)',
@@ -344,7 +344,7 @@ class modResourceGetNodesProcessor extends modProcessor {
             ),
             'leaf' => false,
             'cls' => implode(' ', $class),
-            'iconCls' => $this->modx->getOption('mgr_tree_icon_context', null, 'tree-context'),
+            'iconCls' => $context->getOption('mgr_tree_icon_context', 'tree-context'),
             'qtip' => $context->get('description') != '' ? strip_tags($context->get('description')) : '',
             'type' => 'modContext',
             'pseudoroot' => true,
