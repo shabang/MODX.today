@@ -1,0 +1,162 @@
+id: 351
+pagetitle: 'Introducing pdoTools'
+alias: introducing-pdotools
+parent: 1
+introtext: ''
+template: 2
+menuindex: 194
+createdby: 2
+uri: posts/introducing-pdotools
+show_in_tree: 0
+properties: '{"contentblocks":{"content":"[{\"layout\":3,\"content\":{\"col1\":[{\"value\":\"The first thing you need to do right after install of new copy of MODX - is the install of extras.\\n\\nThe usual set is well-known:\\n* **getResources** for list your documents\\n* **getPage** for pagination of your lists\\n* **Wayfinder** for build menus\\n* **Breadcrumb(s)** for, hm, breadcrumbs\\n* **GoogleSitemap** for sitemap\\n\\nBut now you can replace all of them by **one** package - pdoTools. And why pdoTools?\\n\\n### 9 snippets\\nYes, I`m not joking. It contains 9 snippets (for now) that could to realize almost any functionality of usual website. And, what important, almost of them is a drop-in replacement for other popular snippets.\\n\\n#### pdoResources\\nIt is replacement for getResources.\\nAs all other snippets, it is not use xPDO objects for representation of resources. It works directly with database tables, so you do not need to convert resources dates to timestamps before pass them to \\\"date\\\" output filter.\\nAnd it joins only needed TVs, so you must specify them in `&includeTVs` parameter as comma-separated list.\\n```\\n[[!pdoResources?\\n    &parents=`0`\\n    &includeTVs=`my_tv1,my_tv2`\\n    &tvPrefix=`tv.`\\n    &processTVs=`1`\\n    &includeContent=`1`\\n    &showLog=`1`\\n]]\\n```\\n`&showLog` - is the one of the most important futures of pdoTools snippets. It allows you to controll how fast this snippet processing, exaclty. Is there a slow SQL query, or too complicated chunk? You will know.\\n\\n[![](https:\/\/file.modx.pro\/files\/d\/9\/3\/d931de6c3c2f67be8879c1765e833bbcs.jpg)](https:\/\/file.modx.pro\/files\/d\/9\/3\/d931de6c3c2f67be8879c1765e833bbc.png)\\n\\nThe second important future that you could see on screenshot - SQL joins. Yes, you can create complicate queries and select only what you need:\\n```\\n[[!pdoResources?\\n    &parents=`0`\\n    &class=`modResource`\\n    &leftJoin=`{\\n        \\\"Parent\\\": {\\n            \\\"class\\\": \\\"modResource\\\",\\n            \\\"on\\\": \\\"modResource.parent = Parent.id\\\"\\n        },\\n        \\\"CreatedBy\\\": {\\n            \\\"class\\\": \\\"modUserProfile\\\",\\n            \\\"on\\\": \\\"modResource.createdby = CreatedBy.internalKey\\\"\\n        }\\n    }`\\n    &select=`{\\n        \\\"modResource\\\": \\\"modResource.id, modResource.pagetitle\\\",\\n        \\\"Parent\\\": \\\"Parent.pagetitle as parent\\\",\\n        \\\"CreatedBy\\\": \\\"CreatedBy.fullname as author\\\"\\n    }`\\n    &showLog=`1`\\n]]\\n```\\nNo need to call any snippets or output filters to get parent of resource or creator name. How fast it works? You tell me:\\n\\n[![](https:\/\/file.modx.pro\/files\/0\/4\/5\/04558020e2a34bd6e94fe734db1b6ae3s.jpg)](https:\/\/file.modx.pro\/files\/0\/4\/5\/04558020e2a34bd6e94fe734db1b6ae3.png)\\n\\nThere is many other cool features, but you should know at list about this two.\\n\\n#### pdoPage\\nIt is replacement for getPage. What the difference?\\n1. It do not shows empty pages. If you do not have results on page or user entered wrong page manually - you will get redirect to the first page.\\n2. It has parameter `&maxLimit` equal to 100 by default. User could not hang your site by setting `&limit=100000` in url. If you are using getPage - just try to do it on your site.\\n3. It sets metatags to previous and next pages for crawlers.\\n4. It has built-in ajax pagination, seriosly. You need only correct markup and one parameter:\\n```\\n<div id=\\\"pdopage\\\">\\n    <div class=\\\"rows\\\">\\n        [[!pdoPage?\\n            &parents=`0`\\n            &ajaxMode=`default`\\n        ]]\\n    <\/div>\\n    [[!+page.nav]]\\n<\/div>\\n```\\nOf course, you can change markup by specifying additional parameters to snippet.\\n\\n#### pdoMenu\\nThis snippet has no so many difference with Wayfinder but works a little faster.\\n\\nBecause of bypass of xPDO objects you need to check permissions of items in menu by special parameter:\\n```\\n[[!pdoMenu?\\n    &parents=`0`\\n    &checkPermissions=`list`\\n]]\\n```\\nBy default, all permissions checks are disabled. This parameter common for all pdoTools snippets, by the way.\\n\\n#### pdoUsers\\nThis snippets lists users of your site. You can filter them by groups and roles:\\n```\\n[[!pdoUsers?\\n    &groups=`Authors`\\n    &sortdir=`asc`\\n]]\\n```\\nYou could combine it with **pdoPage**:\\n```\\n[[!pdoUsers?\\n    &groups=`Authors`\\n    &roles=`Member`\\n    &sortby=`id`\\n    &sortdir=`asc`\\n]]\\n[[!+page.nav]]\\n```\\nPlaceholders are `modUser` and `modUserProfile` fields. You can see them all if you will just set blank `&tpl` parameter (or do not set it at all, if snippet do not has default tpl value).\\n\\n[![](https:\/\/file.modx.pro\/files\/0\/a\/d\/0ad486c2c7412ad9a32c25f9027b3962s.jpg)](https:\/\/file.modx.pro\/files\/0\/a\/d\/0ad486c2c7412ad9a32c25f9027b3962.png)\\n\\nBlank `&tpl` is another common feauture of pdoTools snippets. You will not forget usable placeholders, right?\\n\\n#### pdoSitemap\\nFast sitemap that do not requires to set XML type of resource. If parameter `&forceXML` is enabled (by default).\\n\\nIt caches data by default and cache key depends from snippet params but you can set your own key. How fast it is?\\n\\nWell, we can test it by disabling `&forceXML` and enabling `&showLog`. On my site it takes almost 30 seconds for the first run and only 0.03 for the second:\\n```\\n[[!pdoSitemap?\\n    &forceXML=`0`\\n    &showLog=`1`\\n]]\\n```\\nThere are **6873** resources in my sitemap.\\n\\n[![](https:\/\/file.modx.pro\/files\/0\/d\/3\/0d3b7798fd8464ee2bb39fbb481e3902s.jpg)](https:\/\/file.modx.pro\/files\/0\/d\/3\/0d3b7798fd8464ee2bb39fbb481e3902.png) [![](https:\/\/file.modx.pro\/files\/1\/9\/1\/1916b6d00e0c7e77e0119c29f1d3aba6s.jpg)](https:\/\/file.modx.pro\/files\/1\/9\/1\/1916b6d00e0c7e77e0119c29f1d3aba6.png)\\n\\n### pdoNeighbors\\nSnippet for make links to previous, next and upper pages of current document.\\n```\\n[[!pdoNeighbors?\\n    &sortby=`menuindex`\\n    &sortdirc=`desc`\\n]]\\n```\\nJust neighbors, you know.\\n\\n#### pdoCrumbs\\nMy version of simple snippet for breadcrumbs of site. Nothing special except use of pdoTools core with fast chunks processing and data fetching.\\n```\\n[[!Breadcrumbs]]\\n```\\n\\n#### pdoTitle\\nThis snippet generates \\\"title\\\" tag of pages. It runs **pdoCrumbs** and shows path to current document in title.\\n```\\n<title>[[!pdoTitle]] \/ [[++site_name]]<\/title>\\n```\\nAlso it supports **pdoPage** by default and you will see number of pages in title.\\n```\\n<title>Questions \/ page 5 from 593 \/ Sections \/ mysite.com<\/title>\\n```\\nCrawlers loves it!\\n\\n[![](https:\/\/file.modx.pro\/files\/a\/e\/f\/aef145845f8c84ad6bc104fe31e6d796s.jpg)](https:\/\/file.modx.pro\/files\/a\/e\/f\/aef145845f8c84ad6bc104fe31e6d796.png)\\n\\n#### pdoField\\nAnd, finally, snippet that allows you to get any field from any resources. It is replacement both for **UltimateParent** and **getResourceField** snippets.\\n\\nFor example, we need to get `longtitle` of resource with id = 15\\n```\\n[[pdoField?\\n    &id=`15`\\n    &field=`longtitle`\\n]]\\n```\\nOr we want to get `pagetitle` of grandparent of current document:\\n```\\n[[pdoField?\\n    &id=`[[*id]]`\\n    &field=`pagetitle`\\n    &top=`2`\\n]]\\n```\\n\\n### Conclusion\\nI can wright more and more about pdoTools but it is enought for the first time.\\n\\nIt is important to remember, that all pdoTools snippets uses one core and most parameters are common for all of them.\\n\\nYou can use `&showLog` for details about snippets work, you can specify empty chunks to see available placeholders and you can join tables on the fly.\\n\\npdoTools - is a library, not just set of snippets. Many MODX extras uses pdoTools for their own snippets: **miniShop2, Tickets, BannerY, AjaxForm**, etc.\\n\\nThe only one drawback of pdoTools - it is a small amount of english documentation. All we have is here https:\/\/github.com\/bezumkin\/Docs\/tree\/master\/en\/01_Components\/01_pdoTools. You could add your own pages, by the way.\\n\\nAnd do not forget that all of snippets parameters are described inside them. Just see the appropriate tab in MODX manager.\\n\\n\",\"field\":15,\"settings\":{}}]},\"settings\":[],\"parent\":0,\"title\":\"\"}]","linear":[{"value":"The first thing you need to do right after install of new copy of MODX - is the install of extras.\n\nThe usual set is well-known:\n* **getResources** for list your documents\n* **getPage** for pagination of your lists\n* **Wayfinder** for build menus\n* **Breadcrumb(s)** for, hm, breadcrumbs\n* **GoogleSitemap** for sitemap\n\nBut now you can replace all of them by **one** package - pdoTools. And why pdoTools?\n\n### 9 snippets\nYes, I`m not joking. It contains 9 snippets (for now) that could to realize almost any functionality of usual website. And, what important, almost of them is a drop-in replacement for other popular snippets.\n\n#### pdoResources\nIt is replacement for getResources.\nAs all other snippets, it is not use xPDO objects for representation of resources. It works directly with database tables, so you do not need to convert resources dates to timestamps before pass them to \"date\" output filter.\nAnd it joins only needed TVs, so you must specify them in `&includeTVs` parameter as comma-separated list.\n```\n[[!pdoResources?\n    &parents=`0`\n    &includeTVs=`my_tv1,my_tv2`\n    &tvPrefix=`tv.`\n    &processTVs=`1`\n    &includeContent=`1`\n    &showLog=`1`\n]]\n```\n`&showLog` - is the one of the most important futures of pdoTools snippets. It allows you to controll how fast this snippet processing, exaclty. Is there a slow SQL query, or too complicated chunk? You will know.\n\n[![](https:\/\/file.modx.pro\/files\/d\/9\/3\/d931de6c3c2f67be8879c1765e833bbcs.jpg)](https:\/\/file.modx.pro\/files\/d\/9\/3\/d931de6c3c2f67be8879c1765e833bbc.png)\n\nThe second important future that you could see on screenshot - SQL joins. Yes, you can create complicate queries and select only what you need:\n```\n[[!pdoResources?\n    &parents=`0`\n    &class=`modResource`\n    &leftJoin=`{\n        \"Parent\": {\n            \"class\": \"modResource\",\n            \"on\": \"modResource.parent = Parent.id\"\n        },\n        \"CreatedBy\": {\n            \"class\": \"modUserProfile\",\n            \"on\": \"modResource.createdby = CreatedBy.internalKey\"\n        }\n    }`\n    &select=`{\n        \"modResource\": \"modResource.id, modResource.pagetitle\",\n        \"Parent\": \"Parent.pagetitle as parent\",\n        \"CreatedBy\": \"CreatedBy.fullname as author\"\n    }`\n    &showLog=`1`\n]]\n```\nNo need to call any snippets or output filters to get parent of resource or creator name. How fast it works? You tell me:\n\n[![](https:\/\/file.modx.pro\/files\/0\/4\/5\/04558020e2a34bd6e94fe734db1b6ae3s.jpg)](https:\/\/file.modx.pro\/files\/0\/4\/5\/04558020e2a34bd6e94fe734db1b6ae3.png)\n\nThere is many other cool features, but you should know at list about this two.\n\n#### pdoPage\nIt is replacement for getPage. What the difference?\n1. It do not shows empty pages. If you do not have results on page or user entered wrong page manually - you will get redirect to the first page.\n2. It has parameter `&maxLimit` equal to 100 by default. User could not hang your site by setting `&limit=100000` in url. If you are using getPage - just try to do it on your site.\n3. It sets metatags to previous and next pages for crawlers.\n4. It has built-in ajax pagination, seriosly. You need only correct markup and one parameter:\n```\n<div id=\"pdopage\">\n    <div class=\"rows\">\n        [[!pdoPage?\n            &parents=`0`\n            &ajaxMode=`default`\n        ]]\n    <\/div>\n    [[!+page.nav]]\n<\/div>\n```\nOf course, you can change markup by specifying additional parameters to snippet.\n\n#### pdoMenu\nThis snippet has no so many difference with Wayfinder but works a little faster.\n\nBecause of bypass of xPDO objects you need to check permissions of items in menu by special parameter:\n```\n[[!pdoMenu?\n    &parents=`0`\n    &checkPermissions=`list`\n]]\n```\nBy default, all permissions checks are disabled. This parameter common for all pdoTools snippets, by the way.\n\n#### pdoUsers\nThis snippets lists users of your site. You can filter them by groups and roles:\n```\n[[!pdoUsers?\n    &groups=`Authors`\n    &sortdir=`asc`\n]]\n```\nYou could combine it with **pdoPage**:\n```\n[[!pdoUsers?\n    &groups=`Authors`\n    &roles=`Member`\n    &sortby=`id`\n    &sortdir=`asc`\n]]\n[[!+page.nav]]\n```\nPlaceholders are `modUser` and `modUserProfile` fields. You can see them all if you will just set blank `&tpl` parameter (or do not set it at all, if snippet do not has default tpl value).\n\n[![](https:\/\/file.modx.pro\/files\/0\/a\/d\/0ad486c2c7412ad9a32c25f9027b3962s.jpg)](https:\/\/file.modx.pro\/files\/0\/a\/d\/0ad486c2c7412ad9a32c25f9027b3962.png)\n\nBlank `&tpl` is another common feauture of pdoTools snippets. You will not forget usable placeholders, right?\n\n#### pdoSitemap\nFast sitemap that do not requires to set XML type of resource. If parameter `&forceXML` is enabled (by default).\n\nIt caches data by default and cache key depends from snippet params but you can set your own key. How fast it is?\n\nWell, we can test it by disabling `&forceXML` and enabling `&showLog`. On my site it takes almost 30 seconds for the first run and only 0.03 for the second:\n```\n[[!pdoSitemap?\n    &forceXML=`0`\n    &showLog=`1`\n]]\n```\nThere are **6873** resources in my sitemap.\n\n[![](https:\/\/file.modx.pro\/files\/0\/d\/3\/0d3b7798fd8464ee2bb39fbb481e3902s.jpg)](https:\/\/file.modx.pro\/files\/0\/d\/3\/0d3b7798fd8464ee2bb39fbb481e3902.png) [![](https:\/\/file.modx.pro\/files\/1\/9\/1\/1916b6d00e0c7e77e0119c29f1d3aba6s.jpg)](https:\/\/file.modx.pro\/files\/1\/9\/1\/1916b6d00e0c7e77e0119c29f1d3aba6.png)\n\n### pdoNeighbors\nSnippet for make links to previous, next and upper pages of current document.\n```\n[[!pdoNeighbors?\n    &sortby=`menuindex`\n    &sortdirc=`desc`\n]]\n```\nJust neighbors, you know.\n\n#### pdoCrumbs\nMy version of simple snippet for breadcrumbs of site. Nothing special except use of pdoTools core with fast chunks processing and data fetching.\n```\n[[!Breadcrumbs]]\n```\n\n#### pdoTitle\nThis snippet generates \"title\" tag of pages. It runs **pdoCrumbs** and shows path to current document in title.\n```\n<title>[[!pdoTitle]] \/ [[++site_name]]<\/title>\n```\nAlso it supports **pdoPage** by default and you will see number of pages in title.\n```\n<title>Questions \/ page 5 from 593 \/ Sections \/ mysite.com<\/title>\n```\nCrawlers loves it!\n\n[![](https:\/\/file.modx.pro\/files\/a\/e\/f\/aef145845f8c84ad6bc104fe31e6d796s.jpg)](https:\/\/file.modx.pro\/files\/a\/e\/f\/aef145845f8c84ad6bc104fe31e6d796.png)\n\n#### pdoField\nAnd, finally, snippet that allows you to get any field from any resources. It is replacement both for **UltimateParent** and **getResourceField** snippets.\n\nFor example, we need to get `longtitle` of resource with id = 15\n```\n[[pdoField?\n    &id=`15`\n    &field=`longtitle`\n]]\n```\nOr we want to get `pagetitle` of grandparent of current document:\n```\n[[pdoField?\n    &id=`[[*id]]`\n    &field=`pagetitle`\n    &top=`2`\n]]\n```\n\n### Conclusion\nI can wright more and more about pdoTools but it is enought for the first time.\n\nIt is important to remember, that all pdoTools snippets uses one core and most parameters are common for all of them.\n\nYou can use `&showLog` for details about snippets work, you can specify empty chunks to see available placeholders and you can join tables on the fly.\n\npdoTools - is a library, not just set of snippets. Many MODX extras uses pdoTools for their own snippets: **miniShop2, Tickets, BannerY, AjaxForm**, etc.\n\nThe only one drawback of pdoTools - it is a small amount of english documentation. All we have is here https:\/\/github.com\/bezumkin\/Docs\/tree\/master\/en\/01_Components\/01_pdoTools. You could add your own pages, by the way.\n\nAnd do not forget that all of snippets parameters are described inside them. Just see the appropriate tab in MODX manager.\n\n","field":15,"settings":[]}],"fieldcounts":{"15":1},"_isContentBlocks":true}}'
+tvs:
+    author: markhamstra
+    disqus_id: ''
+    preview.image: ''
+
+-----
+
+<div class="row   " >
+    <div class="[[++default_article_column_classnames]]">
+        <p>The first thing you need to do right after install of new copy of MODX - is the install of extras.</p>
+<p>The usual set is well-known:</p>
+<ul>
+<li><strong>getResources</strong> for list your documents</li>
+<li><strong>getPage</strong> for pagination of your lists</li>
+<li><strong>Wayfinder</strong> for build menus</li>
+<li><strong>Breadcrumb(s)</strong> for, hm, breadcrumbs</li>
+<li><strong>GoogleSitemap</strong> for sitemap</li>
+</ul>
+<p>But now you can replace all of them by <strong>one</strong> package - pdoTools. And why pdoTools?</p>
+<h3>9 snippets</h3>
+<p>Yes, I`m not joking. It contains 9 snippets (for now) that could to realize almost any functionality of usual website. And, what important, almost of them is a drop-in replacement for other popular snippets.</p>
+<h4>pdoResources</h4>
+<p>It is replacement for getResources.
+As all other snippets, it is not use xPDO objects for representation of resources. It works directly with database tables, so you do not need to convert resources dates to timestamps before pass them to &quot;date&quot; output filter.
+And it joins only needed TVs, so you must specify them in <code>&amp;includeTVs</code> parameter as comma-separated list.</p>
+<pre><code>[[!pdoResources?
+    &amp;parents=`0`
+    &amp;includeTVs=`my_tv1,my_tv2`
+    &amp;tvPrefix=`tv.`
+    &amp;processTVs=`1`
+    &amp;includeContent=`1`
+    &amp;showLog=`1`
+]]</code></pre>
+<p><code>&amp;showLog</code> - is the one of the most important futures of pdoTools snippets. It allows you to controll how fast this snippet processing, exaclty. Is there a slow SQL query, or too complicated chunk? You will know.</p>
+<p><a href="https://file.modx.pro/files/d/9/3/d931de6c3c2f67be8879c1765e833bbc.png"><img src="https://file.modx.pro/files/d/9/3/d931de6c3c2f67be8879c1765e833bbcs.jpg" alt="" /></a></p>
+<p>The second important future that you could see on screenshot - SQL joins. Yes, you can create complicate queries and select only what you need:</p>
+<pre><code>[[!pdoResources?
+    &amp;parents=`0`
+    &amp;class=`modResource`
+    &amp;leftJoin=`{
+        "Parent": {
+            "class": "modResource",
+            "on": "modResource.parent = Parent.id"
+        },
+        "CreatedBy": {
+            "class": "modUserProfile",
+            "on": "modResource.createdby = CreatedBy.internalKey"
+        }
+    }`
+    &amp;select=`{
+        "modResource": "modResource.id, modResource.pagetitle",
+        "Parent": "Parent.pagetitle as parent",
+        "CreatedBy": "CreatedBy.fullname as author"
+    }`
+    &amp;showLog=`1`
+]]</code></pre>
+<p>No need to call any snippets or output filters to get parent of resource or creator name. How fast it works? You tell me:</p>
+<p><a href="https://file.modx.pro/files/0/4/5/04558020e2a34bd6e94fe734db1b6ae3.png"><img src="https://file.modx.pro/files/0/4/5/04558020e2a34bd6e94fe734db1b6ae3s.jpg" alt="" /></a></p>
+<p>There is many other cool features, but you should know at list about this two.</p>
+<h4>pdoPage</h4>
+<p>It is replacement for getPage. What the difference?</p>
+<ol>
+<li>It do not shows empty pages. If you do not have results on page or user entered wrong page manually - you will get redirect to the first page.</li>
+<li>It has parameter <code>&amp;maxLimit</code> equal to 100 by default. User could not hang your site by setting <code>&amp;limit=100000</code> in url. If you are using getPage - just try to do it on your site.</li>
+<li>It sets metatags to previous and next pages for crawlers.</li>
+<li>It has built-in ajax pagination, seriosly. You need only correct markup and one parameter:
+<pre><code>&lt;div id="pdopage"&gt;
+&lt;div class="rows"&gt;
+    [[!pdoPage?
+        &amp;parents=`0`
+        &amp;ajaxMode=`default`
+    ]]
+&lt;/div&gt;
+[[!+page.nav]]
+&lt;/div&gt;</code></pre>
+<p>Of course, you can change markup by specifying additional parameters to snippet.</p></li>
+</ol>
+<h4>pdoMenu</h4>
+<p>This snippet has no so many difference with Wayfinder but works a little faster.</p>
+<p>Because of bypass of xPDO objects you need to check permissions of items in menu by special parameter:</p>
+<pre><code>[[!pdoMenu?
+    &amp;parents=`0`
+    &amp;checkPermissions=`list`
+]]</code></pre>
+<p>By default, all permissions checks are disabled. This parameter common for all pdoTools snippets, by the way.</p>
+<h4>pdoUsers</h4>
+<p>This snippets lists users of your site. You can filter them by groups and roles:</p>
+<pre><code>[[!pdoUsers?
+    &amp;groups=`Authors`
+    &amp;sortdir=`asc`
+]]</code></pre>
+<p>You could combine it with <strong>pdoPage</strong>:</p>
+<pre><code>[[!pdoUsers?
+    &amp;groups=`Authors`
+    &amp;roles=`Member`
+    &amp;sortby=`id`
+    &amp;sortdir=`asc`
+]]
+[[!+page.nav]]</code></pre>
+<p>Placeholders are <code>modUser</code> and <code>modUserProfile</code> fields. You can see them all if you will just set blank <code>&amp;tpl</code> parameter (or do not set it at all, if snippet do not has default tpl value).</p>
+<p><a href="https://file.modx.pro/files/0/a/d/0ad486c2c7412ad9a32c25f9027b3962.png"><img src="https://file.modx.pro/files/0/a/d/0ad486c2c7412ad9a32c25f9027b3962s.jpg" alt="" /></a></p>
+<p>Blank <code>&amp;tpl</code> is another common feauture of pdoTools snippets. You will not forget usable placeholders, right?</p>
+<h4>pdoSitemap</h4>
+<p>Fast sitemap that do not requires to set XML type of resource. If parameter <code>&amp;forceXML</code> is enabled (by default).</p>
+<p>It caches data by default and cache key depends from snippet params but you can set your own key. How fast it is?</p>
+<p>Well, we can test it by disabling <code>&amp;forceXML</code> and enabling <code>&amp;showLog</code>. On my site it takes almost 30 seconds for the first run and only 0.03 for the second:</p>
+<pre><code>[[!pdoSitemap?
+    &amp;forceXML=`0`
+    &amp;showLog=`1`
+]]</code></pre>
+<p>There are <strong>6873</strong> resources in my sitemap.</p>
+<p><a href="https://file.modx.pro/files/0/d/3/0d3b7798fd8464ee2bb39fbb481e3902.png"><img src="https://file.modx.pro/files/0/d/3/0d3b7798fd8464ee2bb39fbb481e3902s.jpg" alt="" /></a> <a href="https://file.modx.pro/files/1/9/1/1916b6d00e0c7e77e0119c29f1d3aba6.png"><img src="https://file.modx.pro/files/1/9/1/1916b6d00e0c7e77e0119c29f1d3aba6s.jpg" alt="" /></a></p>
+<h3>pdoNeighbors</h3>
+<p>Snippet for make links to previous, next and upper pages of current document.</p>
+<pre><code>[[!pdoNeighbors?
+    &amp;sortby=`menuindex`
+    &amp;sortdirc=`desc`
+]]</code></pre>
+<p>Just neighbors, you know.</p>
+<h4>pdoCrumbs</h4>
+<p>My version of simple snippet for breadcrumbs of site. Nothing special except use of pdoTools core with fast chunks processing and data fetching.</p>
+<pre><code>[[!Breadcrumbs]]</code></pre>
+<h4>pdoTitle</h4>
+<p>This snippet generates &quot;title&quot; tag of pages. It runs <strong>pdoCrumbs</strong> and shows path to current document in title.</p>
+<pre><code>&lt;title&gt;[[!pdoTitle]] / [[++site_name]]&lt;/title&gt;</code></pre>
+<p>Also it supports <strong>pdoPage</strong> by default and you will see number of pages in title.</p>
+<pre><code>&lt;title&gt;Questions / page 5 from 593 / Sections / mysite.com&lt;/title&gt;</code></pre>
+<p>Crawlers loves it!</p>
+<p><a href="https://file.modx.pro/files/a/e/f/aef145845f8c84ad6bc104fe31e6d796.png"><img src="https://file.modx.pro/files/a/e/f/aef145845f8c84ad6bc104fe31e6d796s.jpg" alt="" /></a></p>
+<h4>pdoField</h4>
+<p>And, finally, snippet that allows you to get any field from any resources. It is replacement both for <strong>UltimateParent</strong> and <strong>getResourceField</strong> snippets.</p>
+<p>For example, we need to get <code>longtitle</code> of resource with id = 15</p>
+<pre><code>[[pdoField?
+    &amp;id=`15`
+    &amp;field=`longtitle`
+]]</code></pre>
+<p>Or we want to get <code>pagetitle</code> of grandparent of current document:</p>
+<pre><code>[[pdoField?
+    &amp;id=`[[*id]]`
+    &amp;field=`pagetitle`
+    &amp;top=`2`
+]]</code></pre>
+<h3>Conclusion</h3>
+<p>I can wright more and more about pdoTools but it is enought for the first time.</p>
+<p>It is important to remember, that all pdoTools snippets uses one core and most parameters are common for all of them.</p>
+<p>You can use <code>&amp;showLog</code> for details about snippets work, you can specify empty chunks to see available placeholders and you can join tables on the fly.</p>
+<p>pdoTools - is a library, not just set of snippets. Many MODX extras uses pdoTools for their own snippets: <strong>miniShop2, Tickets, BannerY, AjaxForm</strong>, etc.</p>
+<p>The only one drawback of pdoTools - it is a small amount of english documentation. All we have is here <a href="https://github.com/bezumkin/Docs/tree/master/en/01_Components/01_pdoTools">https://github.com/bezumkin/Docs/tree/master/en/01_Components/01_pdoTools</a>. You could add your own pages, by the way.</p>
+<p>And do not forget that all of snippets parameters are described inside them. Just see the appropriate tab in MODX manager.</p>
+    </div>
+</div>
