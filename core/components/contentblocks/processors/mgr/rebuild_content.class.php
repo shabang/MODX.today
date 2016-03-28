@@ -165,7 +165,9 @@ class ContentBlocksRebuildProcessor extends modProcessor {
     public function parse(modResource $resource, array $content = array())
     {
         $this->contentBlocks->setResource($resource);
+        $this->modx->elementCache = array();
         $this->modx->resource = $resource;
+
         $summary = $this->contentBlocks->summarizeContent($content);
         $parsedContent = $this->contentBlocks->generateHtml($content);
 

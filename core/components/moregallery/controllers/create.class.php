@@ -24,6 +24,7 @@ class mgResourceCreateManagerController extends ResourceCreateManagerController 
             return;
         }
         $moreGallery->setWorkingContext($this->resource->get('context_key'));
+        $moreGallery->mg();
 
         $this->addHtml('<script type="text/javascript">
             moreGallery.config = '.$this->modx->toJSON($moreGallery->config).';

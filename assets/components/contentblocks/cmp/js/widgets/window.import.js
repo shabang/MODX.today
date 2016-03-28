@@ -8,6 +8,9 @@ ContentBlocksComponent.window.Import = function(config) {
         modal: true,
         width: 450,
         fields: [{
+            xtype: 'hidden',
+            name: 'parent'
+        },{
             xtype: 'panel',
             cls: 'panel-desc',
             html: '<p>' + config.introduction + '</p>',

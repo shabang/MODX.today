@@ -8,6 +8,7 @@ $xpdo_meta_map['cbLayout']= array (
     'name' => NULL,
     'description' => NULL,
     'sortorder' => 0,
+    'category' => 0,
     'icon' => '',
     'icon_type' => 'core',
     'columns' => NULL,
@@ -22,7 +23,7 @@ $xpdo_meta_map['cbLayout']= array (
     'name' => 
     array (
       'dbtype' => 'varchar',
-      'precision' => '255',
+      'precision' => '190',
       'phptype' => 'string',
       'null' => false,
     ),
@@ -37,6 +38,14 @@ $xpdo_meta_map['cbLayout']= array (
     array (
       'dbtype' => 'int',
       'precision' => '5',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
+    'category' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '10',
       'phptype' => 'integer',
       'null' => false,
       'default' => 0,
@@ -130,6 +139,33 @@ $xpdo_meta_map['cbLayout']= array (
           'null' => false,
         ),
       ),
+    ),
+    'category' => 
+    array (
+      'alias' => 'category',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'category' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+  ),
+  'aggregates' => 
+  array (
+    'Category' => 
+    array (
+      'class' => 'cbCategory',
+      'local' => 'category',
+      'foreign' => 'id',
+      'cardinality' => 'one',
+      'owner' => 'foreign',
     ),
   ),
 );

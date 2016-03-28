@@ -220,6 +220,12 @@ Ext.extend(ContentBlocksComponent.window.Field, MODx.Window, {
             anchor: '100%',
             maxLength: 1024
         },{
+            xtype: 'contentblocks-combo-category',
+            name: 'category',
+            fieldLabel: _('contentblocks.category'),
+            allowBlank: true,
+            anchor: '100%'
+        },{
             xtype: 'contentblocks-combo-icons',
             name: 'icon',
             id: config.id + '-icon',

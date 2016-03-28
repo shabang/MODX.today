@@ -81,6 +81,9 @@ jQuery(function($) {
             '   </div>' +
             '' +
             '   <label><%= moreGallery.lang("url") %> <br /><input type="text" id="mgimage-url" value="<%- url %>"></label>' +
+            '' +
+            '   <div class="mgimage-custom-fields"></div>' +
+            '' +
             '   <div class="edit-form-buttons">' +
         '           <a href="javascript:void(0);" class="save">' +
         '               <span class="headline"><%= moreGallery.lang("save") %></span>' +
@@ -143,7 +146,8 @@ jQuery(function($) {
             sortorder: 0,
             width: 0,
             height: 0,
-            crops: ''
+            crops: '',
+            custom: {}
         },
 
         actions: {
@@ -196,7 +200,7 @@ jQuery(function($) {
         },
 
         removeItem: function() {
-            if (confirm(moreGallery.lang('confirm_remove', {name: this.model.attributes.name}))) {
+            if (moreGallery.confirm(moreGallery.lang('confirm_remove', {name: this.model.attributes.name}))) {
                 var view = this;
                 this.$el.animate({opacity: 0}, 800, function() {
                     $(this).animate({width: 0}, 400, function() {
@@ -328,7 +332,7 @@ jQuery(function($) {
             "updateSort": 'updateSort',
             'click #mgresource-modal-mask' : 'modelStopEdit',
             'click #mgresource-modal .close': 'modelStopEdit',
-            'blur #mgresource-modal .edit-form input, #mgresource-modal .edit-form textarea': 'updateFromModal',
+            'blur #mgresource-modal .edit-form input, #mgresource-modal .edit-form textarea, #mgresource-modal .edit-form select': 'updateFromModal',
             'click #mgresource-modal .save': 'updateFromModal',
 
             'click .modal-import .import-from-file': 'importFromFile'
@@ -411,6 +415,65 @@ jQuery(function($) {
 
         modelStartEdit: function(data) {
             this.openModal(this.modalViewTemplate, data.model);
+
+            if (moreGallery.customFields) {
+                var fldWrapper = this.modal.find('.mgimage-custom-fields');
+
+                underscore.each(moreGallery.customFields, function(options, key) {
+                    var type = options.type || 'text',
+                        label = options.label || key,
+                        defaultValue = options.default || '',
+                        value = data.model.attributes.custom && data.model.attributes.custom[key] ? data.model.attributes.custom[key] : defaultValue,
+                        markup = '<div class="mgimage-custom-field-' + type + '">';
+
+                    // Prevent XSS attacks through custom data
+                    value = underscore.escape(value);
+
+                    markup = markup + '<label for="mgimage-custom-field-' + key + '">' + label + '</label><br>';
+
+                    switch (type) {
+                        case 'select':
+                            markup = markup + '<select id="mgimage-custom-field-' + key + '">';
+
+                            var selectOptions = options.options || [{"value":"none", "label": "No options configured."}],
+                                selected = '';
+                            underscore.each(selectOptions, function(opt) {
+                                selected = opt.value == value ? 'selected="selected"' : '';
+                                markup = markup + '<option value="' + opt.value + '" ' + selected + '>' + opt.label + '</option>';
+                            });
+
+                            markup = markup + '</select><br>';
+                            break;
+
+                        case 'textarea':
+                            markup = markup + '<textarea id="mgimage-custom-field-' + key + '">' + value + '</textarea><br>';
+                            break;
+
+                        case 'richtext':
+                            markup = markup + '<textarea id="mgimage-custom-field-' + key + '">' + value + '</textarea><br>';
+
+
+                            if (MODx && MODx.loadRTE) {
+                                var appView = this;
+                                setTimeout(function() {
+                                    MODx.loadRTE('mgimage-custom-field-' + key);
+                                    with (appView) { appView.fixContainerHeight(); }
+                                }, 150);
+                            }
+
+                            break;
+
+                        case 'text':
+                        default:
+                            markup = markup + '<input type="text" id="mgimage-custom-field-' + key + '" value="' + value + '"><br>';
+                            break;
+                    }
+                    markup = markup + '</div>';
+
+                    fldWrapper.append(markup);
+                }, this);
+
+            }
 
             if (MODx && MODx.loadRTE && moreGallery.config.use_rte_for_images) {
                 var appView = this;
@@ -640,6 +703,23 @@ jQuery(function($) {
                 }
             });
 
+            if (moreGallery.customFields) {
+                var previousValues = appView.activeModelInModal.get('custom') || {},
+                    newValues = underscore.clone(previousValues);
+
+                $.each(moreGallery.customFields, function(key, options) {
+                    var field = appView.$('#mgresource-modal #mgimage-custom-field-' + key),
+                        previousValue = previousValues[key] ? previousValues[key] : '',
+                        newValue = field.val();
+
+                    if (previousValue != newValue) {
+                        newValues[key] = newValue;
+                        diff = true;
+                    }
+                });
+                appView.activeModelInModal.set('custom', newValues);
+            }
+
             if (diff) {
                 saveBtn.text(moreGallery.lang('saving')).addClass('mgimage-saving');
                 appView.activeModelInModal.save(null, {
@@ -740,7 +820,7 @@ jQuery(function($) {
                  */
                 add: function(e, data) {
                     if (data.files[0].size > (moreGallery.config.memory_limit / 12)) {
-                        if (!confirm(moreGallery.lang('preupload_very_big', {file: data.files[0].name}))) {
+                        if (!moreGallery.confirm(moreGallery.lang('preupload_very_big', {file: data.files[0].name}))) {
                             return;
                         }
                     }

@@ -29,13 +29,15 @@ class mgResourceUpdateManagerController extends ResourceUpdateManagerController 
             $this->modx->log(modX::LOG_LEVEL_ERROR, 'Error loading moreGallery class from ' . $corePath);
             return;
         }
-        $moreGallery->setWorkingContext($this->resource->get('context_key'));
-
+        $moreGallery->setResource($this->resource);
         $crops = $moreGallery->getCrops($this->resource);
+        $customFields = $moreGallery->getCustomFields($this->resource);
+        $customFields = !empty($customFields) ? $this->modx->toJSON($customFields) : 'false';
 
         $this->addHtml('<script type="text/javascript">
             moreGallery.config = '.$this->modx->toJSON($moreGallery->config).';
             moreGallery.crops = ' . $this->modx->toJSON($crops) . ';
+            moreGallery.customFields = ' . $customFields . ';
         </script>');
         $this->addJavascript($assetsUrl.'mgr/js/moregallery.class.js');
         $this->addJavascript($mgrUrl.'assets/modext/util/datetime.js');
@@ -72,6 +74,7 @@ class mgResourceUpdateManagerController extends ResourceUpdateManagerController 
         // ]]>
         </script>');
 
+        $moreGallery->mg();
         $tpl = $moreGallery->getChunk('mgr/update', $moreGallery->config);
         $this->addHtml($tpl);
         $this->loadRichTextEditor();

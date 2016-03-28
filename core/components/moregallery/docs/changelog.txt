@@ -1,3 +1,45 @@
+++ MoreGallery 1.4.0-rc1
+++ Released on 2016-03-23
++++++++++++++++++++++++++
+New Features:
+- Custom fields! Add text fields, text areas, rich text or select fields to the image edit modal [#74]
+- Automatically regenerate the mgr_thumb if it no longer exists or the mgr_thumb column is empty [#138]
+- Add crop_jpeg_quality setting to control the quality of thumbnails that are generated as jpegs [#137]
+- Add thumbnail_format setting to control the format of the mgr_thumb file [#120]
+- Add allowed_extensions_per_source setting to limit uploads to media-source specific allowed imageExtensions [#132]
+- Add &includeCount property to mgGetTags to get the number of images using a specific tag [#135]
+- Allow excluding images by tag with mgGetImages with "-tag" [#136 - thanks Thomas!]
+- Add &wrapperIfEmpty property to mgGetTags and mgGetImages that allows disabling the wrapperTpl if there are no results [#118]
+- Add &singleImageParam property to mgGetImages to allow changing the parameter per snippet call
+- Add &singleImageEnabled property to mgGetImages to disable the single image view completely
+- Automatically create tags when keywords are found in the image IPTC data [#112]
+- Make IPTC data available via a new iptc image field
+- Add support for path placeholders in the gallery path, including dates, a selection of settings and all resource fields and TVs
+- Provide support for extras like FileSluggy that sanitise file names on upload [#142]
+
+Improvements:
+- Prevent potential fatal error in mgGetImages/mgGetTags if $modx->resource isn't set [#119]
+- Make sure mgGetImages/mgGetTags set the working context
+- Remove hardcoded tooltip on the resource toolbar icon [#117]
+- Make sure mgGetTags with a resource filter also checks if images are hidden
+- Make visual difference between active and inactive images bigger [#116]
+- Implement modmore/Alpacka for shared utilities [#141]
+- Add support for transliteration for filename sanitization [#121]
+- Improve styling of the Gallery header in MODX 2.4
+- Automatically refresh the resource update page if the content position or crops are changed
+- Add prefill_from_iptc setting to allow disabling the automatic name/tag prefilling [#144]
+- Add resource data to the wrapperTpl [#145]
+- Allow deleting images when the confirm dialogs are dismissed [#143]
+- IPTC and EXIF data can be inspected with iptc_dump, iptc_json, exif_dump and exif_json placeholders
+
+Fixes:
+- Fix loading the lexicon for the Content > New Gallery menu item [#87]
+- Fix toolbar icon position being out of order
+- Fix image URL generation on Windows [S7588]
+- Synchronise processing with importing with the upload processing
+- Ensure mgImage->toArray respects the $keyPrefix value
+
+
 ++ MoreGallery 1.3.7-pl
 ++ Released on 2015-10-08
 +++++++++++++++++++++++++

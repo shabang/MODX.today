@@ -1,4 +1,4 @@
-var ContentBlocksFields, ContentBlocksLayouts, ContentBlocksContents, ContentBlocksConfig, ContentBlocksWrapperCls, ContentBlocksExtraSelectors, ContentBlocksTemplates, ContentBlocksResource;
+var ContentBlocksFields, ContentBlocksLayouts, ContentBlocksCategories, ContentBlocksContents, ContentBlocksConfig, ContentBlocksWrapperCls, ContentBlocksExtraSelectors, ContentBlocksTemplates, ContentBlocksResource;
 
 var vcJquery = $.noConflict();
 (function ($) {
@@ -402,7 +402,9 @@ var vcJquery = $.noConflict();
                 fieldDef = [],
                 position = btn.hasClass('contentblocks-add-content-here-link') ? btn.closest('li.contentblocks-field-outer').index() : 'bottom',
                 thisLayoutFields = ContentBlocks.getLayoutFields(column.closest('.contentblocks-layout')).allFields,
-                allPageFields = [];
+                allPageFields = [],
+                usedFields = [],
+                categoryHtml = [];
 
             $.each(ContentBlocks.generatedContentFields, function(idx, fld) {
                 allPageFields.push(fld.fieldId);
@@ -425,40 +427,55 @@ var vcJquery = $.noConflict();
                 return 0;
             });
 
-            var fields = [];
-            $.each(fieldDef, function(id, data) {
-                var fieldsInLayout = $.grep(thisLayoutFields, function(n,i) {return n == data.id}).length;
-                var fieldsInPage = $.grep(allPageFields, function(n,i) {return n == data.id}).length;
-                if(
-                    (data.times_per_layout && fieldsInLayout >= data.times_per_layout)
-                    || (data.times_per_page && fieldsInPage >= data.times_per_page)
-                    || (!data.available)
-                ) {
-                    return;
-                }
+            $.each(ContentBlocksCategories, function(idx, category) {
+                var fields = [];
 
-                // Hide subfields from the window
-                if (data.parent !== 0) {
-                    return;
-                }
+                $.each(fieldDef, function(id, data) {
+                    var fieldsInLayout = $.grep(thisLayoutFields, function(n,i) {return n == data.id}).length;
+                    var fieldsInPage = $.grep(allPageFields, function(n,i) {return n == data.id}).length;
+                    if(
+                      (data.times_per_layout && fieldsInLayout >= data.times_per_layout)
+                      || (data.times_per_page && fieldsInPage >= data.times_per_page)
+                      || (!data.available)
+                      || data.category != category.id
+                    ) {
+                        return;
+                    }
 
-                // I18N
-                var lexName = _(data.name),
-                    lexDescription = _(data.description);
-                if (lexName && lexName.length) {
-                    data.name = lexName;
-                }
-                if (lexDescription && lexDescription.length) {
-                    data.description = lexDescription;
-                }
+                    // Hide subfields from the window
+                    if (data.parent !== 0) {
+                        return;
+                    }
 
-                data.icon = data.icon.replace('--DPR--', dpr);
-                fields.push(tmpl('contentblocks-modal-add-content-field', data));
+                    // I18N
+                    var lexName = _(data.name),
+                      lexDescription = _(data.description);
+                    if (lexName && lexName.length) {
+                        data.name = lexName;
+                    }
+                    if (lexDescription && lexDescription.length) {
+                        data.description = lexDescription;
+                    }
+
+                    data.icon = data.icon.replace('--DPR--', dpr);
+                    fields.push(tmpl('contentblocks-modal-add-content-field', data));
+                    usedFields.push(fieldDef[id]);
+                });
+                fieldDef = $(fieldDef).not(usedFields).get();
+                if(fields.length) {
+                    fields = fields.join('');
+                    // if we only have uncategorized entries, don't show the title
+                    categoryHtml.push(tmpl('contentblocks-modal-add-content-category', {
+                        fields: fields,
+                        category_name: (category.id == 0 && categoryHtml.length == 0) ? '' : category.name,
+                        category_description: category.description,
+                        category_id: category.id
+                    }));
+                }
             });
-            fields = fields.join('');
 
             var html = tmpl('contentblocks-modal-add-content', {
-                fields: fields
+              category_html : categoryHtml.join('')
             });
 
             ContentBlocks.openModal(_('contentblocks.add_content'), html, {
@@ -511,7 +528,7 @@ var vcJquery = $.noConflict();
 
         generateSettingFields: function(settings, defaultSettings, currentData, fieldDisplayType) {
             fieldDisplayType = (typeof fieldDisplayType === "undefined") ? 'modal' : fieldDisplayType;
-            var fields = []
+            var fields = [],
                 fieldHasOptions = ['select', 'radio', 'checkbox'];
             $.each(settings, function(id, setting) {
                 defaultSettings[setting.reference] = setting.default_value;
@@ -528,6 +545,7 @@ var vcJquery = $.noConflict();
                     }
 
                     if (fieldHasOptions.indexOf(setting.fieldtype) >= 0 && setting.fieldoptions.length) {
+                        setting.value = String(setting.value || '');
                         var settingType = setting.fieldtype,
                             settingValues = setting.value.split(',');
                         setting.options = [];
@@ -539,12 +557,14 @@ var vcJquery = $.noConflict();
                                 checked = (settingValues.indexOf(value) !== -1) ? ' checked="checked"' : '',
                                 display = opt[0],
                                 displayLex = _(display),
-                                option = {value : value, selected : selected, checked: checked, display: display, reference: setting.reference},
                                 tpl = 'contentblocks-modal-layout-setting-' + settingType + '-option';
 
                             if (displayLex && displayLex.length > 0) {
                                 display = displayLex;
                             }
+
+                            var option = {value : value, selected : selected, checked: checked, display: display, reference: setting.reference};
+
                             setting.options.push(tmpl(tpl, option));
                         });
                         setting.options = setting.options.join('');
@@ -688,8 +708,9 @@ var vcJquery = $.noConflict();
                 // get data for field, primarily to make sure that we only allow specified layouts on nested layouts
                 parentData = container.closest('li.contentblocks-field-outer').data() || false,
                 allowedLayouts = [],
+                categoryLayoutHtml = [],
                 allowedTemplates = [],
-                layouts = [],
+                categoryTemplateHtml = [],
                 templates = [],
                 position = 'bottom';
 
@@ -726,33 +747,55 @@ var vcJquery = $.noConflict();
                     return 0;
                 });
 
-                $.each(layoutDef, function(id, data) {
-                    var layoutsInPage = $.grep(allPageLayouts, function(n,i) {return n == data.id}).length;
-                    if(
-                        (data.times_per_page && layoutsInPage >= data.times_per_page)
-                        || (data.layout_only_nested == "1" && !parentData)
-                        || (!data.available)
-                        || (allowedLayouts.length && allowedLayouts.indexOf(data.id.toString()) == -1)
-                    ) {
-                        return;
-                    }
+                var usedLayouts = [];
 
-                    // I18N
-                    var lexName = _(data.name),
-                        lexDescription = _(data.description);
-                    if (lexName && lexName.length) {
-                        data.name = lexName;
-                    }
-                    if (lexDescription && lexDescription.length) {
-                        data.description = lexDescription;
-                    }
+                $.each(ContentBlocksCategories, function(idx, category) {
+                    var layouts = [];
 
-                    data.icon = data.icon.replace('--DPR--', dpr);
-                    layouts.push(tmpl('contentblocks-modal-add-layout-option', data));
+                    $.each(layoutDef, function(id, data) {
+                        var layoutsInPage = $.grep(allPageLayouts, function(n,i) {return n == data.id}).length;
+                        if(
+                          (data.times_per_page && layoutsInPage >= data.times_per_page)
+                          || (data.layout_only_nested == "1" && !parentData)
+                          || (!data.available)
+                          || (allowedLayouts.length && allowedLayouts.indexOf(data.id.toString()) == -1)
+                          || data.category != category.id
+                        ) {
+                            return;
+                        }
+
+                        // I18N
+                        var lexName = _(data.name),
+                          lexDescription = _(data.description);
+                        if (lexName && lexName.length) {
+                            data.name = lexName;
+                        }
+                        if (lexDescription && lexDescription.length) {
+                            data.description = lexDescription;
+                        }
+
+                        data.icon = data.icon.replace('--DPR--', dpr);
+                        layouts.push(tmpl('contentblocks-modal-add-layout-option', data));
+                        usedLayouts.push(layoutDef[id]);
+                    });
+                    layoutDef = $(layoutDef).not(usedLayouts).get();
+                    if(layouts.length) {
+                        layouts = layouts.join('');
+
+                        // if we only have uncategorized entries, don't show the title
+                        categoryLayoutHtml.push(tmpl('contentblocks-modal-add-layout-category', {
+                            layouts: layouts,
+                            layout_type: 'layout',
+                            category_name: (category.id == 0 && categoryLayoutHtml.length == 0) ? '' : category.name,
+                            category_description: category.description,
+                            category_id: category.id
+                        }));
+                    }
                 });
+
+                categoryLayoutHtml = categoryLayoutHtml.join('');
             }
-            
-            layouts = layouts.join('');
+
 
             if (allowedTemplates) {
                 // Grab templates
@@ -771,34 +814,56 @@ var vcJquery = $.noConflict();
                     return 0;
                 });
 
-                // Loop over templates to parse and stuff inside a template
-                $.each(avlTemplates, function(id, data) {
-                    if (!data.available) return;
-                    if (allowedTemplates.length && allowedTemplates.indexOf(data.id.toString()) == -1) return;
+                var usedTemplates = [];
 
-                    // I18N
-                    var lexName = _(data.name),
-                        lexDescription = _(data.description);
-                    if (lexName && lexName.length) {
-                        data.name = lexName;
-                    }
-                    if (lexDescription && lexDescription.length) {
-                        data.description = lexDescription;
-                    }
+                $.each(ContentBlocksCategories, function(idx, category) {
+                    var templates = [];
 
-                    data.icon = data.icon.replace('--DPR--', dpr);
-                    templates.push(tmpl('contentblocks-modal-add-layout-template-option', data));
+                    // Loop over templates to parse and stuff inside a template
+                    $.each(avlTemplates, function(id, data) {
+                        if (!data.available) return;
+                        if (allowedTemplates.length && allowedTemplates.indexOf(data.id.toString()) == -1) return;
+                        if (data.category != category.id) return;
+
+                        // I18N
+                        var lexName = _(data.name),
+                          lexDescription = _(data.description);
+                        if (lexName && lexName.length) {
+                            data.name = lexName;
+                        }
+                        if (lexDescription && lexDescription.length) {
+                            data.description = lexDescription;
+                        }
+
+                        data.icon = data.icon.replace('--DPR--', dpr);
+                        templates.push(tmpl('contentblocks-modal-add-layout-template-option', data));
+                        usedTemplates.push(avlTemplates[id]);
+                    });
+                    avlTemplates = $(avlTemplates).not(usedTemplates).get();
+                    if(templates.length) {
+                        templates = templates.join('');
+
+                        // if we only have uncategorized entries, don't show the title
+                        categoryTemplateHtml.push(tmpl('contentblocks-modal-add-layout-category', {
+                            layouts: templates,
+                            layout_type: 'template',
+                            category_name: (category.id == 0 && categoryTemplateHtml.length == 0) ? '' : category.name,
+                            category_description: category.description,
+                            category_id: category.id
+                        }));
+                    }
                 });
+
+                categoryTemplateHtml = categoryTemplateHtml.join('');
             }
 
-            templates = templates.join('');
 
 
             var html = tmpl('contentblocks-modal-add-layout', {
-                hasLayouts: layouts.length > 0,
-                layouts: layouts,
-                hasTemplates: templates.length > 0,
-                templates: templates
+                hasLayouts: usedLayouts.length > 0,
+                category_layout_html: categoryLayoutHtml,
+                hasTemplates: usedTemplates.length > 0,
+                category_template_html: categoryTemplateHtml
             });
 
             ContentBlocks.openModal(_('contentblocks.add_layout'), html, {
@@ -1448,6 +1513,35 @@ var vcJquery = $.noConflict();
 
             $link.blur();
         },
+        initCategories : function() {
+            categories = [];
+
+
+            for (var key in ContentBlocksCategories) {
+                var nameLex = _(ContentBlocksCategories[key].name);
+                if (nameLex && nameLex.length) {
+                    ContentBlocksCategories[key].name = nameLex;
+                }
+                var descLex = _(ContentBlocksCategories[key].description);
+                if (descLex && descLex.length) {
+                    ContentBlocksCategories[key].description = descLex;
+                }
+
+                categories.push(ContentBlocksCategories[key]);
+            }
+
+            categories.sort(function(a, b) {
+                if (a.sortorder < b.sortorder) return -1;
+                if (a.sortorder > b.sortorder) return 1;
+                return 0;
+            });
+            categories.push({id : '0', name : "Uncategorized", description: ""});
+
+            // TODO: Should we just do this, which changes the type from object of objects to array of object
+            // or would it be better to create a whole new thing? It seems silly to me to create another var
+            // to just hold onto the same data.
+            ContentBlocksCategories = categories;
+        },
         initialized: false,
         initialize: function(contentBody) {
             // for typeahead
@@ -1459,6 +1553,7 @@ var vcJquery = $.noConflict();
                 }
             });
             ContentBlocks.resourcesSource.initialize();
+            ContentBlocks.initCategories();
 
             // Insert the new content blocks editing stuff
             contentBody.append(tmpl('contentblocks-wrapper-tpl', {}));

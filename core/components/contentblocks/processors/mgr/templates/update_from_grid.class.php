@@ -30,6 +30,7 @@ class cbTemplateUpdateFromGridProcessor extends modProcessor {
         }
 
         $field->set('sortorder', $this->record['sortorder']);
+        $field->set('category', $this->record['category']);
         if ($field->save()) {
             return $this->success();
         }

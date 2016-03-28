@@ -53,8 +53,8 @@ $_lang['moregallery.model_error'] = 'Ett oväntat fel uppstod, bildens typ kunde
 
 $_lang['moregallery.error_invalid_resource'] = 'Ett oväntat fel uppstod, resursen "[[+resource]]" är inte ett giltigt galleri.';
 $_lang['moregallery.error_loading_source'] = 'Ett fel uppstod när galleriets mediakälla skulle laddas.';
-$_lang['moregallery.error_invalid_filetype'] = 'Sorry, .[[+extension]] files are not allowed.';
-$_lang['moregallery.error_upload_failed'] = 'the file could not be uploaded (Error [[+error]]).';
+$_lang['moregallery.error_invalid_filetype'] = 'Filer av typen .[[+extension]] är inte tillåtna.';
+$_lang['moregallery.error_upload_failed'] = 'filen kunde inte laddas upp (Fel [[+error]]).';
 
 // Tags related, for MoreGallery 1.1
 $_lang['moregallery.tags'] = 'Bildens taggar';
@@ -84,16 +84,34 @@ $_lang['setting_moregallery.content_position_desc'] = 'Sätt till "över", "unde
 $_lang['setting_moregallery.use_rte_for_images'] = 'Använd Rich Text redigerare';
 $_lang['setting_moregallery.use_rte_for_images_desc'] = 'När aktiverat kommer den aktiva rich text redigeraren att laddas in i bild beskrivningsfältet. Vi rekommenderar att man använder Redactor, men andra redigerare stöds också.';
 $_lang['setting_moregallery.crops'] = 'Klipp';
-$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">full Crops documentation</a> for more information about syntax and functionality.';
-$_lang['setting_moregallery.single_image_url_param'] = 'Single Image URL Parameter';
-$_lang['setting_moregallery.single_image_url_param_desc'] = 'Used with the mgGetImages snippet, the single image url parameter determines whether a listing or single image is displayed. This URL parameter will contain the image ID and, if not found, it will send the user to the configured 404 page. ';
+$_lang['setting_moregallery.crops_desc'] = 'Ange konfigurationen för Crops här för att aktivera beskärning av bilderna så att det intressanta området visas. Ett exempel kan vara <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. Eftersom det här är en avancerad funktion så hänvisas du till den <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">fullständiga dokumentationen för Crops</a> för mer information om syntax och funktionalitet.';
+$_lang['setting_moregallery.single_image_url_param'] = 'URL parameter för enstaka bild';
+$_lang['setting_moregallery.single_image_url_param_desc'] = 'URL parametern för enstaka bild används tillsammans med mgGetImages snippeten för att avgöra om en enstaka bild eller en full listning ska visas. Den här URL parametern kommer att innehålla ID:t för bilden, och om det inte hittas kommer användaren att skickas till 404-felsidan. ';
 $_lang['setting_moregallery.add_icon_to_toolbar'] = 'Lägg till ikon i verktygsfältet';
-$_lang['setting_moregallery.add_icon_to_toolbar_desc'] = 'When enabled, a "New Gallery" icon will be added to resource toolbar providing quick access to create new Galleries.';
+$_lang['setting_moregallery.add_icon_to_toolbar_desc'] = 'När den är aktiverad, kommer ikonen för "Nytt Galleri" att läggas till verktygsfältet för resurser för att ge snabb åtkomst till att skapa nya gallerier.';
 
 $_lang['setting_moregallery.sanitize_replace'] = 'Saneringsersättning';
 $_lang['setting_moregallery.sanitize_replace_desc'] = 'Alla tecken i de uppladdade filnamnen som inte matchar saneringsmönstret kommer att ersättas med detta tecken.';
 $_lang['setting_moregallery.sanitize_pattern'] = 'Saniteringsmönster';
 $_lang['setting_moregallery.sanitize_pattern_desc'] = 'Ett RegEx mönster för att rensa upp filnamn vid uppladdning.';
+$_lang['setting_moregallery.crop_jpeg_quality'] = 'Kvalitet för JPEG Crop';
+$_lang['setting_moregallery.crop_jpeg_quality_desc'] = 'Du kan kontrollera kvaliteten för de tumnaglar som genereras för JPEG-bilder genom att ange ett nummer mellan 0 och 100.';
+$_lang['setting_moregallery.thumbnail_format'] = 'Format för tumnaglar i hanteraren';
+$_lang['setting_moregallery.thumbnail_format_desc'] = 'Ange det format (png, gif eller jpg) som ska användas för tumnaglar i hanteraren (mgr_thumb). Detta påverkar inte beskärning av bilder; där kommer samma format att användas som för originalbilden.';
+$_lang['setting_moregallery.prefill_from_iptc'] = 'Prefill from IPTC';
+$_lang['setting_moregallery.prefill_from_iptc_desc'] = 'When enabled the image will automatically populate the name, description and tags with information stored in the image.';
+
+
+$_lang['setting_moregallery.translit'] = "Transkribering";
+$_lang['setting_moregallery.translit_desc'] = "När värdet inte är \"none\" eller tomt aktiverar detta transkribering innan saneringsprocessen, som översätter felaktiga tecken till tillåtna sådana. Om detta värde är tomt, ärver den det från kärnans \"friendly_alias_translit\" inställning.";
+
+$_lang['setting_moregallery.translit_class'] = "Klass för transkribering";
+$_lang['setting_moregallery.translit_class_desc'] = "Namnet på den klass som skall användas för transkribering. Om detta värde är tomt, ärver den det från kärnans \"friendly_alias_translit_class\" inställning.";
+$_lang['setting_moregallery.translit_class_path'] = "Sökväg till klass för transkribering";
+$_lang['setting_moregallery.translit_class_path_desc'] = "Sökvägen till klassen att använda för transkribering. Om detta värde är tomt ärver det från kärnans \"friendly_alias_translit_class_path\" inställning.";
+$_lang['setting_moregallery.custom_fields'] = "Anpassade fält";
+$_lang['setting_moregallery.custom_fields_desc'] = "Tillåter dig att lägga till ytterligare alternativ till dialogrutan frö att editera en bild. Den här inställningen kräver ett JSON-objekt. För ytterligare information om hur anpassade fält definieras och används, vänligen <a href=\"https://www.modmore.com/moregallery/documentation/custom-fields/\">läs dokumentationen här</a>.";
+
 $_lang['setting_mgr_tree_icon_mgresource'] = 'Galleri trädikon';
 $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'Font Awesome ikonklassen att lägga till för MoreGallery resurser i filträdet. ';
 
@@ -104,35 +122,40 @@ $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'Font Awesome ikonklassen att 
 /** mgGetImages */
 $_lang['moregallery.mggetimages.cache_desc'] = 'Cachea galleri utdata?';
 $_lang['moregallery.mggetimages.resource_desc'] = 'Ange en resurs-ID att ta bilder ifrån.';
-$_lang['moregallery.mggetimages.sortby_desc'] = 'The field to sort by. Valid values: filename, name, description, sortorder, uploadedon, editedon';
+$_lang['moregallery.mggetimages.sortby_desc'] = 'Fältet att sortera utifrån. Giltiga värden: filnamn, namn, beskrivning, sorteringsordning, uppladdningsdatum, editeringsdatum';
 $_lang['moregallery.mggetimages.sortdir_desc'] = 'Riktningen som bilderna ska sorteras i. Det kan vara "asc" (stigande) eller "desc" (fallande).';
-$_lang['moregallery.mggetimages.tags_desc'] = 'A comma separated list of tag names or IDs to filter images on.';
-$_lang['moregallery.mggetimages.tagsfromurl_desc'] = 'Set to the name of a URL parameter to get tags to filter on.';
-$_lang['moregallery.mggetimages.getresourcefields_desc'] = 'When enabled, resource fields will be loaded into the image template.';
-$_lang['moregallery.mggetimages.getresourcetvs_desc'] = 'Provide a comma separated list of TV names to load into the image template.';
-$_lang['moregallery.mggetimages.tagtpl_desc'] = 'The name of a Chunk to load for templating tags.';
-$_lang['moregallery.mggetimages.imagetpl_desc'] = 'The name of a Chunk to load for templating images.';
-$_lang['moregallery.mggetimages.singleimagetpl_desc'] = 'The name of a Chunk to load when viewing the special one-image view.';
-$_lang['moregallery.mggetimages.tagseparator_desc'] = 'A string to separate tag templates with for each of the images.';
-$_lang['moregallery.mggetimages.imageseparator_desc'] = 'A string to separate image templates with in gallery view.';
-$_lang['moregallery.mggetimages.wrappertpl_desc'] = 'When not empty, the specified Chunk will be used to wrap the entire output in.';
-$_lang['moregallery.mggetimages.toplaceholder_desc'] = 'When not empty, the snippet will set a placeholder with the output and will not output content directly.';
-$_lang['moregallery.mggetimages.totalvar_desc'] = 'Used for getPage pagination, set this to a placeholder to set for the total number of results.';
-$_lang['moregallery.mggetimages.limit_desc'] = 'The number of images to load in the result set.';
-$_lang['moregallery.mggetimages.offset_desc'] = 'he number of images to skip in the result set.';
-$_lang['moregallery.mggetimages.scheme_desc'] = 'The scheme to use in generating URLs; defaults to the value of the link_tag_scheme value.';
-$_lang['moregallery.mggetimages.where_desc'] = 'A generic condition to add to the query can be added here, in JSON format. For example {"uploadedby":4} or {"name:LIKE":"%train%"} ';
+$_lang['moregallery.mggetimages.tags_desc'] = 'En kommaseparerad lista över namn på taggar eller ID: n att filtrera bilderna utifrån.';
+$_lang['moregallery.mggetimages.tagsfromurl_desc'] = 'Ange namnet på en URL-parameter för att få taggar att filtrera utifrån.';
+$_lang['moregallery.mggetimages.getresourcefields_desc'] = 'När aktiverad, kommer resursfält att laddas in till bildmallen.';
+$_lang['moregallery.mggetimages.getresourcetvs_desc'] = 'Ange en kommaseparerad lista över mallvariabler att ladda in i bildmallen.';
+$_lang['moregallery.mggetimages.tagtpl_desc'] = 'Namnet på en Chunk som ska användas som mall för taggar.';
+$_lang['moregallery.mggetimages.imagetpl_desc'] = 'Namnet på en Chunk som ska användas som mall för bilder.';
+$_lang['moregallery.mggetimages.singleimageenabled_desc'] = 'När värdet är 1, kommer snippeten att svara på anrop med URL -parametern singleImageParam genom att visa vyn för enstaka bilder.';
+$_lang['moregallery.mggetimages.singleimagetpl_desc'] = 'Namnet på en Chunk som ska användas för att visa den speciella vyn för enskild bild.';
+$_lang['moregallery.mggetimages.singleimageparam_desc'] = 'Kan användas för att överida systeminställningen moregallery.single_image_url_param per snippetanrop. Det är användbart om du vill visa flera gallerier på samma sida.';
+$_lang['moregallery.mggetimages.tagseparator_desc'] = 'En sträng för att separera mallen för taggar med för var och en av bilderna.';
+$_lang['moregallery.mggetimages.imageseparator_desc'] = 'En sträng för att separera mallarna för bilder med i gallerivyn.';
+$_lang['moregallery.mggetimages.wrappertpl_desc'] = 'När den inte är tom, kommer den angivna Chunken att användas för att omsluta hela resultatet.';
+$_lang['moregallery.mggetimages.wrapperifempty_desc'] = 'Sätt till 0 för att bara använda wrapperTpl om det finns minst en bild att visa. När den är satt till 1 kommer wrapperTpl alltid användas, även om det inte finns några bilder.';
+$_lang['moregallery.mggetimages.toplaceholder_desc'] = 'När den inte är tom, kommer snippeten att placera resultatet i en platshållare istället för att visa resultatet direkt.';
+$_lang['moregallery.mggetimages.totalvar_desc'] = 'Används för sidbrytning via getPage, ange den platshållare som ska användas för det totala antalet resultat.';
+$_lang['moregallery.mggetimages.limit_desc'] = 'Antalet bilder att ladda in.';
+$_lang['moregallery.mggetimages.offset_desc'] = 'Antal bilder att hoppa över.';
+$_lang['moregallery.mggetimages.scheme_desc'] = 'Det schema som ska användas för att generera URL:er; standardvärdet är värdet för link_tag_scheme.';
+$_lang['moregallery.mggetimages.where_desc'] = 'Ett generellt villkor att lägga till sökfrågan kan läggas till här, i JSON-format. Till exempel {"uploadedby":4} eller {"name:LIKE":"%train%"}. ';
 
 /** mgGetTags */
-$_lang['moregallery.mggettags.cache_desc_desc'] = 'Cache the Tag output?';
-$_lang['moregallery.mggettags.resource_desc'] = 'Specify a resource ID to get tags from.';
-$_lang['moregallery.mggettags.sortby_desc'] = 'The field to sort by. Valid values: display, createdon';
-$_lang['moregallery.mggettags.sortdir_desc'] = 'The direction to sort tags by. This can be "asc" or "desc".';
-$_lang['moregallery.mggettags.tpl_desc'] = 'The name of a Chunk to load for templating tags.';
-$_lang['moregallery.mggettags.separator_desc'] = 'A string to separate tags with.';
-$_lang['moregallery.mggettags.wrappertpl_desc'] = 'When not empty, the specified Chunk will be used to wrap the entire output in.';
-$_lang['moregallery.mggettags.toplaceholder_desc'] = 'When not empty, the snippet will set a placeholder with the output and will not output content directly.';
-$_lang['moregallery.mggettags.totalvar_desc'] = 'Used for getPage pagination, set this to a placeholder to set for the total number of results.';
+$_lang['moregallery.mggettags.cache_desc_desc'] = 'Ska taggresultatet lagras i cachen?';
+$_lang['moregallery.mggettags.resource_desc'] = 'Ange ett resurs ID att hämta taggar ifrån.';
+$_lang['moregallery.mggettags.sortby_desc'] = 'Fältet att sortera efter. Giltiga värden är display eller createdon.';
+$_lang['moregallery.mggettags.sortdir_desc'] = 'Riktningen som taggarna ska sorteras i. Det kan vara "asc" (stigande) eller "desc" (fallande).';
+$_lang['moregallery.mggettags.tpl_desc'] = 'Namnet på en Chunk som ska användas som mall för taggar.';
+$_lang['moregallery.mggettags.separator_desc'] = 'En sträng att separata taggarna med.';
+$_lang['moregallery.mggettags.wrappertpl_desc'] = 'När den inte är tom, kommer den angivna Chunken att användas för att omsluta hela resultatet.';
+$_lang['moregallery.mggettags.wrapperifempty_desc'] = 'Sätt till 0 för att bara använda wrapperTpl om det finns minst ett resultat att visa. När den är satt till 1 kommer wrapperTpl alltid användas, även om det inte finns några resultat.';
+$_lang['moregallery.mggettags.toplaceholder_desc'] = 'När den inte är tom, kommer snippeten att placera resultatet i en platshållare istället för att visa resultatet direkt.';
+$_lang['moregallery.mggettags.includecount_desc'] = 'När den är satt till 1 kommer platshållaren [[+image_count]] att innehålla antalet aktiva bilder som använder den här taggen.';
+$_lang['moregallery.mggettags.totalvar_desc'] = 'Används för sidbrytning via getPage, ange den platshållare som ska användas för det totala antalet resultat.';
 $_lang['moregallery.mggettags.limit_desc'] = 'Antal bilder att ladda in.';
 $_lang['moregallery.mggettags.offset_desc'] = 'Antal bilder att hoppa över.';
 $_lang['moregallery.mggettags.where_desc'] = 'Ett allmänt tillstånd att lägga till i förfrågan kan läggas till här, i JSON-format. Till exempel {"createdon:>=":1390737600} eller {"display:LIKE":"%train%"} ';

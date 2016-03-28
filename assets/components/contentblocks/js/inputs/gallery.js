@@ -282,7 +282,7 @@
             var images = [];
             dom.find('.gallery-image-holder li').each(function(idx, img) {
                 var $img = $(img),
-                    $link = $img.find('input[id].settfield'),
+                    $link = $img.find('input[id].linkfield'),
                     data = {
                         url: $img.find('.url').val(),
                         title: $img.find('.title').val(),

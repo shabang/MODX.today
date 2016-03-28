@@ -11,6 +11,7 @@ $xpdo_meta_map['cbField']= array (
     'name' => NULL,
     'description' => NULL,
     'sortorder' => 0,
+    'category' => 0,
     'icon' => '',
     'icon_type' => 'core',
     'template' => NULL,
@@ -40,7 +41,7 @@ $xpdo_meta_map['cbField']= array (
     'input' => 
     array (
       'dbtype' => 'varchar',
-      'precision' => '255',
+      'precision' => '190',
       'phptype' => 'string',
       'null' => false,
       'default' => 'textfield',
@@ -48,7 +49,7 @@ $xpdo_meta_map['cbField']= array (
     'name' => 
     array (
       'dbtype' => 'varchar',
-      'precision' => '255',
+      'precision' => '190',
       'phptype' => 'string',
       'null' => false,
     ),
@@ -63,6 +64,14 @@ $xpdo_meta_map['cbField']= array (
     array (
       'dbtype' => 'int',
       'precision' => '5',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
+    'category' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '10',
       'phptype' => 'integer',
       'null' => false,
       'default' => 0,
@@ -197,6 +206,22 @@ $xpdo_meta_map['cbField']= array (
         ),
       ),
     ),
+    'category' => 
+    array (
+      'alias' => 'category',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'category' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
   ),
   'composites' => 
   array (
@@ -215,6 +240,14 @@ $xpdo_meta_map['cbField']= array (
     array (
       'class' => 'cbField',
       'local' => 'parent',
+      'foreign' => 'id',
+      'cardinality' => 'one',
+      'owner' => 'foreign',
+    ),
+    'Category' => 
+    array (
+      'class' => 'cbCategory',
+      'local' => 'category',
       'foreign' => 'id',
       'cardinality' => 'one',
       'owner' => 'foreign',

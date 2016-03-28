@@ -10,7 +10,9 @@ $xpdo_meta_map['mgImage']= array (
     'filename' => '',
     'file' => '',
     'mgr_thumb' => '',
+    'custom' => NULL,
     'exif' => NULL,
+    'iptc' => NULL,
     'width' => 0,
     'height' => 0,
     'name' => NULL,
@@ -56,7 +58,19 @@ $xpdo_meta_map['mgImage']= array (
       'null' => false,
       'default' => '',
     ),
+    'custom' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'array',
+      'null' => true,
+    ),
     'exif' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'array',
+      'null' => true,
+    ),
+    'iptc' => 
     array (
       'dbtype' => 'text',
       'phptype' => 'array',

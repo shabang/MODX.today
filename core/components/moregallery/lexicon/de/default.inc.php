@@ -53,8 +53,8 @@ $_lang['moregallery.model_error'] = 'Es trat ein unerwarteter Fehler auf: Das Bi
 
 $_lang['moregallery.error_invalid_resource'] = 'Es trat ein unerwarteter Fehler auf: Die Ressource "[[+resource]]" ist keine gültige Galerie.';
 $_lang['moregallery.error_loading_source'] = 'Es trat ein Fehler beim Laden der Medienquelle auf.';
-$_lang['moregallery.error_invalid_filetype'] = 'Sorry, .[[+extension]] files are not allowed.';
-$_lang['moregallery.error_upload_failed'] = 'the file could not be uploaded (Error [[+error]]).';
+$_lang['moregallery.error_invalid_filetype'] = 'Entschuldigung, der Dataityp [[+extension]] ist nicht erlaubt.';
+$_lang['moregallery.error_upload_failed'] = 'die Datei konnte nicht hochgeladen werden (Fehler [[+ Fehler]]).';
 
 // Tags related, for MoreGallery 1.1
 $_lang['moregallery.tags'] = 'Tags';
@@ -80,21 +80,39 @@ $_lang['setting_moregallery.image_id_in_name_desc'] = 'Auf "prefix" oder "suffix
 $_lang['setting_moregallery.resource_id_in_path'] = 'ID der Ressource im Pfad';
 $_lang['setting_moregallery.resource_id_in_path_desc'] = 'Wenn aktiviert, wird die ID der Galerie-Ressource der Quell-URL hinzugefügt, so dass jede Galerie ihr eigenes Verzeichnis bekommt.';
 $_lang['setting_moregallery.content_position'] = 'Position des Content-Felds';
-$_lang['setting_moregallery.content_position_desc'] = '"Oben", "unten", "tab" oder "ausblenden", um zu bestimmen, wie das Inhaltsfeld angezeigt wird, wenn überhaupt.';
+$_lang['setting_moregallery.content_position_desc'] = '"above" (über), "below" (unter), "tab" oder "hide" (ausblenden), um zu bestimmen, wie das Inhaltsfeld angezeigt wird, wenn überhaupt.';
 $_lang['setting_moregallery.use_rte_for_images'] = 'Rich-Text-Editor verwenden';
-$_lang['setting_moregallery.use_rte_for_images_desc'] = 'When enabled, the currently active rich text editor will be loaded into the Image Description field. We recommend using Redactor, but other editors are also supported.';
+$_lang['setting_moregallery.use_rte_for_images_desc'] = 'Wenn aktiviert, wird der derzeit aktive Richtext-Editor ins Bildbeschreibungsfeld geladen. Wir empfehlen, Redactor zu verwenden, aber andere Editoren werden ebenfalls unterstützt.';
 $_lang['setting_moregallery.crops'] = 'Ausschnitte';
-$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">full Crops documentation</a> for more information about syntax and functionality.';
-$_lang['setting_moregallery.single_image_url_param'] = 'Single Image URL Parameter';
-$_lang['setting_moregallery.single_image_url_param_desc'] = 'Used with the mgGetImages snippet, the single image url parameter determines whether a listing or single image is displayed. This URL parameter will contain the image ID and, if not found, it will send the user to the configured 404 page. ';
-$_lang['setting_moregallery.add_icon_to_toolbar'] = 'Add Icon to Toolbar';
-$_lang['setting_moregallery.add_icon_to_toolbar_desc'] = 'When enabled, a "New Gallery" icon will be added to resource toolbar providing quick access to create new Galleries.';
+$_lang['setting_moregallery.crops_desc'] = 'Fügen Sie hier ihre Beschnitt-Konfiguraton ein, um den Beschnitt um einen interessanten Bereich zu erlauben. Ein Beispiel wäre: <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. Da es sich um eine eher fortgeschrittene Funktion handelt, lesen Sie bitte die <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">vollständige Dokumentation</a> für mehr Informationen zu Syntax und Funktionalität.';
+$_lang['setting_moregallery.single_image_url_param'] = 'Einzelnes Bild-URL-Parameter';
+$_lang['setting_moregallery.single_image_url_param_desc'] = 'Wird mit dem mgGetImage snippet verwendet, der einzelne Bild-URL-Parameter bestimmt, ob eine Liste oder ein einzelnes Bild angezeigt wird. Dieser URL-Parameter wird die Bild-ID enthalten und schickt den Betrachter auf die eingestellte 404-Seite, falls diese nicht gefunden wird. ';
+$_lang['setting_moregallery.add_icon_to_toolbar'] = 'Icon zur Symbolleiste hinzufügen';
+$_lang['setting_moregallery.add_icon_to_toolbar_desc'] = 'Wenn aktiviert, wird ein »Neue Galerie«-Symbol zur Ressourcen-Symbolleiste hinzugefügt, um schnell neue Galerien erzeugen zu können.';
 
 $_lang['setting_moregallery.sanitize_replace'] = 'Sanitize Replacement';
 $_lang['setting_moregallery.sanitize_replace_desc'] = 'Any characters in the uploaded filenames that do not match the sanitize pattern will be replaced with this character.';
-$_lang['setting_moregallery.sanitize_pattern'] = 'Sanitize Pattern';
+$_lang['setting_moregallery.sanitize_pattern'] = 'Desinfizieren Muster';
 $_lang['setting_moregallery.sanitize_pattern_desc'] = 'A RegEx pattern for cleaning up filenames on upload.';
-$_lang['setting_mgr_tree_icon_mgresource'] = 'Gallery Tree Icon';
+$_lang['setting_moregallery.crop_jpeg_quality'] = 'JPEG Crop Quality';
+$_lang['setting_moregallery.crop_jpeg_quality_desc'] = 'For JPEG images you can control the quality of the thumbnails being generated by specifying a number between 0 and 100.';
+$_lang['setting_moregallery.thumbnail_format'] = 'Manager Thumbnail Format';
+$_lang['setting_moregallery.thumbnail_format_desc'] = 'Set the format (png, gif or jpg) that is used for thumbnails in the manager (mgr_thumb). This does not affect image cropping; those will use the same format as the original image.';
+$_lang['setting_moregallery.prefill_from_iptc'] = 'Prefill from IPTC';
+$_lang['setting_moregallery.prefill_from_iptc_desc'] = 'When enabled the image will automatically populate the name, description and tags with information stored in the image.';
+
+
+$_lang['setting_moregallery.translit'] = "Transliteration";
+$_lang['setting_moregallery.translit_desc'] = "When set to a value that is not \"none\" or empty, this will enable transliteration prior to the sanitization process, enabling translating of invalid characters to valid ones. If this value is empty, it will inherit from the core \"friendly_alias_translit\" setting.";
+
+$_lang['setting_moregallery.translit_class'] = "Translit-Klasse";
+$_lang['setting_moregallery.translit_class_desc'] = "The name of the class to use for transliteration. If this value is empty, it will inherit from the core \"friendly_alias_translit_class\" setting.";
+$_lang['setting_moregallery.translit_class_path'] = "Translit Class Path";
+$_lang['setting_moregallery.translit_class_path_desc'] = "The path to the class to use for transliteration. If this value is empty, it will inherit from the core \"friendly_alias_translit_class_path\" setting.";
+$_lang['setting_moregallery.custom_fields'] = "Benutzerdefinierte Felder";
+$_lang['setting_moregallery.custom_fields_desc'] = "Allows you to add additional options to the image edit modal. This setting requires a JSON object. For more information about how custom fields are defined and used, please <a href=\"https://www.modmore.com/moregallery/documentation/custom-fields/\">read the documentation here</a>.";
+
+$_lang['setting_mgr_tree_icon_mgresource'] = 'Galerie-Baum-Icon';
 $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'The Font Awesome icon class to add to MoreGallery Resources in the file tree. ';
 
 /**
@@ -105,17 +123,20 @@ $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'The Font Awesome icon class t
 $_lang['moregallery.mggetimages.cache_desc'] = 'Sollen die bisher angezeigten Bilder im Cache zwischengespeichert werden?';
 $_lang['moregallery.mggetimages.resource_desc'] = 'Bitte legen sie eine Quelle fest um Bilder anzuzeigen.';
 $_lang['moregallery.mggetimages.sortby_desc'] = 'Das Feld zum Sortieren von. Gültige Werte: Dateiname, Name, Einzelheiten, Sortierreihenfolge, Hochgeladen auf, Bearbeitet auf';
-$_lang['moregallery.mggetimages.sortdir_desc'] = 'The direction to sort images by. This can be "asc" or "desc".';
-$_lang['moregallery.mggetimages.tags_desc'] = 'A comma separated list of tag names or IDs to filter images on.';
+$_lang['moregallery.mggetimages.sortdir_desc'] = 'Die Richtung, in der Bilder sortiert werden. Dies kann "Asc" (aufsteigend) bzw. "Desc" (absteigend) sein.';
+$_lang['moregallery.mggetimages.tags_desc'] = 'Eine kommagetrennte Liste von Tag-Namen oder IDs, nach der die Bildern gefiltert wird.';
 $_lang['moregallery.mggetimages.tagsfromurl_desc'] = 'Fügen sie den Namen eines URL parameters hinzu um die Suche einzuschränken.';
 $_lang['moregallery.mggetimages.getresourcefields_desc'] = 'When enabled, resource fields will be loaded into the image template.';
 $_lang['moregallery.mggetimages.getresourcetvs_desc'] = 'Provide a comma separated list of TV names to load into the image template.';
 $_lang['moregallery.mggetimages.tagtpl_desc'] = 'The name of a Chunk to load for templating tags.';
 $_lang['moregallery.mggetimages.imagetpl_desc'] = 'The name of a Chunk to load for templating images.';
+$_lang['moregallery.mggetimages.singleimageenabled_desc'] = 'When set to 1, the snippet will respond to requests with the singleImageParam URL property by showing the single image view.';
 $_lang['moregallery.mggetimages.singleimagetpl_desc'] = 'The name of a Chunk to load when viewing the special one-image view.';
+$_lang['moregallery.mggetimages.singleimageparam_desc'] = 'Can be used to override the moregallery.single_image_url_param system setting per snippet call. Useful if you show multiple galleries on the same page.';
 $_lang['moregallery.mggetimages.tagseparator_desc'] = 'A string to separate tag templates with for each of the images.';
 $_lang['moregallery.mggetimages.imageseparator_desc'] = 'A string to separate image templates with in gallery view.';
 $_lang['moregallery.mggetimages.wrappertpl_desc'] = 'When not empty, the specified Chunk will be used to wrap the entire output in.';
+$_lang['moregallery.mggetimages.wrapperifempty_desc'] = 'Set to 0 to only use the wrapperTpl if there is at least 1 result. When set to 1 it will always use the wrapperTpl, even without results.';
 $_lang['moregallery.mggetimages.toplaceholder_desc'] = 'When not empty, the snippet will set a placeholder with the output and will not output content directly.';
 $_lang['moregallery.mggetimages.totalvar_desc'] = 'Used for getPage pagination, set this to a placeholder to set for the total number of results.';
 $_lang['moregallery.mggetimages.limit_desc'] = 'The number of images to load in the result set.';
@@ -124,14 +145,16 @@ $_lang['moregallery.mggetimages.scheme_desc'] = 'The scheme to use in generating
 $_lang['moregallery.mggetimages.where_desc'] = 'A generic condition to add to the query can be added here, in JSON format. For example {"uploadedby":4} or {"name:LIKE":"%train%"} ';
 
 /** mgGetTags */
-$_lang['moregallery.mggettags.cache_desc_desc'] = 'Cache the Tag output?';
+$_lang['moregallery.mggettags.cache_desc_desc'] = 'Die Tag-Ausgabe cachen?';
 $_lang['moregallery.mggettags.resource_desc'] = 'Specify a resource ID to get tags from.';
 $_lang['moregallery.mggettags.sortby_desc'] = 'The field to sort by. Valid values: display, createdon';
 $_lang['moregallery.mggettags.sortdir_desc'] = 'The direction to sort tags by. This can be "asc" or "desc".';
 $_lang['moregallery.mggettags.tpl_desc'] = 'The name of a Chunk to load for templating tags.';
 $_lang['moregallery.mggettags.separator_desc'] = 'Text, um Tags durch.';
 $_lang['moregallery.mggettags.wrappertpl_desc'] = 'When not empty, the specified Chunk will be used to wrap the entire output in.';
+$_lang['moregallery.mggettags.wrapperifempty_desc'] = 'Set to 0 to only use the wrapperTpl if there is at least 1 result. When set to 1 it will always use the wrapperTpl, even without results.';
 $_lang['moregallery.mggettags.toplaceholder_desc'] = 'When not empty, the snippet will set a placeholder with the output and will not output content directly.';
+$_lang['moregallery.mggettags.includecount_desc'] = 'When set to 1 the [[+image_count]] placeholder will contain the number of active images that are using this tag.';
 $_lang['moregallery.mggettags.totalvar_desc'] = 'Used for getPage pagination, set this to a placeholder to set for the total number of results.';
 $_lang['moregallery.mggettags.limit_desc'] = 'The number of images to load in the result set.';
 $_lang['moregallery.mggettags.offset_desc'] = 'he number of images to skip in the result set.';

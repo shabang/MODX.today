@@ -23,23 +23,46 @@ class cbFieldGetListProcessor extends modObjectGetListProcessor {
      * @return xPDOQuery
      */
     public function prepareQueryBeforeCount(xPDOQuery $c) {
+        $c->leftJoin('cbCategory', 'Category');
+        $c->select($this->modx->getSelectColumns($this->classKey, $this->classKey));
+        $c->select($this->modx->getSelectColumns('cbCategory', 'Category', 'category_', array('id', 'name')));
+
         $parent = (int)$this->getProperty('parent', 0);
         $c->where(array(
-            'parent' => $parent,
+          'parent' => $parent,
         ));
 
         if ($ids = $this->getProperty('ids')) {
             $ids = array_map('trim',explode(",",$ids));
 
             $c->where(array(
-                'cbField.id:IN' => $ids,
+              'cbField.id:IN' => $ids,
             ));
         }
 
         if ($inputs = $this->getProperty('inputs')) {
-            $inputs = array_map('trim',explode(",",$inputs));
             $c->where(array(
-                'cbField.input:IN' => $inputs,
+              'cbField.input:IN' => $inputs,
+            ));
+        }
+
+        if ($input = $this->getProperty('type')) {
+            $c->where(array(
+              'cbField.input:IN' => array($input),
+            ));
+        }
+
+        if ($searchTerm = $this->getProperty('search')) {
+            $c->where(array(
+              'name:LIKE' => '%'.$searchTerm.'%',
+              'OR:description:LIKE' => '%'.$searchTerm.'%',
+              'OR:id:LIKE' => '%'.$searchTerm.'%',
+            ));
+        }
+
+        if ($category = $this->getProperty('category')) {
+            $c->where(array(
+              'cbField.category' => $category,
             ));
         }
         return $c;
@@ -58,6 +81,10 @@ class cbFieldGetListProcessor extends modObjectGetListProcessor {
         $input = $array['input'];
         if (isset($this->modx->contentblocks->inputs[$input]) && ($this->modx->contentblocks->inputs[$input] instanceof cbInput)) {
             $array['input_display'] = $this->modx->contentblocks->inputs[$input]->getName();
+        }
+
+        if (empty($array['category_name'])) {
+            $array['category_name'] = $this->modx->lexicon('contentblocks.uncategorized');
         }
 
         // Turn into JSON so the JS can easily interact with the data

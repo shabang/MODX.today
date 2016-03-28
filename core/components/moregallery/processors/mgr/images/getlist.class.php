@@ -56,7 +56,7 @@ class mgImageGetListProcessor extends modObjectGetListProcessor {
                 $imageType = @getimagesize($array['mgr_thumb_path']);
                 $imageType = $imageType[2];
             }
-            if ($imageType !== null) {
+            if ($imageType !== null && file_exists($array['mgr_thumb_path'])) {
                 $mime = image_type_to_mime_type($imageType);
                 $array['mgr_thumb'] = "data:$mime;base64," . base64_encode(file_get_contents($array['mgr_thumb_path']));
             }

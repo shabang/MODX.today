@@ -48,7 +48,7 @@ class mgImageCrop extends xPDOSimpleObject
                 $source->removeObject($relativeUrl . $thumbnail);
             }
 
-            $extension = pathinfo($image->get('file'), PATHINFO_EXTENSION);
+            $extension = strtolower(pathinfo($image->get('file'), PATHINFO_EXTENSION));
             $cropInfo = $this->xpdo->moregallery->getCropInfo($this->get('crop'), $image->get('resource'));
             $file = $source->getObjectContents($relativeUrl . $image->get('file'));
             $newImage = $this->createThumbnail($file['content'], $cropInfo, $extension);
@@ -187,11 +187,20 @@ class mgImageCrop extends xPDOSimpleObject
          */
         try {
             require_once dirname(dirname(dirname(__FILE__))).'/model/phpthumb/ThumbLib.inc.php';
-            $thumb = PhpThumbFactory::create($image, array(), true);
+            $options = array(
+                'jpegQuality' => (int)$this->xpdo->moregallery->getOption('moregallery.crop_jpeg_quality', null, '90'),
+            );
+            $thumb = PhpThumbFactory::create($image, $options, true);
 
-            // If we're dealing with a PNG, setting the format like this ensures the image keeps transparency/alpha
+            // Make sure PhpThumb knows the format the image should be in.
             if ($extension === 'png') {
                 $thumb->setFormat('PNG');
+            }
+            elseif ($extension === 'gif') {
+                $thumb->setFormat('GIF');
+            }
+            else {
+                $thumb->setFormat('JPG');
             }
 
             // Crop the image from the $x and $y defined, for a size of $width and $height.

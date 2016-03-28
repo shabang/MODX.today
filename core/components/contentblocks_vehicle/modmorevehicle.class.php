@@ -7,7 +7,7 @@
  * Class modmoreVehicle
  */
 class modmoreVehicle extends xPDOObjectVehicle {
-    const VERSION = '0.6.0';
+    const VERSION = '1.0.0';
 
     public $class = 'modmoreVehicle';
 
@@ -21,17 +21,25 @@ class modmoreVehicle extends xPDOObjectVehicle {
     public function put(& $transport, & $object, $attributes = array ()) {
         parent :: put($transport, $object, $attributes);
 
-        $object = serialize($this->payload['object']);
-        $objectEncrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, md5(MODMORE_VEHICLE_PRIVATE_KEY), $object, MCRYPT_MODE_CFB);
-        $this->payload['object_encrypted'] = base64_encode($objectEncrypted);
+        $this->payload['object_encrypted'] = $this->encode($this->payload['object']);
         unset ($this->payload['object']);
 
         if (isset($this->payload['related_objects'])) {
-            $relatedObjects = serialize($this->payload['related_objects']);
-            $relatedObjectsEncrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, md5(MODMORE_VEHICLE_PRIVATE_KEY), $relatedObjects, MCRYPT_MODE_CFB);
-            $this->payload['related_objects_encrypted'] = base64_encode($relatedObjectsEncrypted);
+            $this->payload['related_objects_encrypted'] = $this->encode($this->payload['related_objects']);
             unset ($this->payload['related_objects']);
         }
+    }
+
+    /**
+     * @param $data
+     * @return string
+     */
+    public function encode($data) {
+        $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+        $cipher = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, MODMORE_VEHICLE_PRIVATE_KEY, serialize($data), MCRYPT_MODE_CBC, $iv);
+        $cipher = $iv . $cipher;
+        return base64_encode($cipher);
     }
 
     /**
@@ -72,17 +80,21 @@ class modmoreVehicle extends xPDOObjectVehicle {
      *
      * @return bool
      */
-    public function decodePayloads(xPDOTransport &$transport, $endpoint = 'install') {
+    public function decodePayloads(xPDOTransport &$transport, $endpoint = 'install')
+    {
+        $transport->xpdo->log(xPDO::LOG_LEVEL_INFO, 'Decoding package information...');
+        $publicKeyFile = MODX_CORE_PATH . 'components/' . $this->payload['namespace'] . '/.pubkey';
+        $publicKey = file_exists($publicKeyFile) ? file_get_contents($publicKeyFile) : $this->payload['modmore_public_key'];
         $params = array(
-            'download_id' => $this->payload['vehicle_download_id'],
-            'public_key' => $this->payload['vehicle_public_key'],
-            'object' => urlencode($this->payload['object_encrypted']),
-            'related_objects' => (isset($this->payload['related_objects_encrypted'])) ? urlencode($this->payload['related_objects_encrypted']) : '',
-            'vehicle_version' => self::VERSION,
+          'public_key' => $publicKey,
+          'package' => $this->payload['modmore_package'],
+          'object' => urlencode($this->payload['object_encrypted']),
+          'related_objects' => (isset($this->payload['related_objects_encrypted'])) ? urlencode($this->payload['related_objects_encrypted']) : '',
+          'vehicle_version' => self::VERSION,
         );
 
         $package = $transport->xpdo->getObject('transport.modTransportPackage', array(
-            'signature' => $transport->signature
+          'signature' => $transport->signature
         ));
         if ($package instanceof modTransportPackage) {
             $provider = $package->getOne('Provider');
@@ -90,11 +102,12 @@ class modmoreVehicle extends xPDOObjectVehicle {
                 /**
                  * @var modRestResponse $response
                  */
-                $provider->xpdo->setOption('contentType','default');
-                $response = $provider->request('package/decode/'.$endpoint, 'POST', $params);
+                $provider->xpdo->setOption('contentType', 'default');
+                $response = $provider->request('package/decode/' . $endpoint, 'POST', $params);
                 if ($response->isError()) {
                     $msg = $response->getError();
                     $transport->xpdo->log(xPDO::LOG_LEVEL_ERROR, 'Error decoding encrypted data: ' . $msg);
+
                     return false;
                 }
 
@@ -105,7 +118,9 @@ class modmoreVehicle extends xPDOObjectVehicle {
                     $object = unserialize($object);
                     $this->payload['object'] = $object;
                 } else {
-                    $transport->xpdo->log(xPDO::LOG_LEVEL_ERROR, 'Decode result did not include the object to install. Please try to install again, and contact support@modmore.com if the problem persists.');
+                    $transport->xpdo->log(xPDO::LOG_LEVEL_ERROR,
+                      'Decode result did not include the object to install. Please try to install again, and contact support@modmore.com if the problem persists.');
+
                     return false;
                 }
                 if (isset($data->related_objects)) {
@@ -114,21 +129,20 @@ class modmoreVehicle extends xPDOObjectVehicle {
                     $relatedObjects = unserialize($relatedObjects);
                     $this->payload['related_objects'] = $relatedObjects;
                 }
+
                 return true;
 
-            }
-            else {
-                $transport->xpdo->log(xPDO::LOG_LEVEL_ERROR, 'Could not find the provider for this package. Please make sure this package was installed with the modmore.com package provider and contact support@modmore.com if you need assistance.');
+            } else {
+                $transport->xpdo->log(xPDO::LOG_LEVEL_ERROR,
+                  'Could not find the provider for this package. Please make sure this package was installed with the modmore.com package provider and contact support@modmore.com if you need assistance.');
+
                 return false;
             }
-        }
-        else {
-            $transport->xpdo->log(xPDO::LOG_LEVEL_ERROR,'Could not find the package object for ' . $transport->signature . '.');
+        } else {
+            $transport->xpdo->log(xPDO::LOG_LEVEL_ERROR,
+              'Could not find the package object for ' . $transport->signature . '.');
+
             return false;
         }
     }
-
-
 }
-
-

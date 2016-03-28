@@ -55,7 +55,7 @@ abstract class ContentBlocksImportProcessor extends modProcessor
         }
 
         if ($this->mode === 'replace') {
-            $this->modx->removeCollection($this->classKey, array());
+            $this->removeCollection();
         }
 
         foreach ($data as $row) {
@@ -83,5 +83,13 @@ abstract class ContentBlocksImportProcessor extends modProcessor
 
 
         return $this->success();
+    }
+
+    /**
+     * Removes existing records in "replace" mode
+     */
+    public function removeCollection()
+    {
+        $this->modx->removeCollection($this->classKey, array());
     }
 }

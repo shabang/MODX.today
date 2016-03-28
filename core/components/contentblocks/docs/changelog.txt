@@ -1,3 +1,43 @@
+++ ContentBlocks 1.4.0-pl
+++ Released on 2016-03-23
+++++++++++++++++++++++++++
+New Features:
+- Categories! You can now organise your fields, layouts and templates into neat categories to keep 'm organised.
+- Filters and search in the component for fields, layouts and templates
+- New License System! We've enabled support for our new license system, which includes free development licenses
+
+Improvements:
+- All indexed varchar fields are now limited to 190 characters to account for indexes on MySQL Strict mode [#379]
+
+++ ContentBlocks 1.3.6-pl
+++ Released on 2016-03-15
+++++++++++++++++++++++++++
+- Fix links on gallery input types [S8247]
+- Fix setting option values using lexicons [#375]
+- Fix edge case where integer setting values could break the canvas
+- Fix subfield action buttons appearing where they shouldn't in repeaters
+
+++ ContentBlocks 1.3.5-pl
+++ Released on 2016-03-07
+++++++++++++++++++++++++++
+- Make sure the key and width of repeater subfields are required [S8028]
+- Fix fatal error in case a repeater subfield did not have a key [S8028]
+- Add "fontawesome" icon (Thanks Sebastian!) [#370]
+- Prevent importing subfields from wiping all fields [#369]
+- Fix variable names in RenderContent event [#373]
+
+++ ContentBlocks 1.3.4-pl
+++ Released on 2016-02-16
+++++++++++++++++++++++++++
+- Fix issue where TV tags would not get parsed properly (Update to Alpacka v0.2.1, #366)
+- Fix issue emptying TinyRTE-enabled inputs always keeping the last character (#279, S7934)
+- Correct some links that have changed to prevent redirects
+
+++ ContentBlocks 1.3.3-pl
+++ Released on 2016-02-10
+++++++++++++++++++++++++++
+- Fix incorrect caching of resources in rebuild_content processor
+
 ++ ContentBlocks 1.3.2-pl
 ++ Released on 2016-02-04
 ++++++++++++++++++++++++++

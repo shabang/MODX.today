@@ -22,6 +22,8 @@ ContentBlocksComponent.grid.Templates = function (config) {
             {name: 'name', type: 'string'},
             {name: 'description', type: 'string'},
             {name: 'sortorder', type: 'int'},
+            {name: 'category', type: 'int'},
+            {name: 'category_name', type: 'string'},
             {name: 'icon', type: 'string'},
             {name: 'icon_type', type: 'string'},
             {name: 'content', type: 'object'},
@@ -50,6 +52,15 @@ ContentBlocksComponent.grid.Templates = function (config) {
                 return v;
             }
         }, {
+            header: _('contentblocks.category'),
+            dataIndex: 'category',
+            sortable: true,
+            width: .15,
+            editor: {
+                xtype: 'contentblocks-combo-category',
+                renderer: true
+            }
+        },{
             header: _('contentblocks.sortorder'),
             dataIndex: 'sortorder',
             sortable: true,
@@ -64,7 +75,40 @@ ContentBlocksComponent.grid.Templates = function (config) {
                 handler: this.addTemplate,
                 scope: this
             },
-            '->',
+            '->',{
+                xtype: 'contentblocks-combo-category'
+                ,name: 'category'
+                ,id: 'contentblocks-templates-category-filter'
+                ,emptyText: _('contentblocks.category')
+                ,listeners: {
+                    'select': {fn:this.filterCategory,scope:this}
+                }
+            }, {
+                xtype: 'textfield'
+                ,id: 'contentblocks-templates-search-filter'
+                ,emptyText: _('contentblocks.search')
+                ,listeners: {
+                    'change': {fn:this.search,scope:this}
+                    ,'render': {fn: function(cmp) {
+                        new Ext.KeyMap(cmp.getEl(), {
+                            key: Ext.EventObject.ENTER
+                            ,fn: function() {
+                                this.fireEvent('change',this);
+                                this.blur();
+                                return true;
+                            }
+                            ,scope: cmp
+                        });
+                    },scope:this}
+                }
+            },{
+                xtype: 'button'
+                ,id: 'contentblocks-templates-clear-filters'
+                ,text: _('filter_clear')
+                ,listeners: {
+                    'click': {fn: this.clearFilter, scope: this}
+                }
+            },
             {
                 text: _('contentblocks.export_templates'),
                 handler: this.exportAllTemplates,
@@ -204,6 +248,25 @@ Ext.extend(ContentBlocksComponent.grid.Templates, MODx.grid.Grid, {
             }
         });
         win.show();
+    },
+    search: function(tf,nv,ov) {
+        this.getStore().setBaseParam('search',tf.getValue());
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
+    },
+    filterCategory: function(cb,nv,ov) {
+        this.getStore().setBaseParam('category',cb.getValue());
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
+    },
+    clearFilter: function() {
+        this.getStore().baseParams = {
+            action: 'mgr/fields/getlist'
+        };
+        Ext.getCmp('contentblocks-templates-search-filter').reset();
+        Ext.getCmp('contentblocks-templates-category-filter').reset();
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
     }
 });
 Ext.reg('contentblocks-grid-templates', ContentBlocksComponent.grid.Templates);

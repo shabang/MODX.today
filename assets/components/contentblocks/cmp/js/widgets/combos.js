@@ -162,6 +162,31 @@ ContentBlocksComponent.combo.MediaSource = function(config) {
 Ext.extend(ContentBlocksComponent.combo.MediaSource,MODx.combo.ComboBox);
 Ext.reg('contentblocks-combo-mediasource',ContentBlocksComponent.combo.MediaSource);
 
+ContentBlocksComponent.combo.Category = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        url: ContentBlocksComponent.config.connectorUrl,
+        baseParams: {
+            action: 'mgr/categories/getlist',
+            combo: true
+        },
+        fields: ['id', 'name', 'description', 'sortorder'],
+        hiddenName: config.name,
+        paging: true,
+        pageSize: 20,
+        valueField: 'id',
+        displayField: 'name',
+        tpl: new Ext.XTemplate('<tpl for=".">'
+            ,'<div class="x-combo-list-item">'
+            ,'<h4 class="modx-combo-title">{name}</h4>'
+            ,'<p class="modx-combo-desc">{description}</p>'
+            ,'</div></tpl>')
+    });
+    ContentBlocksComponent.combo.Category.superclass.constructor.call(this,config);
+};
+Ext.extend(ContentBlocksComponent.combo.Category,MODx.combo.ComboBox);
+Ext.reg('contentblocks-combo-category',ContentBlocksComponent.combo.Category);
+
 ContentBlocksComponent.combo.AvailabilityField = function(config) {
     config = config || {};
     Ext.applyIf(config,{

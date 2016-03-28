@@ -4,7 +4,7 @@
  */
 class cbDefaultCreateProcessor extends modObjectCreateProcessor {
     public $classKey = 'cbDefault';
-    public $languageTopics = array('moreprovider:default');
+    public $languageTopics = array('contentblocks:default');
 
     /**
      * @return bool

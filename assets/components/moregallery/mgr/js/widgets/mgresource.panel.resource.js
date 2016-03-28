@@ -90,10 +90,13 @@ Ext.extend(moreGallery.panel.Resource, MODx.panel.Resource, {
         }
         else {
             c.items.push([{
-                html: '<p>' + _('moregallery.please_save_first') + '</p>',
-                title: _('moregallery.name'),
                 xtype: 'modx-panel',
-                bodyCssClass: 'main-wrapper'
+                title: _('moregallery.name'),
+                id: 'mgresource-backbone-wrapper',
+                html: '<p>' + _('moregallery.please_save_first') + '</p>',
+                bodyCssClass: 'main-wrapper',
+                collapsible: true,
+                animCollapse: false
             }]);
         }
 
@@ -161,8 +164,32 @@ Ext.extend(moreGallery.panel.Resource, MODx.panel.Resource, {
             ,id: 'moregallery-crops'
             ,anchor: '100%'
             ,value: moreGallery.getResourceProperty(config.record, 'crops', 'inherit')
+        },{
+            xtype: 'textfield'
+            ,fieldLabel: _('setting_moregallery.custom_fields')
+            ,description: _('setting_moregallery.custom_fields_desc')
+            ,name: 'properties_custom_fields'
+            ,hiddenName: 'properties_custom_fields'
+            ,id: 'moregallery-custom_fields'
+            ,anchor: '100%'
+            ,value: moreGallery.getResourceProperty(config.record, 'custom_fields', 'inherit')
         });
         return flds;
+    },
+
+    success: function(o) {
+        moreGallery.panel.Resource.superclass.success.call(this,o);
+
+        var object = o.result.object;
+        if (this.config.record && this.config.record.properties && this.config.record.properties.moregallery && this.config.record.properties.moregallery.content_position !== object.properties_content_position) {
+            location.href = location.href;
+        }
+        if (this.config.record && this.config.record.properties && this.config.record.properties.moregallery && this.config.record.properties.moregallery.crops !== object.properties_crops) {
+            location.href = location.href;
+        }
+        if (this.config.record && this.config.record.properties && this.config.record.properties.moregallery && this.config.record.properties.moregallery.custom_fields !== object.properties_custom_fields) {
+            location.href = location.href;
+        }
     }
 });
 Ext.reg('modx-panel-resource',moreGallery.panel.Resource);

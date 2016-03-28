@@ -96,7 +96,7 @@ class ContentBlocks extends Alpacka {
     public function __construct($instance, array $config = array())
     {
         parent::__construct($instance, $config);
-        $this->setVersion(1, 3, 2, 'pl');
+        $this->setVersion(1, 4, 0, 'pl');
 
         /**
          * @deprecated
@@ -172,6 +172,21 @@ class ContentBlocks extends Alpacka {
         // make sure the parser is available, so we can process tags later on if needed
         $this->modx->getParser();
 
+        $categories = array(); ;
+        $c = $this->modx->newQuery('cbCategory');
+        $c->sortby('sortorder', 'ASC');
+        foreach ($this->modx->getIterator('cbCategory') as $category) {
+            /** @var cbField $field */
+            $key = '_' . $category->get('id');
+            $categories[$key] = $category->get(array('id', 'name', 'description', 'sortorder'));
+
+            // TODO: Lexiconable?
+//            if (array_key_exists($input, $this->inputs) && $this->inputs[$input] instanceof cbBaseInput) {
+//                $topics = $this->inputs[$input]->getLexiconTopics();
+//                foreach ($topics as $topic) $this->modx->controller->addLexiconTopic($topic);
+//            }
+        }
+
         $fields = array(); ;
         $c = $this->modx->newQuery('cbField');
         $c->where(array(
@@ -198,7 +213,7 @@ class ContentBlocks extends Alpacka {
             $key = '_' . $layout->get('id');
             $icon_type = $layout->get('icon_type');
             $icon_base_url = ($icon_type === 'core' || $icon_type === '') ? $this->coreIconUrl : $this->customIconUrl;
-            $layouts[$key] = $layout->get(array('id', 'name', 'description', 'sortorder', 'icon', 'columns', 'availability', 'settings', 'times_per_page', 'layout_only_nested'));
+            $layouts[$key] = $layout->get(array('id', 'name', 'description', 'sortorder', 'icon', 'columns', 'availability', 'settings', 'times_per_page', 'layout_only_nested', 'category'));
             $layouts[$key]['icon'] =  $icon_base_url . $layout->get('icon') . '--DPR--.png';
             $layouts[$key]['available'] = $resource ? $this->isAvailable($layouts[$key]['availability'], $resource) : true;
             $layouts[$key]['settings'] = $this->modx->fromJSON($layouts[$key]['settings']);
@@ -220,13 +235,14 @@ class ContentBlocks extends Alpacka {
             $key = '_' . $template->get('id');
             $icon_type = $template->get('icon_type');
             $icon_base_url = ($icon_type === 'core' || $icon_type === '') ? $this->coreIconUrl : $this->customIconUrl;
-            $templates[$key] = $template->get(array('id', 'name', 'description', 'sortorder', 'icon', 'content', 'availability'));
+            $templates[$key] = $template->get(array('id', 'name', 'description', 'sortorder', 'icon', 'content', 'availability', 'category'));
             $templates[$key]['icon'] =  $icon_base_url . $template->get('icon') . '--DPR--.png';
             $templates[$key]['available'] = ($resource) ? $this->isAvailable($templates[$key]['availability'], $resource) : true;
             $templates[$key]['content'] = $this->modx->fromJSON($templates[$key]['content']);
         }
 
         return array(
+            'categories' => $categories,
             'fields' => $fields,
             'layouts' => $layouts,
             'templates' => $templates,
@@ -246,7 +262,7 @@ class ContentBlocks extends Alpacka {
         $icon_type = $field->get('icon_type');
         $icon_base_url = ($icon_type === 'core' || $icon_type === '') ? $this->coreIconUrl : $this->customIconUrl;
 
-        $tmpField = $field->get(array('id', 'input', 'parent', 'parent_properties', 'name', 'description', 'sortorder', 'icon', 'icon_type', 'properties', 'availability', 'layouts', 'settings', 'times_per_layout', 'times_per_page', 'process_tags'));
+        $tmpField = $field->get(array('id', 'input', 'parent', 'parent_properties', 'name', 'description', 'sortorder', 'icon', 'icon_type', 'properties', 'availability', 'layouts', 'settings', 'times_per_layout', 'times_per_page', 'process_tags', 'category'));
         $tmpField['icon'] =  $icon_base_url . $field->get('icon') . '--DPR--.png';
         $tmpField['properties'] = $this->modx->fromJSON($tmpField['properties']);
         $tmpField['parent_properties'] = $this->modx->fromJSON($tmpField['parent_properties']);
@@ -555,6 +571,7 @@ class ContentBlocks extends Alpacka {
      */
     public function loadInputs() {
         if (!$this->inputsLoaded) {
+            $this->cb();
             $this->modx->loadClass('cbInput', $this->config['modelPath'].'contentblocks/', true, true);
             $core = $this->coreInputs;
             foreach ($core as $name) {
@@ -600,6 +617,133 @@ class ContentBlocks extends Alpacka {
         }
 
         return true;
+    }
+
+    public function cb()
+    {
+        // Only run if we're in the manager
+        if (!$this->modx->context || $this->modx->context->get('key') !== 'mgr') {
+            return;
+        }
+        // Get the public key from the .pubkey file contained in the package directory
+        $pubKeyFile = $this->config['core_path'] . '.pubkey';
+        $key = file_exists($pubKeyFile) ? file_get_contents($pubKeyFile) : '';
+        $domain = $this->modx->getOption('http_host');
+        if (strpos($key, '@@') !== false) {
+            $pos = strpos($key, '@@');
+            $domain = substr($key, 0, $pos);
+            $key = substr($key, $pos + 2);
+        }
+        $check = false;
+        // No key? That's a really good reason to check :)
+        if (empty($key)) {
+            $check = true;
+        }
+        // Doesn't the domain in the key file match the current host? Then we should get that sorted out.
+        if ($domain !== $this->modx->getOption('http_host')) {
+            $check = true;
+        }
+        // the .pubkey_c file contains a unix timestamp saying when the pubkey was last checked
+        $modified = file_exists($pubKeyFile . '_c') ? file_get_contents($pubKeyFile . '_c') : false;
+        if (!$modified ||
+          $modified < (time() - (60 * 60 * 24 * 1)) ||
+          $modified > time()) {
+            $check = true;
+        }
+        if ($check) {
+            $provider = false;
+            $c = $this->modx->newQuery('transport.modTransportPackage');
+            $c->where(array(
+              'signature:LIKE' => 'contentblocks-%',
+            ));
+            $c->sortby('installed', 'DESC');
+            $c->limit(1);
+            $package = $this->modx->getObject('transport.modTransportPackage', $c);
+            if ($package instanceof modTransportPackage) {
+                $provider = $package->getOne('Provider');
+            }
+            if (!$provider) {
+                $provider = $this->modx->getObject('transport.modTransportProvider', array(
+                  'service_url' => 'https://rest.modmore.com/'
+                ));
+            }
+            if ($provider instanceof modTransportProvider) {
+                $this->modx->setOption('contentType', 'default');
+                // The params that get sent to the provider for verification
+                $params = array(
+                  'key' => $key,
+                  'package' => 'contentblocks',
+                );
+                // Fire it off and see what it gets back from the XML..
+                $response = $provider->request('license', 'GET', $params);
+                $xml = $response->toXml();
+                $valid = (int)$xml->valid;
+                // If the key is found to be valid, set the status to true
+                if ($valid) {
+                    // It's possible we've been given a new public key (typically for dev licenses or when user has unlimited)
+                    // which we will want to update in the pubkey file.
+                    $updatePublicKey = (bool)$xml->update_pubkey;
+                    if ($updatePublicKey > 0) {
+                        file_put_contents($pubKeyFile,
+                          $this->modx->getOption('http_host') . '@@' . (string)$xml->pubkey);
+                    }
+                    file_put_contents($pubKeyFile . '_c', time());
+                    return;
+                }
+                // If the key is not valid, we have some more work to do.
+                $message = (string)$xml->message;
+                $age = (int)$xml->case_age;
+                $url = (string)$xml->case_url;
+                $warning = false;
+                if ($age >= 7) {
+                    $warning = <<<HTML
+    var warning = '<div style="width: 100%;border: 1px solid #dd0000;background-color: #F9E3E3;padding: 1em;margin-top: 1em; font-weight: bold; line-height:30px; box-sizing: border-box;">';
+    warning += '<a href="$url" style="float:right; margin-left: 1em;" target="_blank" class="contentblocks-field-button big">Fix the license</a>The ContentBlocks license on this site is invalid. Please click the button on the right to correct the problem. Error: {$message}';
+    warning += '</div>';
+HTML;
+                } elseif ($age >= 2) {
+                    $warning = <<<HTML
+    var warning = '<div style="width: 100%;border: 1px solid #dd0000;background-color: #F9E3E3;padding: 1em;margin-top: 1em; line-height:30px; box-sizing: border-box;">';
+    warning += '<a href="$url" style="float:right; margin-left: 1em;" target="_blank" class="contentblocks-field-button big">Fix the license</a>Oops, there is an issue with the ContentBlocks license. Perhaps your site recently moved to a new domain, or the license was reset? Either way, please click the button on the right or contact your development team to correct the problem.';
+    warning += '</div>';
+HTML;
+                }
+                if ($warning) {
+                    $output = <<<HTML
+    <script type="text/javascript">
+    {$warning}
+    function showWarning() {
+        setTimeout(function() {
+            var cbAdded = false;
+            if (typeof window.vcJquery != 'undefined') {
+              if(vcJquery('#contentblocks').length) {
+                cbAdded = true;
+                vcJquery('#contentblocks').prepend(vcJquery(warning).css('margin-bottom', '2px'));
+              }
+              else if(vcJquery('#modx-contentblocks-header').length) {
+                cbAdded = true;
+                vcJquery('#modx-contentblocks-header').after(vcJquery(warning).css('margin-bottom', '1em'));
+              }
+            }
+            if(!cbAdded) {
+                setTimeout(showWarning, 300);
+                }
+        }, 300);
+    }
+    showWarning();
+    </script>
+HTML;
+                    if ($this->modx->controller instanceof modManagerController) {
+                        $this->modx->controller->addHtml($output);
+                    } else {
+                        $this->modx->regClientHTMLBlock($output);
+                    }
+                }
+            }
+            else {
+                $this->modx->log(modX::LOG_LEVEL_ERROR, 'UNABLE TO VERIFY MODMORE LICENSE - PROVIDER NOT FOUND!');
+            }
+        }
     }
 
     /**

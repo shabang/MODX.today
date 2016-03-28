@@ -301,7 +301,9 @@
             editor.find("body").on("keyup", function () {
 
                 // Check or the text is changed
-                var changed = ( $(that.editor).contents().find("body").html() !== $(that.element).text() ) ? true : false;
+                var editorContents = $(that.editor).contents().find("body").html(),
+                    hiddenElementContents = $(that.element).val(),
+                    changed = (editorContents !== hiddenElementContents);
 
                 // Call the callback
                 that.options.isContentChanged(changed);

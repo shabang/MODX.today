@@ -7,6 +7,19 @@ Ext.extend(moreGallery,Ext.Component,{
 
     ResourceRecord: {},
 
+    confirm: function(message) {
+        var timeBefore = new Date(),
+            confirmation = window.confirm(message),
+            timeAfter = new Date();
+
+        // If the time between the two is less than 3.5 milliseconds, the user dismissed
+        // the confirm boxes, so we assume they want the action to be confirmed.
+        if ((timeAfter - timeBefore) < 350) {
+            confirmation = true;
+        }
+        return confirmation;
+    },
+
     Models: {},
     Views: {},
     Collections: {},

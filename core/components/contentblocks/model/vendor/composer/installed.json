@@ -49,24 +49,24 @@
     },
     {
         "name": "modmore/alpacka",
-        "version": "v0.2.0",
-        "version_normalized": "0.2.0.0",
+        "version": "v0.2.2",
+        "version_normalized": "0.2.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/modmore/Alpacka.git",
-            "reference": "64fb10d15d73d9fe2dc14d9b0992394b6d736972"
+            "reference": "4300141ce48f83bda25b69162bcb29d9477b435a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/modmore/Alpacka/zipball/64fb10d15d73d9fe2dc14d9b0992394b6d736972",
-            "reference": "64fb10d15d73d9fe2dc14d9b0992394b6d736972",
+            "url": "https://api.github.com/repos/modmore/Alpacka/zipball/4300141ce48f83bda25b69162bcb29d9477b435a",
+            "reference": "4300141ce48f83bda25b69162bcb29d9477b435a",
             "shasum": ""
         },
         "require": {
             "php": ">5.3.3",
             "pimple/pimple": "~3.0"
         },
-        "time": "2016-01-28 13:43:09",
+        "time": "2016-03-23 21:36:34",
         "type": "library",
         "installation-source": "source",
         "autoload": {

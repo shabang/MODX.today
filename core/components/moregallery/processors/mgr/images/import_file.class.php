@@ -15,6 +15,16 @@ class moreGalleryMgrImagesImportProcessor extends modObjectCreateProcessor {
 
     public $imageErrors = array();
 
+    /** @var moreGallery */
+    public $moregallery;
+
+    public function initialize()
+    {
+        $corePath = $this->modx->getOption('moregallery.core_path', null, $this->modx->getOption('core_path').'components/moregallery/');
+        $this->moregallery =& $this->modx->getService('moregallery', 'moreGallery' , $corePath . 'model/moregallery/');
+        return parent::initialize();
+    }
+
     /**
      * @return array
      */
@@ -58,6 +68,17 @@ class moreGalleryMgrImagesImportProcessor extends modObjectCreateProcessor {
         $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
         $fileName = substr($fileName, 0, strlen($fileName) - strlen($fileExtension) - 1);
 
+        /**
+         * Try to load the image name from IPTC data on the image fiel
+         */
+        try {
+            getimagesize($file, $info);
+            if (isset($info["APP13"])) {
+                $this->object->loadIPTCData($info["APP13"]);
+            }
+        }
+        catch (Exception $e) {}
+
         $this->setProperty('name', $fileName);
         $this->setProperty('filename', $fileName . '.' . $fileExtension);
         $this->setProperty('sortorder', $this->modx->getCount('mgImage', array('resource' => $resource)) + 1);
@@ -76,10 +97,10 @@ class moreGalleryMgrImagesImportProcessor extends modObjectCreateProcessor {
         $id = $this->object->get('id');
         $fileName = $this->modx->moregallery->sanitizeFileName($this->object->get('filename'));
 
-        if ($imageIdPlacement == 'prefix') {
+        if ($imageIdPlacement === 'prefix') {
             $fileName = $id . '_' . $fileName;
         }
-        elseif ($imageIdPlacement == 'suffix') {
+        elseif ($imageIdPlacement === 'suffix') {
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);
             $fileName = pathinfo($fileName, PATHINFO_FILENAME);
             $fileName = $fileName . '_' . $id . '.' . $ext;
@@ -91,6 +112,7 @@ class moreGalleryMgrImagesImportProcessor extends modObjectCreateProcessor {
         /**
          * Do the import
          */
+        $this->moregallery->renames = array();
         $uploaded = $this->resource->source->createObject($this->path, $fileName, $content);
         if (!$uploaded) {
             $errors = $this->resource->source->getErrors();
@@ -98,7 +120,16 @@ class moreGalleryMgrImagesImportProcessor extends modObjectCreateProcessor {
             $this->modx->log(modX::LOG_LEVEL_ERROR,'[moreGallery] Error importing file: ' . $errors);
             $this->imageErrors[] = $errors;
             $this->object->remove();
-            return false;
+            return $this->failure($errors);
+        }
+        /**
+         * Check if the file has been renamed by a plugin like FileSluggy
+         */
+        $newFileName = reset($this->moregallery->renames);
+        if (!empty($newFileName)) {
+            $baseMediaPath = $this->resource->source->getBasePath() . $this->path;
+            $newFileName = substr($newFileName, strlen($baseMediaPath));
+            $fileName = $newFileName;
         }
 
         /**
@@ -107,28 +138,24 @@ class moreGalleryMgrImagesImportProcessor extends modObjectCreateProcessor {
         $this->object->set('file', $fileName);
 
         $file = $this->resource->source->getObjectContents($this->path . $fileName);
-        /**
-         * Attempt to increase the memory limit as we're about to do some heavy image stuff
-         */
-        $before = ini_get('memory_limit');
-        $unit = strtoupper(substr($before, -1));
-        $number = substr($before, 0, -1);
-        $newLimit = $this->modx->moregallery->getOption('moregallery.upload_memory_limit', null, '256M', true);
-        $newLimitNumber = substr($newLimit, 0, -1);
-        if ($unit !== 'G' && $number < $newLimitNumber) {
-            @ini_set('memory_limit', $newLimit);
-            $after = ini_get('memory_limit');
 
-            if ($before === $after)
-            {
-                $this->modx->log(modX::LOG_LEVEL_ERROR, '[moregallery] Attempted to up the memory limit from ' . $before . ' to ' . $newLimit . ', but failed. You may run out of memory while resizing the uploaded image.');
-            }
+
+        /**
+         * Based on the IPTC data, try to pre-fill certain fields
+         */
+        $iptc = $this->object->get('iptc');
+        if ($this->moregallery->getOption('moregallery.prefill_from_iptc', null, true) && is_array($iptc)) {
+            $this->object->prefillFromIPTC($iptc);
         }
 
         /**
-         * Resize the image to a smaller one. Before we do this, we register a shutdown
-         * function that can clean up if the resize fails (for example, because of
-         * memory issues).
+         * Attempt to increase the memory limit as we're about to do some heavy image stuff
+         */
+        $this->moregallery->setMemoryLimit();
+
+        /**
+         * Register a shutdown function that will attempt to clean up stuff should the request fail with a fatal
+         * error, for example due to image resizing and memory limits.
          */
         register_shutdown_function(array('moreGalleryMgrImagesUploadProcessor', 'onShutdown'), $this);
         $this->object->loadExifData($file['path']);

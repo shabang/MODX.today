@@ -67,13 +67,15 @@ class RepeaterInput extends cbBaseInput {
                 'fieldLabel' => $this->modx->lexicon('contentblocks.repeater.key'),
                 'xtype' => 'textfield',
                 'default' => '',
-                'description' => $this->modx->lexicon('contentblocks.repeater.key.description')
+                'description' => $this->modx->lexicon('contentblocks.repeater.key.description'),
+                'allowBlank' => false
             ),
             array(
                 'key' => 'width',
                 'fieldLabel' => $this->modx->lexicon('contentblocks.width'),
                 'xtype' => 'numberfield',
-                'description' => $this->modx->lexicon('contentblocks.width.description')
+                'description' => $this->modx->lexicon('contentblocks.width.description'),
+                'allowBlank' => false
             ),
         );
     }
@@ -161,23 +163,27 @@ class RepeaterInput extends cbBaseInput {
         // Loop over each key in the row and its value (array)
         foreach ($row as $key => $value) {
             $field = $group[$key];
-            $inputType = $field->get('input');
+            if ($field instanceof cbField) {
+                $inputType = $field->get('input');
 
-            // If it's a known input, we try to parse it
-            if (isset($this->contentBlocks->inputs[$inputType])) {
-                /** @var cbBaseInput $input */
-                $input = $this->contentBlocks->inputs[$inputType];
+                // If it's a known input, we try to parse it
+                if (isset($this->contentBlocks->inputs[$inputType])) {
+                    /** @var cbBaseInput $input */
+                    $input = $this->contentBlocks->inputs[$inputType];
 
-                // Attempt to parse the data through that input type
-                try {
-                    $parseData = array_merge($data, $field->toArray(), $value);
-                    $value = $input->process($field, $parseData);
-                } catch (Exception $e) {
-                    $value = 'Error parsing ' . $inputType . ': ' . $e->getMessage();
+                    // Attempt to parse the data through that input type
+                    try {
+                        $parseData = array_merge($data, $field->toArray(), $value);
+                        $value = $input->process($field, $parseData);
+                    } catch (Exception $e) {
+                        $value = 'Error parsing ' . $inputType . ': ' . $e->getMessage();
+                    }
+                } else {
+                    $value = 'Input ' . htmlentities($inputType, ENT_QUOTES, 'UTF-8') . ' not found.';
                 }
             }
             else {
-                $value = 'Input ' . htmlentities($inputType, ENT_QUOTES, 'UTF-8') . ' not found.';
+                $value = 'Could not find subfield with key "' . $key . '" in the group"';
             }
 
             // Set the value as placeholder in $rowFields

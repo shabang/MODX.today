@@ -1,60 +1,53 @@
 <?php
+require_once dirname(dirname(__FILE__)) . '/vendor/autoload.php';
 
 /**
  * moreGallery Service Class
  * @package moreGallery
  */
-class moreGallery {
-    public $version = '1.3.7-pl';
-
+class moreGallery extends \modmore\Alpacka\Alpacka {
+    protected $namespace = 'moregallery';
     public $cacheOptions = array(
         xPDO::OPT_CACHE_KEY => 'moregallery'
     );
-
-    /** @var modX */
-    public $modx;
-
-    /** @var bool|modContext  */
-    public $wctx = false;
-
     public $debug = false;
-
-    public $chunks = array();
-
     protected $_resources = array();
     protected $_memoryLimitIncreased = false;
 
     /**
-     * @param \modX $modx
+     * This array keeps track of renamed file uploads in order to make sure image links don't break when
+     * something like FileSluggy is active on the site as well.
+     *
+     * @var array
+     */
+    public $renames = array();
+
+    /**
+     * moreGallery constructor.
+     *
+     * @param modX $instance
      * @param array $config
      */
-    function __construct(modX &$modx, array $config = array()) {
-        $this->modx =& $modx;
+    public function __construct($instance, array $config = array())
+    {
+        parent::__construct($instance, $config);
+        $this->setVersion(1, 4, 0, 'rc1');
 
         if (isset($config['resource']) && is_numeric($config['resource']))
         {
             $resource = $this->getResource($config['resource']);
-            if ($resource instanceof modResource)
-            {
-                $this->setWorkingContext($resource->get('context_key'));
+            if ($resource instanceof modResource) {
+                $this->setResource($resource);
             }
         }
 
-        $basePath = $this->modx->getOption('moregallery.core_path', $config, $this->modx->getOption('core_path').'components/moregallery/');
         $assetsUrl = $this->modx->getOption('moregallery.assets_url', $config, $this->modx->getOption('assets_url').'components/moregallery/');
         $assetsPath = $this->modx->getOption('moregallery.assets_path', $config, $this->modx->getOption('assets_path').'components/moregallery/');
-        $this->config = array_merge(array(
-            'base_bath' => $basePath,
-            'core_path' => $basePath,
-            'model_path' => $basePath.'model/',
-            'processors_path' => $basePath.'processors/',
-            'elements_path' => $basePath.'elements/',
-            'templates_path' => $basePath.'templates/',
+        $this->config = array_merge($this->config, array(
+            'templates_path' => $this->config['elements_path'] . 'chunks/',
             'assets_path' => $assetsPath,
             'js_url' => $assetsUrl.'js/',
             'css_url' => $assetsUrl.'css/',
-            'assets_url' => $assetsUrl,
-            'connector_url' => $assetsUrl.'connector.php',
 
             'source' => $this->getOption('moregallery.source', null, $this->modx->getOption('default_media_source'), true),
             'source_relative_url' => $this->getOption('moregallery.source_relative_url', null, 'assets/galleries/'),
@@ -68,57 +61,140 @@ class moreGallery {
 
         $modelPath = $this->config['model_path'];
 
-        $this->modx->addPackage('moregallery', $modelPath);
-        $this->modx->lexicon->load('moregallery:default');
-
-        $this->modx->loadClass('mgResource', $modelPath.'moregallery/');
-        $this->modx->loadClass('mgImage', $modelPath.'moregallery/');
+        $this->modx->loadClass('mgResource', $modelPath . 'moregallery/');
+        $this->modx->loadClass('mgImage', $modelPath . 'moregallery/');
 
         $this->debug = $this->getOption('moregallery.debug', null, false);
     }
 
-    /**
-     * Grabs the setting by its key, looking at the current working context (see setWorkingContext) first.
-     *
-     * @param $key
-     * @param null $options
-     * @param null $default
-     * @return mixed
-     */
-    public function getOption($key, $options = null, $default = null)
+    public function mg()
     {
-        if ($this->wctx) {
-            return $this->wctx->getOption($key, $default, $options);
+        // Only run if we're in the manager
+        if (!$this->modx->context || $this->modx->context->get('key') !== 'mgr') {
+            return;
         }
-        return $this->modx->getOption($key, $options, $default);
+
+        // Get the public key from the .pubkey file contained in the package directory
+        $pubKeyFile = $this->config['core_path'] . '.pubkey';
+        $key = file_exists($pubKeyFile) ? file_get_contents($pubKeyFile) : '';
+        $domain = $this->modx->getOption('http_host');
+        if (strpos($key, '@@') !== false) {
+            $pos = strpos($key, '@@');
+            $domain = substr($key, 0, $pos);
+            $key = substr($key, $pos + 2);
+        }
+
+        $check = false;
+        // No key? That's a really good reason to check :)
+        if (empty($key)) {
+            $check = true;
+        }
+
+        // Doesn't the domain in the key file match the current host? Then we should get that sorted out.
+        if ($domain !== $this->modx->getOption('http_host')) {
+            $check = true;
+        }
+
+        // the .pubkey_c file contains a unix timestamp saying when the pubkey was last checked
+        $modified = file_exists($pubKeyFile . '_c') ? file_get_contents($pubKeyFile . '_c') : false;
+        if (!$modified ||
+            $modified < (time() - (60 * 60 * 24 * 1)) ||
+            $modified > time()) {
+            $check = true;
+        }
+
+        if ($check) {
+            $provider = false;
+            $c = $this->modx->newQuery('transport.modTransportPackage');
+            $c->where(array(
+                'signature:LIKE' => 'moregallery-%',
+            ));
+            $c->sortby('installed', 'DESC');
+            $c->limit(1);
+            $package = $this->modx->getObject('transport.modTransportPackage', $c);
+            if ($package instanceof modTransportPackage) {
+                $provider = $package->getOne('Provider');
+            }
+            if (!$provider) {
+                $provider = $this->modx->getObject('transport.modTransportProvider', array(
+                    'service_url' => 'https://rest.modmore.com/'
+                ));
+            }
+            if ($provider instanceof modTransportProvider) {
+                $this->modx->setOption('contentType', 'default');
+
+                // The params that get sent to the provider for verification
+                $params = array(
+                    'key' => $key,
+                    'package' => 'moregallery',
+                );
+
+                // Fire it off and see what it gets back from the XML..
+                $response = $provider->request('license', 'GET', $params);
+                $xml = $response->toXml();
+
+                $valid = (int)$xml->valid;
+                // If the key is found to be valid, set the status to true
+                if ($valid) {
+                    // It's possible we've been given a new public key (typically for dev licenses or when user has unlimited)
+                    // which we will want to update in the pubkey file.
+                    $updatePublicKey = (bool)$xml->update_pubkey;
+                    if ($updatePublicKey > 0) {
+                        file_put_contents($pubKeyFile,
+                            $this->modx->getOption('http_host') . '@@' . (string)$xml->pubkey);
+                    }
+                    file_put_contents($pubKeyFile . '_c', time());
+                    return;
+                }
+
+                // If the key is not valid, we have some more work to do.
+                $message = (string)$xml->message;
+                $age = (int)$xml->case_age;
+                $url = (string)$xml->case_url;
+                $warning = false;
+                if ($age >= 7) {
+                    $warning = <<<HTML
+    var warning = '<li style="width: 100%;border: 1px solid #dd0000;background-color: #F9E3E3;padding: 1em;border-radius: 5px;margin-top: 1em; font-weight: bold;">';
+    warning += '<a href="$url" style="float:right; margin-left: 1em;" target="_blank">Fix the license</a>The MoreGallery license on this site is invalid. Please click the button on the right to correct the problem. Error: {$message}';
+    warning += '</li>';
+HTML;
+                } elseif ($age >= 2) {
+                    $warning = <<<HTML
+    var warning = '<li style="width: 100%;border: 1px solid #dd0000;background-color: #F9E3E3;padding: 1em;border-radius: 5px;margin-top: 1em;">';
+    warning += '<a href="$url" style="float:right; margin-left: 1em;" target="_blank">Fix the license</a>Oops, there is an issue with the MoreGallery license. Perhaps your site recently moved to a new domain, or the license was reset? Either way, please click the button on the right or contact your development team to correct the problem.';
+    warning += '</li>';
+HTML;
+                }
+                if ($warning) {
+                    $output = <<<HTML
+    <script type="text/javascript">
+    {$warning}
+    function showWarning() {
+        setTimeout(function() {
+            if (typeof window.mg$ != 'undefined' && mg$('.mgresource-toolbar').length) {
+                mg$('.mgresource-toolbar').find('ul').append(warning);
+            }
+            else {
+                setTimeout(showWarning, 300);
+            }
+        }, 300);
+    }
+    showWarning();
+    </script>
+HTML;
+                    if ($this->modx->controller instanceof modManagerController) {
+                        $this->modx->controller->addHtml($output);
+                    } else {
+                        $this->modx->regClientHTMLBlock($output);
+                    }
+                }
+            }
+            else {
+                $this->modx->log(modX::LOG_LEVEL_ERROR, 'UNABLE TO VERIFY MODMORE LICENSE - PROVIDER NOT FOUND!');
+            }
+        }
     }
 
-    /**
-     * Set the internal working context for grabbing context-specific options.
-     *
-     * @param $key
-     * @return bool|modContext
-     */
-    public function setWorkingContext($key)
-    {
-        if ($key instanceof modResource)
-        {
-            $key = $key->get('context_key');
-        }
-
-        if (empty($key))
-        {
-            return false;
-        }
-
-        $this->wctx = $this->modx->getContext($key);
-        if (!$this->wctx) {
-            $this->modx->log(modX::LOG_LEVEL_ERROR, 'Error loading working context ' . $key, '', __METHOD__, __FILE__, __LINE__);
-            return false;
-        }
-
-        return $this->wctx;
-    }
 
     /**
      * Gets a list of id => tag
@@ -138,56 +214,6 @@ class moreGallery {
         return $tagNames;
     }
 
-    /**
-    * Gets a Chunk and caches it; also falls back to file-based templates
-    * for easier debugging.
-    *
-    * @author Shaun McCormick
-    * @access public
-    * @param string $name The name of the Chunk
-    * @param array $properties The properties for the Chunk
-    * @return string The processed content of the Chunk
-    */
-    public function getChunk($name,$properties = array()) {
-        $chunk = null;
-        if (!isset($this->chunks[$name])) {
-            $chunk = $this->modx->getObject('modChunk',array('name' => $name),true);
-            if (empty($chunk)) {
-                $chunk = $this->_getTplChunk($name);
-                if ($chunk == false) return false;
-            }
-            $this->chunks[$name] = $chunk->getContent();
-        } else {
-            $o = $this->chunks[$name];
-            $chunk = $this->modx->newObject('modChunk');
-            $chunk->setContent($o);
-        }
-        $chunk->setCacheable(false);
-        return $chunk->process($properties);
-    }
-
-    /**
-    * Returns a modChunk object from a template file.
-    *
-    * @author Shaun McCormick
-    * @access private
-    * @param string $name The name of the Chunk. Will parse to name.chunk.tpl
-    * @param string $postFix The postfix to append to the name
-    * @return modChunk/boolean Returns the modChunk object if found, otherwise
-    * false.
-    */
-    private function _getTplChunk($name,$postFix = '.chunk.tpl') {
-        $chunk = false;
-        $f = $this->config['elements_path'].'chunks/'.strtolower($name).$postFix;
-        if (file_exists($f)) {
-            $o = file_get_contents($f);
-            /* @var modChunk $chunk */
-            $chunk = $this->modx->newObject('modChunk');
-            $chunk->set('name',$name);
-            $chunk->setContent($o);
-        }
-        return $chunk;
-    }
 
     /**
      * @return int|string
@@ -229,10 +255,7 @@ class moreGallery {
      * @return mixed
      */
     public function sanitizeFileName($name) {
-        $replace = $this->getOption('moregallery.sanitize_replace', null, '_');
-        $pattern = $this->getOption('moregallery.sanitize_pattern', null, '/([[:alnum:]_\.-]*)/');
-        $name = str_replace(str_split(preg_replace($pattern, $replace, $name)), $replace, $name);
-        return $name;
+        return $this->sanitize($name);
     }
 
     /**
@@ -252,6 +275,31 @@ class moreGallery {
             $crops = $this->getOption('moregallery.crops', null, '');
         }
         return $this->parseCrops($crops);
+    }
+
+    /**
+     * Gets the custom fields. If a resource is set ($this->setResource) it will look through that resource its
+     * properties for a moregallery.custom_fields object as well.
+     *
+     * @return array
+     */
+    public function getCustomFields()
+    {
+        $fields = false;
+        if ($this->resource) {
+            $fields = $this->resource->getProperty('custom_fields', 'moregallery', false);
+        }
+
+        if (empty($fields) || $fields == 'inherit') {
+            $fields = $this->getOption('moregallery.custom_fields', null, '{}');
+        }
+
+        $fields = $this->modx->fromJSON($fields);
+        if (!$fields || empty($fields)) {
+            return array();
+        }
+
+        return $fields;
     }
 
     /**

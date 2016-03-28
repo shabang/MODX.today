@@ -53,6 +53,12 @@ ContentBlocksComponent.window.Layout = function(config) {
                     anchor: '100%',
                     maxLength: 1024
                 },{
+                    xtype: 'contentblocks-combo-category',
+                    name: 'category',
+                    fieldLabel: _('contentblocks.category'),
+                    allowBlank: true,
+                    anchor: '100%'
+                },{
                     xtype: 'contentblocks-combo-icons',
                     name: 'icon',
                     formId: config.id,

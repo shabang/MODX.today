@@ -53,8 +53,8 @@ $_lang['moregallery.model_error'] = 'Een onverwachte fout is opgetreden, de afbe
 
 $_lang['moregallery.error_invalid_resource'] = 'Een onverwachte fout is opgetreden, document "[[+resource]]" is geen Galerij.';
 $_lang['moregallery.error_loading_source'] = 'Er is een fout opgetreden bij het laden van de Media Source voor deze Galerij.';
-$_lang['moregallery.error_invalid_filetype'] = 'Sorry, .[[+extension]] files are not allowed.';
-$_lang['moregallery.error_upload_failed'] = 'the file could not be uploaded (Error [[+error]]).';
+$_lang['moregallery.error_invalid_filetype'] = 'Sorry, .[[+extension]] bestanden zijn niet toegestaan.';
+$_lang['moregallery.error_upload_failed'] = 'het bestand kon niet geüpload worden (foutmelding [[+error]]).';
 
 // Tags related, for MoreGallery 1.1
 $_lang['moregallery.tags'] = 'Tags';
@@ -84,7 +84,7 @@ $_lang['setting_moregallery.content_position_desc'] = 'Stel in op "above", "belo
 $_lang['setting_moregallery.use_rte_for_images'] = 'Gebruik Rich Text Editor';
 $_lang['setting_moregallery.use_rte_for_images_desc'] = 'Als deze instelling ingeschakeld is zal de huidige rich text editor geladen worden voor de omschrijving van afbeeldingen. We raden Redactor aan, maar andere editors zijn ook ondersteund. ';
 $_lang['setting_moregallery.crops'] = 'Uitsneden';
-$_lang['setting_moregallery.crops_desc'] = 'Insert your Crops configuration here to enable region of interest cropping on images. An example could be <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. As this is an advanced feature, please refer to the <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">full Crops documentation</a> for more information about syntax and functionality.';
+$_lang['setting_moregallery.crops_desc'] = 'Stel hier de crops configuratie in om zogenaamde "Region of Interest" cropping in te schakelen. Een voorbeeld van een geldige waarde is: <code>small:width=200,height=200,aspect=1|medium:width=500,aspect=0.7</code>. Aangezien dit een geavanceerde functie in raden we aan de <a href="https://www.modmore.com/extras/moregallery/documentation/crops/" target="_blank">volledige documentatie</a> te lezen voor meer informatie over de syntax en ondersteunde functionaliteit. ';
 $_lang['setting_moregallery.single_image_url_param'] = 'Afbeelding URL parameter';
 $_lang['setting_moregallery.single_image_url_param_desc'] = 'Deze instelling wordt gebruikt met de mgGetImages snippet, waarbij het beschikbaar zijn van de deze parameter aangeeft dat enkel de aangegeven afbeelding getoond  moet worden. Mocht de afbeelding niet gevonden zijn dan wordt de gebruiker naar de 404 pagina gestuurd. ';
 $_lang['setting_moregallery.add_icon_to_toolbar'] = 'Icoon aan Toolbar toevoegen';
@@ -94,6 +94,24 @@ $_lang['setting_moregallery.sanitize_replace'] = 'Opschoon Vervanging';
 $_lang['setting_moregallery.sanitize_replace_desc'] = 'Alle tekens in de naam van geüploade afbeeldingen die niet aan het opschoon patroon voldoen worden vervangen door het karakter in deze instelling. ';
 $_lang['setting_moregallery.sanitize_pattern'] = 'Opschoon Patroon';
 $_lang['setting_moregallery.sanitize_pattern_desc'] = 'Een RegEx patroon waar de naam van een afbeelding aan moet voldoen.';
+$_lang['setting_moregallery.crop_jpeg_quality'] = 'JPEG Crop Kwaliteit';
+$_lang['setting_moregallery.crop_jpeg_quality_desc'] = 'Voor JPEG afbeeldingen is het mogelijk de kwaliteit van de gegenereerde thumbnails aan te geven, met een nummer tussen 0 en 100.';
+$_lang['setting_moregallery.thumbnail_format'] = 'Manager Thumbnail Format';
+$_lang['setting_moregallery.thumbnail_format_desc'] = 'De indeling (png, gif of jpg) dat gebruikt wordt voor thumbnails in de manager (mgr_thumb waarde). Dit heeft geen effect op image crops; die gebruiken altijd dezelfde indeling als het originele bestand.';
+$_lang['setting_moregallery.prefill_from_iptc'] = 'Prefill from IPTC';
+$_lang['setting_moregallery.prefill_from_iptc_desc'] = 'When enabled the image will automatically populate the name, description and tags with information stored in the image.';
+
+
+$_lang['setting_moregallery.translit'] = "Transliteratie";
+$_lang['setting_moregallery.translit_desc'] = "Indien je hier geen lege waarde of \"none\" opgeeft zal transliteratie worden ingeschakeld voordat bestandsnamen worden opgeschoond, waarmee ongeschikte karakters omgezet kunnen worden naar geschikte karakters. Als deze setting leeg is zal de core \"friendly_alias_translit\" setting gebruikt worden.";
+
+$_lang['setting_moregallery.translit_class'] = "Transliteratie Class";
+$_lang['setting_moregallery.translit_class_desc'] = "De naam van de class om te gebruiken voor transliteratie. Indien deze setting leeg is zal de core \"friendly_alias_translit_class\" setting worden gebruikt.";
+$_lang['setting_moregallery.translit_class_path'] = "Transliteratie Class Pad";
+$_lang['setting_moregallery.translit_class_path_desc'] = "Het pad naar de class om te gebruiken voor transliteratie. Indien deze setting leeg is zal de core \"friendly_alias_translit_class_path\" setting worden gebruikt.";
+$_lang['setting_moregallery.custom_fields'] = "Extra Velden";
+$_lang['setting_moregallery.custom_fields_desc'] = "Maakt het mogelijk om extra velden of opties toe te voegen aan de window waarin afbeeldingen worden bewerkt. Deze setting verwacht een JSON object. Voor meer informatie over hoe custom velden gedefinieerd en gebruikt worden <a href=\"https://www.modmore.com/moregallery/documentation/custom-fields/\">kunt u de documentatie hier vinden</a>.";
+
 $_lang['setting_mgr_tree_icon_mgresource'] = 'Galerij Icoon';
 $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'De Font Awesome icoon class om te gebruiken in de document tree om een Galerij toe te voegen. ';
 
@@ -112,10 +130,13 @@ $_lang['moregallery.mggetimages.getresourcefields_desc'] = 'Indien ingeschakeld 
 $_lang['moregallery.mggetimages.getresourcetvs_desc'] = 'Geef een komma gescheiden lijst op van template variabel namen die geladen moeten worden in de afbeelding template.';
 $_lang['moregallery.mggetimages.tagtpl_desc'] = 'De naam van een chunk om voor tags te gebruiken.';
 $_lang['moregallery.mggetimages.imagetpl_desc'] = 'De naam van een chunk om te gebruiken als template voor de afbeeldingen.';
+$_lang['moregallery.mggetimages.singleimageenabled_desc'] = 'Wanneer ingesteld op 1 zal de snippet reageren op requests met de singleImageParam URL parameter, door een enkele afbeelding te tonen.';
 $_lang['moregallery.mggetimages.singleimagetpl_desc'] = 'De naam van een chunk om te gebruiken wanneer er een enkele afbeelding wordt getoond.';
+$_lang['moregallery.mggetimages.singleimageparam_desc'] = 'Kan gebruikt worden om de moregallery.single_image_url_param systeem instelling te overschrijven per snippet call. Handig als je meerdere galerijen op dezelfde pagina wilt tonen.';
 $_lang['moregallery.mggetimages.tagseparator_desc'] = 'Een tekenreeks om tag templates van elkaar te scheiden in de afbeelding templates.';
 $_lang['moregallery.mggetimages.imageseparator_desc'] = 'Een tekenreeks om afbeelding templates van elkaar te scheiden in de galerijweergave.';
 $_lang['moregallery.mggetimages.wrappertpl_desc'] = 'Indien opgegeven zal deze naam van een chunk gebruikt worden als wrapper voor de complete output.';
+$_lang['moregallery.mggetimages.wrapperifempty_desc'] = 'Stel in op 0 om de wrapperTpl alleen te gebruiken als er minstens 1 resultaat is. Wanneer deze property is ingesteld op 1 zal de wrapperTpl altijd gebruikt worden, zelfs zonder resultaten.';
 $_lang['moregallery.mggetimages.toplaceholder_desc'] = 'Indien opgegeven zal de snippet een placeholder instellen met deze naam, waarin de volledige output wordt opgeslagen.';
 $_lang['moregallery.mggetimages.totalvar_desc'] = 'Gebruikt voor paginatie met getPage, deze placeholder zal het totaal aantal resultaten bevatten.';
 $_lang['moregallery.mggetimages.limit_desc'] = 'Het aantal afbeeldingen dat geladen moet worden.';
@@ -131,7 +152,9 @@ $_lang['moregallery.mggettags.sortdir_desc'] = 'De richting voor het sorteren va
 $_lang['moregallery.mggettags.tpl_desc'] = 'De naam van een chunk om te gebruiken als template voor de tags.';
 $_lang['moregallery.mggettags.separator_desc'] = 'Een tekenreeks om tussen tags te gebruiken.';
 $_lang['moregallery.mggettags.wrappertpl_desc'] = 'Indien opgegeven zal deze naam van een chunk gebruikt worden als wrapper voor de complete output.';
+$_lang['moregallery.mggettags.wrapperifempty_desc'] = 'Stel in op 0 om de wrapperTpl alleen te gebruiken als er minstens 1 resultaat is. Wanneer deze property is ingesteld op 1 zal de wrapperTpl altijd gebruikt worden, zelfs zonder resultaten.';
 $_lang['moregallery.mggettags.toplaceholder_desc'] = 'Indien opgegeven zal de snippet een placeholder instellen met deze naam, waarin de volledige output wordt opgeslagen.';
+$_lang['moregallery.mggettags.includecount_desc'] = 'Wanneer ingesteld op 1 zal de [[+image_count]] placeholder het aantal actieve afbeelding dat de tag gebruikt bevatten.';
 $_lang['moregallery.mggettags.totalvar_desc'] = 'Gebruikt voor paginatie met getPage, deze placeholder zal het totaal aantal resultaten bevatten.';
 $_lang['moregallery.mggettags.limit_desc'] = 'Het aantal tags dat geladen moet worden.';
 $_lang['moregallery.mggettags.offset_desc'] = 'Het aantal tags dat aan het begin van de resultaten overgeslagen moet worden.';

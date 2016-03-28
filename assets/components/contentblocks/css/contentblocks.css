@@ -336,6 +336,9 @@
     position: relative; }
     #contentblocks-modal .contentblocks-modal-content h2 {
       margin-top: 12px; }
+    #contentblocks-modal .contentblocks-modal-content p.contentblocks-category-description {
+      margin: -8px 0 8px;
+      color: #707070; }
     #contentblocks-modal .contentblocks-modal-content #modal_tabs {
       margin-bottom: 1.5em; }
       #contentblocks-modal .contentblocks-modal-content #modal_tabs a {
@@ -1054,6 +1057,8 @@ ul.contentblocks-field-list-outer {
   .contentblocks-repeater-item-wrapper > li > .contentblocks-field-wrap {
     border-bottom: none;
     padding: 5px 15px; }
+    .contentblocks-repeater-item-wrapper > li > .contentblocks-field-wrap > .contentblocks-field > .contentblocks-field-actions {
+      display: none; }
   .contentblocks-repeater-item-wrapper > li .contentblocks-add-content-here {
     display: none; }
 

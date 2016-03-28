@@ -61,10 +61,24 @@
     {%#o.content%}
 </div>
 </script>
+
 <script type="text/x-tmpl" id="contentblocks-modal-add-content">
 <p>{%=_('contentblocks.add_content.introduction')%}</p>
-<ul class="contentblocks-add-field-list">{%#o.fields%}</ul>
+<div class="contentblocks-add-field-categories">
+    {%#o.category_html%}
+</div>
 </script>
+
+<script type="text/x-tmpl" id="contentblocks-modal-add-content-category">
+<div class="contentblocks-add-field-category  contentblocks-add-field-category-{%=o.category_id%}">
+    <h2 class="contentblocks-category-title">{%=o.category_name%}</h2>
+    {% if (o.category_description) { %}
+    <p class="contentblocks-category-description">{%=o.category_description%}</p>
+    {% } %}
+    <ul class="contentblocks-add-field-list">{%#o.fields%}</ul>
+</div>
+</script>
+
 <script type="text/x-tmpl" id="contentblocks-modal-add-content-field">
     <li>
         <a href="javascript:void(0);" title="{%=o.description%}" data-id="{%=o.id%}" class="tooltip">
@@ -156,20 +170,50 @@
 </div>
 </script>
 
+<!--
+
+<script type="text/x-tmpl" id="contentblocks-modal-add-content">
+<p>{%=_('contentblocks.add_content.introduction')%}</p>
+<div class="contentblocks-add-field-categories">
+    {%#o.category_html%}
+</div>
+</script>
+
+-->
+
 <script type="text/x-tmpl" id="contentblocks-modal-add-layout">
 <p>{%=_('contentblocks.add_layout.introduction')%}</p>
 {% if (o.hasTemplates) { %}
     <h2>{%=_('contentblocks.templates')%}</h2>
-    <ul class="contentblocks-add-template-list">{%#o.templates%}</ul>
+
+    <div class="contentblocks-add-template-categories">
+        {%#o.category_template_html%}
+    </div>
 
     {% if (o.hasLayouts) { %}
         <h2>{%=_('contentblocks.layouts')%}</h2>
     {% } %}
 {% } %}
 {% if (o.hasLayouts) { %}
-    <ul class="contentblocks-add-layout-list">{%#o.layouts%}</ul
+    <div class="contentblocks-add-layout-categories">
+        {%#o.category_layout_html%}
+    </div>
 {% } %}
 </script>
+
+<script type="text/x-tmpl" id="contentblocks-modal-add-layout-category">
+<div class="contentblocks-add-{%=o.layout_type%}-category  contentblocks-add-{%=o.layout_type%}-category-{%=o.category_id%}">
+    {% if (o.category_name) { %}
+    <h3 class="contentblocks-category-title">{%=o.category_name%}</h3>
+    {% } %}
+
+    {% if (o.category_description) { %}
+    <p class="contentblocks-category-description">{%=o.category_description%}</p>
+    {% } %}
+    <ul class="contentblocks-add-{%=o.layout_type%}-list">{%#o.layouts%}</ul>
+</div>
+</script>
+
 <script type="text/x-tmpl" id="contentblocks-modal-add-layout-option">
     <li>
         <a href="javascript:void(0);" title="{%=o.description%}" data-id="{%=o.id%}" class="tooltip">

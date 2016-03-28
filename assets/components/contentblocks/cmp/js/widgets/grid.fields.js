@@ -28,6 +28,8 @@ ContentBlocksComponent.grid.Fields = function(config) {
             {name: 'input_display', type: 'string'},
             {name: 'name', type: 'string'},
             {name: 'description', type: 'string'},
+            {name: 'category', type: 'int'},
+            {name: 'category_name', type: 'string'},
             {name: 'icon', type: 'string'},
             {name: 'icon_type', type: 'string'},
             {name: 'sortorder', type: 'int'},
@@ -71,6 +73,15 @@ ContentBlocksComponent.grid.Fields = function(config) {
                 return v;
             }
 		},{
+			header: _('contentblocks.category'),
+			dataIndex: 'category',
+			sortable: true,
+			width: .15,
+            editor: {
+                xtype: 'contentblocks-combo-category',
+                renderer: true
+            }
+		},{
 			header: _('contentblocks.input'),
 			dataIndex: 'input',
 			sortable: true,
@@ -91,7 +102,48 @@ ContentBlocksComponent.grid.Fields = function(config) {
             text: _('contentblocks.add_field'),
             handler: this.addField,
             scope: this
-        }, '->', {
+        }, '->',{
+            xtype: 'contentblocks-combo-inputs'
+            ,name: 'category'
+            ,id: 'contentblocks-fields-input-filter'
+            ,emptyText: _('contentblocks.input')
+            ,listeners: {
+                'select': {fn:this.filterInputType,scope:this}
+            }
+        },{
+            xtype: 'contentblocks-combo-category'
+            ,name: 'category'
+            ,id: 'contentblocks-fields-category-filter'
+            ,emptyText: _('contentblocks.category')
+            ,listeners: {
+                'select': {fn:this.filterCategory,scope:this}
+            }
+        }, {
+            xtype: 'textfield'
+            ,id: 'contentblocks-fields-search-filter'
+            ,emptyText: _('contentblocks.search')
+            ,listeners: {
+                'change': {fn:this.search,scope:this}
+                ,'render': {fn: function(cmp) {
+                    new Ext.KeyMap(cmp.getEl(), {
+                        key: Ext.EventObject.ENTER
+                        ,fn: function() {
+                            this.fireEvent('change',this);
+                            this.blur();
+                            return true;
+                        }
+                        ,scope: cmp
+                    });
+                },scope:this}
+            }
+        },{
+            xtype: 'button'
+            ,id: 'contentblocks-fields-clear-filters'
+            ,text: _('filter_clear')
+            ,listeners: {
+                'click': {fn: this.clearFilter, scope: this}
+            }
+        }, '-', {
             text: _('contentblocks.export_fields'),
             handler: this.exportAllFields,
             scope: this
@@ -261,6 +313,9 @@ Ext.extend(ContentBlocksComponent.grid.Fields,MODx.grid.Grid,{
             baseParams: {
                 action: 'mgr/fields/import'
             },
+            record: {
+                parent: this.config.parent
+            },
             listeners: {
                 success: {fn: function(r) {
                     this.refresh();
@@ -292,6 +347,31 @@ Ext.extend(ContentBlocksComponent.grid.Fields,MODx.grid.Grid,{
             }
         }
         return true;
+    },
+    search: function(tf,nv,ov) {
+        this.getStore().setBaseParam('search',tf.getValue());
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
+    },
+    filterCategory: function(cb,nv,ov) {
+        this.getStore().setBaseParam('category',cb.getValue());
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
+    },
+    filterInputType : function(cb,nv,ov) {
+        this.getStore().setBaseParam('type',cb.getValue());
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
+    },
+    clearFilter: function() {
+        this.getStore().baseParams = {
+            action: 'mgr/fields/getlist'
+        };
+        Ext.getCmp('contentblocks-fields-search-filter').reset();
+        Ext.getCmp('contentblocks-fields-category-filter').reset();
+        Ext.getCmp('contentblocks-fields-input-filter').reset();
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
     }
 });
 Ext.reg('contentblocks-grid-fields',ContentBlocksComponent.grid.Fields);

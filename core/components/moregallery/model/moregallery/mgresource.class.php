@@ -11,6 +11,9 @@ class mgResource extends modResource {
     /** @var modMediaSource|modFileMediaSource|modS3MediaSource $source */
     public $source;
 
+    /** @var moreGallery */
+    public $moregallery;
+
     /**
      * Loads up the moreGallery class and enforces a class_key of moreGallery.
      * @param xPDO|modX $xpdo
@@ -23,6 +26,10 @@ class mgResource extends modResource {
         $this->config = array(
             'templates_path' => $corePath . 'templates/',
         );
+        $this->moregallery = $this->xpdo->getService('moregallery', 'moreGallery', $corePath . 'model/moregallery/');
+        if (!($this->moregallery instanceof moreGallery)) {
+            $this->xpdo->log(modX::LOG_LEVEL_ERROR, 'Error loading moreGallery class from ' . $corePath, '', __METHOD__, __FILE__, __LINE__);
+        }
     }
 
     /**
@@ -63,15 +70,20 @@ class mgResource extends modResource {
      */
     public function getSourceRelativeUrl() {
         $url = $this->getProperty('relative_url', 'moregallery', 'inherit');
-        if ($url == 'inherit') {
-            $url = $this->xpdo->moregallery->getOption('moregallery.source_relative_url', null, 'assets/galleries/');
+        if ($url === 'inherit') {
+            $url = $this->moregallery->getOption('moregallery.source_relative_url', null, 'assets/galleries/');
         }
 
-        $includeGalleryID = (bool)$this->xpdo->moregallery->getOption('moregallery.resource_id_in_path', null, '1');
+        $includeGalleryID = (bool)$this->moregallery->getOption('moregallery.resource_id_in_path', null, '1');
         if ($includeGalleryID) {
-            $url = rtrim($url, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $this->get('id');
+            $url = rtrim($url, '/') . '/' . $this->get('id');
         }
-        $url = rtrim($url, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $url = rtrim($url, '/') . '/';
+
+        if (!$this->moregallery->resource) {
+            $this->moregallery->setResource($this);
+        }
+        $url = $this->moregallery->parsePathVariables($url);
         return $url;
     }
 

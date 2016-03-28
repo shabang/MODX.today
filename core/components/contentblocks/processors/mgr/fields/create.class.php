@@ -4,7 +4,7 @@
  */
 class cbFieldCreateProcessor extends modObjectCreateProcessor {
     public $classKey = 'cbField';
-    public $languageTopics = array('moreprovider:default');
+    public $languageTopics = array('contentblocks:default');
 
     /**
      * @return bool

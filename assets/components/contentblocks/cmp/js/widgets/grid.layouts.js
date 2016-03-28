@@ -22,6 +22,8 @@ ContentBlocksComponent.grid.Layouts = function(config) {
             {name: 'name', type: 'string'},
             {name: 'description', type: 'string'},
             {name: 'sortorder', type: 'int'},
+            {name: 'category', type: 'int'},
+            {name: 'category_name', type: 'string'},
             {name: 'icon', type: 'string'},
             {name: 'icon_type', type: 'string'},
             {name: 'columns', type: 'object'},
@@ -63,6 +65,15 @@ ContentBlocksComponent.grid.Layouts = function(config) {
                 return v;
             }
 		},{
+            header: _('contentblocks.category'),
+            dataIndex: 'category',
+            sortable: true,
+            width: .15,
+            editor: {
+                xtype: 'contentblocks-combo-category',
+                renderer: true
+            }
+        },{
 			header: _('contentblocks.columns'),
 			dataIndex: 'columns',
 			sortable: true,
@@ -87,7 +98,40 @@ ContentBlocksComponent.grid.Layouts = function(config) {
             text: _('contentblocks.add_layout'),
             handler: this.addLayout,
             scope: this
-        }, '->', {
+        }, '->',{
+            xtype: 'contentblocks-combo-category'
+            ,name: 'category'
+            ,id: 'contentblocks-layouts-category-filter'
+            ,emptyText: _('contentblocks.category')
+            ,listeners: {
+                'select': {fn:this.filterCategory,scope:this}
+            }
+        }, {
+            xtype: 'textfield'
+            ,id: 'contentblocks-layouts-search-filter'
+            ,emptyText: _('contentblocks.search')
+            ,listeners: {
+                'change': {fn:this.search,scope:this}
+                ,'render': {fn: function(cmp) {
+                    new Ext.KeyMap(cmp.getEl(), {
+                        key: Ext.EventObject.ENTER
+                        ,fn: function() {
+                            this.fireEvent('change',this);
+                            this.blur();
+                            return true;
+                        }
+                        ,scope: cmp
+                    });
+                },scope:this}
+            }
+        },{
+            xtype: 'button'
+            ,id: 'contentblocks-layouts-clear-filters'
+            ,text: _('filter_clear')
+            ,listeners: {
+                'click': {fn: this.clearFilter, scope: this}
+            }
+        }, {
             text: _('contentblocks.export_layouts'),
             handler: this.exportAllLayouts,
             scope: this
@@ -246,6 +290,25 @@ Ext.extend(ContentBlocksComponent.grid.Layouts,MODx.grid.Grid,{
             }
         }
         return true;
+    },
+    search: function(tf,nv,ov) {
+        this.getStore().setBaseParam('search',tf.getValue());
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
+    },
+    filterCategory: function(cb,nv,ov) {
+        this.getStore().setBaseParam('category',cb.getValue());
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
+    },
+    clearFilter: function() {
+        this.getStore().baseParams = {
+            action: 'mgr/fields/getlist'
+        };
+        Ext.getCmp('contentblocks-layouts-search-filter').reset();
+        Ext.getCmp('contentblocks-layouts-category-filter').reset();
+        this.getBottomToolbar().changePage(1);
+        this.refresh();
     }
 });
 Ext.reg('contentblocks-grid-layouts',ContentBlocksComponent.grid.Layouts);

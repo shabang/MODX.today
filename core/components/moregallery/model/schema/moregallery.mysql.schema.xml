@@ -15,7 +15,9 @@
         <field key="filename" dbtype="varchar" precision="250" phptype="string" null="false" default="" />
         <field key="file" dbtype="varchar" precision="250" phptype="string" null="false" default="" />
         <field key="mgr_thumb" dbtype="varchar" precision="250" phptype="string" null="false" default="" />
+        <field key="custom" dbtype="text" phptype="array" null="true" />
         <field key="exif" dbtype="text" phptype="array" null="true" />
+        <field key="iptc" dbtype="text" phptype="array" null="true" />
 
         <field key="width" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
         <field key="height" dbtype="int" precision="10" phptype="integer" null="false" default="0" />

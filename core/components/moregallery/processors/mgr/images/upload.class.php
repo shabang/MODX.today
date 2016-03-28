@@ -15,6 +15,15 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
 
     public $imageErrors = array();
 
+    /** @var moreGallery */
+    public $moregallery;
+
+    public function initialize()
+    {
+        $corePath = $this->modx->getOption('moregallery.core_path', null, $this->modx->getOption('core_path').'components/moregallery/');
+        $this->moregallery =& $this->modx->getService('moregallery', 'moreGallery' , $corePath . 'model/moregallery/');
+        return parent::initialize();
+    }
 
     /**
      * @return array
@@ -55,7 +64,25 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
             return $this->modx->lexicon('moregallery.error_upload_failed', array('error' => $file['error']));
         }
 
-        $allowedExtensions = strtolower($this->modx->getOption('upload_images'));
+        /**
+         * The allowed extensions can come from 2 places.
+         *
+         * If allowed_extensions_per_source is enabled, the media source is checked for an imageExtensions property
+         * and then that value is used.
+         *
+         * In all other cases, it looks for the upload_images setting.
+         */
+        $allowedExtensions = false;
+        $sourceSpecificExtensions = $this->moregallery->getOption('moregallery.allowed_extensions_per_source', null, false);
+        if ($sourceSpecificExtensions) {
+            $properties = $this->resource->source->getPropertyList();
+            if (isset($properties['imageExtensions']) && !empty($properties['imageExtensions'])) {
+                $allowedExtensions = $properties['imageExtensions'];
+            }
+        }
+        if (!$allowedExtensions) {
+            $allowedExtensions = strtolower($this->moregallery->getOption('upload_images'));
+        }
         $allowedExtensions = explode(',', $allowedExtensions);
         $allowedExtensions = array_map('trim', $allowedExtensions);
         if (!in_array($fileExtension, $allowedExtensions)) {
@@ -65,24 +92,12 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
         }
 
         /**
-         * Try to load the image name from IPTC data on the image fiel
+         * Try to load the image name from IPTC data on the image file
          */
         try {
             getimagesize($file['tmp_name'], $info);
             if (isset($info["APP13"])) {
-                $iptc = iptcparse($info["APP13"]);
-
-                if (is_array($iptc))
-                {
-                    $iptcCaptionHeaders = array("2#120", "2#105", "2#005");
-                    foreach ($iptcCaptionHeaders as $key)
-                    {
-                        if (isset($iptc[$key]) && !empty($iptc[$key][0]))
-                        {
-                            $name = $iptc[$key][0];
-                        }
-                    }
-                }
+                $this->object->loadIPTCData($info["APP13"]);
             }
         }
         catch (Exception $e) {}
@@ -102,15 +117,15 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
         $this->_uploaded = true;
 
         /** Prefix image ID to the file name to ensure uniqueness. */
-        $imageIdPlacement = $this->modx->moregallery->getOption('moregallery.image_id_in_name', null, 'prefix', true);
+        $imageIdPlacement = $this->moregallery->getOption('moregallery.image_id_in_name', null, 'prefix', true);
         foreach ($_FILES as &$file) {
             $id = $this->object->get('id');
-            $name = $this->modx->moregallery->sanitizeFileName($file['name']);
+            $name = $this->moregallery->sanitizeFileName($file['name']);
 
-            if ($imageIdPlacement == 'prefix') {
+            if ($imageIdPlacement === 'prefix') {
                 $name = $id . '_' . $name;
             }
-            elseif ($imageIdPlacement == 'suffix') {
+            elseif ($imageIdPlacement === 'suffix') {
                 $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
                 $name = pathinfo($file['name'], PATHINFO_FILENAME);
                 $name = $name . '_' . $id . '.' . $ext;
@@ -122,6 +137,7 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
         /**
          * Do the upload
          */
+        $this->moregallery->renames = array();
         $uploaded = $this->resource->source->uploadObjectsToContainer($this->path, $_FILES);
         if (!$uploaded) {
             $errors = $this->resource->source->getErrors();
@@ -129,7 +145,17 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
             $this->modx->log(modX::LOG_LEVEL_ERROR,'[moreGallery] Error uploading file: ' . $errors);
             $this->imageErrors[] = $errors;
             $this->object->remove();
-            return false;
+            return $this->failure($errors);
+        }
+
+        /**
+         * Check if the file has been renamed by a plugin like FileSluggy
+         */
+        $newFileName = reset($this->moregallery->renames);
+        if (!empty($newFileName)) {
+            $baseMediaPath = $this->resource->source->getBasePath() . $this->path;
+            $newFileName = substr($newFileName, strlen($baseMediaPath));
+            $_FILES['upload']['name'] = $newFileName;
         }
 
         /**
@@ -140,16 +166,27 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
         $this->object->set('file', $file['basename']);
 
         /**
-         * Attempt to increase the memory limit as we're about to do some heavy image stuff
+         * Based on the IPTC data, try to pre-fill certain fields
          */
-        $this->modx->moregallery->setMemoryLimit();
+        $iptc = $this->object->get('iptc');
+        if ($this->moregallery->getOption('moregallery.prefill_from_iptc', null, true) && is_array($iptc)) {
+            $this->object->prefillFromIPTC($iptc);
+        }
 
         /**
-         * Resize the image to a smaller one. Before we do this, we register a shutdown
-         * function that can clean up if the resize fails (for example, because of
-         * memory issues).
+         * Attempt to increase the memory limit as we're about to do some heavy image stuff
+         */
+        $this->moregallery->setMemoryLimit();
+
+        /**
+         * Register a shutdown function that will attempt to clean up stuff should the request fail with a fatal
+         * error, for example due to image resizing and memory limits.
          */
         register_shutdown_function(array('moreGalleryMgrImagesUploadProcessor', 'onShutdown'), $this);
+
+        /**
+         * Grab exif data and use to fix the orientation if needed
+         */
         $this->object->loadExifData($file['path']);
         $exif = $this->object->get('exif');
         if (is_array($exif) && isset($exif['Orientation'])) {
@@ -161,6 +198,10 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
                 $this->resource->source->updateObject($this->path . $uploadedFile['name'], $fixedOrientation);
             }
         }
+
+        /**
+         * Create a copy of the image as a smaller manager thumbnail
+         */
         $this->object->createThumbnail($file['content']);
 
         // Save again; we added some more details.

@@ -6,6 +6,8 @@ $_lang['contentblocks.mgr.home'] = "Content Blocks";
 
 $_lang['contentblocks.general'] = "General";
 $_lang['contentblocks.properties'] = "Properties";
+$_lang['contentblocks.clear_filters'] = "Clear filters";
+$_lang['contentblocks.search'] = "Search";
 
 $_lang['contentblocks.link'] = "Link";
 $_lang['contentblocks.link.description'] = "A field for creating links. Resource, email, and URLs are supported.";
@@ -36,6 +38,7 @@ $_lang['contentblocks.error.missing_id'] = "Missing ID property";
 $_lang['contentblocks.error.input_not_found'] = "Input not found";
 $_lang['contentblocks.error.input_not_found.message'] = "Uh oh. A field with input type \"[[+input]]\" was loaded, however that input type does not exist.";
 $_lang['contentblocks.error.field_not_found'] = "Field not found";
+$_lang['contentblocks.error.category_not_found'] = "Category not found";
 $_lang['contentblocks.error.layout_not_found'] = "Layout not found";
 $_lang['contentblocks.error.error_saving_object'] = "Error saving object";
 $_lang['contentblocks.error.xml_not_loaded'] = "Could not load the XML File";
@@ -181,6 +184,25 @@ $_lang['contentblocks.directory.description'] = 'A subfolder within the media so
 $_lang['contentblocks.file_types'] = 'Allowed File Extensions';
 $_lang['contentblocks.file_types.description'] = 'Files with these extensions (comma-separated) will be uploaded. For no restriction, leave blank.';
 $_lang['contentblocks.file_types.disallowed'] = 'File type not allowed in this field';
+
+// Categories
+$_lang['contentblocks.category'] = "Category";
+$_lang['contentblocks.categories'] = "Categories";
+$_lang['contentblocks.categories.intro'] = "Use Categories to better organise your Fields, Layouts and Templates. When assigned to an element, the Add Content and Add Layout modals will show categorized items first, followed by an \"Uncategorized\" category.";
+$_lang['contentblocks.uncategorized'] = "Uncategorized";
+$_lang['contentblocks.add_category'] = "Add Category";
+$_lang['contentblocks.edit_category'] = "Edit Category";
+$_lang['contentblocks.duplicate_category'] = "Duplicate Category";
+$_lang['contentblocks.delete_category'] = "Delete Category";
+$_lang['contentblocks.delete_category.confirm'] = "Are you sure you want to delete this Category? Any elements that currently use the category will be set to uncategorized instead.";
+$_lang['contentblocks.delete_category.confirm.js'] = "Are you sure you want to delete this Category?";
+$_lang['contentblocks.export_category'] = "Export Category";
+$_lang['contentblocks.export_categories'] = "Export";
+$_lang['contentblocks.export_categories.confirm'] = "After clicking Yes below, we will prepare an XML export of all Categories. This can be used to import the Categories later or in a different installation. Generating the XML should only take a few seconds.";
+$_lang['contentblocks.import_categories'] = "Import";
+$_lang['contentblocks.import_categories.title'] = "Import Categories";
+$_lang['contentblocks.import_categories.intro'] = "By uploading an XML file and choosing the right import mode, you can import Categories you exported before or from a different site. <b>Be careful</b> with importing Categories if you have content using the current fields already. Please contact support@modmore.com if you are unsure about what mode to use in the import.";
+
 
 // Templates
 $_lang['contentblocks.templates'] = 'Templates';

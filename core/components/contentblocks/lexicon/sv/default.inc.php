@@ -62,7 +62,7 @@ $_lang['contentblocks.condition_value'] = "Värde(n)";
 $_lang['contentblocks.availibility.layouts'] = "Layout(er)";
 $_lang['contentblocks.availibility.layouts.description'] = "Begränsa användning av detta fält till ett eller flera (kommaseparerade) layouter. Om detta lämnas tomt är fältet tillgängligt i alla layouter, annars är det begränsat till de du anger. ";
 $_lang['contentblocks.availibility.times_per_page'] = "Antal gånger per sida";
-$_lang['contentblocks.availibility.times_per_page.description'] = "Begränsa användning till så här många gånger per sida. Lämna blankt för obegränsat.";
+$_lang['contentblocks.availibility.times_per_page.description'] = "Begränsa användning till så här många gånger per sida. Lämna blankt för ingen begränsning.";
 $_lang['contentblocks.availibility.times_per_layout'] = "Antal gånger per layout";
 $_lang['contentblocks.availibility.times_per_layout.description'] = "Begränsa användning till så här många gånger per layout.";
 $_lang['contentblocks.availibility.only_nested'] = "Tillåt endast som nästlad layout";
@@ -157,7 +157,7 @@ $_lang['contentblocks.description'] = "Beskrivning";
 $_lang['contentblocks.template'] = "Mall";
 $_lang['contentblocks.template.description'] = "Mallen för layouten har flera tillgängliga platshållare, beroende på de kolumner och inställningar du definierar i flikarna till vänster. ";
 $_lang['contentblocks.width'] = "Bredd";
-$_lang['contentblocks.width.description'] = "The width of the field (in percentages) that this field will take up in the canvas. Fields are floated left so you can create some basic layouts with this option.";
+$_lang['contentblocks.width.description'] = "Bredden på fältet (i procent) som det här fältet kommer att uppta i canvasen. Fält är vänsterjusterade (floated left) så du kan skapa en form av enkel layout med den här inställningen.";
 $_lang['contentblocks.save'] = "Spara";
 $_lang['contentblocks.reference'] = "Referens";
 $_lang['contentblocks.default_value'] = "Standardvärde";
@@ -305,7 +305,7 @@ $_lang['contentblocks.quote.author'] = "Författare";
 
 $_lang['contentblocks.repeater'] = "Upprepare";
 $_lang['contentblocks.repeater.description'] = "Låter dig definiera en grupp med fält som redigeraren sedan kan repetera som en grupp.";
-$_lang['contentblocks.repeater_template.description'] = "The template for each individual row in the repeater. There is no default as it completely depends on your groups configuration! For each of the Fields you define, you also need to set a key. The repeater will first parse all of the defined fields through their own processor (so an image field is first parsed as if it were a standalone image field), and the result of that is set into the placeholder based on the key. Please consult the documentation at modmore.com for a more in-depth instruction of how the repeater field works. Also supports a <code>[[+idx]]</code> placeholder.";
+$_lang['contentblocks.repeater_template.description'] = "Mallen för varje enskild rad i uppreparen. Det finns ingen standard eftersom det helt beror på din grupps konfiguration! För varje fält du definierar, måste du även ange en nyckel. Uppreparen kommer först att behandla alla definierade fält genom sin egen processor (så att ett bildfält först behandlas som om det var ett självständigt bildfält), och resultatet från det placeras i platshållaren baserat på nyckeln. Vänligen se dokumentationen på modmore.com för en mer detaljerade instruktioner över hur uppreparen fungerar. Platshållaren <code>[[+idx]]</code> stöds också.";
 $_lang['contentblocks.repeater.width'] = "Bredd (i %)";
 $_lang['contentblocks.repeater.key'] = "Nyckel";
 $_lang['contentblocks.repeater.key.description'] = "Nyckeln genom vilket värdet för det här fältet är tillgängligt i mallen Repeater. ";
@@ -315,10 +315,10 @@ $_lang['contentblocks.repeater.max_items'] = "Maximalt antal objekt";
 $_lang['contentblocks.repeater.max_items.description'] = "När inställt på ett värde större än 0, kan ytterligare rader inte läggas till utöver denna gräns.";
 $_lang['contentblocks.repeater.max_items_reached'] = "Tyvärr, du får inte lägga till fler än [[+max]] objekt.";
 $_lang['contentblocks.repeater.min_items'] = "Minsta antal objekt";
-$_lang['contentblocks.repeater.min_items.description'] = "When set to a number larger than 0, rows cannot be removed beyond this limit.";
+$_lang['contentblocks.repeater.min_items.description'] = "När satt till ett nummer större än 0, kan inte antalet rader blir lägre än denna gräns.";
 $_lang['contentblocks.repeater.add_item'] = "Lägg till objekt";
 $_lang['contentblocks.repeater.delete_item'] = "Radera objekt";
-$_lang['contentblocks.repeater.wrapper_template.description'] = "Outer template to wrap all other parsed rows in. Should contain the <code>[[+rows]]</code> placeholder, can also contain <code>[[+total]]</code>, .";
+$_lang['contentblocks.repeater.wrapper_template.description'] = "Yttre mall som omsluter alla övriga behandlade rader. Ska innehålla platshållaren <code>[[+rows]]</code>, kan också innehålla platshållaren <code>[[+total]]</code>.";
 $_lang['contentblocks.repeater.row_separator'] = "Radavgränsare";
 $_lang['contentblocks.repeater.row_separator.description'] = "En sträng för att limma ihop enskilda rader. Detta kunde vara bara några radbrytningar, som i standarden, eller så kan det vara en bunt html du vill ha mellan raderna.";
 
@@ -386,7 +386,7 @@ $_lang['contentblocks.max_images_reached'] = "Tyvärr, du kan inte använda fler
 $_lang['contentblocks.upload_error'] = "Åh nej, nånting gick fel vid uppladdningen av [[+file]]: [[+message]]";
 $_lang['contentblocks.upload_error.file_too_big'] = "\"\n\nFilen kanske var för stor.";
 $_lang['contentblocks.image.thumbnail_size'] = "Manager miniatyrstorlek";
-$_lang['contentblocks.image.thumbnail_size.description'] = "Dimensions for manager thumbnails. Leave blank for none, one numeric value for square images, and dimensions in wxh for rectangular images. Example: 100 or 100x50";
+$_lang['contentblocks.image.thumbnail_size.description'] = "Storlek för tumnaglar i hanteraren. Lämna tomt för ingen, ett numeriskt värde för kvadratiska bilder, och dimensioner på formen lxb för rektangulära bilder. Exemple: 100 eller 100x50.";
 
 // Misc
 $_lang['contentblocks.use_contentblocks'] = "Använd ContentBlocks?";
@@ -474,10 +474,10 @@ $_lang['setting_contentblocks.image.upload_path'] = "Uppladdningssökväg";
 $_lang['setting_contentblocks.image.upload_path_desc'] = "Sökvägen, inom den definierade media källan, vart filer skall laddas upp. Detta stöder [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] och [[+resource]] platshållare.";
 
 $_lang['setting_contentblocks.cache_source'] = "Cache källa";
-$_lang['setting_contentblocks.cache_source.description'] = "Choose the media source to use for image and gallery thumbnail cache files.";
+$_lang['setting_contentblocks.cache_source.description'] = "Välj den mediakälla som ska användas för bilder och cache för galleriets tumnaglar.";
 
 $_lang['setting_contentblocks.cache_path'] = "Cache sökväg";
-$_lang['setting_contentblocks.cache_path.description'] = "The path, within the defined media source, to which the thumbnail cache files should be uploaded.";
+$_lang['setting_contentblocks.cache_path.description'] = "Sökvägen, inom den definierade mediakällan, som cache filerna för tumnaglarna ska laddas upp till.";
 
 $_lang['setting_contentblocks.sanitize_pattern'] = "Saniteringsmönster";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Ett RegEx mönster att använda vid sanering av filnamn vid behov.";

@@ -87,9 +87,9 @@ class CodeInput extends cbBaseInput {
         $tpl = $field->get('template');
 
         if ((bool)$field->get('entities')) {
-            $data['value'] = htmlentities($data['value'], ENT_QUOTES, 'UTF-8');
+            $data['value'] = htmlentities($data['value']);
             $data['value'] = str_replace(array('[',']'), array('&#91;','&#93;'), $data['value']);
-       }
+        }
 
         // Always encode [[+value]] as if we don't, it throws an infinite loop
         $data['value'] = str_replace('[[+value', '&#91;[+value', $data['value']);

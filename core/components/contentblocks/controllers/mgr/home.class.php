@@ -28,6 +28,7 @@ class ContentblocksMgrHomeManagerController extends ContentblocksManagerControll
     public function loadCustomCssJs() {
         $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/combos.js');
         $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/grid.availability.js');
+        $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/grid.categories.js');
         $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/grid.defaults.js');
         $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/grid.fields.js');
         $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/grid.layoutcolumns.js');
@@ -36,6 +37,7 @@ class ContentblocksMgrHomeManagerController extends ContentblocksManagerControll
         $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/grid.settings.js');
         $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/grid.templates.js');
         $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/window.availability.js');
+        $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/window.categories.js');
         $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/window.defaults.js');
         $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/window.fields.js');
         $this->addJavascript($this->contentblocks->config['assetsUrl'].'cmp/js/widgets/window.import.js');

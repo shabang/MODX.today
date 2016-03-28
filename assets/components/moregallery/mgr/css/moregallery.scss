@@ -29,6 +29,11 @@
       display: none;
     }
   }
+  .redactor-toolbar li a {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+  }
 
   .mceEditor, .mceEditor * {
     -moz-box-sizing: content-box;
@@ -53,16 +58,24 @@
 
 }
 #mgresource-backbone-wrapper {
+  margin: 20px 0;
+
+  .moregallery_v23 & {
+    border: none;
+    -webkit-box-shadow: 0 0 5px 0 rgba(0,0,0,.1);
+    box-shadow: 0 0 5px 0 rgba(0,0,0,.1);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+  }
+
+  .x-panel-header {
+    padding: 15px;
+  }
   .x-panel-bwrap {
     border: 1px solid #cbcbcb;
-
     .moregallery_v23 & {
       border: none;
-      -webkit-box-shadow: 0 0 5px 0 rgba(0,0,0,.1);
-      box-shadow: 0 0 5px 0 rgba(0,0,0,.1);
-      -moz-border-radius: 3px;
-      -webkit-border-radius: 3px;
-      border-radius: 3px;
     }
   }
 }
@@ -297,9 +310,16 @@
     .image_inactive {
       .mask {
         display: block !important;
+        background-color: rgba(255, 255, 255, .7) !important;
+        &:hover {
+          background-color: rgba(255, 255, 255, .5) !important;
+        }
       }
       .deactivate {
         display: none;
+      }
+      .meta {
+        background: #ECECEC;
       }
     }
     .image_active {
@@ -843,7 +863,7 @@
       }
     }
 
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       margin-bottom: 8px;
       padding: 5px;

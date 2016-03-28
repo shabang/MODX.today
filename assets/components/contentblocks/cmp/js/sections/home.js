@@ -10,10 +10,12 @@ ContentBlocksComponent.page.Home = function(config) {
     Ext.applyIf(config,{
         cls: 'container form-with-labels',
         border: false,
+        id : 'contentblocks-page-wrapper',
         components: [{
             xtype: 'panel',
             html: '<h2>' + _('contentblocks.mgr.home') + '</h2>',
             border: false,
+            id: 'modx-contentblocks-header',
             cls: 'modx-page-header'
         },{
             xtype: 'modx-tabs',
@@ -71,6 +73,19 @@ ContentBlocksComponent.page.Home = function(config) {
                     cls: 'main-wrapper'
                 }]
             },{
+                xtype: 'tbfill'
+            },{
+                title: _('contentblocks.categories'),
+                id: 'contentblocks-page-home-tabs-categories',
+                items: [{
+                    xtype: 'panel',
+                    bodyCssClass: 'panel-desc',
+                    html: '<p>' + _('contentblocks.categories.intro') + '</p>'
+                },{
+                    xtype: 'contentblocks-grid-categories',
+                    cls: 'main-wrapper'
+                }]
+            },{
                 title: _('contentblocks.defaults'),
                 id: 'contentblocks-page-home-tabs-defaults',
                 items: [{
@@ -100,7 +115,7 @@ Ext.extend(ContentBlocksComponent.page.Home,MODx.Component,{
     loadHelpPane: function() {
         var tabs = Ext.getCmp('contentblocks-page-home-tabs'),
             aTab = tabs.activeTab,
-            baseUrl = 'https://www.modmore.com/extras/contentblocks/documentation/',
+            baseUrl = 'https://www.modmore.com/contentblocks/documentation/',
             url = '';
 
         switch (aTab.id) {
@@ -112,6 +127,9 @@ Ext.extend(ContentBlocksComponent.page.Home,MODx.Component,{
                 break;
             case 'contentblocks-page-home-tabs-templates':
                 url = 'templates/';
+                break;
+            case 'contentblocks-page-home-tabs-categories':
+                url = 'categories/';
                 break;
             case 'contentblocks-page-home-tabs-defaults':
                 url = 'defaults/';

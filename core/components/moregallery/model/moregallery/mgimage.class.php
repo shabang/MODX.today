@@ -7,10 +7,37 @@ class mgImage extends xPDOSimpleObject
     const MODE_UPLOAD = 'upload';
     const MODE_IMPORT = 'import';
 
+    protected $checkedForThumb = false;
+    protected $iptcHeaderArray = array ( // thank you, stranger http://php.net/manual/en/function.iptcparse.php#113148
+        '2#005'=>'DocumentTitle',
+        '2#010'=>'Urgency',
+        '2#015'=>'Category',
+        '2#020'=>'Subcategories',
+        '2#025'=>'Keywords', //added
+        '2#040'=>'SpecialInstructions',
+        '2#055'=>'CreationDate',
+        '2#080'=>'AuthorByline',
+        '2#085'=>'AuthorTitle',
+        '2#090'=>'City',
+        '2#095'=>'State',
+        '2#101'=>'Country',
+        '2#103'=>'OTR',
+        '2#105'=>'Headline',
+        '2#110'=>'Source',
+        '2#115'=>'PhotoSource',
+        '2#116'=>'Copyright',
+        '2#120'=>'Caption',
+        '2#122'=>'CaptionWriter'
+    );
+
+    /**
+     * mgImage constructor.
+     * @param xPDO|modX $xpdo
+     */
     public function __construct(xPDO & $xpdo) {
         parent::__construct($xpdo);
 
-        if (!$xpdo->moregallery)
+        if (!isset($xpdo->moregallery))
         {
             $this->_loadMoreGalleryService();
         }
@@ -26,7 +53,6 @@ class mgImage extends xPDOSimpleObject
             case 'height':
                 if ($value < 1)
                 {
-
                     $resource = $this->getResource();
                     if ($resource && $resource->_getSource()) {
                         $relativeUrl = $resource->getSourceRelativeUrl();
@@ -159,15 +185,42 @@ class mgImage extends xPDOSimpleObject
         $resource = $this->getResource();
         if (!$rawValues && $resource && $resource->_getSource()) {
             $relativeUrl = $resource->getSourceRelativeUrl();
-            $array['mgr_thumb_path'] = $resource->source->getBasePath().$relativeUrl.$array['mgr_thumb'];
-            $array['mgr_thumb'] = $resource->source->getObjectUrl($relativeUrl.$array['mgr_thumb']);
-            $array['file_url'] = $resource->source->getObjectUrl($relativeUrl.$array['file']);
-            $array['file_path'] = $resource->source->getBasePath().$relativeUrl.$array['file'];
-            $array['view_url'] = $this->xpdo->makeUrl($resource->get('id'), '', array(
+
+            // Check if we have a manager thumbnail, and regenerate it if necessary
+            $thumb = $this->get('mgr_thumb');
+            $thumbPath = $resource->source->getBasePath() . $relativeUrl . $thumb;
+            if (!$this->checkedForThumb) {
+                $this->checkedForThumb = true;
+                if (empty($thumb) || !file_exists($thumbPath)) {
+                    $resource->source->errors = array();
+                    $content = $resource->source->getObjectContents($relativeUrl . $this->get('file'));
+                    if (!$resource->source->hasErrors()) {
+                        if ($this->createThumbnail($content['content'])) {
+                            $this->save();
+                            $thumb = $this->get('mgr_thumb');
+                            $thumbPath = $resource->source->getBasePath() . $relativeUrl . $thumb;
+                        }
+                    }
+                    else {
+                        $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, 'Error(s) while trying to regenerate thumbnail for image ' . $this->get('id') . ' in gallery ' . $this->get('resource') . ': ' . print_r($resource->source->getErrors(), true));
+
+                    }
+                }
+            }
+
+            $array[$keyPrefix . 'mgr_thumb_path'] = $thumbPath;
+            $array[$keyPrefix . 'mgr_thumb'] = $resource->source->getObjectUrl($relativeUrl.$thumb);
+            $array[$keyPrefix . 'file_url'] = $resource->source->getObjectUrl($relativeUrl.$array[$keyPrefix . 'file']);
+            $array[$keyPrefix . 'file_path'] = $resource->source->getBasePath().$relativeUrl.$array[$keyPrefix . 'file'];
+            $array[$keyPrefix . 'view_url'] = $this->xpdo->makeUrl($resource->get('id'), '', array(
                 $this->xpdo->moregallery->getOption('moregallery.single_image_url_param', null, 'iid') => $this->get('id'),
             ), $this->xpdo->moregallery->getOption('link_tag_scheme', null, 'full'));
 
-            $array['_source_is_local'] = ($resource->source->get('class_key') == 'sources.modFileMediaSource');
+            $array[$keyPrefix . '_source_is_local'] = ($resource->source->get('class_key') == 'sources.modFileMediaSource');
+            $array[$keyPrefix . 'exif_dump'] = print_r($array[$keyPrefix.'exif'], true);
+            $array[$keyPrefix . 'exif_json'] = $this->xpdo->toJSON($array[$keyPrefix.'exif']);
+            $array[$keyPrefix . 'iptc_dump'] = print_r($array[$keyPrefix.'iptc'], true);
+            $array[$keyPrefix . 'iptc_json'] = $this->xpdo->toJSON($array[$keyPrefix.'iptc']);
         }
         return $array;
     }
@@ -328,23 +381,36 @@ class mgImage extends xPDOSimpleObject
      * @return bool|string
      */
     public function createThumbnail($content, $width = 250, $height = 250) {
+        $format = $this->xpdo->moregallery->getOption('moregallery.thumbnail_format', null, 'png');
+        $format = strtoupper($format);
+        if (!in_array($format, array('PNG', 'GIF', 'JPG'))) {
+            $format = 'JPG';
+        }
+        $extension = strtolower($format);
         try {
             require_once dirname(dirname(dirname(__FILE__))).'/model/phpthumb/ThumbLib.inc.php';
-            $thumb = PhpThumbFactory::create($content, array(), true);
-            $thumb->setFormat('PNG');
+            $options = array(
+                'jpegQuality' => (int)$this->xpdo->moregallery->getOption('moregallery.crop_jpeg_quality', null, '90'),
+            );
+            $thumb = PhpThumbFactory::create($content, $options, true);
+            $thumb->setFormat($format);
             $size = $thumb->getCurrentDimensions();
-            // Make sure wide images don't get blurry
+
+            // Figure out the right size to make sure wide images don't get blurry
             if ($size['width'] > $size['height']) {
                 $width = ceil(($size['width'] / $size['height']) * $width);
             }
+            // and for tall images too.
             else {
                 $height = ceil(($size['height'] / $size['width']) * $height);
             }
+
+            // Do the actual resizing
             $thumb->resize($width, $height);
             $thumbContents = $thumb->getImageAsString();
 
-
-            $mgrThumb = $this->get('id') . '_' . md5($this->toJSON()) . '.png';
+            // Make the filename the ID, followed by a hash, and the extension (of course).
+            $mgrThumb = $this->get('id') . '_' . md5($this->toJSON()) . '.' . $extension;
 
             $resource = $this->getResource();
             $resource->_getSource();
@@ -368,7 +434,7 @@ class mgImage extends xPDOSimpleObject
                 $exif = exif_read_data($file, NULL, false, false);
                 if (is_array($exif)) {
                     foreach ($exif as $key => $value) {
-                        $exif[$key] = $this->_cleanExifData($value);
+                        $exif[$key] = $this->cleanInvalidData($value);
                     }
                     $this->set('exif', $exif);
                 }
@@ -377,6 +443,91 @@ class mgImage extends xPDOSimpleObject
             }
         } else {
             $this->xpdo->log(xPDO::LOG_LEVEL_WARN, '[moreGallery] This server does not have the exif_read_data function installed. MoreGallery cannot extract exif data now.');
+        }
+    }
+
+    /**
+     * Parses the IPTC data into something a bit more usable
+     *
+     * @param $data
+     * @return array
+     */
+    public function loadIPTCData($data) {
+        $iptc = iptcparse($data);
+
+        $newIptc = array();
+        if (is_array($iptc)) {
+            foreach ($iptc as $key => $value) {
+                if (isset($this->iptcHeaderArray[$key])) {
+                    $key = $this->iptcHeaderArray[$key];
+                }
+
+                if (count($value) == 1) {
+                    $value = $value[0];
+                }
+
+                $newIptc[$key] = $value;
+            }
+
+            // Store the cleaned iptc data in the database
+            $this->set('iptc', $newIptc);
+        }
+
+        return $newIptc;
+    }
+
+    /**
+     * Prefills the name and tags from the provided IPTC data
+     *
+     * @param array $iptc
+     */
+    public function prefillFromIPTC(array $iptc = array())
+    {
+        $name = '';
+        $iptcNameHeaders = array("Caption", "Headline", "DocumentTitle");
+        foreach ($iptcNameHeaders as $key) {
+            if (isset($iptc[$key]) && !empty($iptc[$key])) {
+                $name = $iptc[$key];
+            }
+        }
+        if (!empty($name)) {
+            $this->set('name', $name);
+        }
+
+        $tags = array();
+        $iptcTagHeaders = array('Category', 'Subcategories', 'Keywords');
+        foreach ($iptcTagHeaders as $key) {
+            if (isset($iptc[$key]) && !empty($iptc[$key])) {
+                if (is_array($iptc[$key])) {
+                    $tags = array_merge($tags, array_values($iptc[$key]));
+                }
+                else {
+                    $tags[] = $iptc[$key];
+                }
+            }
+        }
+        $tags = array_unique($tags);
+        if (!empty($tags)) {
+            foreach ($tags as $tag) {
+                /** @var mgTag $tagObj */
+                $tagObj = $this->xpdo->getObject('mgTag', array('display' => $tag));
+                if (!$tagObj) {
+                    $tagObj = $this->xpdo->newObject('mgTag');
+                    $tagObj->fromArray(array(
+                        'display' => $tag,
+                    ));
+                    $tagObj->save();
+                }
+
+                /** @var mgImageTag $link */
+                $link = $this->xpdo->newObject('mgImageTag');
+                $link->fromArray(array(
+                    'resource' => $this->get('resource'),
+                    'image' => $this->get('id'),
+                    'tag' => $tagObj->get('id')
+                ));
+                $link->save();
+            }
         }
     }
 
@@ -430,11 +581,11 @@ class mgImage extends xPDOSimpleObject
      * @param $value
      * @return string
      */
-    protected function _cleanExifData($value)
+    public function cleanInvalidData($value)
     {
         if (is_array($value)) {
             foreach ($value as $key => $subValue) {
-                $value[$key] = $this->_cleanExifData($subValue);
+                $value[$key] = $this->cleanInvalidData($subValue);
             }
             return $value;
         }
