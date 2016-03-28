@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data package="contentblocks" exported="2016-03-28@15:23:13" total="21">
+<cbField>
+	<id>7</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[repeater]]></input>
+	<name><![CDATA[Podcast Content]]></name>
+	<description><![CDATA[]]></description>
+	<sortorder>0</sortorder>
+	<category>0</category>
+	<icon><![CDATA[unorderedlist]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[<dt>[[+timestamp:notempty=`&#91;[[+timestamp]]&#93;`]]
+[[+link:notempty=`<a href="[[+link]]">[[+title]]</a>`:empty=`[[+title]]`]]
+</dt>
+  <dd>[[+description]]</dd>]]></template>
+	<properties><![CDATA[{"wrapper_template":"<h3>[[+headline]]<\/h3>\n<dl>\n  [[+rows]]\n<\/dl>","group":"[{\"id\":\"\",\"input\":\"textfield\",\"key\":\"timestamp\",\"name\":\"Timestamp\",\"width\":20,\"sortorder\":\"0\",\"template\":\"[[+value]]\",\"properties\":{}},{\"id\":\"\",\"input\":\"textfield\",\"key\":\"title\",\"name\":\"Title\",\"width\":50,\"sortorder\":\"1\",\"template\":\"[[+value]]\",\"properties\":{}},{\"id\":\"\",\"input\":\"link\",\"key\":\"link\",\"name\":\"Link\",\"width\":30,\"sortorder\":\"0\",\"template\":\"[[+link]]\",\"properties_link_detection_pattern_override\":\"\",\"properties\":{\"link_detection_pattern_override\":\"\"}},{\"id\":\"\",\"input\":\"richtext\",\"key\":\"description\",\"name\":\"Description\",\"width\":\"100\",\"sortorder\":\"3\",\"template\":\"[[+value]]\",\"properties\":{}}]","row_separator":"","max_items":"0"}]]></properties>
+	<availability><![CDATA[[{"field":"template","value":"6"}]]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>3</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[heading]]></input>
+	<name><![CDATA[Heading]]></name>
+	<description><![CDATA[]]></description>
+	<sortorder>1</sortorder>
+	<category>0</category>
+	<icon><![CDATA[heading]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[<[[+level]]]]><![CDATA[>[[+value]]</[[+level]]]]><![CDATA[>]]></template>
+	<properties><![CDATA[{"default_level":"h2","available_levels":"h1=heading_1,h2=heading_2,h3=heading_3,h4=heading_4,h5=heading_5","use_tinyrte":"1"}]]></properties>
+	<availability><![CDATA[[]]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>16</id>
+	<parent>7</parent>
+	<parent_properties><![CDATA[{"key":"timestamp","width":20}]]></parent_properties>
+	<input><![CDATA[textfield]]></input>
+	<name><![CDATA[Timestamp]]></name>
+	<description></description>
+	<sortorder>1</sortorder>
+	<category>0</category>
+	<icon><![CDATA[]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+value]]]]></template>
+	<properties><![CDATA[[]]]></properties>
+	<availability></availability>
+	<layouts></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>20</id>
+	<parent>12</parent>
+	<parent_properties><![CDATA[{"key":"package_name","width":"70"}]]></parent_properties>
+	<input><![CDATA[textfield]]></input>
+	<name><![CDATA[Package Name]]></name>
+	<description></description>
+	<sortorder>1</sortorder>
+	<category>0</category>
+	<icon><![CDATA[]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+value]]]]></template>
+	<properties><![CDATA[[]]]></properties>
+	<availability></availability>
+	<layouts></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>2</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[richtext]]></input>
+	<name><![CDATA[Rich Text]]></name>
+	<description><![CDATA[]]></description>
+	<sortorder>2</sortorder>
+	<category>0</category>
+	<icon><![CDATA[richtext]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+value]]]]></template>
+	<properties><![CDATA[[]]]></properties>
+	<availability><![CDATA[]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>17</id>
+	<parent>7</parent>
+	<parent_properties><![CDATA[{"key":"title","width":50}]]></parent_properties>
+	<input><![CDATA[textfield]]></input>
+	<name><![CDATA[Title]]></name>
+	<description></description>
+	<sortorder>2</sortorder>
+	<category>0</category>
+	<icon><![CDATA[]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+value]]]]></template>
+	<properties><![CDATA[[]]]></properties>
+	<availability></availability>
+	<layouts></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>21</id>
+	<parent>12</parent>
+	<parent_properties><![CDATA[{"key":"version","width":"30"}]]></parent_properties>
+	<input><![CDATA[textfield]]></input>
+	<name><![CDATA[Version]]></name>
+	<description></description>
+	<sortorder>2</sortorder>
+	<category>0</category>
+	<icon><![CDATA[]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+value]]]]></template>
+	<properties><![CDATA[[]]]></properties>
+	<availability></availability>
+	<layouts></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>10</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[code]]></input>
+	<name><![CDATA[Code Snippet]]></name>
+	<description><![CDATA[]]></description>
+	<sortorder>3</sortorder>
+	<category>0</category>
+	<icon><![CDATA[code]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[<pre><code class="language-[[+lang:eq=`html`:then=`markup`:else=`[[+lang]]`]]">[[+value]]</code></pre>]]></template>
+	<properties><![CDATA[{"available_languages":"html=HTML,javascript=JavaScript,css=CSS,php=PHP","default_language":"html","entities":"1"}]]></properties>
+	<availability><![CDATA[[]]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>18</id>
+	<parent>7</parent>
+	<parent_properties><![CDATA[{"key":"link","width":30}]]></parent_properties>
+	<input><![CDATA[link]]></input>
+	<name><![CDATA[Link]]></name>
+	<description></description>
+	<sortorder>3</sortorder>
+	<category>0</category>
+	<icon><![CDATA[]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+link]]]]></template>
+	<properties><![CDATA[{"link_detection_pattern_override":""}]]></properties>
+	<availability></availability>
+	<layouts></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>22</id>
+	<parent>12</parent>
+	<parent_properties><![CDATA[{"key":"changelog","width":"100"}]]></parent_properties>
+	<input><![CDATA[richtext]]></input>
+	<name><![CDATA[Changelog]]></name>
+	<description></description>
+	<sortorder>3</sortorder>
+	<category>0</category>
+	<icon><![CDATA[]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+value]]]]></template>
+	<properties><![CDATA[[]]]></properties>
+	<availability></availability>
+	<layouts></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>4</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[image_with_title]]></input>
+	<name><![CDATA[Image]]></name>
+	<description><![CDATA[]]></description>
+	<sortorder>4</sortorder>
+	<category>0</category>
+	<icon><![CDATA[image]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+linked:eq=`1`:then=`<a href="[[+url]]" title="View Full Image" target="_blank">`:else=``]]
+<figure class="content-image [[+class]] [[+classnames]]">
+    <img data-src="[[+url]]" class="lazyload" alt="[[+title:striptags]]" [[+style:notempty=`style="[[+style]]"`]]]]><![CDATA[>
+    [[+title:notempty=`<figcaption>[[+title]]</figcaption>`]]
+</figure>
+[[+linked:eq=`1`:then=`</a>`:else=``]]
+]]></template>
+	<properties><![CDATA[{"source":"0","directory":"images\/[[+year]]\/[[+month]]\/","file_types":"png,gif,jpg,jpeg","use_tinyrte":"1"}]]></properties>
+	<availability><![CDATA[[]]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[{"reference":"class","title":"Extra width","fieldtype":"select","default_value":"extended-width","fieldoptions":"none=\non both sides=extended-width","field_is_exposed":"modal"},{"reference":"classnames","title":"Extra classes for figure","fieldtype":"textfield","default_value":"","fieldoptions":"","field_is_exposed":"modal"},{"reference":"style","title":"Image Inline Style","fieldtype":"textfield","default_value":"","fieldoptions":"","field_is_exposed":"modal"},{"reference":"linked","title":"Add Link to Image?","fieldtype":"select","default_value":"0","fieldoptions":"Yes=1\nNo=0","field_is_exposed":"modal"}]]]></settings>
+</cbField>
+<cbField>
+	<id>19</id>
+	<parent>7</parent>
+	<parent_properties><![CDATA[{"key":"description","width":"100"}]]></parent_properties>
+	<input><![CDATA[richtext]]></input>
+	<name><![CDATA[Description]]></name>
+	<description></description>
+	<sortorder>4</sortorder>
+	<category>0</category>
+	<icon><![CDATA[]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+value]]]]></template>
+	<properties><![CDATA[[]]]></properties>
+	<availability></availability>
+	<layouts></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>23</id>
+	<parent>12</parent>
+	<parent_properties><![CDATA[{"key":"link","width":"50"}]]></parent_properties>
+	<input><![CDATA[link]]></input>
+	<name><![CDATA[Information Link]]></name>
+	<description></description>
+	<sortorder>4</sortorder>
+	<category>0</category>
+	<icon><![CDATA[]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+link]]]]></template>
+	<properties><![CDATA[{"link_detection_pattern_override":""}]]></properties>
+	<availability></availability>
+	<layouts></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>11</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[gallery]]></input>
+	<name><![CDATA[Slick Gallery]]></name>
+	<description><![CDATA[]]></description>
+	<sortorder>5</sortorder>
+	<category>0</category>
+	<icon><![CDATA[gallery]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[<div class="slick-slide">
+    <figure class="content-image">
+        <img data-src="[[+url]]" class="lazyload" alt="[[+title:htmlent]]">
+        [[+title:notempty=`
+            <figcaption class="gallery-slide-info">
+                <span class="title">[[+title]]</span>
+                [[+description:notempty=`<p><small class="description">[[+description]]</small></p>`]]
+            </figcaption>`]]
+    </figure>
+</div>]]></template>
+	<properties><![CDATA[{"wrapper_template":"<div class=\"gallery slick-slider slick-centerMode\" data-slider=\"slick\" data-options=\"slide:div;autoplay:false;centerMode:true;centerPadding:16%;\">\n    [[+images]]\n<\/div>","max_images":"12","thumb_size":"medium","source":"0","show_description":"1","show_link_field":"0","directory":"images\/[[+year]]\/[[+month]]\/","file_types":"png,gif,jpg,jpeg"}]]></properties>
+	<availability><![CDATA[[]]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>24</id>
+	<parent>12</parent>
+	<parent_properties><![CDATA[{"key":"releasedon","width":"50"}]]></parent_properties>
+	<input><![CDATA[textfield]]></input>
+	<name><![CDATA[Release Date]]></name>
+	<description></description>
+	<sortorder>5</sortorder>
+	<category>0</category>
+	<icon><![CDATA[]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+value]]]]></template>
+	<properties><![CDATA[[]]]></properties>
+	<availability></availability>
+	<layouts></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>9</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[quote]]></input>
+	<name><![CDATA[Quote]]></name>
+	<description><![CDATA[]]></description>
+	<sortorder>6</sortorder>
+	<category>0</category>
+	<icon><![CDATA[quote]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[<blockquote>
+    <p>[[+value]]</p>
+    [[+cite:notempty=`<cite>[[+cite]]</cite>`]]
+</blockquote>]]></template>
+	<properties><![CDATA[[]]]></properties>
+	<availability><![CDATA[[]]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>5</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[link]]></input>
+	<name><![CDATA[Button]]></name>
+	<description><![CDATA[]]></description>
+	<sortorder>7</sortorder>
+	<category>0</category>
+	<icon><![CDATA[code]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[<p>
+    <a href="[[+link]]" class="large button">[[+link]]</a>
+</p>]]></template>
+	<properties><![CDATA[{"link_detection_pattern_override":""}]]></properties>
+	<availability><![CDATA[]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>1</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[code]]></input>
+	<name><![CDATA[Code]]></name>
+	<description><![CDATA[]]></description>
+	<sortorder>8</sortorder>
+	<category>0</category>
+	<icon><![CDATA[code]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+value]]]]></template>
+	<properties><![CDATA[{"available_languages":"html=HTML","default_language":"html","entities":"0"}]]></properties>
+	<availability><![CDATA[]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>12</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[repeater]]></input>
+	<name><![CDATA[Extras Releases]]></name>
+	<description><![CDATA[]]></description>
+	<sortorder>10</sortorder>
+	<category>0</category>
+	<icon><![CDATA[chunk_C]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[<li class="release">
+    <p><b>[[+link:notempty=`<a href="[[+link]]">`]][[+package_name]] [[+version]][[+link:notempty=`</a>`]]</b>,
+        released on [[+releasedon]]
+        
+        <a href="javascript:void(0);" data-target="changelog_[[+idx]]" class="show-changelog">
+            View Changelog
+        </a>
+    </p>
+    
+    <div class="changelog" id="changelog_[[+idx]]">
+        <a href="javascript:void(0);" class="close-changelog" data-target="changelog_[[+idx]]">&times;</a>
+        [[+changelog]]
+    </div>
+</li>]]></template>
+	<properties><![CDATA[{"wrapper_template":"<ul class=\"extras-feed\">\n    [[+rows]]\n<\/ul>","group":"[{\"id\":\"\",\"input\":\"textfield\",\"key\":\"package_name\",\"name\":\"Package Name\",\"width\":\"70\",\"sortorder\":\"0\",\"template\":\"[[+value]]\",\"properties\":{}},{\"id\":\"\",\"input\":\"textfield\",\"key\":\"version\",\"name\":\"Version\",\"width\":\"30\",\"sortorder\":\"1\",\"template\":\"[[+value]]\",\"properties\":{}},{\"id\":\"\",\"input\":\"richtext\",\"key\":\"changelog\",\"name\":\"Changelog\",\"width\":\"100\",\"sortorder\":\"2\",\"template\":\"[[+value]]\",\"properties\":{}},{\"id\":\"\",\"input\":\"link\",\"key\":\"link\",\"name\":\"Information Link\",\"width\":\"50\",\"sortorder\":\"0\",\"template\":\"[[+link]]\",\"properties_link_detection_pattern_override\":\"\",\"properties\":{\"link_detection_pattern_override\":\"\"}},{\"id\":\"\",\"input\":\"textfield\",\"key\":\"releasedon\",\"name\":\"Release Date\",\"width\":\"50\",\"sortorder\":\"0\",\"template\":\"[[+value]]\",\"properties\":{}}]","row_separator":"","max_items":"0"}]]></properties>
+	<availability><![CDATA[[]]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+<cbField>
+	<id>13</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[chunk]]></input>
+	<name><![CDATA[Embed Article]]></name>
+	<description><![CDATA[Shows another article on MODX.today, opengraph style.]]></description>
+	<sortorder>11</sortorder>
+	<category>0</category>
+	<icon><![CDATA[snippet_C]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+tag]]]]></template>
+	<properties><![CDATA[{"chunk":"42","custom_preview":""}]]></properties>
+	<availability><![CDATA[[]]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[{"reference":"article","title":"Article","fieldtype":"select","default_value":"","fieldoptions":"None=0\n[[getArticlesForSetting]]","field_is_exposed":"asField","process_tags":"1"}]]]></settings>
+</cbField>
+<cbField>
+	<id>15</id>
+	<parent>0</parent>
+	<parent_properties></parent_properties>
+	<input><![CDATA[blockdown]]></input>
+	<name><![CDATA[Markdown]]></name>
+	<description><![CDATA[]]></description>
+	<sortorder>12</sortorder>
+	<category>0</category>
+	<icon><![CDATA[code]]></icon>
+	<icon_type><![CDATA[core]]></icon_type>
+	<template><![CDATA[[[+value]]]]></template>
+	<properties><![CDATA[{"theme_editor":"themes\/editor\/epic-dark.css","theme_preview":"themes\/preview\/preview-dark.css"}]]></properties>
+	<availability><![CDATA[]]></availability>
+	<layouts><![CDATA[]]></layouts>
+	<times_per_layout>0</times_per_layout>
+	<times_per_page>0</times_per_page>
+	<settings><![CDATA[[]]]></settings>
+</cbField>
+</data>
