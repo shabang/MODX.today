@@ -1,0 +1,170 @@
+id: 440
+pagetitle: 'pdoTools Introduction (Part 2)'
+alias: 2016/04/pdotools-introduction-(part-2)
+published: 1
+parent: 1
+introtext: ''
+template: 2
+menuindex: 282
+createdby: 2
+publishedon: 1459942956
+publishedby: 2
+hidemenu: 1
+uri: posts/2016/04/pdotools-introduction-(part-2)
+show_in_tree: 0
+properties: '{"contentblocks":{"content":"[{\"layout\":3,\"content\":{\"col1\":[{\"value\":\"<p>As we learned in the first post about pdoTools, the main benefit of pdoTools is speed. In this second post we''ll look at how pdoTools can be faster, and some more cool features that the library provides. <\/p><p>I developed the first version of pdoTools when working on Tickets. It was supposed to be a ticketing system, but when it was complete it was more like a simple blog system with awesome AJAX commenting. Tools like getResources were not fast enough, so I developed by own library. <\/p><p>The speed in pdoTools come from two ideas. <\/p><ol><li>The database query is built with xPDO, but executed directly with PDO. This means there are no objects created to represent the rows in the database.<\/li><li>Faster chunk processing. If pdoTools can parse the chunk itself, the standard MODX parser is not used. <\/li><\/ol><p>To achieve this there are two classes in pdoTools. <strong>pdoTools<\/strong> is the primary class with general methods for parsing chunks, using placeholders, caching etc. <strong>pdoFetch<\/strong> is the class that works with the database. This can be used to build and execute queries, and to return the results. <\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"pdoFetch Class\",\"level\":\"h2\",\"field\":3,\"settings\":[]},{\"value\":\"<p>pdoFetch extends the pdoTools class, so you only need to load the one class depending on what you need to do. To load the pdoFetch class, you can just do this:<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"<?php\\n$pdo = $modx->getService(''pdoFetch'');\",\"lang\":\"php\",\"field\":10,\"settings\":[]},{\"value\":\"<p>After that you can use all the functions, for example getCollection and getChunk. Here is an example on retrieving and processing resources.<\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"<?php\\n$pdo = $modx->getService(''pdoFetch'');\\n$resources = $pdo->getCollection(''modResource'', array(\\n    ''published'' => true,\\n    ''deleted'' => false\\n), array(\\n    ''parents'' => ''1,5,6,-9'',\\n    ''includeTVs'' => ''tv1, tv2'',\\n    ''sortby'' => ''id'',\\n    ''sortby'' => ''asc'',\\n    ''limit'' => 20,\\n));\\n$tpl = ''@INLINE <p>[[+id]] - [[+pagetitle]]<\/p>'';\\n$output = '''';\\nforeach ($resources as $resource) {\\n    $output .= $pdo->getChunk($tpl, $resource);\\n}\\nreturn $output;\",\"lang\":\"php\",\"field\":10,\"settings\":[]},{\"value\":\"<p>All the logic of the pdoResources snippet is actually inside the pdoFetch class, so you can use that in your own snippets. <\/p><p>pdoFetch tries to execute only a single query at a time. So you need to join tables if you want information that is not in the requested table. <\/p><p>The only time when additional queries are made is when the TVs are selected because we need to get their names and default values for proper requests. After that TVs are joined in the main query, so there are no additional queries to get those values. <\/p><p>If you want to filter by TVs, you can use the <code>&where<\/code> property for it. <\/p>\",\"field\":2,\"settings\":[]},{\"value\":\"[[!pdoResources?\\n    &parents=`0`\\n    &includeTVs=`tv1`\\n    &where=`{\\\"tv1\\\":\\\"my_value\\\"}`\\n]]\",\"lang\":\"html\",\"field\":10,\"settings\":{}},{\"value\":\"<p>As TVs using the default value are not stored as values in the database, you need to compare the value to <code>null<\/code> when you want to select those resources. So if you want to get all resources where tv2 is set to the default value, you would do it like this:<\/p>\",\"field\":2,\"settings\":{}},{\"value\":\"[[!pdoResources?\\n    &parents=`0`\\n    &includeTVs=`tv2`\\n    &where=`{\\\"tv2\\\":null}`\\n]]\",\"lang\":\"html\",\"field\":10,\"settings\":{}},{\"value\":\"<p>In the template it will return the right default value for you to use. <\/p><p>Hopefully this explains pdoFetch and how you can use it. To summarise:<\/p><ol><li>All data is collected in a single query.<\/li><li>Use table joins for getting additional data from other tables if needed. <\/li><li>The results are returned as arrays instead of xPDO objects<\/li><li>If you enable <code>&checkPermissions<\/code> objects will be created to use the <code>checkPolicy()<\/code> method to make sure the user has permissions.<\/li><\/ol>\",\"field\":2,\"settings\":{}},{\"value\":\"pdoTools Class\",\"level\":\"h2\",\"field\":3,\"settings\":{}},{\"value\":\"<p>The pdoTools class handles chunks and various service methods. You can load it in the same way as pdoFetch. <\/p>\",\"field\":2,\"settings\":{}},{\"value\":\"<?php\\n$pdo = $modx->getService(''pdoTools'');\\n$chunk = $pdo->getChunk(''chunkName'', array(''with'' => ''values''));\",\"lang\":\"php\",\"field\":10,\"settings\":{}},{\"value\":\"<p>The getChunk method allow you to load chunks in several different ways.<\/p><ol><li>Default method as a chunk from the database. Just specify the name of the chunk. <\/li><li><code>@INLINE &lt;...&gt;<\/code> for a chunk that will be generated on the fly. <\/li><li><code>@FILE path\/to\/file.tpl<\/code> for a chunk that will be loaded from a file. For security reasons you can only use files with the type tpl and html, and they need to reside within the directory specified as &tplPath. <\/li><li><code>@TEMPLATE<\/code> to use an object its template property to parse the entire template for the result. This is only really useful for resources, and allows pdoTools to function as a replacement for renderResources. <\/li><\/ol><p>Here''s an example of specifying it as @FILE with a tplPath property:<\/p>\",\"field\":2,\"settings\":{}},{\"value\":\"[[!pdoResources?\\n    &tplPath=`\/assets\/chunks\/`\\n    &tpl=`@FILE dir\/file.tpl`\\n]]\",\"lang\":\"html\",\"field\":10,\"settings\":{}},{\"value\":\"<p>Every snippet based on pdoTools can use chunks this way. That includes pdoResources, getTickets, msProducts and more. <\/p><p>When you use the @INLINE approach you need to be careful, because the placeholders you specify might be processed before the snippet is executed. To help with that pdoTools supports different tags for placeholders using curly braces:<\/p>\",\"field\":2,\"settings\":{}},{\"value\":\"[[!pdoResources?\\n    &parents=`0`\\n    &tpl=`@INLINE <p>{{+id}} - {{+pagetitle}}<\/p>`\\n]]\",\"lang\":\"html\",\"field\":10,\"settings\":{}},{\"value\":\"<p>These placeholders will be passed to the snippet without getting processed, and then pdoTools will replace {{ and }} to the normal square brackets. Using this syntax for all @INLINE chunks on a page is important. <\/p><p>When placeholders are parsed by pdoTools, it will try to parse it directly, instead of passing it to the core parser. It can do this for simple tags:<\/p>\",\"field\":2,\"settings\":{}},{\"value\":\"[[+placeholder]]\\n[[%lexicon]]\\n[[~id_for_link]]\\n[[~[[+id]]]]\",\"lang\":\"html\",\"field\":10,\"settings\":{}},{\"value\":\"<p>If you have any nested snippets, chunks or output filters it will load the MODX parser. So if you use output filters the processing will be slower. <\/p><p>Luckily, pdoTools has another trick that allows you to modify the data before processing. This is the <code>&prepareSnippet<\/code> property. With &prepareSnippet, you can specify a snippet that should be called before processing the chunk to modify the data. For example:<\/p>\",\"field\":2,\"settings\":{}},{\"value\":\"[[!pdoResources?\\n    &parents=`0`\\n    &tpl=`@INLINE <p>{{+id}} - {{+pagetitle}}<\/p>`\\n    &prepareSnippet=`cookMyData`\\n]]\",\"lang\":\"html\",\"field\":10,\"settings\":{}},{\"value\":\"<p>The snippet <code>cookMyData<\/code> will have access to a <code>$row<\/code> variable with all the fields of a specific row. The snippet can modify this data, and then return a JSON or serialised string with the row data. <\/p><p>Let''s add a random number to the end of the pagetitle of each resource in the cookMyData snippet. <\/p>\",\"field\":2,\"settings\":{}},{\"value\":\"<?php\\n$row[''pagetitle''] .= rand();\\nreturn json_encode($row);\",\"lang\":\"php\",\"field\":10,\"settings\":{}},{\"value\":\"<p>It''s possible to return the data with either <code>json_encode()<\/code>, or with <code>serialise()<\/code>. By using the prepare snippet, you can throw away all output filters and nested snippets from your chunks to make it faster. Executing one snippet is much faster than parsing lots of different tags in chunks. <\/p><p>In the prepareSnippet you also have access to $modx and $pdoTools to cache data or retrieve other information. <\/p><p>A useful example of how you can use that is the setStore() and getStore() methods on $pdoTools to cache data in memory. For example for Tickets you can highlight users of certain groups with the prepareComments snippet. <\/p>\",\"field\":2,\"settings\":{}},{\"value\":\"[[!TicketComments?\\n    &prepareSnippet=`prepareComments`\\n]]\",\"lang\":\"html\",\"field\":10,\"settings\":{}},{\"value\":\"<?php\\nif (empty($row[''createdby''])) {return json_encode($row);}\\n\\n\/\/ If we do not have cached groups\\nif (!$groups = $pdoTools->getStore(''groups'')) {\\n\\t$tstart = microtime(true);\\n\\t$q = $modx->newQuery(''modUserGroupMember'');\\n\\t$q->innerJoin(''modUserGroup'', ''modUserGroup'', ''modUserGroupMember.user_group = modUserGroup.id'');\\n\\t$q->select(''modUserGroup.name, modUserGroupMember.member'');\\n\\t$q->where(array(''modUserGroup.name:!='' => ''Users''));\\n\\tif ($q->prepare() && $q->stmt->execute()) {\\n\\t\\t$modx->queryTime += microtime(true) - $tstart;\\n\\t\\t$modx->executedQueries++;\\n\\t\\t$groups = array();\\n\\t\\twhile ($tmp = $q->stmt->fetch(PDO::FETCH_ASSOC)) {\\n\\t\\t\\t$name = strtolower($tmp[''name'']);\\n\\t\\t\\tif (!isset($groups[$name])) {\\n\\t\\t\\t\\t$groups[$name] = array($tmp[''member'']);\\n\\t\\t\\t}\\n\\t\\t\\telse {\\n\\t\\t\\t\\t$groups[$name][] = $tmp[''member''];\\n\\t\\t\\t}\\n\\t\\t}\\n\\t}\\n\\tforeach ($groups as & $v) {\\n\\t\\t$v = array_flip($v);\\n\\t}\\n\\t\/\/ Save groups to cache\\n\\t$pdoTools->setStore(''groups'', $groups);\\n}\\n\\n$class = '''';\\nif (!empty($row[''blocked''])) {\\n\\t$class = ''blocked'';\\n}\\nelseif (isset($groups[''administrator''][$row[''createdby'']])) {\\n\\t$class = ''administrator'';\\n}\\n$row[''class''] = $class;\\n\\nreturn json_encode($row);\",\"lang\":\"php\",\"field\":10,\"settings\":{}},{\"value\":\"<p>After that snippet is executed, you can use the class placeholder in the chunk to highlight admins and blocked users. Using the store methods of pdoTools allows you to cache data in memory, it is not written to files, making it very fast for a temporary cache. <\/p><p>So to summarise.<\/p><ol><li>There are 4 ways of specifying chunks to use.<\/li><li>The simpler the chunk, the faster it will be processed. <\/li><li>Using the &prepareSnippet option to replace output filters and other template logic is faster.<\/li><\/ol><p>Every nested call in a chunk will take more time to process. Logic should be in PHP, not in MODX tags.<\/p><p><\/p>\",\"field\":2,\"settings\":{}},{\"value\":\"Conclusion\",\"level\":\"h2\",\"field\":3,\"settings\":{}},{\"value\":\"<p>Now you know how you can make your site faster with pdoTools. Simplify your chunks and place logic in a special snippet that you call with &prepareSnippet. For me this is the best way to develop traditional sites in MODX.<\/p><p>But pdoTools also has built-in support for a real template engine called Fenom. In the next article about pdoTools we will look at that in more detail. <\/p>\",\"field\":2,\"settings\":{}}]},\"settings\":[],\"parent\":0,\"title\":\"\"}]","linear":[{"value":"<p>As we learned in the first post about pdoTools, the main benefit of pdoTools is speed. In this second post we''ll look at how pdoTools can be faster, and some more cool features that the library provides. <\/p><p>I developed the first version of pdoTools when working on Tickets. It was supposed to be a ticketing system, but when it was complete it was more like a simple blog system with awesome AJAX commenting. Tools like getResources were not fast enough, so I developed by own library. <\/p><p>The speed in pdoTools come from two ideas. <\/p><ol><li>The database query is built with xPDO, but executed directly with PDO. This means there are no objects created to represent the rows in the database.<\/li><li>Faster chunk processing. If pdoTools can parse the chunk itself, the standard MODX parser is not used. <\/li><\/ol><p>To achieve this there are two classes in pdoTools. <strong>pdoTools<\/strong> is the primary class with general methods for parsing chunks, using placeholders, caching etc. <strong>pdoFetch<\/strong> is the class that works with the database. This can be used to build and execute queries, and to return the results. <\/p>","field":2,"settings":[]},{"value":"pdoFetch Class","level":"h2","field":3,"settings":[]},{"value":"<p>pdoFetch extends the pdoTools class, so you only need to load the one class depending on what you need to do. To load the pdoFetch class, you can just do this:<\/p>","field":2,"settings":[]},{"value":"<?php\n$pdo = $modx->getService(''pdoFetch'');","lang":"php","field":10,"settings":[]},{"value":"<p>After that you can use all the functions, for example getCollection and getChunk. Here is an example on retrieving and processing resources.<\/p>","field":2,"settings":[]},{"value":"<?php\n$pdo = $modx->getService(''pdoFetch'');\n$resources = $pdo->getCollection(''modResource'', array(\n    ''published'' => true,\n    ''deleted'' => false\n), array(\n    ''parents'' => ''1,5,6,-9'',\n    ''includeTVs'' => ''tv1, tv2'',\n    ''sortby'' => ''id'',\n    ''sortby'' => ''asc'',\n    ''limit'' => 20,\n));\n$tpl = ''@INLINE <p>[[+id]] - [[+pagetitle]]<\/p>'';\n$output = '''';\nforeach ($resources as $resource) {\n    $output .= $pdo->getChunk($tpl, $resource);\n}\nreturn $output;","lang":"php","field":10,"settings":[]},{"value":"<p>All the logic of the pdoResources snippet is actually inside the pdoFetch class, so you can use that in your own snippets. <\/p><p>pdoFetch tries to execute only a single query at a time. So you need to join tables if you want information that is not in the requested table. <\/p><p>The only time when additional queries are made is when the TVs are selected because we need to get their names and default values for proper requests. After that TVs are joined in the main query, so there are no additional queries to get those values. <\/p><p>If you want to filter by TVs, you can use the <code>&where<\/code> property for it. <\/p>","field":2,"settings":[]},{"value":"[[!pdoResources?\n    &parents=`0`\n    &includeTVs=`tv1`\n    &where=`{\"tv1\":\"my_value\"}`\n]]","lang":"html","field":10,"settings":[]},{"value":"<p>As TVs using the default value are not stored as values in the database, you need to compare the value to <code>null<\/code> when you want to select those resources. So if you want to get all resources where tv2 is set to the default value, you would do it like this:<\/p>","field":2,"settings":[]},{"value":"[[!pdoResources?\n    &parents=`0`\n    &includeTVs=`tv2`\n    &where=`{\"tv2\":null}`\n]]","lang":"html","field":10,"settings":[]},{"value":"<p>In the template it will return the right default value for you to use. <\/p><p>Hopefully this explains pdoFetch and how you can use it. To summarise:<\/p><ol><li>All data is collected in a single query.<\/li><li>Use table joins for getting additional data from other tables if needed. <\/li><li>The results are returned as arrays instead of xPDO objects<\/li><li>If you enable <code>&checkPermissions<\/code> objects will be created to use the <code>checkPolicy()<\/code> method to make sure the user has permissions.<\/li><\/ol>","field":2,"settings":[]},{"value":"pdoTools Class","level":"h2","field":3,"settings":[]},{"value":"<p>The pdoTools class handles chunks and various service methods. You can load it in the same way as pdoFetch. <\/p>","field":2,"settings":[]},{"value":"<?php\n$pdo = $modx->getService(''pdoTools'');\n$chunk = $pdo->getChunk(''chunkName'', array(''with'' => ''values''));","lang":"php","field":10,"settings":[]},{"value":"<p>The getChunk method allow you to load chunks in several different ways.<\/p><ol><li>Default method as a chunk from the database. Just specify the name of the chunk. <\/li><li><code>@INLINE &lt;...&gt;<\/code> for a chunk that will be generated on the fly. <\/li><li><code>@FILE path\/to\/file.tpl<\/code> for a chunk that will be loaded from a file. For security reasons you can only use files with the type tpl and html, and they need to reside within the directory specified as &tplPath. <\/li><li><code>@TEMPLATE<\/code> to use an object its template property to parse the entire template for the result. This is only really useful for resources, and allows pdoTools to function as a replacement for renderResources. <\/li><\/ol><p>Here''s an example of specifying it as @FILE with a tplPath property:<\/p>","field":2,"settings":[]},{"value":"[[!pdoResources?\n    &tplPath=`\/assets\/chunks\/`\n    &tpl=`@FILE dir\/file.tpl`\n]]","lang":"html","field":10,"settings":[]},{"value":"<p>Every snippet based on pdoTools can use chunks this way. That includes pdoResources, getTickets, msProducts and more. <\/p><p>When you use the @INLINE approach you need to be careful, because the placeholders you specify might be processed before the snippet is executed. To help with that pdoTools supports different tags for placeholders using curly braces:<\/p>","field":2,"settings":[]},{"value":"[[!pdoResources?\n    &parents=`0`\n    &tpl=`@INLINE <p>{{+id}} - {{+pagetitle}}<\/p>`\n]]","lang":"html","field":10,"settings":[]},{"value":"<p>These placeholders will be passed to the snippet without getting processed, and then pdoTools will replace {{ and }} to the normal square brackets. Using this syntax for all @INLINE chunks on a page is important. <\/p><p>When placeholders are parsed by pdoTools, it will try to parse it directly, instead of passing it to the core parser. It can do this for simple tags:<\/p>","field":2,"settings":[]},{"value":"[[+placeholder]]\n[[%lexicon]]\n[[~id_for_link]]\n[[~[[+id]]]]","lang":"html","field":10,"settings":[]},{"value":"<p>If you have any nested snippets, chunks or output filters it will load the MODX parser. So if you use output filters the processing will be slower. <\/p><p>Luckily, pdoTools has another trick that allows you to modify the data before processing. This is the <code>&prepareSnippet<\/code> property. With &prepareSnippet, you can specify a snippet that should be called before processing the chunk to modify the data. For example:<\/p>","field":2,"settings":[]},{"value":"[[!pdoResources?\n    &parents=`0`\n    &tpl=`@INLINE <p>{{+id}} - {{+pagetitle}}<\/p>`\n    &prepareSnippet=`cookMyData`\n]]","lang":"html","field":10,"settings":[]},{"value":"<p>The snippet <code>cookMyData<\/code> will have access to a <code>$row<\/code> variable with all the fields of a specific row. The snippet can modify this data, and then return a JSON or serialised string with the row data. <\/p><p>Let''s add a random number to the end of the pagetitle of each resource in the cookMyData snippet. <\/p>","field":2,"settings":[]},{"value":"<?php\n$row[''pagetitle''] .= rand();\nreturn json_encode($row);","lang":"php","field":10,"settings":[]},{"value":"<p>It''s possible to return the data with either <code>json_encode()<\/code>, or with <code>serialise()<\/code>. By using the prepare snippet, you can throw away all output filters and nested snippets from your chunks to make it faster. Executing one snippet is much faster than parsing lots of different tags in chunks. <\/p><p>In the prepareSnippet you also have access to $modx and $pdoTools to cache data or retrieve other information. <\/p><p>A useful example of how you can use that is the setStore() and getStore() methods on $pdoTools to cache data in memory. For example for Tickets you can highlight users of certain groups with the prepareComments snippet. <\/p>","field":2,"settings":[]},{"value":"[[!TicketComments?\n    &prepareSnippet=`prepareComments`\n]]","lang":"html","field":10,"settings":[]},{"value":"<?php\nif (empty($row[''createdby''])) {return json_encode($row);}\n\n\/\/ If we do not have cached groups\nif (!$groups = $pdoTools->getStore(''groups'')) {\n\t$tstart = microtime(true);\n\t$q = $modx->newQuery(''modUserGroupMember'');\n\t$q->innerJoin(''modUserGroup'', ''modUserGroup'', ''modUserGroupMember.user_group = modUserGroup.id'');\n\t$q->select(''modUserGroup.name, modUserGroupMember.member'');\n\t$q->where(array(''modUserGroup.name:!='' => ''Users''));\n\tif ($q->prepare() && $q->stmt->execute()) {\n\t\t$modx->queryTime += microtime(true) - $tstart;\n\t\t$modx->executedQueries++;\n\t\t$groups = array();\n\t\twhile ($tmp = $q->stmt->fetch(PDO::FETCH_ASSOC)) {\n\t\t\t$name = strtolower($tmp[''name'']);\n\t\t\tif (!isset($groups[$name])) {\n\t\t\t\t$groups[$name] = array($tmp[''member'']);\n\t\t\t}\n\t\t\telse {\n\t\t\t\t$groups[$name][] = $tmp[''member''];\n\t\t\t}\n\t\t}\n\t}\n\tforeach ($groups as & $v) {\n\t\t$v = array_flip($v);\n\t}\n\t\/\/ Save groups to cache\n\t$pdoTools->setStore(''groups'', $groups);\n}\n\n$class = '''';\nif (!empty($row[''blocked''])) {\n\t$class = ''blocked'';\n}\nelseif (isset($groups[''administrator''][$row[''createdby'']])) {\n\t$class = ''administrator'';\n}\n$row[''class''] = $class;\n\nreturn json_encode($row);","lang":"php","field":10,"settings":[]},{"value":"<p>After that snippet is executed, you can use the class placeholder in the chunk to highlight admins and blocked users. Using the store methods of pdoTools allows you to cache data in memory, it is not written to files, making it very fast for a temporary cache. <\/p><p>So to summarise.<\/p><ol><li>There are 4 ways of specifying chunks to use.<\/li><li>The simpler the chunk, the faster it will be processed. <\/li><li>Using the &prepareSnippet option to replace output filters and other template logic is faster.<\/li><\/ol><p>Every nested call in a chunk will take more time to process. Logic should be in PHP, not in MODX tags.<\/p><p><\/p>","field":2,"settings":[]},{"value":"Conclusion","level":"h2","field":3,"settings":[]},{"value":"<p>Now you know how you can make your site faster with pdoTools. Simplify your chunks and place logic in a special snippet that you call with &prepareSnippet. For me this is the best way to develop traditional sites in MODX.<\/p><p>But pdoTools also has built-in support for a real template engine called Fenom. In the next article about pdoTools we will look at that in more detail. <\/p>","field":2,"settings":[]}],"fieldcounts":{"2":15,"3":3,"10":12},"_isContentBlocks":true}}'
+tvs:
+    author: vasilynaumkin
+    disqus_id: ''
+    preview.image: ''
+
+-----
+
+<div class="row   " >
+    <div class="[[++default_article_column_classnames]]">
+        <p>As we learned in the first post about pdoTools, the main benefit of pdoTools is speed. In this second post we'll look at how pdoTools can be faster, and some more cool features that the library provides. </p><p>I developed the first version of pdoTools when working on Tickets. It was supposed to be a ticketing system, but when it was complete it was more like a simple blog system with awesome AJAX commenting. Tools like getResources were not fast enough, so I developed by own library. </p><p>The speed in pdoTools come from two ideas. </p><ol><li>The database query is built with xPDO, but executed directly with PDO. This means there are no objects created to represent the rows in the database.</li><li>Faster chunk processing. If pdoTools can parse the chunk itself, the standard MODX parser is not used. </li></ol><p>To achieve this there are two classes in pdoTools. <strong>pdoTools</strong> is the primary class with general methods for parsing chunks, using placeholders, caching etc. <strong>pdoFetch</strong> is the class that works with the database. This can be used to build and execute queries, and to return the results. </p>
+
+<h2>pdoFetch Class</h2>
+
+<p>pdoFetch extends the pdoTools class, so you only need to load the one class depending on what you need to do. To load the pdoFetch class, you can just do this:</p>
+
+<pre><code class="language-php">&lt;?php
+$pdo = $modx-&gt;getService('pdoFetch');</code></pre>
+
+<p>After that you can use all the functions, for example getCollection and getChunk. Here is an example on retrieving and processing resources.</p>
+
+<pre><code class="language-php">&lt;?php
+$pdo = $modx-&gt;getService('pdoFetch');
+$resources = $pdo-&gt;getCollection('modResource', array(
+    'published' =&gt; true,
+    'deleted' =&gt; false
+), array(
+    'parents' =&gt; '1,5,6,-9',
+    'includeTVs' =&gt; 'tv1, tv2',
+    'sortby' =&gt; 'id',
+    'sortby' =&gt; 'asc',
+    'limit' =&gt; 20,
+));
+$tpl = '@INLINE &lt;p&gt;&#91;&#91;+id&#93;&#93; - &#91;&#91;+pagetitle&#93;&#93;&lt;/p&gt;';
+$output = '';
+foreach ($resources as $resource) {
+    $output .= $pdo-&gt;getChunk($tpl, $resource);
+}
+return $output;</code></pre>
+
+<p>All the logic of the pdoResources snippet is actually inside the pdoFetch class, so you can use that in your own snippets. </p><p>pdoFetch tries to execute only a single query at a time. So you need to join tables if you want information that is not in the requested table. </p><p>The only time when additional queries are made is when the TVs are selected because we need to get their names and default values for proper requests. After that TVs are joined in the main query, so there are no additional queries to get those values. </p><p>If you want to filter by TVs, you can use the <code>&where</code> property for it. </p>
+
+<pre><code class="language-markup">&#91;&#91;!pdoResources?
+    &amp;parents=`0`
+    &amp;includeTVs=`tv1`
+    &amp;where=`{&quot;tv1&quot;:&quot;my_value&quot;}`
+&#93;&#93;</code></pre>
+
+<p>As TVs using the default value are not stored as values in the database, you need to compare the value to <code>null</code> when you want to select those resources. So if you want to get all resources where tv2 is set to the default value, you would do it like this:</p>
+
+<pre><code class="language-markup">&#91;&#91;!pdoResources?
+    &amp;parents=`0`
+    &amp;includeTVs=`tv2`
+    &amp;where=`{&quot;tv2&quot;:null}`
+&#93;&#93;</code></pre>
+
+<p>In the template it will return the right default value for you to use. </p><p>Hopefully this explains pdoFetch and how you can use it. To summarise:</p><ol><li>All data is collected in a single query.</li><li>Use table joins for getting additional data from other tables if needed. </li><li>The results are returned as arrays instead of xPDO objects</li><li>If you enable <code>&checkPermissions</code> objects will be created to use the <code>checkPolicy()</code> method to make sure the user has permissions.</li></ol>
+
+<h2>pdoTools Class</h2>
+
+<p>The pdoTools class handles chunks and various service methods. You can load it in the same way as pdoFetch. </p>
+
+<pre><code class="language-php">&lt;?php
+$pdo = $modx-&gt;getService('pdoTools');
+$chunk = $pdo-&gt;getChunk('chunkName', array('with' =&gt; 'values'));</code></pre>
+
+<p>The getChunk method allow you to load chunks in several different ways.</p><ol><li>Default method as a chunk from the database. Just specify the name of the chunk. </li><li><code>@INLINE &lt;...&gt;</code> for a chunk that will be generated on the fly. </li><li><code>@FILE path/to/file.tpl</code> for a chunk that will be loaded from a file. For security reasons you can only use files with the type tpl and html, and they need to reside within the directory specified as &tplPath. </li><li><code>@TEMPLATE</code> to use an object its template property to parse the entire template for the result. This is only really useful for resources, and allows pdoTools to function as a replacement for renderResources. </li></ol><p>Here's an example of specifying it as @FILE with a tplPath property:</p>
+
+<pre><code class="language-markup">&#91;&#91;!pdoResources?
+    &amp;tplPath=`/assets/chunks/`
+    &amp;tpl=`@FILE dir/file.tpl`
+&#93;&#93;</code></pre>
+
+<p>Every snippet based on pdoTools can use chunks this way. That includes pdoResources, getTickets, msProducts and more. </p><p>When you use the @INLINE approach you need to be careful, because the placeholders you specify might be processed before the snippet is executed. To help with that pdoTools supports different tags for placeholders using curly braces:</p>
+
+<pre><code class="language-markup">&#91;&#91;!pdoResources?
+    &amp;parents=`0`
+    &amp;tpl=`@INLINE &lt;p&gt;{{+id}} - {{+pagetitle}}&lt;/p&gt;`
+&#93;&#93;</code></pre>
+
+<p>These placeholders will be passed to the snippet without getting processed, and then pdoTools will replace {{ and }} to the normal square brackets. Using this syntax for all @INLINE chunks on a page is important. </p><p>When placeholders are parsed by pdoTools, it will try to parse it directly, instead of passing it to the core parser. It can do this for simple tags:</p>
+
+<pre><code class="language-markup">&#91;&#91;+placeholder&#93;&#93;
+&#91;&#91;%lexicon&#93;&#93;
+&#91;&#91;~id_for_link&#93;&#93;
+&#91;&#91;~&#91;&#91;+id&#93;&#93;&#93;&#93;</code></pre>
+
+<p>If you have any nested snippets, chunks or output filters it will load the MODX parser. So if you use output filters the processing will be slower. </p><p>Luckily, pdoTools has another trick that allows you to modify the data before processing. This is the <code>&prepareSnippet</code> property. With &prepareSnippet, you can specify a snippet that should be called before processing the chunk to modify the data. For example:</p>
+
+<pre><code class="language-markup">&#91;&#91;!pdoResources?
+    &amp;parents=`0`
+    &amp;tpl=`@INLINE &lt;p&gt;{{+id}} - {{+pagetitle}}&lt;/p&gt;`
+    &amp;prepareSnippet=`cookMyData`
+&#93;&#93;</code></pre>
+
+<p>The snippet <code>cookMyData</code> will have access to a <code>$row</code> variable with all the fields of a specific row. The snippet can modify this data, and then return a JSON or serialised string with the row data. </p><p>Let's add a random number to the end of the pagetitle of each resource in the cookMyData snippet. </p>
+
+<pre><code class="language-php">&lt;?php
+$row&#91;'pagetitle'&#93; .= rand();
+return json_encode($row);</code></pre>
+
+<p>It's possible to return the data with either <code>json_encode()</code>, or with <code>serialise()</code>. By using the prepare snippet, you can throw away all output filters and nested snippets from your chunks to make it faster. Executing one snippet is much faster than parsing lots of different tags in chunks. </p><p>In the prepareSnippet you also have access to $modx and $pdoTools to cache data or retrieve other information. </p><p>A useful example of how you can use that is the setStore() and getStore() methods on $pdoTools to cache data in memory. For example for Tickets you can highlight users of certain groups with the prepareComments snippet. </p>
+
+<pre><code class="language-markup">&#91;&#91;!TicketComments?
+    &amp;prepareSnippet=`prepareComments`
+&#93;&#93;</code></pre>
+
+<pre><code class="language-php">&lt;?php
+if (empty($row&#91;'createdby'&#93;)) {return json_encode($row);}
+
+// If we do not have cached groups
+if (!$groups = $pdoTools-&gt;getStore('groups')) {
+	$tstart = microtime(true);
+	$q = $modx-&gt;newQuery('modUserGroupMember');
+	$q-&gt;innerJoin('modUserGroup', 'modUserGroup', 'modUserGroupMember.user_group = modUserGroup.id');
+	$q-&gt;select('modUserGroup.name, modUserGroupMember.member');
+	$q-&gt;where(array('modUserGroup.name:!=' =&gt; 'Users'));
+	if ($q-&gt;prepare() &amp;&amp; $q-&gt;stmt-&gt;execute()) {
+		$modx-&gt;queryTime += microtime(true) - $tstart;
+		$modx-&gt;executedQueries++;
+		$groups = array();
+		while ($tmp = $q-&gt;stmt-&gt;fetch(PDO::FETCH_ASSOC)) {
+			$name = strtolower($tmp&#91;'name'&#93;);
+			if (!isset($groups&#91;$name&#93;)) {
+				$groups&#91;$name&#93; = array($tmp&#91;'member'&#93;);
+			}
+			else {
+				$groups&#91;$name&#93;&#91;&#93; = $tmp&#91;'member'&#93;;
+			}
+		}
+	}
+	foreach ($groups as &amp; $v) {
+		$v = array_flip($v);
+	}
+	// Save groups to cache
+	$pdoTools-&gt;setStore('groups', $groups);
+}
+
+$class = '';
+if (!empty($row&#91;'blocked'&#93;)) {
+	$class = 'blocked';
+}
+elseif (isset($groups&#91;'administrator'&#93;&#91;$row&#91;'createdby'&#93;&#93;)) {
+	$class = 'administrator';
+}
+$row&#91;'class'&#93; = $class;
+
+return json_encode($row);</code></pre>
+
+<p>After that snippet is executed, you can use the class placeholder in the chunk to highlight admins and blocked users. Using the store methods of pdoTools allows you to cache data in memory, it is not written to files, making it very fast for a temporary cache. </p><p>So to summarise.</p><ol><li>There are 4 ways of specifying chunks to use.</li><li>The simpler the chunk, the faster it will be processed. </li><li>Using the &prepareSnippet option to replace output filters and other template logic is faster.</li></ol><p>Every nested call in a chunk will take more time to process. Logic should be in PHP, not in MODX tags.</p><p></p>
+
+<h2>Conclusion</h2>
+
+<p>Now you know how you can make your site faster with pdoTools. Simplify your chunks and place logic in a special snippet that you call with &prepareSnippet. For me this is the best way to develop traditional sites in MODX.</p><p>But pdoTools also has built-in support for a real template engine called Fenom. In the next article about pdoTools we will look at that in more detail. </p>
+    </div>
+</div>
