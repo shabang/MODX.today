@@ -3,6 +3,8 @@
 <head>
 <title>{if $_pagetitle}{$_pagetitle} | {/if}{$_config.site_name|strip_tags|escape}</title>
 <meta http-equiv="Content-Type" content="text/html; charset={$_config.modx_charset}" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 
 {if $_config.manager_favicon_url}<link rel="shortcut icon" href="{$_config.manager_favicon_url}" />{/if}
 
