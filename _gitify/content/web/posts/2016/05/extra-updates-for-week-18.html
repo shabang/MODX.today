@@ -5517,9 +5517,110 @@ tvs:
         <p>Changelog for OpenStack Swift.</p><p>1.2.1-pl (02.05.2016)</p><p>===============================</p><p>- [#2] Improved compatibility with MODX media browser.</p><p>1.2.0-pl (02.03.2016)</p><p>===============================</p><p>- Additional media source for Rackspace.</p><p>1.1.2-pl (24.01.2016)</p><p>===============================</p><p>- Improved remove of directories.</p><p>1.1.1-pl (21.01.2016)</p><p>===============================</p><p>- Fixed "strict standards" PHP warning.</p><p>- Fixed possible containers duplication in a menus.</p><p>1.1.0-pl (15.01.2016)</p><p>===============================</p><p>- Updated core to the latest Rackspace OpenCloud API.</p><p>- Total refactor of component.</p><p>1.0.2-pl (7.12.2015)</p><p>===============================</p><p>- Fixed folder and file icons for Revolution 2.3+</p><p>- Improved method getObjectUrl.</p><p>1.0.1-pl (11.04.2015)</p><p>===============================</p><p>- Some fixes in PHP Cloud Files API</p><p>1.0.0-pl (22.12.2012)</p><p>===============================</p><p>- Use CF_Object in getObjectContents instead file_get_contents</p><p>- Add support create and edit files</p><p>- Fix upload files and create folders in root</p><p>1.0.0 beta 2 (14.10.2012)</p><p>===============================</p><p>- Fix filepath in upload method</p><p>1.0.0 beta 1 (04.10.2012)</p><p>===============================</p><p>- Initial release</p>
     </div>
 </li>
-</ul>
+
+<li class="release">
+    <p><b><a href="http://modx.com/extras/package/tinymcewrapper?utm_source=modxtoday&utm_medium=releaserobotrobbie&utm_campaign=releases_18&utm_term=tinymcewrapper">TinymceWrapper 2.3.1-pl</a></b>,
+        released on 2016-05-03
+        
+        <a href="javascript:void(0);" data-target="changelog_7" class="show-changelog">
+            View Changelog
+        </a>
+    </p>
+    
+    <div class="changelog" id="changelog_7">
+        <a href="javascript:void(0);" class="close-changelog" data-target="changelog_7">&times;</a>
+        <p>++DEPENDENCIES (optional): pdoTools / getResources, tagLister, MODX Resizer, NewsPublisher, MIGX getImageList</p><p>++ALWAYS START BY viewing the TinymceWrapper Demo Resource (it has everything enabled, frontend/backend)</p><p>++INCOMPATIBILITIES</p><p>  FixedPre (and any Extra running on OnParseDocument) kills TinymceWrapper dead. Bruno17 has found a possible MODX glitch.</p><p>  When our TinyJSONGallery is on, Extras Image+ and Gallery do a weird thing of outputting tv path at top of page - will address jako's suggestion before next winter</p><p>------------------------------</p><p>++CONFIGURE your RTE: valid_elements + valid_children = unlimited possibilities!!!</p><p>------------------------------</p><p>TinymceWrapper 2.3.1-pl (aka MIRANDA the beautiful)</p><p>---------------------------------</p><p>UPDATED plugin System Events </p><p>      + OnDocFormPrerender, OnTempFormPrerender,OnSnipFormPrerender,OnChunkFormPrerender,OnPluginFormPrerender,OnFileEditFormPrerender</p><p>      + fix your PropertySets!!!</p><p>UPDATED TinymceWrapper Resource with TinyJSONGallery Demo frontend/backend - sweet stuff!!!</p><p>UPDATED TinymceWrapperNPpublishButtonsTpl chunk - better error handling!!!</p><p>UPDATED modxMagicHoverLink.js</p><p>      + when you hover over resources in tree and search result, you can get SCHEME, relative, absolute, http, https</p><p>      + full support for Markdown</p><p>UPDATED elFinder to 2.1.11, protocol version: 2.1 -- jQuery/jQuery UI: 1.12.0/1.11.4</p><p>UPDATED Responsive FileManager to 9.10.1</p><p>UPDATED TinymceWrapperCodeMirror chunk (includes emmet) to function like its fraternal twin below.</p><p>ADDED TinymceWrapperAce chunk (includes emmet)</p><p>      0. Ace up any fabled textarea within MODX... including quick edit/ create... beautiful and awesome, easy to customize!</p><p>      1. Flawlessly auto detect resource language by content_type (mime), or set to fixed.</p><p>      2. Auto detect elements according to static source extension, or set to fixed.</p><p>      3. Auto detect file language according to file extension - or even in quick edit modal.</p><p>      4. Change language on the fly while editing anything.</p><p>      5. Go full screen. </p><p>      6. Deactivate individual textareas at pleasure.</p><p>      7. Use with RTE - well, you can, and why not?</p><p>      8. Out of the box, Ace comes with lint for the major languages if not all, and a powerful set of keyboard control./</p><p>      0-7 is applicable to TinymceWrapperCodeMirror</p><p>ADDED to TinyMCE RTE awesome homemade PLUGINS</p><p>      + twExoticMarkdownEditor.js - turn any TinyMCE instance into a full-blown beautiful Markdown Editor</p><p>      + twPreCodeManager.js - manage all pre/code tag content - just paste in your source code, and bam! you are on the road! Works for pure Markdown Syntax fenced blocks as well.</p><p>      + twAceEditor.js - just when you thought twCodeMirror.js was the best thing since sliced bacon, Ace comes in with its full horse power.</p><p>      + twCodeMirror.js - reworked to foot the bill (added close button and fontSize)</p><p>ADDED full Markdown support (COMPOSE AND PARSE in markdown, markdownExtra, parsedown, parsedownExtra)</p><p>      SEE init chunk: sample.TinymceWrapperMarkdown</p><p>        + Transform your RTE into the most Perfect Pure Raw Markdown Editor ever - with Markdown floating toolbar, shortcuts, templates etc</p><p>        + USAGE (frontend/backend):</p><p>          ----------------------------------------</p><p>          tinymce.init({</p><p>            ...</p><p>            forced_root_block : "", //!important</p><p>            force_br_newlines : true, //!important</p><p>            force_p_newlines : false, //!important</p><p>            valid_elements: "br", //!important</p><p>            paste_as_text: true, //!important</p><p>            external_plugins: {</p><p>              twExoticMarkdownEditor: "[[++assets_url]]components/tinymcewrapper/tinymceplugins/twExoticMarkdownEditor.js", //!important</p><p>              bubbleBar: "[[++assets_url]]components/tinymcewrapper/tinymceplugins/tinymceBubbleBar.js",</p><p>              twPreCodeManager: "[[++assets_url]]components/tinymcewrapper/tinymceplugins/twPreCodeManager.js",</p><p>              modxMagicHoverLink: "[[++assets_url]]components/tinymcewrapper/tinymceplugins/modxMagicHoverLink.js"</p><p>            },</p><p>            plugins: "paste contextmenu save searchreplace fullscreen",</p><p>            toolbar: "fullscreen twPreCodeManager boldMD italicMD linkMD imageMD blockquoteMD codeMD numlistMD bullistMD tableMD undo redo code searchreplace bubbleBarOptionsButton",</p><p>            menubar: false,</p><p>            contextmenu: "fullscreen twPreCodeManager boldMD italicMD linkMD imageMD blockquoteMD codeMD numlistMD bullistMD tableMD undo redo code searchreplace template"</p><p>          })</p><p>          ----------------------------------------</p><p>      SEE snippet: TinymceWrapperMarkdown (use as Output Modifier)</p><p>        + Not just write beautifully in Markdown but parse the silly thing - so that you never have to write in RT format or see HTML ever again - oh yeaaa! copy all your github stuff over...</p><p>        + <div class="row   " >
+    <div class="[[++default_article_column_classnames]]">
+        Our loyal Release Robot Robbie has compiled a list of new and updated MODX Extras in the week of May 02, 2016.
+
+<ul class="extras-feed">
+    <li class="release">
+    <p><b><a href="http://modx.com/extras/package/virtunewsletter?utm_source=modxtoday&utm_medium=releaserobotrobbie&utm_campaign=releases_18&utm_term=virtunewsletter">virtuNewsletter 2.0.3-pl</a></b>,
+        released on 2016-05-02
+        
+        <a href="javascript:void(0);" data-target="changelog_1" class="show-changelog">
+            View Changelog
+        </a>
+    </p>
+    
+    <div class="changelog" id="changelog_1">
+        <a href="javascript:void(0);" class="close-changelog" data-target="changelog_1">&times;</a>
+        <p>virtuNewsletter 2.0.3-pl (May 2, 2016)</p><p>=================================================</p><ul><li>- remove setQueue from cron's process proccessor</li><li>- fixed class exists condition on Mailgun's class</li></ul>
     </div>
-</div> ... [[*myTV:TinymceWrapperMarkdown]] ... [[+placeholder:TinymceWrapperMarkdown]]</p><p>        + Modifier takes these options: TinymceWrapperMarkdown=`markdown,markdownE,parsedown,parsedownE` (default is parsedownE)</p><p>FIXED critical error in plugin that prevented creating of New Resources anywhere in the Manager (thanks to modxor)</p><p>FIXED typo in elfinderConnector snippet that rendered custom chunks useless (thanks to Dave Smith)</p><p>FIXED elfinder not supplying Image/File TV in TinyMagicPublisher</p><p>FIXED TinyJSONGallery.js </p><p>        + to load jQuery UI via https </p><p>        + ctrl+s now saves JSON and saves to MODX</p><p>FIXED imogen template file/image TV errors</p><p>        + MODX Manager phpthumb must be fed relative inks</p><p>        + MODX Manager phpthumb cannot parse MODX tags</p><p>---------------------------------------------------------------------------------------------------------------------------------------</p>
+</li>
+
+<li class="release">
+    <p><b><a href="http://modx.com/extras/package/admintools?utm_source=modxtoday&utm_medium=releaserobotrobbie&utm_campaign=releases_18&utm_term=admintools">AdminTools 1.6.0-pl</a></b>,
+        released on 2016-05-02
+        
+        <a href="javascript:void(0);" data-target="changelog_2" class="show-changelog">
+            View Changelog
+        </a>
+    </p>
+    
+    <div class="changelog" id="changelog_2">
+        <a href="javascript:void(0);" class="close-changelog" data-target="changelog_2">&times;</a>
+        <p>1.6.0-pl</p><p>==============</p><p>- Added templates and resources relations.</p><p>1.5.0-pl</p><p>==============</p><p>- Added user notes functionality.</p><p>1.4.1-pl</p><p>==============</p><p>- Made the alternate login interface in pure javascript. Remove the jQuery from the AdminLogin snippet.</p><p>- Automatic logout inactive or blocked user if he is logged in.</p><p>1.4.1-beta</p><p>==============</p><p>- Element names in the elements log are links now.</p><p>- Fixed bug of the email authorization.</p>
+    </div>
+</li>
+
+<li class="release">
+    <p><b><a href="http://modx.com/extras/package/formdatamanager?utm_source=modxtoday&utm_medium=releaserobotrobbie&utm_campaign=releases_18&utm_term=formdatamanager">FormDataManager 1.1.0-pl</a></b>,
+        released on 2016-05-02
+        
+        <a href="javascript:void(0);" data-target="changelog_3" class="show-changelog">
+            View Changelog
+        </a>
+    </p>
+    
+    <div class="changelog" id="changelog_3">
+        <a href="javascript:void(0);" class="close-changelog" data-target="changelog_3">&times;</a>
+        <p><em>There is no changelog available for this release.</em></p>
+    </div>
+</li>
+
+<li class="release">
+    <p><b><a href="http://modx.com/extras/package/clicktocall?utm_source=modxtoday&utm_medium=releaserobotrobbie&utm_campaign=releases_18&utm_term=clicktocall">ClickToCall 0.1.0-rc2</a></b>,
+        released on 2016-05-02
+        
+        <a href="javascript:void(0);" data-target="changelog_4" class="show-changelog">
+            View Changelog
+        </a>
+    </p>
+    
+    <div class="changelog" id="changelog_4">
+        <a href="javascript:void(0);" class="close-changelog" data-target="changelog_4">&times;</a>
+        <p>- Fixed: Button central alignment</p>
+    </div>
+</li>
+
+<li class="release">
+    <p><b><a href="http://modx.com/extras/package/minifyhtml?utm_source=modxtoday&utm_medium=releaserobotrobbie&utm_campaign=releases_18&utm_term=minifyhtml">MinifyHTML 1.1-pl1</a></b>,
+        released on 2016-05-02
+        
+        <a href="javascript:void(0);" data-target="changelog_5" class="show-changelog">
+            View Changelog
+        </a>
+    </p>
+    
+    <div class="changelog" id="changelog_5">
+        <a href="javascript:void(0);" class="close-changelog" data-target="changelog_5">&times;</a>
+        <p><em>There is no changelog available for this release.</em></p>
+    </div>
+</li>
+
+<li class="release">
+    <p><b><a href="http://modx.com/extras/package/swift?utm_source=modxtoday&utm_medium=releaserobotrobbie&utm_campaign=releases_18&utm_term=swift">Swift Media Source 1.2.1-pl</a></b>,
+        released on 2016-05-02
+        
+        <a href="javascript:void(0);" data-target="changelog_6" class="show-changelog">
+            View Changelog
+        </a>
+    </p>
+    
+    <div class="changelog" id="changelog_6">
+        <a href="javascript:void(0);" class="close-changelog" data-target="changelog_6">&times;</a>
+        <p>Changelog for OpenStack Swift.</p><p>1.2.1-pl (02.05.2016)</p><p>===============================</p><p>- [#2] Improved compatibility with MODX media browser.</p><p>1.2.0-pl (02.03.2016)</p><p>===============================</p><p>- Additional media source for Rackspace.</p><p>1.1.2-pl (24.01.2016)</p><p>===============================</p><p>- Improved remove of directories.</p><p>1.1.1-pl (21.01.2016)</p><p>===============================</p><p>- Fixed "strict standards" PHP warning.</p><p>- Fixed possible containers duplication in a menus.</p><p>1.1.0-pl (15.01.2016)</p><p>===============================</p><p>- Updated core to the latest Rackspace OpenCloud API.</p><p>- Total refactor of component.</p><p>1.0.2-pl (7.12.2015)</p><p>===============================</p><p>- Fixed folder and file icons for Revolution 2.3+</p><p>- Improved method getObjectUrl.</p><p>1.0.1-pl (11.04.2015)</p><p>===============================</p><p>- Some fixes in PHP Cloud Files API</p><p>1.0.0-pl (22.12.2012)</p><p>===============================</p><p>- Use CF_Object in getObjectContents instead file_get_contents</p><p>- Add support create and edit files</p><p>- Fix upload files and create folders in root</p><p>1.0.0 beta 2 (14.10.2012)</p><p>===============================</p><p>- Fix filepath in upload method</p><p>1.0.0 beta 1 (04.10.2012)</p><p>===============================</p><p>- Initial release</p>
     </div>
 </li>
 </ul>
@@ -5670,6 +5771,38 @@ tvs:
 </ul>
     </div>
 </div> ... [[*myTV:TinymceWrapperMarkdown]] ... [[+placeholder:TinymceWrapperMarkdown]]</p><p>        + Modifier takes these options: TinymceWrapperMarkdown=`markdown,markdownE,parsedown,parsedownE` (default is parsedownE)</p><p>FIXED critical error in plugin that prevented creating of New Resources anywhere in the Manager (thanks to modxor)</p><p>FIXED typo in elfinderConnector snippet that rendered custom chunks useless (thanks to Dave Smith)</p><p>FIXED elfinder not supplying Image/File TV in TinyMagicPublisher</p><p>FIXED TinyJSONGallery.js </p><p>        + to load jQuery UI via https </p><p>        + ctrl+s now saves JSON and saves to MODX</p><p>FIXED imogen template file/image TV errors</p><p>        + MODX Manager phpthumb must be fed relative inks</p><p>        + MODX Manager phpthumb cannot parse MODX tags</p><p>---------------------------------------------------------------------------------------------------------------------------------------</p>
+    </div>
+</li>
+</ul>
+    </div>
+</div> ... [[*myTV:TinymceWrapperMarkdown]] ... [[+placeholder:TinymceWrapperMarkdown]]</p><p>        + Modifier takes these options: TinymceWrapperMarkdown=`markdown,markdownE,parsedown,parsedownE` (default is parsedownE)</p><p>FIXED critical error in plugin that prevented creating of New Resources anywhere in the Manager (thanks to modxor)</p><p>FIXED typo in elfinderConnector snippet that rendered custom chunks useless (thanks to Dave Smith)</p><p>FIXED elfinder not supplying Image/File TV in TinyMagicPublisher</p><p>FIXED TinyJSONGallery.js </p><p>        + to load jQuery UI via https </p><p>        + ctrl+s now saves JSON and saves to MODX</p><p>FIXED imogen template file/image TV errors</p><p>        + MODX Manager phpthumb must be fed relative inks</p><p>        + MODX Manager phpthumb cannot parse MODX tags</p><p>---------------------------------------------------------------------------------------------------------------------------------------</p>
+    </div>
+</li>
+</ul>
+    </div>
+</div> ... [[*myTV:TinymceWrapperMarkdown]] ... [[+placeholder:TinymceWrapperMarkdown]]</p><p>        + Modifier takes these options: TinymceWrapperMarkdown=`markdown,markdownE,parsedown,parsedownE` (default is parsedownE)</p><p>FIXED critical error in plugin that prevented creating of New Resources anywhere in the Manager (thanks to modxor)</p><p>FIXED typo in elfinderConnector snippet that rendered custom chunks useless (thanks to Dave Smith)</p><p>FIXED elfinder not supplying Image/File TV in TinyMagicPublisher</p><p>FIXED TinyJSONGallery.js </p><p>        + to load jQuery UI via https </p><p>        + ctrl+s now saves JSON and saves to MODX</p><p>FIXED imogen template file/image TV errors</p><p>        + MODX Manager phpthumb must be fed relative inks</p><p>        + MODX Manager phpthumb cannot parse MODX tags</p><p>---------------------------------------------------------------------------------------------------------------------------------------</p>
+    </div>
+</li>
+
+<li class="release">
+    <p><b><a href="https://www.modmore.com/extras/moregallery/?pk_campaign=releaserobotrobbie&pk_kwd=releases_18_moregallery">MoreGallery 1.4.1-pl</a></b>,
+        released on 2016-05-04
+        
+        <a href="javascript:void(0);" data-target="changelog_8" class="show-changelog">
+            View Changelog
+        </a>
+    </p>
+    
+    <div class="changelog" id="changelog_8">
+        <a href="javascript:void(0);" class="close-changelog" data-target="changelog_8">&times;</a>
+        <ul>
+<li> Properly filter out EXIF and IPTC data from AJAX requests to prevent tripping over mod_security rules &#91;#149&#93;</li>
+<li> Allow changing the number of thumbnails that are prefetched as base64 in the manager (useful on slow disks) &#91;#148&#93;</li>
+<li> Add missing allowed_extensions_per_source setting to build</li>
+<li> Make sure media source specific extensions are checked case insensitively</li>
+<li> Add DISTINCT to the image query to prevent duplicate results when filtering on tags (Thanks Adam!) &#91;#140&#93;</li>
+<li> Prevent pretty noisy "&#91;&#91;+resource.id&#93;&#93; is not a valid integer" error &#91;S8750&#93;</li>
+</ul>
     </div>
 </li>
 </ul>
