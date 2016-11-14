@@ -1,7 +1,7 @@
 id: 18
 name: 'Updater Broadcast'
 description: 'This plugin manages simple broadcast messages of the updater widget.'
-category: ''
+category: Updater
 properties: null
 static: 1
 static_file: updater/elements/plugins/updater.broadcast.plugin.php

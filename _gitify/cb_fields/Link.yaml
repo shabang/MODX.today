@@ -1,0 +1,12 @@
+id: 18
+parent: 7
+parent_properties: '{"key":"link","width":30}'
+input: link
+name: Link
+description: null
+sortorder: 3
+template: '[[+link]]'
+properties: '{"link_detection_pattern_override":""}'
+availability: null
+layouts: null
+settings: '[]'

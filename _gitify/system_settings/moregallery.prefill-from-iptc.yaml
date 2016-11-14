@@ -1,0 +1,5 @@
+key: moregallery.prefill_from_iptc
+value: '1'
+xtype: modx-combo-boolean
+namespace: moregallery
+area: Advanced

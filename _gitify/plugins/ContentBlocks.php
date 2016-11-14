@@ -1,7 +1,7 @@
 id: 8
 name: ContentBlocks
 description: 'The main plugin for ContentBlocks, responsible for handling generating the form as well as saving the resource. (Part of ContentBlocks)'
-category: ''
+category: ContentBlocks
 properties: null
 
 -----
@@ -108,6 +108,7 @@ switch ($modx->event->name) {
 
         // Grab objects for building the canvas
         $objects = $ContentBlocks->getObjectsForCanvas($resource);
+        $categories = $modx->toJSON($objects['categories']);
         $fields = $modx->toJSON($objects['fields']);
         $layouts = $modx->toJSON($objects['layouts']);
         $templates = $modx->toJSON($objects['templates']);
@@ -118,7 +119,8 @@ switch ($modx->event->name) {
 
         $modx->controller->addHtml(<<<HTML
 <script type="text/javascript">
-    var ContentBlocksFields = $fields,
+    var ContentBlocksCategories = $categories,
+        ContentBlocksFields = $fields,
         ContentBlocksLayouts = $layouts,
         ContentBlocksTemplates = $templates,
         ContentBlocksContents = $contents,
@@ -163,14 +165,14 @@ HTML
 
         // RenderContent Event
         $response = $modx->invokeEvent('ContentBlocks_RenderContent', array(
-            'vcContent' => $cbContent,
-            'vc' => $cbJson,
+            'cbContent' => $cbContent,
+            'cbJson' => $cbJson,
             'resource' => $resource
         ));
         // check if customized content was returned
         if (!empty($response) && is_array($response) && json_encode($response) !== '[""]') {
-            $cbContent = $response[0]['vcContent'];
-            $cbJson = $response[0]['vc'];
+            $cbContent = $response[0]['cbContent'];
+            $cbJson = $response[0]['cbJson'];
         }
 
         if (!empty($cbJson) && $cbContent !== false && is_array($cbContent)) {

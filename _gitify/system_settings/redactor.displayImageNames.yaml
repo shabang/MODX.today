@@ -1,4 +1,0 @@
-key: redactor.displayImageNames
-xtype: modx-combo-boolean
-namespace: redactor
-area: advanced

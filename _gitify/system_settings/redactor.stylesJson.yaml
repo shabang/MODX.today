@@ -1,5 +1,0 @@
-key: redactor.stylesJson
-value: '[{"btnName":"Inline Code","className":"redactor_format_pre","wrap":"code","forceBlock":"0"}]'
-xtype: textarea
-namespace: redactor
-area: Toolbar

@@ -1,6 +1,6 @@
 id: 7
 name: Collections
-category: ''
+category: Collections
 properties: 'a:0:{}'
 
 -----

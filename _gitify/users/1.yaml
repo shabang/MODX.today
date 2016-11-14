@@ -5,5 +5,5 @@ remote_key: null
 remote_data: null
 salt: b5803d7724d22165cfadab74f72c4c34
 primary_group: 1
-session_stale: null
+session_stale: 'a:2:{i:0;s:3:"mgr";i:1;s:3:"web";}'
 sudo: 1

@@ -1,0 +1,11 @@
+id: 21
+parent: 12
+parent_properties: '{"key":"version","width":"30"}'
+name: Version
+description: null
+sortorder: 2
+template: '[[+value]]'
+properties: '[]'
+availability: null
+layouts: null
+settings: '[]'

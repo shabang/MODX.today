@@ -1,6 +1,7 @@
 id: 11
 name: IntrotextRTE
 properties: 'a:0:{}'
+disabled: 1
 
 -----
 

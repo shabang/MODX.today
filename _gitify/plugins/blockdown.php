@@ -1,8 +1,8 @@
 id: 30
 name: blockdown
 description: 'MarkDown Input Type. Powered by EpicEditor and Parsedown.'
-category: ''
-properties: 'a:0:{}'
+category: Blockdown
+properties: null
 
 -----
 

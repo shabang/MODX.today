@@ -2,6 +2,5 @@ id: 3
 name: 'Default Podcast'
 description: ''
 icon: template_03
-icon_type: core
 content: '[{"layout":3,"content":{"col1":[{"value":"","field":2,"settings":{}},{"rows":[{"timestamp":{"value":"","fieldId":"contentblocks-field-4"},"title":{"value":"","fieldId":"contentblocks-field-5"},"link":{"link":"","linkType":"link","fieldId":"contentblocks-field-6"},"description":{"value":"","fieldId":"contentblocks-field-7"}}],"field":7,"settings":{}}]},"settings":[],"parent":0}]'
 availability: '[{"field":"parent","value":"1"}]'

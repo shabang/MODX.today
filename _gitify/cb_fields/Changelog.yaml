@@ -1,0 +1,12 @@
+id: 22
+parent: 12
+parent_properties: '{"key":"changelog","width":"100"}'
+input: richtext
+name: Changelog
+description: null
+sortorder: 3
+template: '[[+value]]'
+properties: '[]'
+availability: null
+layouts: null
+settings: '[]'

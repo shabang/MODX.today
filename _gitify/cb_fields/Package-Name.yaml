@@ -1,0 +1,11 @@
+id: 20
+parent: 12
+parent_properties: '{"key":"package_name","width":"70"}'
+name: 'Package Name'
+description: null
+sortorder: 1
+template: '[[+value]]'
+properties: '[]'
+availability: null
+layouts: null
+settings: '[]'

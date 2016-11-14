@@ -1,0 +1,5 @@
+key: redactor.formattingAdd
+value: '[{"tag":"code","title":"Inline Code"}]'
+xtype: textarea
+namespace: redactor
+area: Advanced

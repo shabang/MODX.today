@@ -1,9 +1,9 @@
 id: 3
 username: jpdevries
-password: M2t29J33UVY0eLY/9o7dN2EAQG+P9Tw36URJkXBLJKk=
+password: ajzCaNW2QKd8yJSae3XWtc0ffxbkEK0DuJBRPSV4g+o=
 remote_key: null
 remote_data: null
 salt: fe62b292691b044ae3b806de8b605a4c
 primary_group: 1
-session_stale: null
+session_stale: 'a:2:{i:0;s:3:"mgr";i:1;s:3:"web";}'
 sudo: 1

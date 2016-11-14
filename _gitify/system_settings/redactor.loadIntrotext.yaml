@@ -1,0 +1,4 @@
+key: redactor.loadIntrotext
+xtype: modx-combo-boolean
+namespace: redactor
+area: Editor

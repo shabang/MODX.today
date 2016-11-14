@@ -1,4 +1,5 @@
 id: 13
+parent_properties: null
 input: chunk
 name: 'Embed Article'
 description: 'Shows another article on MODX.today, opengraph style.'

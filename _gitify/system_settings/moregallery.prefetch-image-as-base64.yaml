@@ -1,0 +1,5 @@
+key: moregallery.prefetch_image_as_base64
+value: '20'
+xtype: numberfield
+namespace: moregallery
+area: Advanced

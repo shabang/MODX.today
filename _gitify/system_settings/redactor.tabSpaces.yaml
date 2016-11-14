@@ -1,4 +1,0 @@
-key: redactor.tabSpaces
-xtype: modx-combo-boolean
-namespace: redactor
-area: Editor

@@ -3,7 +3,9 @@ resource: 10
 filename: 4_febe.jpg
 file: 8_4_febe.jpg
 mgr_thumb: _thumbs/8_e0aef424a4fc16bda4ab052554a42eee.png
+custom: null
 exif: 'a:7:{s:8:"FileName";s:12:"8_4_febe.jpg";s:12:"FileDateTime";i:1423680134;s:8:"FileSize";i:72602;s:8:"FileType";i:2;s:8:"MimeType";s:10:"image/jpeg";s:13:"SectionsFound";s:0:"";s:8:"COMPUTED";a:4:{s:4:"html";s:25:"width="1024" height="768"";s:6:"Height";i:768;s:5:"Width";i:1024;s:7:"IsColor";i:1;}}'
+iptc: null
 width: 1024
 height: 768
 name: 4_febe
@@ -11,3 +13,4 @@ description: null
 url: null
 sortorder: 3
 uploadedon: 1429467264
+properties: null

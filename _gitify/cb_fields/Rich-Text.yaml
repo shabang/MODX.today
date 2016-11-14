@@ -1,4 +1,5 @@
 id: 2
+parent_properties: null
 input: richtext
 name: 'Rich Text'
 description: ''

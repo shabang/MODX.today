@@ -2,7 +2,7 @@ id: 19
 name: FormItIsChecked
 description: 'A custom output filter used with checkboxes/radios for checking checked status.'
 category: FormIt
-properties: null
+properties: 'a:0:{}'
 
 -----
 
@@ -27,10 +27,14 @@ properties: null
  * @package formit
  */
 /**
+ * FormItIsChecked
+ *
  * Custom output filter that returns checked="checked" if the value is set
  *
  * @var string $input
  * @var string $options
+ * @var modX $modx
+ *
  * @package formit
  */
 $output = ' ';

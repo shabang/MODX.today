@@ -1,8 +1,8 @@
 id: 28
 name: GitifyWatch
 description: 'Watches for changes in resources and elements to automatically run Gitify and git to commit & push changes.'
-category: ''
-properties: 'a:0:{}'
+category: 'Gitify Watch'
+properties: null
 
 -----
 
@@ -33,8 +33,6 @@ if (!$scheduler) {
 $environment = $gitifywatch->getEnvironment();
 $trigger = false;
 $username = ($modx->user) ? $modx->user->get('username') : 'Anonymous';
-
-$modx->log(modX::LOG_LEVEL_ERROR, 'This is the environment in the plugin: ' . print_r($environment, true));
 
 if (!$environment || !$environment['auto_commit_and_push']) {
     $modx->log(modX::LOG_LEVEL_WARN, '[GitifyWatch] Not allowed to commit and push on this environment: ' . print_r($environment, true), '', 'GitifyWatch plugin', __FILE__, __LINE__);

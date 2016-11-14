@@ -3,7 +3,9 @@ resource: 10
 filename: 6_1411740973_a557c667c32a73954f5e4dd73de0880d.jpg
 file: 9_6_1411740973_a557c667c32a73954f5e4dd73de0880d.jpg
 mgr_thumb: _thumbs/9_71b44ede9a319a8a44b256a5e5c6cc4d.png
+custom: null
 exif: "a:46:{s:8:\"FileName\";s:51:\"9_6_1411740973_a557c667c32a73954f5e4dd73de0880d.jpg\";s:12:\"FileDateTime\";i:1423680134;s:8:\"FileSize\";i:1747416;s:8:\"FileType\";i:2;s:8:\"MimeType\";s:10:\"image/jpeg\";s:13:\"SectionsFound\";s:44:\"ANY_TAG, IFD0, THUMBNAIL, EXIF, GPS, INTEROP\";s:8:\"COMPUTED\";a:8:{s:4:\"html\";s:26:\"width=\"3264\" height=\"2448\"\";s:6:\"Height\";i:2448;s:5:\"Width\";i:3264;s:7:\"IsColor\";i:1;s:17:\"ByteOrderMotorola\";i:1;s:15:\"ApertureFNumber\";s:5:\"f/2.4\";s:18:\"Thumbnail.FileType\";i:2;s:18:\"Thumbnail.MimeType\";s:10:\"image/jpeg\";}s:15:\"GPS_IFD_Pointer\";i:462;s:5:\"Model\";s:7:\"Nexus 5\";s:16:\"Exif_IFD_Pointer\";i:134;s:16:\"YCbCrPositioning\";i:1;s:11:\"YResolution\";s:4:\"72/1\";s:14:\"ResolutionUnit\";i:2;s:11:\"XResolution\";s:4:\"72/1\";s:4:\"Make\";s:3:\"LGE\";s:9:\"THUMBNAIL\";a:6:{s:11:\"YResolution\";s:4:\"72/1\";s:14:\"ResolutionUnit\";i:2;s:11:\"XResolution\";s:4:\"72/1\";s:11:\"Compression\";i:6;s:21:\"JPEGInterchangeFormat\";i:807;s:27:\"JPEGInterchangeFormatLength\";i:9651;}s:13:\"ApertureValue\";s:7:\"252/100\";s:22:\"InteroperabilityOffset\";i:432;s:17:\"DateTimeDigitized\";s:19:\"2014:09:20 09:39:50\";s:17:\"ShutterSpeedValue\";s:9:\"4643/1000\";s:10:\"ColorSpace\";i:1;s:16:\"DateTimeOriginal\";s:19:\"2014:09:20 09:39:50\";s:15:\"FlashPixVersion\";s:4:\"0100\";s:17:\"ExposureBiasValue\";s:3:\"0/6\";s:15:\"ExifImageLength\";i:2448;s:11:\"ExifVersion\";s:4:\"0220\";s:14:\"ExifImageWidth\";i:3264;s:11:\"FocalLength\";s:7:\"397/100\";s:5:\"Flash\";i:0;s:12:\"ExposureTime\";s:4:\"1/25\";s:15:\"ISOSpeedRatings\";i:722;s:23:\"ComponentsConfiguration\";s:4:\"\x01\x02\x03\0\";s:7:\"FNumber\";s:7:\"240/100\";s:15:\"GPSImgDirection\";s:5:\"126/1\";s:18:\"GPSImgDirectionRef\";s:1:\"M\";s:14:\"GPSLatitudeRef\";s:1:\"N\";s:11:\"GPSLatitude\";a:3:{i:0;s:4:\"52/1\";i:1;s:3:\"5/1\";i:2;s:11:\"81802/10000\";}s:15:\"GPSLongitudeRef\";s:1:\"E\";s:12:\"GPSLongitude\";a:3:{i:0;s:3:\"5/1\";i:1;s:4:\"16/1\";i:2;s:12:\"535952/10000\";}s:14:\"GPSAltitudeRef\";s:1:\"\0\";s:11:\"GPSAltitude\";s:6:\"0/1000\";s:12:\"GPSTimeStamp\";a:3:{i:0;s:3:\"7/1\";i:1;s:4:\"39/1\";i:2;s:4:\"45/1\";}s:17:\"GPSProcessingMode\";s:5:\"ASCII\";s:12:\"GPSDateStamp\";s:10:\"2014:09:20\";s:21:\"InterOperabilityIndex\";s:3:\"R98\";s:23:\"InterOperabilityVersion\";s:4:\"0100\";}"
+iptc: null
 width: 3264
 height: 2448
 name: 6_1411740973_a557c667c32a73954f5e4dd73de0880d
@@ -11,3 +13,4 @@ description: null
 url: null
 sortorder: 4
 uploadedon: 1429467264
+properties: null

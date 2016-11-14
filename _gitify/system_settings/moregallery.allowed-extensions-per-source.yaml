@@ -1,0 +1,4 @@
+key: moregallery.allowed_extensions_per_source
+xtype: modx-combo-boolean
+namespace: moregallery
+area: Advanced

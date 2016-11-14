@@ -1,0 +1,12 @@
+id: 19
+parent: 7
+parent_properties: '{"key":"description","width":"100"}'
+input: richtext
+name: Description
+description: null
+sortorder: 4
+template: '[[+value]]'
+properties: '[]'
+availability: null
+layouts: null
+settings: '[]'

@@ -1,0 +1,11 @@
+id: 16
+parent: 7
+parent_properties: '{"key":"timestamp","width":20}'
+name: Timestamp
+description: null
+sortorder: 1
+template: '[[+value]]'
+properties: '[]'
+availability: null
+layouts: null
+settings: '[]'

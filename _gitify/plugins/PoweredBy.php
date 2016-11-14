@@ -1,6 +1,7 @@
 id: 31
 name: PoweredBy
 properties: 'a:0:{}'
+disabled: 1
 
 -----
 

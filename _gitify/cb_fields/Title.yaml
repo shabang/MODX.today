@@ -1,0 +1,11 @@
+id: 17
+parent: 7
+parent_properties: '{"key":"title","width":50}'
+name: Title
+description: null
+sortorder: 2
+template: '[[+value]]'
+properties: '[]'
+availability: null
+layouts: null
+settings: '[]'

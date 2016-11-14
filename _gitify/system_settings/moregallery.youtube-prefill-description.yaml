@@ -1,0 +1,4 @@
+key: moregallery.youtube_prefill_description
+xtype: modx-combo-boolean
+namespace: moregallery
+area: Video

@@ -6,31 +6,26 @@ properties: null
 
 -----
 
-$bytes = $input;
-  
-  if ($bytes >= 1073741824)
-  {
-      $bytes = number_format($bytes / 1073741824, 2) . ' GB';
-  }
-  elseif ($bytes >= 1048576)
-  {
-      $bytes = number_format($bytes / 1048576, 2) . ' MB';
-  }
-  elseif ($bytes >= 1024)
-  {
-      $bytes = number_format($bytes / 1024, 2) . ' KB';
-  }
-  elseif ($bytes > 1)
-  {
-      $bytes = $bytes . ' bytes';
-  }
-  elseif ($bytes == 1)
-  {
-      $bytes = $bytes . ' byte';
-  }
-  else
-  {
-      $bytes = '0 bytes';
-  }
+/**
+ * $the cbFileFormatSize snippet is used for formatting a number of bytes, into a more user friendly format.
+ * It is intended to be used as output filter. For example:
+ *
+ * [[+size:cbFileFormatSize]] where [[+size]] is an integer.
+ *
+ * Optionally, it is possible to specify the number of decimals that should be added. Do this by specifying
+ * a numeric value as option, like this:
+ *
+ * [[+size:cbFileFormatSize=`0`]] => no decimals
+ * [[+size:cbFileFormatSize=`2`]] => 2 decimals, which is also the default *
+ *
+ * @var modX $modx
+ * @var array $input
+ * @var array $options
+ */
 
-  return $bytes;
+$cbCorePath = $modx->getOption('contentblocks.core_path', null, $modx->getOption('core_path').'components/contentblocks/');
+$contentBlocks = $modx->getService('contentblocks','ContentBlocks', $cbCorePath.'model/contentblocks/');
+
+$bytes = $input;
+$decimals = (isset($options) && is_numeric($options)) ? $options : 2;
+return $contentBlocks->formatBytes($bytes, $decimals);

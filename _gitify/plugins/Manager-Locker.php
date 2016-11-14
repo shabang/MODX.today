@@ -1,7 +1,7 @@
 id: 17
 name: 'Manager Locker'
 description: 'Handle manager locking state.'
-category: ''
+category: Locker
 properties: null
 
 -----

@@ -1,0 +1,4 @@
+key: redirector.track_uri_updates
+xtype: combo-boolean
+namespace: redirector
+area: Manager

@@ -1,0 +1,11 @@
+id: 24
+parent: 12
+parent_properties: '{"key":"releasedon","width":"50"}'
+name: 'Release Date'
+description: null
+sortorder: 5
+template: '[[+value]]'
+properties: '[]'
+availability: null
+layouts: null
+settings: '[]'
