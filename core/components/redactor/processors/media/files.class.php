@@ -69,7 +69,7 @@ class RedactorListFilesProcessor extends RedactorBaseProcessor {
 
                 // If requested with no type param, or if type=image, only show images
                 $imageOnly = ($this->getProperty('type', 'image') === 'image');
-                $extension = pathinfo($src, PATHINFO_EXTENSION);
+                $extension = strtolower(pathinfo($src, PATHINFO_EXTENSION));
                 $imageExtensions = $this->redactor->getOption('upload_images');
                 $imageExtensions = $this->redactor->explode($imageExtensions);
                 if ($imageOnly && !in_array($extension, $imageExtensions)) {

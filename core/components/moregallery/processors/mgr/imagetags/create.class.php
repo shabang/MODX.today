@@ -5,6 +5,7 @@
 class mgImageTagCreateProcessor extends modObjectCreateProcessor {
     public $classKey = 'mgImageTag';
     public $languageTopics = array('reviews:default');
+    public $permission = array('moregallery_view_gallery' => true, 'moregallery_image_tags' => true);
 
     /**
      * Before setting, check the value for "tag".
@@ -20,6 +21,10 @@ class mgImageTagCreateProcessor extends modObjectCreateProcessor {
                 $this->setProperty('tag', $tagObj->get('id'));
             }
             else {
+                if (!$this->modx->context->checkPolicy('moregallery_image_tags_new')) {
+                    return $this->modx->lexicon('permission_denied');
+                }
+
                 $tagObj = $this->modx->newObject('mgTag');
                 $tagObj->fromArray(array(
                     'display' => $tag,

@@ -28,8 +28,7 @@
  */
 
 $_lang['setting_updater.debug'] = "Debug mode";
-$_lang['setting_updater.debug_desc'] = "Turns on debug mode";
-
+$_lang['setting_updater.debug_desc'] = "Turns on debug mode. Caution: this setting makes updater very verbose in the logs. You should only set this setting if you experience problems with Updater to provide enough information for bugfix. Don't forget to disable the setting when you have finished debugging, or your logfile will grow large.";
 
 /* Area widget */
 $_lang['updater.widget'] = 'Update status';
@@ -92,6 +91,9 @@ $_lang['setting_updater.mail_format_html_desc'] = "Whether to use HTML in notifi
 $_lang['setting_updater.send_notification_hours'] = "Minimum hours between update notifications";
 $_lang['setting_updater.send_notification_hours_desc'] = "The minimum hours between two notifications of the same type. <em>Note: type means (core||package) here.</em>.";
 
+$_lang['setting_updater.repeat_notifications_hours'] = "Repeat notification time";
+$_lang['setting_updater.repeat_notifications_hours_desc'] = "Time in hours until a notification will be resend. Use this e.g. to get constantly remindend of pending updates.";
+
 /* Area Persistance */
 $_lang['setting_updater.last_send_core_notification'] = "Time of last send core notification";
 $_lang['setting_updater.last_send_core_notification_desc'] = "<strong>DO NOT CHANGE!</strong> Settings is used automatically.";
@@ -108,6 +110,43 @@ $_lang['setting_updater.last_send_core_desc'] = "<strong>DO NOT CHANGE!</strong>
 $_lang['setting_updater.last_send_packages'] = "Last send packages data";
 $_lang['setting_updater.last_send_packages_desc'] = "<strong>DO NOT CHANGE!</strong> Settings is used automatically.";
 
+/*
+ * don't check for:
+ *  0 no restriction (default)
+ *  1 patch release candidates or pre-releases, _._.x-rcN
+ *  2 patch releases at all
+ *  3 minor version release candidates
+ *  4 minor versions at all
+ *
+ * The higher the value, the less notifications you get.
+ */
+
+$_lang['setting_updater.check_core_release_level'] = "Release level for core check";
+$_lang['setting_updater.check_core_release_level_desc'] = "<p>The release level to check for. Affects both widget and notifications. You have
+    the following options:</p>
+     <ul>
+        <li>0 - all release levels, including dev-versions and alpha-versions (recommended in dev/git)</li>
+        <li>1 - only beta versions or better</li>
+        <li>2 - only release candidates or better (no alpha, no beta)</li>
+        <li>3 - only stable versions</li>
+     </ul>
+    <p>The default is <strong>3</strong>, which will only show stable versions. This is recommended for production environments.
+    If you don't care, you can set it to a lower level which will show you unstable and early releases with potential bugs also.</p>";
+
+$_lang['setting_updater.check_core_version_level'] = "Version level for core check";
+$_lang['setting_updater.check_core_version_level_desc'] = "<p>The version level to check for. Affects both widget and notifications. You have
+    the following options:</p>
+    <ul>
+        <li>0 - show all version levels (include major versions)</li>
+        <li>1 - show minor versions and below (prevent major versions [BC])</li>
+        <li>2 - show patch versions only (prevent minor and major versions [BC, functionality])</li>
+    </ul>
+    <p>The default is <strong>1</strong> here, which means showing all new version without versions breaking backwards compatibility. Normally
+    these versions (minor and patches) can be updated to without problems. Be aware that minor versions include new
+    functionality which may also introduce new bugs. <br/>
+    <em>Attention: patch version development may be discontinued silently for your current version. If you set this value to 2, you may never
+    get notifications about updates in this case! In that case, make sure that you are informed via other channels about possible
+    updates like slack (modxcommunity.slack.com), the MODX forum or RSS-feeds.</em></p>";
 
 /*
 $_lang['setting_updater.'] = "";

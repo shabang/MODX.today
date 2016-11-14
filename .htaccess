@@ -11,8 +11,6 @@
 
 ServerSignature Off
 
-
-
 # ----------------------------------------------------------------------
 #  UTF-8 encoding
 # ----------------------------------------------------------------------
@@ -23,8 +21,6 @@ AddDefaultCharset utf-8
 # Force UTF-8 for a number of file formats
 AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
 
-
-
 # ----------------------------------------------------------------------
 # Enable Rewrite Engine
 # ----------------------------------------------------------------------
@@ -34,8 +30,6 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
 	RewriteEngine On
 	RewriteBase /
 </IfModule>
-
-
 
 # ----------------------------------------------------------------------
 # | HTTP Strict Transport Security (HSTS)                              |
@@ -63,8 +57,6 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
      Header set Strict-Transport-Security "max-age=16070400"
 </IfModule>
 
-
-
 # ----------------------------------------------------------------------
 # Domain Rewrite
 # ----------------------------------------------------------------------
@@ -78,10 +70,13 @@ AddCharset utf-8 .atom .css .js .json .rss .vtt .webapp .xml
 #RewriteRule (.*) https://modx.today%{REQUEST_URI} [R=301,L]
 
 RewriteCond %{HTTP_HOST} !(.*)?modx.today$ [NC]
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
 RewriteRule ^(.*)$ http://modx.today/$1 [L,R=301] 
 
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
 RewriteRule ^(\.|_backup|_deployment|_gitify|core|config\.core\.php|package\.json|readme.md) /index.php?q=404 [L]
-
 
 # ----------------------------------------------------------------------
 #  More security
@@ -94,15 +89,15 @@ RewriteRule ^(\.|_backup|_deployment|_gitify|core|config\.core\.php|package\.jso
 	Options -Indexes
 </IfModule>
 
-
 # Block access to "hidden" directories whose names begin with a period. This
 # includes directories used by version control systems such as Subversion or Git.
 <IfModule mod_rewrite.c>
   RewriteCond %{SCRIPT_FILENAME} -d
   RewriteCond %{SCRIPT_FILENAME} -f
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
   RewriteRule "(^|/)\." - [F]
 </IfModule>
-
 
 # Block access to htaccess and htpasswd files
 <FilesMatch "\.(htaccess|htpasswd)$">
@@ -119,7 +114,6 @@ RewriteRule ^(\.|_backup|_deployment|_gitify|core|config\.core\.php|package\.jso
 	Satisfy All
 </FilesMatch>
 
-
 # ----------------------------------------------------------------------
 # Better IE experience
 # ----------------------------------------------------------------------
@@ -133,26 +127,21 @@ RewriteRule ^(\.|_backup|_deployment|_gitify|core|config\.core\.php|package\.jso
     </FilesMatch>
 </IfModule>
 
-
-
 # ----------------------------------------------------------------------
 #  filename based cache busting
 # ----------------------------------------------------------------------
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
 RewriteRule ^(.+)\.(\d+)\.(ico|js|css|jpg|png|gif|svg|eot|ttf|woff)$ $1.$3
-
-
 
 # ----------------------------------------------------------------------
 # Custom Rewrites
 # ----------------------------------------------------------------------
 
 #RewriteRule ^produkte/(.+)/$ produkte/?name=$1 [L,QSA]
-
-
-
 
 # ----------------------------------------------------------------------
 # MODX StaticCache
@@ -177,10 +166,9 @@ RewriteRule ^(.+)\.(\d+)\.(ico|js|css|jpg|png|gif|svg|eot|ttf|woff)$ $1.$3
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
 RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
-
-
-
 
 # ----------------------------------------------------------------------
 #  expire headers
@@ -220,7 +208,6 @@ RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
 	ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
 </IfModule>
 
-
 # Remove `ETags` as resources are sent with far-future expires headers.
 # https://developer.yahoo.com/performance/rules.html#etags
 # `FileETag None` doesn't work in all cases.
@@ -229,8 +216,6 @@ RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
 </IfModule>
 
 FileETag None
-
-
 
 # ----------------------------------------------------------------------
 #  Compression

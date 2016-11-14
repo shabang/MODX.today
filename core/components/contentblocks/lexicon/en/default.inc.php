@@ -19,12 +19,12 @@ $_lang['contentblocks.link.link_new_tab'] = "Open in new tab";
 $_lang['contentblocks.link.add'] = "Add Link";
 $_lang['contentblocks.link.remove'] = "Remove Link";
 $_lang['contentblocks.link.placeholder'] = "Start typing the name of a resource, external link or email address";
-$_lang['contentblocks.link.link_detection_pattern_override'] = 'Link detectection pattern override';
+$_lang['contentblocks.link.link_detection_pattern_override'] = 'Link detection pattern override';
 $_lang['contentblocks.link.link_detection_pattern_override.description'] = 'Regex to detect whether a link is valid; if not, http:// will be prepended.';
 $_lang['contentblocks.link.limit_to_current_context'] = 'Limit resource results to current context';
 $_lang['contentblocks.link.limit_to_current_context.description'] = 'Limits typeahead results to resources contained within the same context as the page being edited';
 
-$_lang['setting_contentblocks.link.link_detection_pattern'] = 'Link detectection pattern';
+$_lang['setting_contentblocks.link.link_detection_pattern'] = 'Link detection pattern';
 $_lang['setting_contentblocks.link.link_detection_pattern_desc'] = 'Regex to detect whether a link is valid; if not, http:// will be prepended.';
 
 $_lang['setting_contentblocks.typeahead.include_introtext'] = 'Include Introtext in Typeahead';
@@ -32,7 +32,8 @@ $_lang['setting_contentblocks.typeahead.include_introtext_desc'] = 'When enabled
 
 $_lang['contentblocks.error.not_an_export'] = "The file does not seem to be a ContentBlocks export";
 $_lang['contentblocks.error.importing_row'] = "Error importing row: ";
-$_lang['contentblocks.error.no_valid_field'] = "No valid field found";
+$_lang['contentblocks.error.no_valid_field'] = "No valid field found for request.";
+$_lang['contentblocks.error.no_valid_input'] = "No valid input found for request.";
 $_lang['contentblocks.error.no_snippets'] = "No snippets available for use";
 $_lang['contentblocks.error.missing_id'] = "Missing ID property";
 $_lang['contentblocks.error.input_not_found'] = "Input not found";
@@ -113,6 +114,7 @@ $_lang['contentblocks.delete_layoutcolumn'] = "Delete Column";
 $_lang['contentblocks.delete_layoutcolumn.confirm'] = "Are you sure you want to delete this Column? Potentially disastrous things can happen with any content that used this Column.";
 $_lang['contentblocks.add_setting'] = "Add Setting";
 $_lang['contentblocks.edit_setting'] = "Edit Setting";
+$_lang['contentblocks.duplicate_setting'] = "Duplicate Setting";
 $_lang['contentblocks.delete_setting'] = "Delete Setting";
 $_lang['contentblocks.delete_setting.confirm'] = "Are you sure you want to delete this Setting?";
 
@@ -172,7 +174,7 @@ $_lang['contentblocks.fieldtype.textfield'] = "Text";
 $_lang['contentblocks.fieldtype.link'] = "Link";
 $_lang['contentblocks.fieldtype.textarea'] = "Textarea";
 $_lang['contentblocks.fieldoptions'] = "Field Options";
-$_lang['contentblocks.fieldoptions.description'] = "Used for Select field types only. Define available values as \"Displayed Value=placeholder_value\", one per line. If you only pass a single value per line (such as \"foo\"), that will be used as both displayed and placeholder value.";
+$_lang['contentblocks.fieldoptions.description'] = "Used for Select field types only. Define available values as \"placeholder_value==Displayed Value\" (\"Displayed Value=placeholder_value\" is also supported, but will be removed in 2.0), one per line. If you only pass a single value per line (such as \"foo\"), that will be used as both displayed and placeholder value.";
 $_lang['contentblocks.field_is_exposed'] = "Expose field";
 $_lang['contentblocks.field_is_exposed.description'] = "Show field on canvas instead of only after clicking settings icon";
 $_lang['contentblocks.field_is_exposed.modal'] = "Show field setting in modal window";
@@ -304,7 +306,7 @@ $_lang['contentblocks.image.source.description'] = "Leave this at (none) to use 
 $_lang['contentblocks.image_template.description'] = "Template for the image input type. Should probably include an <code>&lt;img&gt;</code> tag. Available Placeholders: <code>[[+url]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 $_lang['contentblocks.imagewithtitle'] = "Image with Title";
 $_lang['contentblocks.imagewithtitle.description'] = "Same as image, but this time with a textfield to add an alt or title attribute.";
-$_lang['contentblocks.image_with_title'] = $_lang['contentblocks.imagewithtitle'];
+$_lang['contentblocks.image_with_title'] = "Image with Title";
 $_lang['contentblocks.image_with_title_template.description'] = "Template for the image input type. Should probably include an <code>&lt;img&gt;</code> tag. Available placeholders: <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 
 $_lang['contentblocks.list'] = "List";
@@ -315,7 +317,7 @@ $_lang['contentblocks.list_nested_template.description'] = "Inner template for i
 
 $_lang['contentblocks.orderedlist'] = "Ordered List";
 $_lang['contentblocks.orderedlist.description'] = "Same as the List type, except with an ordered list instead.";
-$_lang['contentblocks.ordered_list'] = $_lang['contentblocks.orderedlist'];
+$_lang['contentblocks.ordered_list'] = "Ordered List";
 $_lang['contentblocks.ordered_list_template.description'] = "Template for individual list items. This should probably contain a <code>&lt;li&gt;</code> tag. Available placeholders: <code>[[+value]]</code> (the list item text), <code>[[+idx]]</code> (an incrementing item number, starting at 1 on each level) and <code>[[+items]]</code> (sub-lists, templated with the other templates).";
 $_lang['contentblocks.ordered_list_wrapper_template.description'] = "Outer most template for ordered lists. This should probably contain a <code>&lt;ol&gt;</code> tag. Available placeholder: <code>[[+items]]</code> (list items templated with the other templates).";
 $_lang['contentblocks.ordered_list_nested_template.description'] = "Inner template for indented sub-lists. This should probably contain a <code>&lt;ol&gt;</code> tag. Available placeholder: <code>[[+items]]</code> (list items templated with the other templates).";
@@ -338,6 +340,8 @@ $_lang['contentblocks.repeater.max_items.description'] = "When set to a number l
 $_lang['contentblocks.repeater.max_items_reached'] = "Sorry, you are not allowed to add more than [[+max]] items.";
 $_lang['contentblocks.repeater.min_items'] = "Minimum number of Items";
 $_lang['contentblocks.repeater.min_items.description'] = "When set to a number larger than 0, rows cannot be removed beyond this limit.";
+$_lang['contentblocks.repeater.add_first_item'] = "Automatically add first item";
+$_lang['contentblocks.repeater.add_first_item.description'] = "When enabled the Repeater will automatically get a first item added if there are none added yet.";
 $_lang['contentblocks.repeater.add_item'] = "Add Item";
 $_lang['contentblocks.repeater.delete_item'] = "Delete Item";
 $_lang['contentblocks.repeater.wrapper_template.description'] = "Outer template to wrap all other parsed rows in. Should contain the <code>[[+rows]]</code> placeholder, can also contain <code>[[+total]]</code>, .";
@@ -374,6 +378,15 @@ $_lang['contentblocks.video.search_youtube'] = "Search YouTube";
 $_lang['contentblocks.video.paste_link'] = "Paste a link here";
 $_lang['contentblocks.video.youtube_not_loaded'] = "The YouTube API has not been loaded. Please try again in a few seconds. If the problem persists, the API might not be available currently.";
 $_lang['contentblocks.video.api_error'] = "Uh oh, an error occured: [[+message]] (Code [[+code]])";
+
+// Select
+$_lang['contentblocks.dropdown'] = "Dropdown";
+$_lang['contentblocks.dropdown.description'] = "A simple dropdown field, allowing the editor to choose one item from a number of predefined options.";
+$_lang['contentblocks.dropdown_template.description'] = "Template for the dropdown field. Available placeholders are <code>[[+value]]</code> (the value option for the chosen item), <code>[[+display]]</code> (the displayed value in the dropdown).";
+$_lang['contentblocks.dropdown.options'] = "Drop-down Options";
+$_lang['contentblocks.dropdown.options.description'] = "Define available values as 'value==Displayed Value', with one option per line. If you only pass a single value per line (such as 'foo'), that will be used as both displayed and placeholder value. Prefixing a single value with # will make it a disabled option. You can also use @SNIPPET bindings to dynamically provide option values. For detailed information on specifying options consult the Dropdown documentation at modmo.re/cb.";
+$_lang['contentblocks.dropdown.default_value'] = "Default Value";
+$_lang['contentblocks.dropdown.default_value.description'] = "The default value to choose when the dropdown is inserted, or nothing is selected.";
 
 // Snippet
 $_lang['contentblocks.snippet'] = "Snippet";

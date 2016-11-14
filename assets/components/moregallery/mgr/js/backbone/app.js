@@ -5,17 +5,23 @@ jQuery(function($) {
             '<div class="image" style="background-image: url(<%= mgr_thumb %>);">' +
             '   <div class="mask">' +
             '       <div class="image-actions">' +
-                '       <a class="zoom mgsearchicon icon icon-search" href="javascript:void(0); //View full-size image" title="<%= moreGallery.lang("view_full_size_image") %>"></span>' +
-                '       <a class="activate mgtrashicon icon icon-eye" href="javascript:void(0); //<%= moreGallery.lang("activate_image") %>" title="<%= moreGallery.lang("activate_image") %>"></a>' +
-                '       <a class="deactivate mgtrashicon icon icon-eye-slash" href="javascript:void(0); //<%= moreGallery.lang("deactivate_image") %>" title="<%= moreGallery.lang("deactivate_image") %>"></a>' +
-                '       <a class="delete mgtrashicon icon icon-trash-o" href="javascript:void(0); //Delete this image" title="<%= moreGallery.lang("delete_image") %>"></a>' +
+                '       <a class="zoom mgsearchicon icon icon-search" href="javascript:void(0); //View full-size image" title="<%= moreGallery.lang("view_full_size_image") %>"></a>' +
+                '       <% if (moreGallery.config.permissions.image_active) { %>' +
+            '               <a class="activate mgtrashicon icon icon-eye" href="javascript:void(0); //<%= moreGallery.lang("activate_image") %>" title="<%= moreGallery.lang("activate_image") %>"></a>' +
+                '           <a class="deactivate mgtrashicon icon icon-eye-slash" href="javascript:void(0); //<%= moreGallery.lang("deactivate_image") %>" title="<%= moreGallery.lang("deactivate_image") %>"></a>' +
+            '           <% } %>' +
+                '       <% if (moreGallery.config.permissions.image_delete) { %>' +
+                '           <a class="delete mgtrashicon icon icon-trash-o" href="javascript:void(0); //Delete this image" title="<%= moreGallery.lang("delete_image") %>"></a>' +
+                '       <% } %>' +
             '       </div>' +
             '   </div>' +
             '</div>' +
             '<div class="meta">' +
             '   <p class="name"><%= name %></p>' +
             '   <p class="filename"><%= filename %></p>' +
-            '   <a class="edit mgicon-pencil icon icon-pencil-square-o"></a>' +
+            '   <% if (moreGallery.config.permissions.image_edit) {%>' +
+            '       <a class="edit mgicon-pencil icon icon-pencil-square-o"></a>' +
+            '   <% } %>' +
             '</div>' +
             '<div class="uploadprogress">' +
             '   <div class="uploading"></div>' +
@@ -27,21 +33,25 @@ jQuery(function($) {
 
         appView: '<div class="mgresource-toolbar">' +
             '<ul>' +
-            '   <li><a href="javascript: void(0);" id="mgresource-image-upload" title="<%= moreGallery.lang("upload_image") %>">' +
+            '   <% if (moreGallery.config.permissions.upload) { %><li><a href="javascript: void(0);" id="mgresource-image-upload" title="<%= moreGallery.lang("upload_image") %>">' +
                 '   <span class="icon mgicon-upload icon-upload"></span>' +
                 '   <span class="headline"><%= moreGallery.lang("upload") %></span>' +
-            '   </a></li>' +
-            '   <li><a href="javascript: void(0);" id="mgresource-image-import" title="<%= moreGallery.lang("import_image") %>">' +
+            '   </a></li><% } %>' +
+            '   <% if (moreGallery.config.permissions.import) { %><li><a href="javascript: void(0);" id="mgresource-image-import" title="<%= moreGallery.lang("import_image") %>">' +
                 '   <span class="icon mgicon-download icon-download"></span>' +
                 '   <span class="headline"><%= moreGallery.lang("import") %></span>' +
-            '   </a></li>' +
+            '   </a></li><% } %>' +
+            '   <% if (moreGallery.config.permissions.video) { %><li><a href="javascript: void(0);" id="mgresource-video-add" title="<%= moreGallery.lang("add_video") %>">' +
+                '   <span class="icon mgicon-download icon-video-camera"></span>' +
+                '   <span class="headline"><%= moreGallery.lang("add_video") %></span>' +
+            '   </a></li><% } %>' +
             '   <li><a href="javascript: void(0);" id="mgresource-image-refresh" title="<%= moreGallery.lang("refresh") %>">' +
                 '   <span class="icon mgicon-cycle icon-refresh"></span>' +
                 '   <!--<span class="headline"><%= moreGallery.lang("refresh") %></span>-->' +
             '   </a></li>' +
-            '   <li id="mgresource-droparea">' +
+            '   <% if (moreGallery.config.permissions.upload) { %><li id="mgresource-droparea">' +
         '           <p><i class="mgicon-upload icon icon-upload"></i> <%= moreGallery.lang("drop_to_upload") %></p>' +
-            '   </li>' +
+            '   </li><% } %>' +
             '   <li id="mgresource-stats">' +
                 '   <span id="mgresource-image-count">0</span> <%= moreGallery.lang("images_count") %>' +
             '   </li>' +
@@ -68,7 +78,7 @@ jQuery(function($) {
             '   <label><%= moreGallery.lang("name_field") %> <br /><input type="text" id="mgimage-name" value="<%- name %>"></label><br />' +
             '   <label for="mgimage-description"><%= moreGallery.lang("description") %></label> <br />' +
             '   <textarea id="mgimage-description" rows="5"><%- description %></textarea> <br />' +
-            '' +
+            '<% if (moreGallery.config.permissions.image_tags) { %>' +
             '   <div class="mgimage-tags">' +
             '       <label for="mgimage-new-tag"><%= moreGallery.lang("tags") %></label>' +
             '       <br />' +
@@ -79,7 +89,7 @@ jQuery(function($) {
             '           <div class="spinner"></div>' +
             '       </div>' +
             '   </div>' +
-            '' +
+            '<% } %>' +
             '   <label><%= moreGallery.lang("url") %> <br /><input type="text" id="mgimage-url" value="<%- url %>"></label>' +
             '' +
             '   <div class="mgimage-custom-fields"></div>' +
@@ -97,15 +107,17 @@ jQuery(function($) {
         modalZoomView: '<div class="image-zoom">' +
             '   <h3><%= name %></h3>' +
             '   <a href="javascript:void(0);" class="close">&times;</a>' +
-            '   <img src="<%= file_url %>" alt="<%= filename %>" />' +
+            '   <%= full_view %>' +
             '</div>',
         cropView: '<div class="image-crop">' +
             '   <a href="<%= thumbnail_url %>" target="_blank" class="image-crop-preview">' +
             '       <img src="<%= thumbnail_url %>" alt="<%= key %>" >' +
             '   </a>' +
             '   <label><%= key_display %></label>' +
+            '   <% if (moreGallery.config.permissions.image_crop_edit) { %>' +
             '   <button class="image-crop-edit" data-crop="<%= key %>"><%= moreGallery.lang("edit_crop") %></button>' +
             '   <span class="image-crop-saving-spinner"></span> ' +
+            '   <% } %>' +
             '</div>',
         modalImport: '<div class="modal-import">' +
             '   <a href="javascript:void(0);" class="close">&times;</a>' +
@@ -126,6 +138,17 @@ jQuery(function($) {
             '       <a href="javascript:void(0);" class="import-from-file">Folder</a>' +
             '   </li>' +
             '</ul>' +
+            '</div>',
+        modalVideoSelect: '<div class="modal-video-select">' +
+            '   <a href="javascript:void(0);" class="close">&times;</a>' +
+            '   <h3><%= moreGallery.lang("add_video") %></h3>' +
+            '   <p><%= moreGallery.lang("add_video_instructions") %></p>' +
+            '   <label><%= moreGallery.lang("video_url") %> <br /><input type="text" id="video-url" value=""></label>' +
+            '   <ul class="supported-services">' +
+            '       <li class="service-youtube"><i class="icon icon-youtube"></i> </li>' +
+            '       <li class="service-vimeo"><i class="icon icon-vimeo"></i> </li>' +
+            '   </ul>' +
+            '   <span class="video-error error"></span> ' +
             '</div>'
     };
 
@@ -186,7 +209,9 @@ jQuery(function($) {
         },
 
         startEdit: function() {
-            this.model.trigger('startEdit', {model: this.model});
+            if (moreGallery.config.permissions.image_edit) {
+                this.model.trigger('startEdit', {model: this.model});
+            }
         },
 
         viewImage: function() {
@@ -194,16 +219,22 @@ jQuery(function($) {
         },
 
         toggleActive: function() {
+            if (!moreGallery.config.permissions.image_active) {
+                return false;
+            }
             this.model.set('active', !this.model.get('active'));
             this.model.save();
             return false;
         },
 
         removeItem: function() {
+            if (!moreGallery.config.permissions.image_delete) {
+                return false;
+            }
             if (moreGallery.confirm(moreGallery.lang('confirm_remove', {name: this.model.attributes.name}))) {
                 var view = this;
-                this.$el.animate({opacity: 0}, 800, function() {
-                    $(this).animate({width: 0}, 400, function() {
+                this.$el.animate({opacity: 0}, 800, function () {
+                    $(this).animate({width: 0}, 400, function () {
                         view.model.destroy();
                     })
                 });
@@ -260,6 +291,7 @@ jQuery(function($) {
         modalViewTemplate: underscore.template(templates.modalImageView),
         modalZoomViewTemplate: underscore.template(templates.modalZoomView),
         modalImportTemplate: underscore.template(templates.modalImport),
+        modalVideoSelectTemplate: underscore.template(templates.modalVideoSelect),
         cropViewTemplate: underscore.template(templates.cropView),
 
         collection: imageCollection,
@@ -288,26 +320,35 @@ jQuery(function($) {
 
         render: function() {
             if (!this.rendered) {
-                var html = this.appViewTemplate({});
-                this.$el.html(html);
-
-
-                var appView = this,
-                    relMaxPos = jQuery('#modx-header').height() + 12;
-                jQuery('#modx-content').find('> .x-panel-bwrap > .x-panel-body').scroll(function() {
-                    var hasCls = appView.$el.hasClass('fixed-toolbar'),
-                        relPos = appView.$el.offset().top;
-
-                    if (!hasCls && (relPos < relMaxPos)) {
-                        appView.$el.addClass('fixed-toolbar');
+                if (this.options.permissions.view_gallery) {
+                    var html = this.appViewTemplate({});
+                    this.$el.html(html);
+                    if (this.options.permissions.image_edit) {
+                        this.$el.addClass('moregallery-permission-image-edit');
                     }
-                    if (hasCls && (relPos > relMaxPos)) {
-                        appView.$el.removeClass('fixed-toolbar');
-                    }
-                });
 
-                this.refresh();
-                this.initializeUpload();
+
+                    var appView = this,
+                        relMaxPos = jQuery('#modx-header').height() + 12;
+                    jQuery('#modx-content').find('> .x-panel-bwrap > .x-panel-body').scroll(function () {
+                        var hasCls = appView.$el.hasClass('fixed-toolbar'),
+                            relPos = appView.$el.offset().top;
+
+                        if (!hasCls && (relPos < relMaxPos)) {
+                            appView.$el.addClass('fixed-toolbar');
+                        }
+                        if (hasCls && (relPos > relMaxPos)) {
+                            appView.$el.removeClass('fixed-toolbar');
+                        }
+                    });
+
+                    this.refresh();
+                    this.initializeUpload();
+                }
+                else {
+                    var html = '<p>' + moreGallery.lang('permission_denied') + '</p>';
+                    this.$el.html(html);
+                }
                 this.rendered = true;
             }
             return this;
@@ -318,7 +359,7 @@ jQuery(function($) {
             this.listenTo(this.collection, 'add', this.updateCount);
             this.listenTo(this.collection, 'remove', this.updateCount);
             this.listenTo(this.collection, 'startEdit', this.modelStartEdit);
-            this.listenTo(this.collection, 'stopEdit', this.modelStopEdit);
+            this.listenTo(this.collection, 'stopEdit', this.closeModal);
             this.listenTo(this.collection, 'zoomImage', this.zoomImage);
         },
 
@@ -327,31 +368,28 @@ jQuery(function($) {
             "click #mgresource-image-upload"   : function() {
                 $('#mgresource-upload-input').trigger('click');
             },
-            //"click #mgresource-image-import": 'openImportModal',
             "click #mgresource-image-import": 'importFromFile',
+            "click #mgresource-video-add": 'selectVideo',
             "updateSort": 'updateSort',
-            'click #mgresource-modal-mask' : 'modelStopEdit',
-            'click #mgresource-modal .close': 'modelStopEdit',
+            'click #mgresource-modal-mask' : 'closeModal',
+            'click #mgresource-modal .close': 'closeModal',
             'blur #mgresource-modal .edit-form input, #mgresource-modal .edit-form textarea, #mgresource-modal .edit-form select': 'updateFromModal',
             'click #mgresource-modal .save': 'updateFromModal',
 
             'click .modal-import .import-from-file': 'importFromFile'
         },
 
-        openImportModal: function(e) {
-            var data = {
-                attributes: {
-                    galleries: '<option value="1">Gallery Uno</option><option value="2">Gallery Deux</option><option value="3">Gallery Trois</option>'
-                }
-            };
-
-            this.openModal(this.modalImportTemplate, data, '50%');
-        },
-
         importFromFile: function(e) {
+            if (!moreGallery.config.permissions.import) {
+                return false;
+            }
+
             var appView = this;
-            if (!this.fileBrowser) this.fileBrowser = MODx.load({
+            var fileBrowser = MODx.load({
                 xtype: 'modx-browser',
+                closeAction: 'close',
+                id: Ext.id(),
+                multiple: true,
                 onSelect: function(data) {
                     with(appView) { appView.importFromFileSelect(data); }
                 },
@@ -361,11 +399,14 @@ jQuery(function($) {
                 source: moreGallery.getResourceProperty(moreGallery.ResourceRecord, 'source', moreGallery.config.source)
             });
 
-            this.fileBrowser.show();
-
+            fileBrowser.show();
         },
 
         importFromFileSelect: function(data) {
+            if (!moreGallery.config.permissions.import) {
+                return false;
+            }
+
             importId++;
             var image = new Image({
                 id: 'import_' + importId,
@@ -411,6 +452,109 @@ jQuery(function($) {
                     image.trigger('destroy');
                 }
             });
+        },
+
+        selectVideo: function(e) {
+            var appView = this;
+            this.openModal(this.modalVideoSelectTemplate, new Image(), '40%');
+            this.modal.find('#video-url').on('input', function(e) {
+                url = $(this).val();
+                with(appView) { appView.selectVideoFromUrl(url); }
+            })
+        },
+
+        selectVideoFromUrl: function(url) {
+            var appView = this;
+            
+            var video = new Image({
+                mgr_thumb: moreGallery.config.assets_url + 'mgr/img/importing.png',
+                file_url: moreGallery.config.assets_url + 'mgr/img/importing.png',
+                sortorder: this.collection.length
+            });
+            
+            var found = false,
+                service = '';
+
+            // https://www.youtube.com/watch?v=e7eZUGB9HKU
+            var YouTube = url.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/);
+            if (YouTube && YouTube[1].length > 0) {
+                found = true;
+                service = 'youtube';
+                video.set('mgr_thumb', 'https://i1.ytimg.com/vi/' + YouTube[1] + '/hqdefault.jpg');
+                video.set('filename', 'youtube:' + YouTube[1]);
+                video.set('class_key', 'mgYouTubeVideo');
+                video.set('video_id', YouTube[1]);
+            }
+
+            // https://vimeo.com/channels/thatswyfilms/159821179
+            var Vimeo = url.match(/^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/);
+            if (Vimeo && Vimeo[5] && Vimeo[5].length > 0) {
+                found = true;
+                service = 'vimeo';
+                video.set('filename', 'vimeo:' + Vimeo[5]);
+                video.set('class_key', 'mgVimeoVideo');
+                video.set('video_id', Vimeo[5]);
+            }
+
+            if (found) {
+                importId++;
+                video.set('id', 'video_' + importId);
+                appView.collection.add(video);
+
+                // Hide an errors and give the user 250ms to see it's recognised
+                appView.modal.find('.video-error').hide();
+                appView.modal.find('.modal-video-select').addClass('video-identified video-identified-' + service);
+                setTimeout(function () {
+                    appView.closeModal();
+                    var cid = video.cid;
+                    var videoView = appView.$('div[data-id=' + cid + ']');
+                    if (videoView) {
+                        videoView.addClass('mgimage-uploading');
+                    }
+                }, 350)
+
+                var postData = {
+                    tmpid: video.get('id'),
+                    cid: video.cid,
+                    resource: MODx.request.id,
+                    class_key: video.get('class_key'),
+                    video_id: video.get('video_id'),
+                    filename: video.get('filename')
+                };
+
+                var appView = this;
+                jQuery.ajax({
+                    url: moreGallery.config.connector_url + '?action=mgr/videos/select',
+                    data: postData,
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (data, textStatus, jqXhr) {
+                        // Successful processor?
+                        if (data.success) {
+                            var record = data.object;
+                            jQuery.each(record, function (key, value) {
+                                video.set(key, value);
+                            });
+                            video.trigger('uploadComplete');
+                        }
+                        // Uh oh, no bueno.
+                        else {
+                            alert(moreGallery.lang('upload_error', {file: postData.filename, message: data.message}));
+                            video.trigger('destroy');
+                        }
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        alert(moreGallery.lang('upload_error', {
+                            file: postData.filename,
+                            message: textStatus + ' (' + errorThrown + ')'
+                        }));
+                        video.trigger('destroy');
+                    }
+                });
+            }
+            else {
+                appView.modal.find('.video-error').text('Video URL not recognised.').show();
+            }
         },
 
         modelStartEdit: function(data) {
@@ -483,19 +627,19 @@ jQuery(function($) {
                 }, 150);
             }
 
-            $('#mgimage-name, #mgimage-url').on('keydown', function(e)
-            {
-                if (e.keyCode == 13)
-                {
+            $('#mgimage-name, #mgimage-url').on('keydown', function(e) {
+                if (e.keyCode == 13) {
                     e.preventDefault();
                 }
             });
 
             // Initiate tags
-            var imageTags = new moreGallery.Views.TagCollection({
-                el: $('.mgimage-tags-holder'),
-                image: data.model.id
-            });
+            if (moreGallery.config.permissions.image_tags) {
+                var imageTags = new moreGallery.Views.TagCollection({
+                    el: $('.mgimage-tags-holder'),
+                    image: data.model.id
+                });
+            }
 
             var cropsHolder = $('.mgimage-crops'),
                 currentCrops = Ext.decode(data.model.attributes.crops) || {},
@@ -504,85 +648,84 @@ jQuery(function($) {
 
             this.displayCrops(cropsHolder, currentCrops, this);
 
-            cropsHolder.on('click', '.image-crop-edit', function() {
-                var btn = $(this),
-                    key = btn.data('crop'),
-                    crop = moreGallery.crops[key],
-                    text = btn.text();
+            if (moreGallery.config.permissions.image_crop_edit) {
+                cropsHolder.on('click', '.image-crop-edit', function () {
+                    var btn = $(this),
+                        key = btn.data('crop'),
+                        crop = moreGallery.crops[key],
+                        text = btn.text();
 
-                if (text == moreGallery.lang('save_crop'))
-                {
-                    // Grab the selected coords and release the selection
-                    var selected = jcrop_api.tellSelect(),
-                        previewSpinner = btn.siblings('.image-crop-saving-spinner');
+                    if (text == moreGallery.lang('save_crop')) {
+                        // Grab the selected coords and release the selection
+                        var selected = jcrop_api.tellSelect(),
+                            previewSpinner = btn.siblings('.image-crop-saving-spinner');
 
-                    btn.attr('disabled', true).text(moreGallery.lang('processing_crop'));
-                    previewSpinner.addClass('spinner');
-                    jcrop_api.release();
-                    jcrop_api.disable();
+                        btn.attr('disabled', true).text(moreGallery.lang('processing_crop'));
+                        previewSpinner.addClass('spinner');
+                        jcrop_api.release();
+                        jcrop_api.disable();
 
-                    // Make sure we have full pixels instead of decimals
-                    $.each(selected, function(index, value) {
-                        selected[index] = Math.round(value);
-                    });
+                        // Make sure we have full pixels instead of decimals
+                        $.each(selected, function (index, value) {
+                            selected[index] = Math.round(value);
+                        });
 
-                    // Update the currentCrops object and write it to the database
-                    currentCrops[key].x = selected.x;
-                    currentCrops[key].y = selected.y;
-                    currentCrops[key].x2 = selected.x2;
-                    currentCrops[key].y2 = selected.y2;
-                    currentCrops[key].width = selected.w;
-                    currentCrops[key].height = selected.h;
+                        // Update the currentCrops object and write it to the database
+                        currentCrops[key].x = selected.x;
+                        currentCrops[key].y = selected.y;
+                        currentCrops[key].x2 = selected.x2;
+                        currentCrops[key].y2 = selected.y2;
+                        currentCrops[key].width = selected.w;
+                        currentCrops[key].height = selected.h;
 
-                    var encoded = Ext.encode(currentCrops);
-                    data.model.set('crops', encoded);
-                    data.model.save(null, {
-                        success: function (model, response, options)
-                        {
-                            var newCrops = Ext.decode(model.attributes.crops) || {};
-                            // Redraw the crops display so it shows the updated values
-                            that.displayCrops(cropsHolder, newCrops, that);
-                            // Update the text and re-enable buttons
-                            btn.text(moreGallery.lang('edit_crop'));
-                            cropsHolder.find('button').removeAttr('disabled');
-                            previewSpinner.removeClass('spinner');
-                        }
-                    });
+                        var encoded = Ext.encode(currentCrops);
+                        data.model.set('crops', encoded);
+                        data.model.save(null, {
+                            success: function (model, response, options) {
+                                var newCrops = Ext.decode(model.attributes.crops) || {};
+                                // Redraw the crops display so it shows the updated values
+                                that.displayCrops(cropsHolder, newCrops, that);
+                                // Update the text and re-enable buttons
+                                btn.text(moreGallery.lang('edit_crop'));
+                                cropsHolder.find('button').removeAttr('disabled');
+                                previewSpinner.removeClass('spinner');
+                            }
+                        });
 
 
-                }
-                else {
-                    // Disable all buttons except the current, set to save
-                    cropsHolder.find('button').attr('disabled', true);
-                    btn.text(moreGallery.lang('save_crop')).removeAttr('disabled');
-
-                    // Select the current crop if there is one
-                    if (currentCrops[key] && currentCrops[key].width > 0)
-                    {
-                        jcrop_api.setSelect([currentCrops[key].x,currentCrops[key].y,currentCrops[key].x2,currentCrops[key].y2]);
                     }
+                    else {
+                        // Disable all buttons except the current, set to save
+                        cropsHolder.find('button').attr('disabled', true);
+                        btn.text(moreGallery.lang('save_crop')).removeAttr('disabled');
 
-                    // Update some crop-specific options
-                    jcrop_api.setOptions({
-                        aspectRatio: crop['aspect'] ? crop['aspect'] : null,
-                        minSize: [
-                            crop['min_width'] ? crop['min_width'] : 0,
-                            crop['min_height'] ? crop['min_height'] : 0
-                        ]
-                    });
+                        // Select the current crop if there is one
+                        if (currentCrops[key] && currentCrops[key].width > 0) {
+                            jcrop_api.setSelect([currentCrops[key].x, currentCrops[key].y, currentCrops[key].x2, currentCrops[key].y2]);
+                        }
 
-                    // Enable the crop
-                    jcrop_api.enable();
-                }
-            });
+                        // Update some crop-specific options
+                        jcrop_api.setOptions({
+                            aspectRatio: crop['aspect'] ? crop['aspect'] : null,
+                            minSize: [
+                                crop['min_width'] ? crop['min_width'] : 0,
+                                crop['min_height'] ? crop['min_height'] : 0
+                            ]
+                        });
 
-            this.$('#mgimage-image').Jcrop({
-                trueSize: [data.model.attributes.width, data.model.attributes.height],
-                keySupport: false
-            }, function() {
-                jcrop_api = this;
-                jcrop_api.disable();
-            });
+                        // Enable the crop
+                        jcrop_api.enable();
+                    }
+                });
+
+                this.$('#mgimage-image').Jcrop({
+                    trueSize: [data.model.attributes.width, data.model.attributes.height],
+                    keySupport: false
+                }, function () {
+                    jcrop_api = this;
+                    jcrop_api.disable();
+                });
+            }
 
             if (!this.dropZoneInitiated) {
                 this.dropZoneInitiated = true;
@@ -594,8 +737,7 @@ jQuery(function($) {
             }
         },
 
-        displayCrops: function(cropsHolder, currentCrops, that)
-        {
+        displayCrops: function(cropsHolder, currentCrops, that) {
             cropsHolder.empty();
 
             $.each(moreGallery.crops, function(key, options) {
@@ -657,7 +799,7 @@ jQuery(function($) {
             }
         },
 
-        modelStopEdit: function() {
+        closeModal: function() {
             if (this.modal) {
                 var appView = this;
                 this.modal.fadeOut({
@@ -667,7 +809,6 @@ jQuery(function($) {
                     }
                 });
                 this.modalMask.fadeOut();
-
 
                 if (window.tinyMCE) {
                     var ed = tinyMCE.get('mgimage-description');

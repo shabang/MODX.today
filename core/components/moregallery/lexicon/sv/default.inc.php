@@ -9,6 +9,8 @@ $_lang['moregallery.new'] = 'Nytt galleri';
 $_lang['moregallery.new_description'] = 'Skapa ett nytt gallery som du kan ladda upp bilder till.';
 $_lang['moregallery.name'] = 'Galleri';
 $_lang['moregallery.name_here'] = 'Skapa ett galleri här';
+$_lang['moregallery.permission_denied'] = 'Tyvärr, du har inte de nödvändiga rättigheterna för att hantera detta galleri.';
+$_lang['moregallery.new_tags_not_allowed'] = 'Tyvärr, du har inte de nödvändiga rättigheterna för att lägga till nya taggar. Vänligen välj en existerande tagg genom att börja skriva i inmatningsfältet.';
 $_lang['moregallery.please_save_first'] = 'Du måste spara galleriet innan du kan börja lägga till bilder. Efter att du har sparat galleriet kan du ladda upp bilder här.';
 
 
@@ -35,6 +37,8 @@ $_lang['moregallery.upload_image'] = 'Ladda upp bilder till galleriet';
 $_lang['moregallery.upload'] = 'Ladda upp';
 $_lang['moregallery.import_image'] = 'Importera bilder från andra källor';
 $_lang['moregallery.import'] = 'Importera';
+$_lang['moregallery.add_video'] = 'Lägg till video';
+$_lang['moregallery.add_video_instructions'] = 'Ange videons URL nedan för att importera den till galleriet.';
 $_lang['moregallery.refresh'] = 'Uppdatera';
 $_lang['moregallery.drop_to_upload'] = 'Dra och släpp bilder för att ladda upp dem till galleriet';
 $_lang['moregallery.images_count'] = 'bilder';
@@ -50,6 +54,7 @@ $_lang['moregallery.preupload_very_big'] = 'Filen "[[+file]]" är väldigt stor.
 $_lang['moregallery.upload_error'] = 'Aj då, ett fel uppstod när bilden [[+file]] skulle laddas upp: [[+message]]';
 $_lang['moregallery.upload_error_huge'] = 'Den uppladdade bilden var över [[+size]]MB i storlek, vilken kan ha varit för mycket för servern att hantera. Prova att minska storleken på bilden innan du laddar upp den igen.';
 $_lang['moregallery.model_error'] = 'Ett oväntat fel uppstod, bildens typ kunde inte hittas. Prova med att uppdatera sidan.';
+$_lang['moregallery.video_load_error'] = 'Videons information kunde inte hämtas. Det beror antagligen på att videon inte existerar, eller att den är markerad som privat.';
 
 $_lang['moregallery.error_invalid_resource'] = 'Ett oväntat fel uppstod, resursen "[[+resource]]" är inte ett giltigt galleri.';
 $_lang['moregallery.error_loading_source'] = 'Ett fel uppstod när galleriets mediakälla skulle laddas.';
@@ -98,8 +103,12 @@ $_lang['setting_moregallery.crop_jpeg_quality'] = 'Kvalitet för JPEG Crop';
 $_lang['setting_moregallery.crop_jpeg_quality_desc'] = 'Du kan kontrollera kvaliteten för de tumnaglar som genereras för JPEG-bilder genom att ange ett nummer mellan 0 och 100.';
 $_lang['setting_moregallery.thumbnail_format'] = 'Format för tumnaglar i hanteraren';
 $_lang['setting_moregallery.thumbnail_format_desc'] = 'Ange det format (png, gif eller jpg) som ska användas för tumnaglar i hanteraren (mgr_thumb). Detta påverkar inte beskärning av bilder; där kommer samma format att användas som för originalbilden.';
-$_lang['setting_moregallery.prefill_from_iptc'] = 'Prefill from IPTC';
-$_lang['setting_moregallery.prefill_from_iptc_desc'] = 'When enabled the image will automatically populate the name, description and tags with information stored in the image.';
+$_lang['setting_moregallery.prefill_from_iptc'] = 'Förifyll från IPTC';
+$_lang['setting_moregallery.prefill_from_iptc_desc'] = 'När aktiverad kommer namn, beskrivning och taggar att förifyllas med information lagrad i bildfilen.';
+$_lang['setting_moregallery.vimeo_prefill_description'] = 'Förifyll beskrivning från Vimeo';
+$_lang['setting_moregallery.vimeo_prefill_description_desc'] = 'När aktiverad, kommer filmer som hämtas från Vimeo att få sin beskrivning satt till beskrivningen på filmen där.';
+$_lang['setting_moregallery.youtube_prefill_description'] = 'Förifyll beskrivning från YouTube';
+$_lang['setting_moregallery.youtube_prefill_description_desc'] = 'När aktiverad, kommer filmer som hämtas från YouTube att få sin beskrivning satt till beskrivningen på filmen där.';
 
 
 $_lang['setting_moregallery.translit'] = "Transkribering";
@@ -112,6 +121,11 @@ $_lang['setting_moregallery.translit_class_path_desc'] = "Sökvägen till klasse
 $_lang['setting_moregallery.custom_fields'] = "Anpassade fält";
 $_lang['setting_moregallery.custom_fields_desc'] = "Tillåter dig att lägga till ytterligare alternativ till dialogrutan frö att editera en bild. Den här inställningen kräver ett JSON-objekt. För ytterligare information om hur anpassade fält definieras och används, vänligen <a href=\"https://www.modmore.com/moregallery/documentation/custom-fields/\">läs dokumentationen här</a>.";
 
+$_lang['setting_moregallery.prefetch_image_as_base64'] = "Förladda bilder som Base64";
+$_lang['setting_moregallery.prefetch_image_as_base64_desc'] = "Ange ett tal som representerar det antal bilder som ska förladdas som Base64-resurser. Vi inläsning av bilder som Base64 kommer bilderna att visas i nära realtid (det blir ingen fördröjning när webbläsaren laddar in bilden). Det kan ta längre tid att fylla galleriet i hanteraren för långsamma eller avlägsna mediekällor.";
+$_lang['setting_moregallery.allowed_extensions_per_source'] = "Tillåtna filändelser per mediakälla";
+$_lang['setting_moregallery.allowed_extensions_per_source_desc'] = "Aktivera den här inställningen för att använda mediekällans inställningar över tillåtna filändelser vid uppladdning. Om den är inaktiverad kommer MoreGallery att titta på inställningen upload_images istället.";
+
 $_lang['setting_mgr_tree_icon_mgresource'] = 'Galleri trädikon';
 $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'Font Awesome ikonklassen att lägga till för MoreGallery resurser i filträdet. ';
 
@@ -121,19 +135,28 @@ $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'Font Awesome ikonklassen att 
 
 /** mgGetImages */
 $_lang['moregallery.mggetimages.cache_desc'] = 'Cachea galleri utdata?';
-$_lang['moregallery.mggetimages.resource_desc'] = 'Ange en resurs-ID att ta bilder ifrån.';
+$_lang['moregallery.mggetimages.resource_desc'] = 'Ange ett resurs-ID eller flera kommaseparerade ID:n att hämta bilder ifrån.';
+$_lang['moregallery.mggetimages.activeonly_desc'] = 'När aktiverad kommer enbart aktiva bilder att visas. Inaktivera för att också visa inaktiva bilder.';
 $_lang['moregallery.mggetimages.sortby_desc'] = 'Fältet att sortera utifrån. Giltiga värden: filnamn, namn, beskrivning, sorteringsordning, uppladdningsdatum, editeringsdatum';
 $_lang['moregallery.mggetimages.sortdir_desc'] = 'Riktningen som bilderna ska sorteras i. Det kan vara "asc" (stigande) eller "desc" (fallande).';
 $_lang['moregallery.mggetimages.tags_desc'] = 'En kommaseparerad lista över namn på taggar eller ID: n att filtrera bilderna utifrån.';
 $_lang['moregallery.mggetimages.tagsfromurl_desc'] = 'Ange namnet på en URL-parameter för att få taggar att filtrera utifrån.';
+$_lang['moregallery.mggetimages.tagseparator_desc'] = 'En sträng för att separera mallen för taggar med för var och en av bilderna.';
+$_lang['moregallery.mggetimages.gettags_desc'] = 'När aktiverad kommer taggar att laddas in för varje bild.';
+$_lang['moregallery.mggetimages.getresourcecontent_desc'] = 'När aktiverad kommer resursens innehåll att laddas in och vara tillgängligt i bildens mall.';
+$_lang['moregallery.mggetimages.getresourceproperties_desc'] = 'När aktiverad kommer resursens inställningar att laddas in och vara tillgängligt i bildens mall.';
 $_lang['moregallery.mggetimages.getresourcefields_desc'] = 'När aktiverad, kommer resursfält att laddas in till bildmallen.';
 $_lang['moregallery.mggetimages.getresourcetvs_desc'] = 'Ange en kommaseparerad lista över mallvariabler att ladda in i bildmallen.';
 $_lang['moregallery.mggetimages.tagtpl_desc'] = 'Namnet på en Chunk som ska användas som mall för taggar.';
 $_lang['moregallery.mggetimages.imagetpl_desc'] = 'Namnet på en Chunk som ska användas som mall för bilder.';
+$_lang['moregallery.mggetimages.youtubetpl_desc'] = 'Namnet på en Chunk att ladda in för att använda som mall för inbäddade filmer från YouTube.';
+$_lang['moregallery.mggetimages.vimeotpl_desc'] = 'Namnet på en Chunk att ladda in för att använda som mall för inbäddade filmer från Vimeo.';
+$_lang['moregallery.mggetimages.singleimagetpl_desc'] = 'Namnet på en Chunk som ska användas som mall då en bild visas i läget för enskild bild.';
+$_lang['moregallery.mggetimages.singleyoutubetpl_desc'] = 'Namnet på en Chunk som ska användas som mall då ett videoklipp från YouTube visas i läget för enskild bild.';
+$_lang['moregallery.mggetimages.singlevimeotpl_desc'] = 'Namnet på en Chunk som ska användas som mall då ett videoklipp från Vimeo visas i läget för enskild bild.';
 $_lang['moregallery.mggetimages.singleimageenabled_desc'] = 'När värdet är 1, kommer snippeten att svara på anrop med URL -parametern singleImageParam genom att visa vyn för enstaka bilder.';
-$_lang['moregallery.mggetimages.singleimagetpl_desc'] = 'Namnet på en Chunk som ska användas för att visa den speciella vyn för enskild bild.';
 $_lang['moregallery.mggetimages.singleimageparam_desc'] = 'Kan användas för att överida systeminställningen moregallery.single_image_url_param per snippetanrop. Det är användbart om du vill visa flera gallerier på samma sida.';
-$_lang['moregallery.mggetimages.tagseparator_desc'] = 'En sträng för att separera mallen för taggar med för var och en av bilderna.';
+$_lang['moregallery.mggetimages.singleimageresource_desc'] = 'Används för att generera länken i platshållaren view_url. Sätt den till en resurs som ska användas för att visa enstaka bilder om det är en annan än den resurs som bilden laddades upp till.';
 $_lang['moregallery.mggetimages.imageseparator_desc'] = 'En sträng för att separera mallarna för bilder med i gallerivyn.';
 $_lang['moregallery.mggetimages.wrappertpl_desc'] = 'När den inte är tom, kommer den angivna Chunken att användas för att omsluta hela resultatet.';
 $_lang['moregallery.mggetimages.wrapperifempty_desc'] = 'Sätt till 0 för att bara använda wrapperTpl om det finns minst en bild att visa. När den är satt till 1 kommer wrapperTpl alltid användas, även om det inte finns några bilder.';
@@ -143,6 +166,8 @@ $_lang['moregallery.mggetimages.limit_desc'] = 'Antalet bilder att ladda in.';
 $_lang['moregallery.mggetimages.offset_desc'] = 'Antal bilder att hoppa över.';
 $_lang['moregallery.mggetimages.scheme_desc'] = 'Det schema som ska användas för att generera URL:er; standardvärdet är värdet för link_tag_scheme.';
 $_lang['moregallery.mggetimages.where_desc'] = 'Ett generellt villkor att lägga till sökfrågan kan läggas till här, i JSON-format. Till exempel {"uploadedby":4} eller {"name:LIKE":"%train%"}. ';
+$_lang['moregallery.mggetimages.debug_desc'] = 'Aktivera för att lägga till en felsökningsinformation (användbar för felrapporter) i slutet på snippetens utdata.';
+$_lang['moregallery.mggetimages.timing_desc'] = 'Aktivera för att lägga till den totala hanteringstiden i slutet av snippetens utdata.';
 
 /** mgGetTags */
 $_lang['moregallery.mggettags.cache_desc_desc'] = 'Ska taggresultatet lagras i cachen?';

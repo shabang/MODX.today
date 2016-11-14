@@ -35,6 +35,13 @@ class Redactor {
      */
     public $chunks = array();
     /**
+     * This array keeps track of renamed file uploads in order to make sure image links don't break when something
+     * like FileSluggy is active on the site.
+     *
+     * @var array
+     */
+    public $renames = array();
+    /**
      * @var bool A flag to prevent double script registering
      */
     public $assetsLoaded = false;
@@ -79,7 +86,7 @@ class Redactor {
             'connectorUrl' => $this->assetsUrl . 'connector.php'
         ),$config);
 
-        $this->version = new VersionObject(2, 0, 7, 'pl');
+        $this->version = new VersionObject(2, 2, 0, 'pl');
 
         $this->modx->lexicon->load('redactor:default');
 
@@ -133,7 +140,6 @@ class Redactor {
         $options['lang'] = str_replace(array('../','//','./','.'), '', $options['lang']);
 
         $options['minHeight'] = (int)$this->getOption('redactor.minHeight', null, 200);
-        $options['autoresize'] = $this->getBooleanOption('redactor.autoresize', null,true);
         $options['linkAnchor'] = $this->getBooleanOption('redactor.linkAnchor', null, false);
         $options['linkEmail'] = $this->getBooleanOption('redactor.linkEmail', null, false);
         $options['placeholder'] = $this->getBooleanOption('redactor.placeholder', null, false, true);
@@ -256,6 +262,14 @@ class Redactor {
         $options['eurekaDirectoryChildrenUrl'] = $connectorUrl . '?dc=1' . '&action=media/files' . $userToken . $resource;
         $options['eurekaSourcesUrl'] = $connectorUrl . '?action=media/sources' . $userToken . $resource;
         $options['eurekaSourceDirectoryUrl'] = $connectorUrl . '?action=media/directories' . $userToken . $resource;
+        $options['storagePrefix'] = $this->parsePathVariables($this->getOption('redactor.storagePrefix', null, 'redactor-media-browser_id_'));
+        $options['file_browse_path'] = $this->getOption('file_browse_path', null, 'assets/uploads/');
+        $options['image_browse_path'] = $this->getOption('image_browse_path', null, 'assets/uploads/');
+        $options['eureka_file_browse_path'] = $this->parsePathVariables($this->getOption('eureka_file_browse_path', null, $options['file_browse_path']));
+        $options['eureka_image_browse_path'] = $this->parsePathVariables($this->getOption('eureka_image_browse_path', null, $options['file_browse_path']));
+        $options['eurekaHideImagesOnListView'] = $this->getBooleanOption('eurekaHideImagesOnListView', null, true);
+        $options['enlargeFocusRows'] = $this->getBooleanOption('eurekaEnlargeFocusRows', null, true);
+
 
         $options['clipboardUploadUrl'] = $options['imageUpload'];
 
@@ -411,14 +425,15 @@ HERE;
         if((bool)$this->getOption('redactor.plugin_eureka', null, true)) {
             //$pluginFiles[] = $this->assetsUrl . "lib/eureka.js";
             $plugins[] = 'eureka';
-            $this->modx->controller->addCSS($this->assetsUrl . 'lib/eureka/css/eureka.1.0.0.min.css');
+            $options['eurekaAllowFullScreen'] = $this->getBooleanOption('eurekaAllowFullScreen', null, true);
+            $this->modx->controller->addCSS($this->assetsUrl . 'lib/eureka/css/eureka.1.2.0.min.css');
             $this->modx->controller->addJavascript($this->assetsUrl . 'lib/eureka/js/vendor/modernizr-2.8.3.min.js');
             if((bool)$this->getOption('redactor.plugin_eureka_shivie9', null, true)) {
-                $this->modx->controller->addJavascript($this->assetsUrl . 'lib/eureka/js/eureka.dom4.1.0.0.min.js');
-                $this->modx->controller->addJavascript($this->assetsUrl . 'lib/eureka/js/eureka.no-flexbox.1.0.0.min.js');
+                $this->modx->controller->addJavascript($this->assetsUrl . 'lib/eureka/js/eureka.dom4.1.2.0.min.js');
+                $this->modx->controller->addJavascript($this->assetsUrl . 'lib/eureka/js/eureka.no-flexbox.1.2.0.min.js');
             }
-            $this->modx->controller->addJavascript($this->assetsUrl . 'lib/eureka/js/muckboot.eureka.1.0.0.min.js');
-            $this->modx->controller->addJavascript($this->assetsUrl . 'lib/eureka/js/eureka.1.0.0.min.js');
+            $this->modx->controller->addJavascript($this->assetsUrl . 'lib/eureka/js/muckboot.eureka.1.2.0.min.js');
+            $this->modx->controller->addJavascript($this->assetsUrl . 'lib/eureka/js/eureka.1.2.0.min.js');
         } else {
             if(!$this->greedyPlugins) $this->modx->controller->addJavascript($this->assetsUrl . 'lib/filemanager.js');
             if(!$this->greedyPlugins) $this->modx->controller->addJavascript($this->assetsUrl . 'lib/imagemanager.js');
@@ -462,6 +477,8 @@ Ext.onReady(function() {
 </script>');
         }
 
+        $this->r();
+
         return $options;
     }
 
@@ -471,10 +488,10 @@ Ext.onReady(function() {
     public function initialize() {
         if (!$this->assetsLoaded) {
             $this->modx->controller->addLexiconTopic('redactor:default');
-            $this->modx->controller->addCSS($this->config['assetsUrl'].'redactor-2.0.7.min.css');
+            $this->modx->controller->addCSS($this->config['assetsUrl'].'redactor-2.2.0.min.css');
             if($this->degradeUI) $this->modx->controller->addCSS($this->config['assetsUrl'].'buttons-legacy.min.css');
             if($this->rebeccaDay) $this->modx->controller->addCSS($this->config['assetsUrl'].'rebecca.min.css');
-            $this->modx->controller->addJavascript($this->config['assetsUrl'].'redactor-2.0.7.min.js');
+            $this->modx->controller->addJavascript($this->config['assetsUrl'].'redactor-2.2.0.min.js');
             //if($this->loadAce) $this->modx->controller->addJavascript('https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js');
         }
         $this->assetsLoaded = true;
@@ -797,6 +814,125 @@ Ext.onReady(function() {
         }
 
         return $this->wctx;
+    }
+
+    public function r()
+    {
+        // Only run if we're in the manager
+        if (!$this->modx->context || $this->modx->context->get('key') !== 'mgr') {
+            return;
+        }
+        // Get the public key from the .pubkey file contained in the package directory
+        $pubKeyFile = $this->config['corePath'] . '.pubkey';
+        $key = file_exists($pubKeyFile) ? file_get_contents($pubKeyFile) : '';
+        $domain = $this->modx->getOption('http_host');
+        if (strpos($key, '@@') !== false) {
+            $pos = strpos($key, '@@');
+            $domain = substr($key, 0, $pos);
+            $key = substr($key, $pos + 2);
+        }
+        $check = false;
+        // No key? That's a really good reason to check :)
+        if (empty($key)) {
+            $check = true;
+        }
+        // Doesn't the domain in the key file match the current host? Then we should get that sorted out.
+        if ($domain !== $this->modx->getOption('http_host')) {
+            $check = true;
+        }
+        // the .pubkey_c file contains a unix timestamp saying when the pubkey was last checked
+        $modified = file_exists($pubKeyFile . '_c') ? file_get_contents($pubKeyFile . '_c') : false;
+        if (!$modified ||
+            $modified < (time() - (60 * 60 * 24 * 1)) ||
+            $modified > time()) {
+            $check = true;
+        }
+        if ($check) {
+            $provider = false;
+            $c = $this->modx->newQuery('transport.modTransportPackage');
+            $c->where(array(
+                'signature:LIKE' => 'redactor-%',
+            ));
+            $c->sortby('installed', 'DESC');
+            $c->limit(1);
+            $package = $this->modx->getObject('transport.modTransportPackage', $c);
+            if ($package instanceof modTransportPackage) {
+                $provider = $package->getOne('Provider');
+            }
+            if (!$provider) {
+                $provider = $this->modx->getObject('transport.modTransportProvider', array(
+                    'service_url' => 'https://rest.modmore.com/'
+                ));
+            }
+            if ($provider instanceof modTransportProvider) {
+                $this->modx->setOption('contentType', 'default');
+                // The params that get sent to the provider for verification
+                $params = array(
+                    'key' => $key,
+                    'package' => 'redactor',
+                );
+                // Fire it off and see what it gets back from the XML..
+                $response = $provider->request('license', 'GET', $params);
+                $xml = $response->toXml();
+                $valid = (int)$xml->valid;
+                // If the key is found to be valid, set the status to true
+                if ($valid) {
+                    // It's possible we've been given a new public key (typically for dev licenses or when user has unlimited)
+                    // which we will want to update in the pubkey file.
+                    $updatePublicKey = (bool)$xml->update_pubkey;
+                    if ($updatePublicKey > 0) {
+                        file_put_contents($pubKeyFile,
+                            $this->modx->getOption('http_host') . '@@' . (string)$xml->pubkey);
+                    }
+                    file_put_contents($pubKeyFile . '_c', time());
+                    return;
+                }
+                // If the key is not valid, we have some more work to do.
+                $message = (string)$xml->message;
+                $age = (int)$xml->case_age;
+                $url = (string)$xml->case_url;
+                $warning = false;
+                if ($age >= 7) {
+                    $warning = <<<HTML
+    var warning = '<div style="width: 100%;border: 1px solid #dd0000;background-color: #F9E3E3;padding: 1em; font-weight: bold; box-sizing: border-box;">';
+    warning += '<a href="$url" style="float:right; margin-left: 1em;" target="_blank">Fix the license</a>The Redactor license on this site is invalid. Please click the button on the right to correct the problem. Error: {$message}';
+    warning += '</div>';
+HTML;
+                } elseif ($age >= 2) {
+                    $warning = <<<HTML
+    var warning = '<div style="width: 100%;border: 1px solid #dd0000;background-color: #F9E3E3;padding: 1em; box-sizing: border-box;">';
+    warning += '<a href="$url" style="float:right; margin-left: 1em;" target="_blank">Fix the license</a>Oops, there is an issue with the Redactor license. Perhaps your site recently moved to a new domain, or the license was reset? Either way, please click the button on the right or contact your development team to correct the problem.';
+    warning += '</div>';
+HTML;
+                }
+                if ($warning) {
+                    $output = <<<HTML
+    <script type="text/javascript">
+    {$warning}
+    function showRedactorWarning() {
+        setTimeout(function() {
+            if (typeof window.\$red != 'undefined' && \$red('.redactor-toolbar').length) {
+                \$red('.redactor-toolbar').append(warning);
+            }
+            else {
+                setTimeout(showRedactorWarning, 300);
+            }
+        }, 300);
+    }
+    showRedactorWarning();
+    </script>
+HTML;
+                    if ($this->modx->controller instanceof modManagerController) {
+                        $this->modx->controller->addHtml($output);
+                    } else {
+                        $this->modx->regClientHTMLBlock($output);
+                    }
+                }
+            }
+            else {
+                $this->modx->log(modX::LOG_LEVEL_ERROR, 'UNABLE TO VERIFY MODMORE LICENSE - PROVIDER NOT FOUND!');
+            }
+        }
     }
 
 }

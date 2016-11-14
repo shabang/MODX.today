@@ -4,8 +4,10 @@ $xpdo_meta_map['mgImage']= array (
   'version' => '1.1',
   'table' => 'moregallery_image',
   'extends' => 'xPDOSimpleObject',
+  'inherit' => 'single',
   'fields' => 
   array (
+    'class_key' => 'mgImage',
     'resource' => NULL,
     'filename' => '',
     'file' => '',
@@ -24,9 +26,18 @@ $xpdo_meta_map['mgImage']= array (
     'editedon' => 0,
     'editedby' => 0,
     'active' => 1,
+    'properties' => NULL,
   ),
   'fieldMeta' => 
   array (
+    'class_key' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '100',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'mgImage',
+    ),
     'resource' => 
     array (
       'dbtype' => 'int',
@@ -160,9 +171,31 @@ $xpdo_meta_map['mgImage']= array (
       'null' => false,
       'default' => 1,
     ),
+    'properties' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'array',
+      'null' => true,
+    ),
   ),
   'indexes' => 
   array (
+    'class_key' => 
+    array (
+      'alias' => 'class_key',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'class_key' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
     'resource' => 
     array (
       'alias' => 'resource',

@@ -67,7 +67,7 @@ $_lang['prop_formit.emailsubject_desc'] = 'Je-li nastaven hook `email` pak je te
 $_lang['prop_formit.emailusefieldforsubject_desc'] = 'Je-li ve formuláři definováno políčko `subject` a tento parametr je nastaven na "true" bude hodnota formulářového políčka `subject` použita jako předmět zprávy.';
 $_lang['prop_formit.emailhtml_desc'] = 'Volitelné. Je-li nastaven hook `email` pak tímto parametrem můžete aktivovat odeslání zprávy ve formátu HTML, jinak bude zpráva odeslána v textovém formátu. Ve výchozím nastavení se použije HTML.';
 $_lang['prop_formit.emailconvertnewlines_desc'] = 'Je-li nataveno na Ano a emailHtml je nastaveno na 1, budou v e-mailu překonvertovány nové řádky na HTML značku BR.';
-$_lang['prop_formit.emailmulitseparator_desc'] = 'Výchozí oddělovač pro sady hodnot odesálané skrze checkboxy/multi-selecty. Výchozí hodnotou je nový řádek.';
+$_lang['prop_formit.emailmultiseparator_desc'] = 'Výchozí oddělovač pro sady hodnot odesálané skrze checkboxy/multi-selecty. Výchozí hodnotou je nový řádek.';
 $_lang['prop_formit.emailmultiwrapper_desc'] = 'Obalovač každé hodnoty sady odesílané skrze checkboxy/multi-selecty. Výchozí hodnotou je pouze hodnota.';
 
 /* FormIt Auto-Responder properties */
@@ -99,7 +99,7 @@ $_lang['prop_math.mathoperatorfield_desc'] = 'Je-li nastaven hook `math` pak tí
 
 /* FormItCountryOptions properties */
 $_lang['prop_fico.allgrouptext_desc'] = 'Volitelné. Je-li nastaven a používá se parametr &prioritized, bude zobrazen tento textový popis pro všechny ostatní země při výpisu.';
-$_lang['prop_fico.optgroup_desc'] = 'Volitelné. Je-li nastaven a používá se parametr &prioritized, bude použit chunk tpl pro označení skupin.';
+$_lang['prop_fico.optgrouptpl_desc'] = 'Volitelné. Je-li nastaven a používá se parametr &prioritized, bude použit chunk tpl pro označení skupin.';
 $_lang['prop_fico.prioritized_desc'] = 'Volitelné. Čárkou oddělený seznam ISO kódů zemí, které budou zobrazeny jako prioriováné pod jmenovkou "Častí návštěvníci" na začátku rozbalovacího seznamu. Tuto volbu lze použít pro nastavení často vybíraných zemí.';
 $_lang['prop_fico.prioritizedgrouptext_desc'] = 'Volitelné. Je-li nastaven a používá se parametr &prioritized, bude tento text použit jako jmenovka pro sadu položek rozbalovacího menu.';
 $_lang['prop_fico.selected_desc'] = 'Hodnota země při volbě.';

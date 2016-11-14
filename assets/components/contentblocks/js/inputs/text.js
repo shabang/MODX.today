@@ -50,10 +50,16 @@
     ContentBlocks.fieldTypes.textarea = function(dom, data) {
         return {
             init: function () {
-                setTimeout(function() {
-                    dom.find('.contentblocks-field-textarea textarea').autoGrow()
-                        .on('change', ContentBlocks.fixColumnHeights);
-                }, 100);
+                if (ContentBlocks.toBoolean(data.properties.use_tinyrte)) {
+                    var field = dom.find('#' + data.generated_id + '_textarea');
+                    ContentBlocks.addTinyRte(field);
+                }
+                else {
+                    setTimeout(function() {
+                        dom.find('.contentblocks-field-textarea textarea').autoGrow()
+                            .on('change', ContentBlocks.fixColumnHeights);
+                    }, 100);
+                }
             },
             getData: function () {
                 return {
@@ -90,6 +96,13 @@
 
     ContentBlocks.fieldTypes.textfield = function(dom, data) {
         return {
+            init: function() {
+                if (ContentBlocks.toBoolean(data.properties.use_tinyrte)) {
+                    var field = dom.find('#' + data.generated_id + '_textfield');
+                    ContentBlocks.addTinyRte(field);
+                }
+            },
+
             getData: function () {
                 return {
                     value: dom.find('.contentblocks-field-text input').val()
@@ -101,9 +114,15 @@
     ContentBlocks.fieldTypes.quote = function(dom, data) {
         return {
             init: function () {
-                setTimeout(function() {
-                    dom.find('.contentblocks-field-textarea textarea').autoGrow().on('change', ContentBlocks.fixColumnHeights);
-                }, 100);
+                if (ContentBlocks.toBoolean(data.properties.use_tinyrte)) {
+                    var field = dom.find('#' + data.generated_id + '_quote');
+                    ContentBlocks.addTinyRte(field);
+                }
+                else {
+                    setTimeout(function () {
+                        dom.find('.contentblocks-field-textarea textarea').autoGrow().on('change', ContentBlocks.fixColumnHeights);
+                    }, 100);
+                }
                 if (data.cite) {
                     dom.find('.contentblocks-field-text input').val(data.cite);
                 }

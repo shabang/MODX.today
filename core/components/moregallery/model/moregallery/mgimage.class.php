@@ -6,6 +6,7 @@ class mgImage extends xPDOSimpleObject
 {
     const MODE_UPLOAD = 'upload';
     const MODE_IMPORT = 'import';
+    const MODE_VIDEO = 'video';
 
     protected $checkedForThumb = false;
     protected $iptcHeaderArray = array ( // thank you, stranger http://php.net/manual/en/function.iptcparse.php#113148
@@ -37,8 +38,7 @@ class mgImage extends xPDOSimpleObject
     public function __construct(xPDO & $xpdo) {
         parent::__construct($xpdo);
 
-        if (!isset($xpdo->moregallery))
-        {
+        if (!isset($xpdo->moregallery)) {
             $this->_loadMoreGalleryService();
         }
     }
@@ -51,24 +51,42 @@ class mgImage extends xPDOSimpleObject
         {
             case 'width':
             case 'height':
-                if ($value < 1)
-                {
+                if ($value < 1) {
                     $resource = $this->getResource();
                     if ($resource && $resource->_getSource()) {
                         $relativeUrl = $resource->getSourceRelativeUrl();
-                        $filePath = $resource->source->getBasePath().$relativeUrl. $this->get('file');
-                        $size = getimagesize($filePath);
-
-                        $width = $size[0];
-                        $height = $size[1];
-                        $this->set('width', $width);
-                        $this->set('height', $height);
-                        if (!$this->isNew())
-                        {
-                            $this->save();
+                        $fileName = $this->get('file');
+                        if (empty($fileName)) {
+                            $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, '[moregallery] Image record ' . $this->get('id') . ' on resource ' . $this->get('resource') . ' does not have a file value. This may indicate a corrupt upload. Unable to calculate ' . $k . '.');
+                            return 0;
                         }
+                        $filePath = $resource->source->getBasePath().$relativeUrl. $fileName;
 
-                        $value = $$k;
+                        if (file_exists($filePath) && is_file($filePath)) {
+                            /**
+                             * Using the included Imagine lib we crop the image.
+                             */
+                            try {
+                                /** @var \Imagine\Image\ImagineInterface $imagine */
+                                $imagine = $this->xpdo->moregallery->getImagine();
+
+                                // Load the image with imagine and create a resized version
+                                $img = $imagine->open($filePath);
+                                $size = $img->getSize();
+
+                                $width = $size->getWidth();
+                                $height = $size->getHeight();
+                                $this->set('width', $width);
+                                $this->set('height', $height);
+                                if (!$this->isNew()) {
+                                    $this->save();
+                                }
+
+                                $value = $$k;
+                            } catch (Exception $e) {
+                                $this->xpdo->log(modX::LOG_LEVEL_ERROR, '[moregallery] Exception ' . get_class($e) . ' fetching size for image record ' . $this->get('id') . ' from path ' . $filePath . ': ' . $e->getMessage());
+                            }
+                        }
                     }
                 }
                 break;
@@ -94,7 +112,7 @@ class mgImage extends xPDOSimpleObject
     /**
      * Grabs (and creates) crops for an image.
      *
-     * @return array
+     * @return mgImageCrop[]
      */
     public function getCrops()
     {
@@ -183,44 +201,43 @@ class mgImage extends xPDOSimpleObject
         $array = parent::toArray($keyPrefix, $rawValues, $excludeLazy, $includeRelated);
 
         $resource = $this->getResource();
-        if (!$rawValues && $resource && $resource->_getSource()) {
-            $relativeUrl = $resource->getSourceRelativeUrl();
+        if (!$rawValues) {
 
-            // Check if we have a manager thumbnail, and regenerate it if necessary
-            $thumb = $this->get('mgr_thumb');
-            $thumbPath = $resource->source->getBasePath() . $relativeUrl . $thumb;
-            if (!$this->checkedForThumb) {
-                $this->checkedForThumb = true;
-                if (empty($thumb) || !file_exists($thumbPath)) {
-                    $resource->source->errors = array();
-                    $content = $resource->source->getObjectContents($relativeUrl . $this->get('file'));
-                    if (!$resource->source->hasErrors()) {
-                        if ($this->createThumbnail($content['content'])) {
-                            $this->save();
-                            $thumb = $this->get('mgr_thumb');
-                            $thumbPath = $resource->source->getBasePath() . $relativeUrl . $thumb;
-                        }
-                    }
-                    else {
-                        $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, 'Error(s) while trying to regenerate thumbnail for image ' . $this->get('id') . ' in gallery ' . $this->get('resource') . ': ' . print_r($resource->source->getErrors(), true));
-
-                    }
+            if ($resource && $resource->_getSource()) {
+                // Check if we have a manager thumbnail, and regenerate it if necessary
+                if (!$this->checkedForThumb) {
+                    $this->checkedForThumb = true;
+                    $this->checkManagerThumb();
                 }
+
+                $thumb = $this->get('mgr_thumb');
+                $relativeUrl = $resource->getSourceRelativeUrl();
+                $thumbPath = $resource->source->getBasePath() . $relativeUrl . $thumb;
+                $array[$keyPrefix . 'mgr_thumb_path'] = $thumbPath;
+                $array[$keyPrefix . 'mgr_thumb'] = $resource->source->getObjectUrl($relativeUrl . $thumb);
+                $array[$keyPrefix . 'file_url'] = $resource->source->getObjectUrl($relativeUrl . $array[$keyPrefix . 'file']);
+                $array[$keyPrefix . 'file_path'] = $resource->source->getBasePath() . $relativeUrl . $array[$keyPrefix . 'file'];
+                $array[$keyPrefix . '_source_is_local'] = ($resource->source->get('class_key') === 'sources.modFileMediaSource');
+
+                $array[$keyPrefix . 'view_url'] = $this->xpdo->makeUrl($resource->get('id'), '', array(
+                    $this->xpdo->moregallery->getOption('moregallery.single_image_url_param', null, 'iid') => $this->get('id'),
+                ), $this->xpdo->moregallery->getOption('link_tag_scheme', null, 'full'));
             }
 
-            $array[$keyPrefix . 'mgr_thumb_path'] = $thumbPath;
-            $array[$keyPrefix . 'mgr_thumb'] = $resource->source->getObjectUrl($relativeUrl.$thumb);
-            $array[$keyPrefix . 'file_url'] = $resource->source->getObjectUrl($relativeUrl.$array[$keyPrefix . 'file']);
-            $array[$keyPrefix . 'file_path'] = $resource->source->getBasePath().$relativeUrl.$array[$keyPrefix . 'file'];
-            $array[$keyPrefix . 'view_url'] = $this->xpdo->makeUrl($resource->get('id'), '', array(
-                $this->xpdo->moregallery->getOption('moregallery.single_image_url_param', null, 'iid') => $this->get('id'),
-            ), $this->xpdo->moregallery->getOption('link_tag_scheme', null, 'full'));
 
-            $array[$keyPrefix . '_source_is_local'] = ($resource->source->get('class_key') == 'sources.modFileMediaSource');
-            $array[$keyPrefix . 'exif_dump'] = print_r($array[$keyPrefix.'exif'], true);
-            $array[$keyPrefix . 'exif_json'] = $this->xpdo->toJSON($array[$keyPrefix.'exif']);
-            $array[$keyPrefix . 'iptc_dump'] = print_r($array[$keyPrefix.'iptc'], true);
-            $array[$keyPrefix . 'iptc_json'] = $this->xpdo->toJSON($array[$keyPrefix.'iptc']);
+            // As of MoreGallery 1.5, all uploaded files already have their EXIF and IPTC data cleansed. However it's
+            // possible for older images to break the processor loading of images due to old data. The additional
+            // cleaning here ensures that everything works as expected, even if it contains invalid characters.
+            $cleanExif = $this->cleanInvalidData($array[$keyPrefix.'exif']);
+            $array[$keyPrefix . 'exif'] = $cleanExif;
+            $array[$keyPrefix . 'exif_dump'] = print_r($cleanExif, true);
+            $array[$keyPrefix . 'exif_json'] = $this->xpdo->toJSON($cleanExif);
+            $cleanIptc = $this->cleanInvalidData($array[$keyPrefix.'iptc']);
+            $array[$keyPrefix . 'iptc'] = $cleanIptc;
+            $array[$keyPrefix . 'iptc_dump'] = print_r($cleanIptc, true);
+            $array[$keyPrefix . 'iptc_json'] = $this->xpdo->toJSON($cleanIptc);
+
+            $array[$keyPrefix . 'full_view'] = $this->getManagerEmbed();
         }
         return $array;
     }
@@ -244,13 +261,23 @@ class mgImage extends xPDOSimpleObject
         $resource = $this->getResource();
         if ($resource && $resource->_getSource()) {
             $relativeUrl = $resource->getSourceRelativeUrl();
-            $resource->source->removeObject($relativeUrl.$this->get('mgr_thumb'));
-            $resource->source->removeObject($relativeUrl.$this->get('file'));
+
+            $mgrThumb = $this->get('mgr_thumb');
+            if (!empty($mgrThumb)) {
+                $resource->source->removeObject($relativeUrl . $mgrThumb);
+            }
+            $file = $this->get('file');
+            if (!empty($file)) {
+                $resource->source->removeObject($relativeUrl . $file);
+            }
 
             $crops = $this->getCrops();
             /** @var mgImageCrop $crop */
             foreach ($crops as $crop) {
-                $resource->source->removeObject($relativeUrl . $crop->get('thumbnail'));
+                $cropThumbnail = $crop->get('thumbnail');
+                if (!empty($cropThumbnail)) {
+                    $resource->source->removeObject($relativeUrl . $cropThumbnail);
+                }
             }
 
             if ($resource->source->hasErrors()) {
@@ -297,6 +324,8 @@ class mgImage extends xPDOSimpleObject
         $cacheOptions = array(xPDO::OPT_CACHE_KEY => 'moregallery');
         $resource = $this->get('resource');
 
+        $this->xpdo->cacheManager->delete('single-image/' . $resource . '/', $cacheOptions);
+        $this->xpdo->cacheManager->delete('image-collection/' . $resource . '/', $cacheOptions);
         $this->xpdo->cacheManager->delete('mgimage/'.$resource.'/', $cacheOptions);
         $this->xpdo->cacheManager->delete('mgimages/'.$resource.'/', $cacheOptions);
     }
@@ -307,7 +336,7 @@ class mgImage extends xPDOSimpleObject
      * @param string $sortBy
      *
      * @param bool $activeOnly
-     * @return null|object
+     * @return null|mgImage
      */
     public function getPrevious($sortBy = 'sortorder', $activeOnly = true) {
         $c = $this->xpdo->newQuery('mgImage');
@@ -331,7 +360,7 @@ class mgImage extends xPDOSimpleObject
      * @param string $sortBy
      *
      * @param bool $activeOnly
-     * @return null|object
+     * @return null|mgImage
      */
     public function getNext($sortBy = 'sortorder', $activeOnly = true) {
         $c = $this->xpdo->newQuery('mgImage');
@@ -380,55 +409,74 @@ class mgImage extends xPDOSimpleObject
      * @param int $height
      * @return bool|string
      */
-    public function createThumbnail($content, $width = 250, $height = 250) {
-        $format = $this->xpdo->moregallery->getOption('moregallery.thumbnail_format', null, 'png');
-        $format = strtoupper($format);
-        if (!in_array($format, array('PNG', 'GIF', 'JPG'))) {
-            $format = 'JPG';
+    public function createThumbnail($content, $extension = 'jpg', $width = 250, $height = 250) {
+        /** @var \Imagine\Image\ImagineInterface $imagine */
+        $imagine = $this->xpdo->moregallery->getImagine();
+
+        // If the image is a PDF file, it needs a bit more work to get it propery parsed.
+        if ($extension === 'pdf') {
+            $extension = 'png';
+            $content = $this->xpdo->moregallery->writePdfAsImageAndReturnContent($content);
         }
-        $extension = strtolower($format);
+        elseif (strtolower($extension) === 'svg') {
+            $extension = 'png';
+        }
+
         try {
-            require_once dirname(dirname(dirname(__FILE__))).'/model/phpthumb/ThumbLib.inc.php';
+            $img = $imagine->load($content);
+        } catch (Exception $e) {
+            $this->xpdo->log(modX::LOG_LEVEL_ERROR, '[moreGallery] Unable to load image for record ' . $this->get('id') . 'to create thumbnail: ' . $e->getMessage());
+            return $e->getMessage();
+        }
+
+        // Get the size to calculate the way we need to crop this image
+        $size = $img->getSize();
+        $actualWidth = $size->getWidth();
+        $actualHeight = $size->getHeight();
+
+        // Figure out the right size to make sure wide or tall images don't get super blurry
+        // Basically this makes sure that the images are at least the defined size, rather than e.g. 250x50.
+        if ($actualWidth > $actualHeight) {
+            $width = ceil(($actualWidth / $actualHeight) * $width);
+        }
+        else {
+            $height = ceil(($actualHeight / $actualWidth) * $height);
+        }
+
+        try {
+            // Load the image with imagine and create a resized version
+            $thumb = $img->resize(new \Imagine\Image\Box($width, $height));
+
+            // Output the thumbnail as a string
             $options = array(
-                'jpegQuality' => (int)$this->xpdo->moregallery->getOption('moregallery.crop_jpeg_quality', null, '90'),
+                'jpeg_quality' => (int)$this->xpdo->moregallery->getOption('moregallery.crop_jpeg_quality', null, '90'),
+                'png_compression_level' => (int)$this->xpdo->moregallery->getOption('moregallery.crop_png_compression', null, '9'),
             );
-            $thumb = PhpThumbFactory::create($content, $options, true);
-            $thumb->setFormat($format);
-            $size = $thumb->getCurrentDimensions();
 
-            // Figure out the right size to make sure wide images don't get blurry
-            if ($size['width'] > $size['height']) {
-                $width = ceil(($size['width'] / $size['height']) * $width);
-            }
-            // and for tall images too.
-            else {
-                $height = ceil(($size['height'] / $size['width']) * $height);
-            }
-
-            // Do the actual resizing
-            $thumb->resize($width, $height);
-            $thumbContents = $thumb->getImageAsString();
+            $thumbContents = $thumb->get($extension, $options);
 
             // Make the filename the ID, followed by a hash, and the extension (of course).
-            $mgrThumb = $this->get('id') . '_' . md5($this->toJSON()) . '.' . $extension;
+            $hash = md5(implode('-', $this->get(array('id', 'filename', 'file'))));
+            $mgrThumb = $this->get('id') . '_' . $hash . '.' . $extension;
 
+            // Grab the path and create the thumbnail
             $resource = $this->getResource();
             $resource->_getSource();
             $path = $resource->getSourceRelativeUrl();
-
             $resource->source->createContainer($path . '_thumbs/' , '/');
             $resource->source->errors = array();
             $resource->source->createObject($path . '_thumbs/', $mgrThumb, $thumbContents);
             $this->set('mgr_thumb', '_thumbs/' . $mgrThumb);
-            return true;
         } catch (Exception $e) {
-            $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, '[moreGallery] Exception while creating mgr_thumb: ' . $e->getMessage());
+            $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, '[moreGallery] Exception ' . get_class($e) . ' while creating thumbnail: ' . $e->getMessage());
             return $e->getMessage();
         }
+        return true;
     }
     
     public function loadExifData($file) {
-        if (function_exists('exif_read_data')) {
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        if (in_array(strtolower($ext), array('jpeg', 'jpg', 'tiff'), true) && function_exists('exif_read_data')) {
             try {
                 // Fetch EXIF data if we have it.
                 $exif = exif_read_data($file, NULL, false, false);
@@ -536,36 +584,108 @@ class mgImage extends xPDOSimpleObject
      * @param $orientation
      * @return bool|string
      */
-    public function fixOrientation($content, $orientation)
+    public function fixOrientation($content, $orientation, $format)
     {
 
         try {
-            require_once dirname(dirname(dirname(__FILE__))).'/model/phpthumb/ThumbLib.inc.php';
-            $thumb = PhpThumbFactory::create($content, array(), true);
-            $thumb->setFormat('PNG');
+            /** @var \Imagine\Image\ImagineInterface $imagine */
+            $imagine = $this->xpdo->moregallery->getImagine();
+
+            // Load the image with imagine and create a resized version
+            $thumb = $imagine->load($content);
 
             $degrees = 0;
-            switch ($orientation)
-            {
+            switch ($orientation) {
                 case 3:
                     $degrees = 180;
                     break;
                 case 6:
-                    $degrees = 270;
-                    break;
-                case 8:
                     $degrees = 90;
                     break;
+                case 8:
+                    $degrees = 270;
+                    break;
             }
-            if ($degrees > 0)
-            {
-                $thumb->rotateImageNDegrees($degrees);
-                return $thumb->getImageAsString();
+            if ($degrees > 0) {
+                $thumb->rotate($degrees);
+                $options = array(
+                    'jpeg_quality' => (int)$this->xpdo->moregallery->getOption('moregallery.crop_jpeg_quality', null, '90'),
+                    'png_compression_level' => (int)$this->xpdo->moregallery->getOption('moregallery.crop_png_compression', null, '9'),
+                );
+                return $thumb->get($format, $options);
             }
         } catch (Exception $e) {
             $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, '[moreGallery] Exception while creating mgr_thumb: ' . $e->getMessage());
         }
         return false;
+    }
+
+    public function copyTo(mgResource $resource, mgResource $oldResource)
+    {
+        // Get the raw contents of the current image
+        $oldImageData = $this->toArray('', true);
+        unset($oldImageData['id']);
+        
+        /** @var mgImage $newImage */
+        // Create the new image record
+        $newImage = $this->xpdo->newObject('mgImage');
+        $newImage->fromArray($oldImageData, '', true);
+        $newImage->set('resource', $resource->get('id'));
+        $newImage->save();
+
+
+        // Copy across tags for this image
+        $tags = $this->xpdo->getIterator('mgImageTag', array('image' => $this->get('id')));
+        foreach ($tags as $tag) {
+            /** @var mgImageTag $newTag */
+            $newTag = $this->xpdo->newObject('mgImageTag');
+            $newTag->fromArray(array(
+                'resource' => $resource->get('id'),
+                'image' => $newImage->get('id'),
+                'tag' => $tag->get('tag'),
+            ), '', true);
+            $newTag->save();
+        }
+
+        // Get the files that need to be copied
+        $files = array();
+        $files[] = $this->get('file');
+        $files[] = $this->get('mgr_thumb');
+
+        // Get the crops for this image and copy those, also add the cropped thumbnails to the $files array
+        $crops = $this->getCrops();
+        foreach ($crops as $crop) {
+            /** @var mgImageCrop $crop */
+            $newCrop = $this->xpdo->newObject('mgImageCrop');
+            $newCrop->fromArray($crop->toArray());
+            $newCrop->set('image', $newImage->get('id'));
+            $newCrop->save();
+            $files[] = $crop->get('thumbnail');
+        }
+
+        $this->xpdo->moregallery->setResource($oldResource);
+        $relativeUrl = $oldResource->getSourceRelativeUrl();
+        $oldBasePath = $oldResource->_getSource()->getBasePath() . $relativeUrl;
+
+        $this->xpdo->moregallery->setResource($resource);
+        $relativeUrl = $resource->getSourceRelativeUrl();
+        $newBasePath = $resource->_getSource()->getBasePath() . $relativeUrl;
+
+        if (!is_dir($newBasePath)) {
+            $resource->source->createContainer($relativeUrl, '');
+            $resource->source->createContainer($relativeUrl . '_thumbs/', '');
+        }
+
+        foreach ($files as $file) {
+            if (!file_exists($oldBasePath . $file)) {
+                $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, '[moreGallery] Error copying file ' . $file . ' from ' . $oldBasePath . ' to ' . $newBasePath . ' while trying to duplicate image ' . $this->get('id') . ' because the source image does not exist.');
+            }
+            elseif (!copy($oldBasePath . $file, $newBasePath . $file)) {
+                $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, '[moreGallery] Error copying file ' . $file . ' from ' . $oldBasePath . ' to ' . $newBasePath . ' while trying to duplicate image ' . $this->get('id'));
+            }
+        }
+
+        return $newImage;
     }
 
     private function _loadMoreGalleryService()
@@ -592,5 +712,162 @@ class mgImage extends xPDOSimpleObject
         else {
             return preg_replace('/[^\PC\s]/u', '', $value);
         }
+    }
+
+    /**
+     * Gets an extended property on the object. Use this instead of interacting with the `properties` value directly.
+     *
+     * @param $key
+     * @param null $default
+     * @return null
+     */
+    public function getProperty($key, $default = null)
+    {
+        $properties = $this->getProperties();
+        if (isset($properties[$key])) {
+            return $properties[$key];
+        }
+        return $default;
+    }
+
+    /**
+     * Returns all saved properties
+     *
+     * @return array
+     */
+    public function getProperties()
+    {
+        $properties = $this->get('properties');
+        if (!is_array($properties)) {
+            $properties = array();
+        }
+        return $properties;
+    }
+
+    /**
+     * Sets an extended property on the object. Use this instead of interacting with the `properties` value directly.
+     *
+     * @param string $key
+     * @param null $value
+     */
+    public function setProperty($key, $value = null)
+    {
+        $properties = $this->getProperties();
+        if (!is_array($properties)) {
+            $properties = array();
+        }
+        $properties[$key] = $value;
+        $this->setProperties($properties);
+    }
+
+    /**
+     * Sets an array of properties on the object. If $merge is true, it will do an array_merge with the current data first
+     * and otherwise it will overwrite it completely.
+     *
+     * @param $properties
+     * @param bool $merge
+     */
+    public function setProperties($properties, $merge = true)
+    {
+        if ($merge) {
+            $properties = array_merge($this->getProperties(), $properties);
+        }
+        $this->set('properties', $properties);
+    }
+
+    /**
+     * Unsets the property specified by $key, and returns its value (if any).
+     *
+     * @param $key
+     * @return mixed
+     */
+    public function unsetProperty($key)
+    {
+        $properties = $this->getProperties();
+        if (isset($properties[$key])) {
+            $value = $properties[$key];
+            unset($properties[$key]);
+            $this->setProperties($properties, false);
+            return $value;
+        }
+        return null;
+    }
+
+    /**
+     * Unsets all properties defined in $keys. Returns an array of $key => $oldValue values.
+     *
+     * @param array $keys
+     * @return array
+     */
+    public function unsetProperties(array $keys = array())
+    {
+        $values = array();
+        foreach ($keys as $key) {
+            $values[$key] = $this->unsetProperty($key);
+        }
+        return $values;
+    }
+
+    /**
+     * Returns a HTML embed code for the video.
+     *
+     * @return string
+     */
+    public function getManagerEmbed() {
+        $resource = $this->getResource();
+        if (!$resource || !$resource->_getSource()) {
+            return '';
+        }
+        $relativeUrl = $resource->getSourceRelativeUrl();
+        $file = $this->get('file');
+        $fileUrl = $resource->source->getBaseUrl() . $relativeUrl . $file;
+        
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
+        if (strtolower($extension) === 'pdf') {
+            return <<<HTML
+            <object width="100%" height="500" type="application/pdf" data="$fileUrl">
+            <p>Unable to preview PDF file.</p>
+</object>
+HTML;
+        }
+        
+        return '<img src="' . $fileUrl . '">';
+    }
+
+    /**
+     * Checks if the manager thumb is available, and creates it if not.
+     *
+     * @return bool
+     */
+    public function checkManagerThumb()
+    {
+        $resource = $this->getResource();
+        if (!$resource || !$resource->_getSource()) {
+            return false;
+        }
+
+        $relativeUrl = $resource->getSourceRelativeUrl();
+        $thumb = $this->get('mgr_thumb');
+        $thumbPath = $resource->source->getBasePath() . $relativeUrl . $thumb;
+        if (empty($thumb) || !file_exists($thumbPath)) {
+            $resource->source->errors = array();
+            $file = $this->get('file');
+            if (empty($file)) {
+                $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, '[moregallery] Image record ' . $this->get('id') . ' on resource ' . $this->get('resource') . ' does not have a file value. This may indicate a corrupt upload. Unable to create manager thumbnail.');
+                return false;
+            }
+            $content = $resource->source->getObjectContents($relativeUrl . $file);
+            if (!$resource->source->hasErrors()) {
+                $extension = pathinfo($this->get('file'), PATHINFO_EXTENSION);
+                if ($this->createThumbnail($content['content'], $extension)) {
+                    return $this->save();
+                }
+            }
+            else {
+                $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, 'Error(s) loading file ' . $relativeUrl . $this->get('file') . ' to regenerate thumbnail for image ' . $this->get('id') . ' in gallery ' . $this->get('resource') . ' from media source ' . $resource->source->get('id') . ' : ' . print_r($resource->source->getErrors(), true));
+
+            }
+        }
+        return false;
     }
 }

@@ -51,6 +51,7 @@ Ext.extend(ContentBlocksComponent.window.TemplateBuilder, MODx.Window, {
             },
             listeners: {
                 'success': {fn: function (r) {
+                    window.ContentBlocksCategories = r.object.categories;
                     window.ContentBlocksFields = r.object.fields;
                     window.ContentBlocksLayouts = r.object.layouts;
                     window.ContentBlocksTemplates = r.object.templates;

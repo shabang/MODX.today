@@ -92,6 +92,7 @@ class fiHooks {
             'mathOp1Field' => 'op1',
             'mathOp2Field' => 'op2',
             'mathOperatorField' => 'operator',
+            'hookErrorJsonOutputPlaceholder' => ''
         ),$config);
         $this->type = $type;
     }
@@ -339,42 +340,43 @@ class fiHooks {
      * @param array $fields An array of cleaned POST fields
      * @return boolean True if email was successfully sent.
      */
-    public function email(array $fields = array()) {
-        $tpl = $this->modx->getOption('emailTpl',$this->formit->config,'');
-        $emailHtml = (boolean)$this->modx->getOption('emailHtml',$this->formit->config,true);
-        $emailConvertNewlines = (boolean)$this->modx->getOption('emailConvertNewlines',$this->formit->config,false);
+    public function email(array $fields = array())
+    {
+        $tpl = $this->modx->getOption('emailTpl', $this->formit->config, '');
+        $emailHtml = (boolean)$this->modx->getOption('emailHtml', $this->formit->config, true);
+        $emailConvertNewlines = (boolean)$this->modx->getOption('emailConvertNewlines', $this->formit->config, false);
 
         /* get from name */
-        $emailFrom = $this->modx->getOption('emailFrom',$this->formit->config,'');
+        $emailFrom = $this->modx->getOption('emailFrom', $this->formit->config, '');
         if (empty($emailFrom)) {
             $emailFrom = !empty($fields['email']) ? $fields['email'] : $this->modx->getOption('emailsender');
         }
-        $emailFrom = $this->_process($emailFrom,$fields);
-        $emailFromName = $this->modx->getOption('emailFromName',$this->formit->config,$emailFrom);
-        $emailFromName = $this->_process($emailFromName,$fields);
+        $emailFrom = $this->_process($emailFrom, $fields);
+        $emailFromName = $this->modx->getOption('emailFromName', $this->formit->config, $this->modx->getOption('site_name', null, $emailFrom));
+        $emailFromName = $this->_process($emailFromName, $fields);
 
         /* get returnPath */
-        $emailReturnPath = $this->modx->getOption('emailReturnPath',$this->formit->config,'');
+        $emailReturnPath = $this->modx->getOption('emailReturnPath', $this->formit->config, '');
         if (empty($emailReturnPath)) {
             $emailReturnPath = $emailFrom;
         }
-        $emailReturnPath = $this->_process($emailReturnPath,$fields);
+        $emailReturnPath = $this->_process($emailReturnPath, $fields);
 
         /* get subject */
-        $useEmailFieldForSubject = $this->modx->getOption('emailUseFieldForSubject',$this->formit->config,true);
+        $useEmailFieldForSubject = $this->modx->getOption('emailUseFieldForSubject', $this->formit->config, true);
         if (!empty($fields['subject']) && $useEmailFieldForSubject) {
             $subject = $fields['subject'];
         } else {
-            $subject = $this->modx->getOption('emailSubject',$this->formit->config,'');
+            $subject = $this->modx->getOption('emailSubject', $this->formit->config, '');
         }
-        $subject = $this->_process($subject,$fields);
+        $subject = $this->_process($subject, $fields);
 
         /* check email to */
-        $emailTo = $this->modx->getOption('emailTo',$this->formit->config,'');
-        $emailToName = $this->modx->getOption('emailToName',$this->formit->config,$emailTo);
+        $emailTo = $this->modx->getOption('emailTo', $this->formit->config, '');
+        $emailToName = $this->modx->getOption('emailToName', $this->formit->config, $emailTo);
         if (empty($emailTo)) {
             $this->errors['emailTo'] = $this->modx->lexicon('formit.email_no_recipient');
-            $this->modx->log(modX::LOG_LEVEL_ERROR,'[FormIt] '.$this->modx->lexicon('formit.email_no_recipient'));
+            $this->modx->log(modX::LOG_LEVEL_ERROR, '[FormIt] '.$this->modx->lexicon('formit.email_no_recipient'));
             return false;
         }
 
@@ -383,11 +385,13 @@ class fiHooks {
         if (empty($tpl)) {
             $tpl = 'email';
             $f = '';
-            $multiSeparator = $this->modx->getOption('emailMultiSeparator',$this->formit->config,"\n");
-            $multiWrapper = $this->modx->getOption('emailMultiWrapper',$this->formit->config,"[[+value]]");
+            $multiSeparator = $this->modx->getOption('emailMultiSeparator', $this->formit->config, "\n");
+            $multiWrapper = $this->modx->getOption('emailMultiWrapper', $this->formit->config, "[[+value]]");
 
             foreach ($fields as $k => $v) {
-                if ($k == 'nospam') continue;
+                if ($k == 'nospam') {
+                    continue;
+                }
                 if (is_array($v) && !empty($v['name']) && isset($v['error']) && $v['error'] == UPLOAD_ERR_OK) {
                     $v = $v['name'];
                     $f[$k] = '<strong>'.$k.'</strong>: '.$v.'<br />';
@@ -398,25 +402,31 @@ class fiHooks {
                             $vKey = $k.'.'.$vKey;
                             $f[$vKey] = '<strong>'.$vKey.'</strong>: '.$vValue.'<br />';
                         } else {
-                            $vOpts[] = str_replace('[[+value]]',$vValue,$multiWrapper);
+                            $vOpts[] = str_replace('[[+value]]', $vValue, $multiWrapper);
                         }
                     }
-                    $newValue = implode($multiSeparator,$vOpts);
+                    $newValue = implode($multiSeparator, $vOpts);
                     if (!empty($vOpts)) {
-                        $f[$k] = '<strong>'.$k.'</strong>:'.$newValue;
+                        $f[$k] = '<strong>'.$k.'</strong>:'.$newValue.'<br />';
                     }
                 } else {
                     $f[$k] = '<strong>'.$k.'</strong>: '.$v.'<br />';
                 }
             }
-            $fields['fields'] = implode("\n",$f);
+            $fields['fields'] = implode("\n", $f);
         } else {
             /* handle file/checkboxes in email tpl */
-            $multiSeparator = $this->modx->getOption('emailMultiSeparator',$this->formit->config,"\n");
-            if (empty($multiSeparator)) $multiSeparator = "\n";
-            if ($multiSeparator == '\n') $multiSeparator = "\n"; /* allow for inputted newlines */
-            $multiWrapper = $this->modx->getOption('emailMultiWrapper',$this->formit->config,"[[+value]]");
-            if (empty($multiWrapper)) $multiWrapper = '[[+value]]';
+            $multiSeparator = $this->modx->getOption('emailMultiSeparator', $this->formit->config, "\n");
+            if (empty($multiSeparator)) {
+                $multiSeparator = "\n";
+            }
+            if ($multiSeparator == '\n') {
+                $multiSeparator = "\n"; /* allow for inputted newlines */
+            }
+            $multiWrapper = $this->modx->getOption('emailMultiWrapper', $this->formit->config, "[[+value]]");
+            if (empty($multiWrapper)) {
+                $multiWrapper = '[[+value]]';
+            }
             
             foreach ($fields as $k => &$v) {
                 if (is_array($v) && !empty($v['name']) && isset($v['error']) && $v['error'] == UPLOAD_ERR_OK) {
@@ -429,15 +439,16 @@ class fiHooks {
                             $fields[$vKey] = $vValue;
                             unset($fields[$k]);
                         } else {
-                            $vOpts[] = str_replace('[[+value]]',$vValue,$multiWrapper);
+                            $vOpts[] = str_replace('[[+value]]', $vValue, $multiWrapper);
                         }
                     }
-                    $v = implode($multiSeparator,$vOpts);
+                    $v = implode($multiSeparator, $vOpts);
                 }
             }
         }
-        $message = $this->formit->getChunk($tpl,$fields);
-        $message = $this->_process($message,$this->config);
+
+        $message = $this->formit->getChunk($tpl, $fields);
+        $message = $this->_process($message, $this->config);
 
         /* load mail service */
         $this->modx->getService('mail', 'mail.modPHPMailer');
@@ -446,7 +457,7 @@ class fiHooks {
         $this->modx->mail->setHTML($emailHtml);
 
         /* set email main properties */
-        $this->modx->mail->set(modMail::MAIL_BODY,$emailHtml && $emailConvertNewlines ? nl2br($message) : $message);
+        $this->modx->mail->set(modMail::MAIL_BODY, $emailHtml && $emailConvertNewlines ? nl2br($message) : $message);
         $this->modx->mail->set(modMail::MAIL_FROM, $emailFrom);
         $this->modx->mail->set(modMail::MAIL_FROM_NAME, $emailFromName);
         $this->modx->mail->set(modMail::MAIL_SENDER, $emailReturnPath);
@@ -456,22 +467,22 @@ class fiHooks {
         $attachmentIndex = 0;
         foreach ($origFields as $k => $v) {
             if (is_array($v) && !empty($v['tmp_name'])) {
-                if(count($v['name']) > 1){
-                    for($i=0;$i<count($v['name']);++$i){
-                        if(isset($v['error'][$i]) && $v['error'][$i] == UPLOAD_ERR_OK){
+                if (is_array($v['name'])) {
+                    for ($i = 0; $i < count($v['name']); ++$i) {
+                        if (isset($v['error'][$i]) && $v['error'][$i] == UPLOAD_ERR_OK) {
                             if (empty($v['name'][$i])) {
                                 $v['name'][$i] = 'attachment'.$attachmentIndex;
-                            }                    
-                            $this->modx->mail->mailer->addAttachment($v['tmp_name'][$i],$v['name'][$i],'base64',!empty($v['type'][$i]) ? $v['type'][$i] : 'application/octet-stream');
+                            }
+                            $this->modx->mail->mailer->addAttachment($v['tmp_name'][$i], $v['name'][$i], 'base64', !empty($v['type'][$i]) ? $v['type'][$i] : 'application/octet-stream');
                             $attachmentIndex++;
                         }
                     }
-                }else{
-                    if(isset($v['error']) && $v['error'] == UPLOAD_ERR_OK){
+                } else {
+                    if (isset($v['error']) && $v['error'] == UPLOAD_ERR_OK) {
                         if (empty($v['name'])) {
                             $v['name'] = 'attachment'.$attachmentIndex;
-                        }                    
-                        $this->modx->mail->mailer->addAttachment($v['tmp_name'],$v['name'],'base64',!empty($v['type']) ? $v['type'] : 'application/octet-stream');
+                        }
+                        $this->modx->mail->mailer->addAttachment($v['tmp_name'], $v['name'], 'base64', !empty($v['type']) ? $v['type'] : 'application/octet-stream');
                         $attachmentIndex++;
                     }
                 }
@@ -479,57 +490,66 @@ class fiHooks {
         }
         
         /* add to: with support for multiple addresses */
-        $emailTo = explode(',',$emailTo);
-        $emailToName = explode(',',$emailToName);
+        $emailTo = explode(',', $emailTo);
+        $emailToName = explode(',', $emailToName);
         $numAddresses = count($emailTo);
-        for ($i=0;$i<$numAddresses;$i++) {
+        for ($i = 0; $i < $numAddresses; $i++) {
             $etn = !empty($emailToName[$i]) ? $emailToName[$i] : '';
-            if (!empty($etn)) $etn = $this->_process($etn,$fields);
-            $emailTo[$i] = $this->_process($emailTo[$i],$fields);
+            if (!empty($etn)) {
+                $etn = $this->_process($etn, $fields);
+            }
+            $emailTo[$i] = $this->_process($emailTo[$i], $fields);
             if (!empty($emailTo[$i])) {
-                $this->modx->mail->address('to',$emailTo[$i],$etn);
+                $this->modx->mail->address('to', $emailTo[$i], $etn);
             }
         }
 
         /* reply to */
-        $emailReplyTo = $this->modx->getOption('emailReplyTo',$this->formit->config,$emailFrom);
-        $emailReplyTo = $this->_process($emailReplyTo,$fields);
-        $emailReplyToName = $this->modx->getOption('emailReplyToName',$this->formit->config,$emailFromName);
-        $emailReplyToName = $this->_process($emailReplyToName,$fields);
+        $emailReplyTo = $this->modx->getOption('emailReplyTo', $this->formit->config, '');
+        if (empty($emailReplyTo)) {
+            $emailReplyTo = !empty($fields['email']) ? $fields['email'] : $emailFrom;
+        }
+        $emailReplyTo = $this->_process($emailReplyTo, $fields);
+        $emailReplyToName = $this->modx->getOption('emailReplyToName', $this->formit->config, $emailFromName);
+        $emailReplyToName = $this->_process($emailReplyToName, $fields);
         if (!empty($emailReplyTo)) {
-            $this->modx->mail->address('reply-to',$emailReplyTo,$emailReplyToName);
+            $this->modx->mail->address('reply-to', $emailReplyTo, $emailReplyToName);
         }
 
         /* cc */
-        $emailCC = $this->modx->getOption('emailCC',$this->formit->config,'');
+        $emailCC = $this->modx->getOption('emailCC', $this->formit->config, '');
         if (!empty($emailCC)) {
-            $emailCCName = $this->modx->getOption('emailCCName',$this->formit->config,'');
-            $emailCC = explode(',',$emailCC);
-            $emailCCName = explode(',',$emailCCName);
+            $emailCCName = $this->modx->getOption('emailCCName', $this->formit->config, '');
+            $emailCC = explode(',', $emailCC);
+            $emailCCName = explode(',', $emailCCName);
             $numAddresses = count($emailCC);
-            for ($i=0;$i<$numAddresses;$i++) {
+            for ($i = 0; $i < $numAddresses; $i++) {
                 $etn = !empty($emailCCName[$i]) ? $emailCCName[$i] : '';
-                if (!empty($etn)) $etn = $this->_process($etn,$fields);
-                $emailCC[$i] = $this->_process($emailCC[$i],$fields);
+                if (!empty($etn)) {
+                    $etn = $this->_process($etn, $fields);
+                }
+                $emailCC[$i] = $this->_process($emailCC[$i], $fields);
                 if (!empty($emailCC[$i])) {
-                    $this->modx->mail->address('cc',$emailCC[$i],$etn);
+                    $this->modx->mail->address('cc', $emailCC[$i], $etn);
                 }
             }
         }
 
         /* bcc */
-        $emailBCC = $this->modx->getOption('emailBCC',$this->formit->config,'');
+        $emailBCC = $this->modx->getOption('emailBCC', $this->formit->config, '');
         if (!empty($emailBCC)) {
-            $emailBCCName = $this->modx->getOption('emailBCCName',$this->formit->config,'');
-            $emailBCC = explode(',',$emailBCC);
-            $emailBCCName = explode(',',$emailBCCName);
+            $emailBCCName = $this->modx->getOption('emailBCCName', $this->formit->config, '');
+            $emailBCC = explode(',', $emailBCC);
+            $emailBCCName = explode(',', $emailBCCName);
             $numAddresses = count($emailBCC);
-            for ($i=0;$i<$numAddresses;$i++) {
+            for ($i = 0; $i < $numAddresses; $i++) {
                 $etn = !empty($emailBCCName[$i]) ? $emailBCCName[$i] : '';
-                if (!empty($etn)) $etn = $this->_process($etn,$fields);
-                $emailBCC[$i] = $this->_process($emailBCC[$i],$fields);
+                if (!empty($etn)) {
+                    $etn = $this->_process($etn, $fields);
+                }
+                $emailBCC[$i] = $this->_process($emailBCC[$i], $fields);
                 if (!empty($emailBCC[$i])) {
-                    $this->modx->mail->address('bcc',$emailBCC[$i],$etn);
+                    $this->modx->mail->address('bcc', $emailBCC[$i], $etn);
                 }
             }
         }
@@ -541,13 +561,13 @@ class fiHooks {
             $sent = true;
         }
         $this->modx->mail->reset(array(
-            modMail::MAIL_CHARSET => $this->modx->getOption('mail_charset',null,'UTF-8'),
-            modMail::MAIL_ENCODING => $this->modx->getOption('mail_encoding',null,'8bit'),
+            modMail::MAIL_CHARSET => $this->modx->getOption('mail_charset', null, 'UTF-8'),
+            modMail::MAIL_ENCODING => $this->modx->getOption('mail_encoding', null, '8bit'),
         ));
 
         if (!$sent) {
-            $this->errors[] = $this->modx->lexicon('formit.email_not_sent').' '.print_r($this->modx->mail->mailer->ErrorInfo,true);
-            $this->modx->log(modX::LOG_LEVEL_ERROR,'[FormIt] '.$this->modx->lexicon('formit.email_not_sent').' '.print_r($this->modx->mail->mailer->ErrorInfo,true));
+            $this->errors[] = $this->modx->lexicon('formit.email_not_sent').' '.print_r($this->modx->mail->mailer->ErrorInfo, true);
+            $this->modx->log(modX::LOG_LEVEL_ERROR, '[FormIt] '.$this->modx->lexicon('formit.email_not_sent').' '.print_r($this->modx->mail->mailer->ErrorInfo, true));
         }
 
         return $sent;
@@ -608,21 +628,24 @@ class fiHooks {
 
     /**
      * Adds in reCaptcha support to FormIt
-     * 
+     *
      * @access public
      * @param array $fields An array of cleaned POST fields
      * @return boolean True if email was successfully sent.
      */
-    public function recaptcha(array $fields = array()) {
+    public function recaptcha(array $fields = array())
+    {
         $passed = false;
         /** @var FormItReCaptcha $reCaptcha */
         $reCaptcha = $this->formit->request->loadReCaptcha();
-        if (empty($reCaptcha->config[FormItReCaptcha::OPT_PRIVATE_KEY])) return false;
+        if (empty($reCaptcha->config[FormItReCaptcha::OPT_PRIVATE_KEY])) {
+            return false;
+        }
 
-        $response = $reCaptcha->checkAnswer($_SERVER['REMOTE_ADDR'],$_POST['recaptcha_challenge_field'],$_POST['recaptcha_response_field']);
+        $response = $reCaptcha->checkAnswer($_SERVER['REMOTE_ADDR'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
 
         if (!$response->is_valid) {
-            $this->addError('recaptcha',$this->modx->lexicon('recaptcha.incorrect',array(
+            $this->addError('recaptcha', $this->modx->lexicon('recaptcha.incorrect', array(
                 'error' => $response->error != 'incorrect-captcha-sol' ? $response->error : '',
             )));
         } else {
@@ -636,7 +659,8 @@ class fiHooks {
      *
      * @param string $url The URL to redirect to after all hooks execute
      */
-    public function setRedirectUrl($url) {
+    public function setRedirectUrl($url)
+    {
         $this->redirectUrl = $url;
     }
 
@@ -645,7 +669,8 @@ class fiHooks {
      *
      * @return null|string
      */
-    public function getRedirectUrl() {
+    public function getRedirectUrl()
+    {
         return $this->redirectUrl;
     }
 
@@ -656,30 +681,39 @@ class fiHooks {
      * @param array $fields An array of cleaned POST fields
      * @return boolean True if email was successfully sent.
      */
-    public function math(array $fields = array()) {
-        $mathField = $this->modx->getOption('mathField',$this->config,'math');
-        if (!isset($fields[$mathField])) { $this->errors[$mathField] = $this->modx->lexicon('formit.math_field_nf',array('field' => $mathField)); return false; }
-        if (empty($fields[$mathField])) { $this->errors[$mathField] = $this->modx->lexicon('formit.field_required',array('field' => $mathField)); return false; }
-        
-        $op1Field = $this->modx->getOption('mathOp1Field',$this->config,'op1');
-        if (empty($fields[$op1Field])) { $this->errors[$mathField] = $this->modx->lexicon('formit.math_field_nf',array('field' => $op1Field)); return false; }
-        $op2Field = $this->modx->getOption('mathOp2Field',$this->config,'op2');
-        if (empty($fields[$op2Field])) { $this->errors[$mathField] = $this->modx->lexicon('formit.math_field_nf',array('field' => $op2Field)); return false; }
-        $operatorField = $this->modx->getOption('mathOperatorField',$this->config,'operator');
-        if (empty($fields[$operatorField])) { $this->errors[$mathField] = $this->modx->lexicon('formit.math_field_nf',array('field' => $operatorField)); return false; }
-
-        $answer = false;
-        $op1 = (int)$fields[$op1Field];
-        $op2 = (int)$fields[$op2Field];
-        switch ($fields[$operatorField]) {
-            case '+': $answer = $op1 + $op2; break;
-            case '-': $answer = $op1 - $op2; break;
-            case '*': $answer = $op1 * $op2; break;
+    public function math(array $fields = array())
+    {
+        $mathField = $this->modx->getOption('mathField', $this->config, 'math');
+        if (!isset($fields[$mathField])) {
+            $this->errors[$mathField] = $this->modx->lexicon('formit.math_field_nf', array('field' => $mathField));
+            return false;
         }
-        $guess = (int)$fields[$mathField];
-        $passed = (boolean)($guess == $answer);
+        if (empty($fields[$mathField])) {
+            $this->errors[$mathField] = $this->modx->lexicon('formit.field_required', array('field' => $mathField));
+            return false;
+        }
+
+        $passed = false;
+        if (isset($_SESSION['formitMath']['op1']) && isset($_SESSION['formitMath']['op2']) && isset($_SESSION['formitMath']['operator'])) {
+            $answer = false;
+            $op1 = $_SESSION['formitMath']['op1'];
+            $op2 = $_SESSION['formitMath']['op2'];
+            switch ($_SESSION['formitMath']['operator']) {
+                case '+':
+                    $answer = $op1 + $op2;
+                    break;
+                case '-':
+                    $answer = $op1 - $op2;
+                    break;
+                case '*':
+                    $answer = $op1 * $op2;
+                    break;
+            }
+            $guess = (int)$fields[$mathField];
+            $passed = (boolean)($guess == $answer);
+        }
         if (!$passed) {
-            $this->addError($mathField,$this->modx->lexicon('formit.math_incorrect'));
+            $this->addError($mathField, $this->modx->lexicon('formit.math_incorrect'));
         }
         return $passed;
     }
@@ -688,17 +722,38 @@ class fiHooks {
      * Process any errors returned by the hooks and set them to placeholders
      * @return void
      */
-    public function processErrors() {
+    public function processErrors()
+    {
         $errors = array();
+        $jsonerrors = array();
+        $jsonOutputPlaceholder = $this->config['hookErrorJsonOutputPlaceholder'];
+        if (!empty($jsonOutputPlaceholder)) {
+            $jsonerrors = array(
+                'errors' => array(),
+                'success' => false,
+                'message' => '',
+            );
+        }
+        
         $placeholderErrors = $this->getErrors();
         foreach ($placeholderErrors as $key => $error) {
-            $errors[$key] = str_replace('[[+error]]',$error,$this->config['errTpl']);
+            $errors[$key] = str_replace('[[+error]]', $error, $this->config['errTpl']);
+            if (!empty($jsonOutputPlaceholder)) {
+                $jsonerrors['errors'][$key] = $errors[$key];
+            }
         }
-        $this->modx->toPlaceholders($errors,$this->config['placeholderPrefix'].'error');
+        $this->modx->toPlaceholders($errors, $this->config['placeholderPrefix'].'error');
 
         $errorMsg = $this->getErrorMessage();
         if (!empty($errorMsg)) {
-            $this->modx->setPlaceholder($this->config['placeholderPrefix'].'error_message',$errorMsg);
+            $this->modx->setPlaceholder($this->config['placeholderPrefix'].'error_message', $errorMsg);
+            if (!empty($jsonOutputPlaceholder)) {
+                $jsonerrors['message'] = $errorMsg;
+            }
+        }
+        if (!empty($jsonOutputPlaceholder)) {
+            $jsonoutput = $this->modx->toJSON($jsonerrors);
+            $this->modx->setPlaceholder($jsonOutputPlaceholder, $jsonoutput);
         }
     }
 

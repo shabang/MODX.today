@@ -19,33 +19,13 @@ class mgResourceUpdateManagerController extends ResourceUpdateManagerController 
      * @return void
      */
     public function loadCustomCssJs() {
+        // Core-provided stuff.
         $mgrUrl = $this->context->getOption('manager_url', MODX_MANAGER_URL, $this->modx->_userConfig);
-        $assetsUrl = $this->modx->getOption('moregallery.assets_url', null, $this->modx->getOption('assets_url').'components/moregallery/');
-
-        $corePath = $this->modx->getOption('moregallery.core_path', null, $this->modx->getOption('core_path').'components/moregallery/');
-        /** @var moreGallery $moreGallery */
-        $moreGallery = $this->modx->getService('moregallery', 'moreGallery', $corePath.'model/moregallery/');
-        if (!$moreGallery) {
-            $this->modx->log(modX::LOG_LEVEL_ERROR, 'Error loading moreGallery class from ' . $corePath);
-            return;
-        }
-        $moreGallery->setResource($this->resource);
-        $crops = $moreGallery->getCrops($this->resource);
-        $customFields = $moreGallery->getCustomFields($this->resource);
-        $customFields = !empty($customFields) ? $this->modx->toJSON($customFields) : 'false';
-
-        $this->addHtml('<script type="text/javascript">
-            moreGallery.config = '.$this->modx->toJSON($moreGallery->config).';
-            moreGallery.crops = ' . $this->modx->toJSON($crops) . ';
-            moreGallery.customFields = ' . $customFields . ';
-        </script>');
-        $this->addJavascript($assetsUrl.'mgr/js/moregallery.class.js');
         $this->addJavascript($mgrUrl.'assets/modext/util/datetime.js');
         $this->addJavascript($mgrUrl.'assets/modext/widgets/element/modx.panel.tv.renders.js');
         $this->addJavascript($mgrUrl.'assets/modext/widgets/resource/modx.grid.resource.security.local.js');
         $this->addJavascript($mgrUrl.'assets/modext/widgets/resource/modx.panel.resource.tv.js');
         $this->addJavascript($mgrUrl.'assets/modext/widgets/resource/modx.panel.resource.js');
-        $this->addJavascript($assetsUrl.'mgr/js/widgets/mgresource.panel.resource.js');
         $this->addJavascript($mgrUrl.'assets/modext/sections/resource/update.js');
         $this->addHtml('
         <script type="text/javascript">
@@ -73,10 +53,34 @@ class mgResourceUpdateManagerController extends ResourceUpdateManagerController 
         });
         // ]]>
         </script>');
+        $this->loadRichTextEditor();
+
+        $assetsUrl = $this->modx->getOption('moregallery.assets_url', null, $this->modx->getOption('assets_url').'components/moregallery/');
+        $corePath = $this->modx->getOption('moregallery.core_path', null, $this->modx->getOption('core_path').'components/moregallery/');
+        /** @var moreGallery $moreGallery */
+        $moreGallery = $this->modx->getService('moregallery', 'moreGallery', $corePath.'model/moregallery/');
+        if (!($moreGallery instanceof moreGallery) || !($moreGallery instanceof \modmore\Alpacka\Alpacka)) {
+            // If the class can't be loaded, we let it fail in a way that doesn't completely wreck everything
+            $this->modx->log(modX::LOG_LEVEL_ERROR, 'Error loading moreGallery class from ' . $corePath);
+            return;
+        }
+
+        // Instantiate the gallery
+        $moreGallery->setResource($this->resource);
+        $crops = $moreGallery->getCrops($this->resource);
+        $customFields = $moreGallery->getCustomFields($this->resource);
+        $customFields = !empty($customFields) ? $this->modx->toJSON($customFields) : 'false';
+
+        $this->addHtml('<script type="text/javascript">
+            moreGallery.config = '.$this->modx->toJSON($moreGallery->config).';
+            moreGallery.crops = ' . $this->modx->toJSON($crops) . ';
+            moreGallery.customFields = ' . $customFields . ';
+        </script>');
+        $this->addJavascript($assetsUrl.'mgr/js/moregallery.class.js');
+        $this->addJavascript($assetsUrl.'mgr/js/widgets/mgresource.panel.resource.js');
 
         $moreGallery->mg();
         $tpl = $moreGallery->getChunk('mgr/update', $moreGallery->config);
         $this->addHtml($tpl);
-        $this->loadRichTextEditor();
     }
 }

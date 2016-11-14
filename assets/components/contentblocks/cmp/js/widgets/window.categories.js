@@ -36,12 +36,27 @@ ContentBlocksComponent.window.Categories = function (config) {
             allowBlank: true,
             anchor: '100%'
         }],
-        listeners: {
-            render: {fn: this.initWindow, scope: this},
-            scope: this
-        }
+        buttons: this.getWindowButtons(config)
     });
     ContentBlocksComponent.window.Categories.superclass.constructor.call(this, config);
 };
-Ext.extend(ContentBlocksComponent.window.Categories, MODx.Window);
+Ext.extend(ContentBlocksComponent.window.Categories, MODx.Window, {
+    getWindowButtons: function(config) {
+        var b = [{
+            text: _('cancel'),
+            scope: this,
+            handler: function() { this.hide(); }
+        },'-'];
+
+        if (ContentBlocksConfig.permissions.categories_save) {
+            b.push([{
+                text: _('save'),
+                scope: this,
+                handler: this.submit,
+                cls: 'primary-button'
+            }]);
+        }
+        return b;
+    }
+});
 Ext.reg('contentblocks-window-categories', ContentBlocksComponent.window.Categories);

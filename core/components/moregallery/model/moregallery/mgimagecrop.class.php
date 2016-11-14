@@ -1,17 +1,4 @@
 <?php
-
-
-/**
- * We use getimagesizefromstring for grabbing image sizes before cropping, but that method is 5.4+ so we use this polyfill
- */
-if (!function_exists('getimagesizefromstring')) {
-    function getimagesizefromstring($string_data)
-    {
-        $uri = 'data://application/octet-stream;base64,'  . base64_encode($string_data);
-        return getimagesize($uri);
-    }
-}
-
 /**
  * Class mgImageCrop
  */
@@ -38,20 +25,30 @@ class mgImageCrop extends xPDOSimpleObject
 
             /** @var mgImage $image */
             $image = $this->getOne('Image');
-            if (!$image)
-            {
+            if (!$image) {
                 return false;
             }
 
-            if (!empty($thumbnail))
-            {
+            if (!empty($thumbnail)) {
                 $source->removeObject($relativeUrl . $thumbnail);
             }
 
-            $extension = strtolower(pathinfo($image->get('file'), PATHINFO_EXTENSION));
-            $cropInfo = $this->xpdo->moregallery->getCropInfo($this->get('crop'), $image->get('resource'));
             $file = $source->getObjectContents($relativeUrl . $image->get('file'));
-            $newImage = $this->createThumbnail($file['content'], $cropInfo, $extension);
+            $content = $file['content'];
+            $extension = strtolower(pathinfo($image->get('file'), PATHINFO_EXTENSION));
+            // If the image is a PDF file, it needs a bit more work to get it propery parsed.
+            if (strtolower($extension) === 'pdf') {
+                if ($extension === 'pdf') {
+                    $extension = 'png';
+                    $content = $this->xpdo->moregallery->writePdfAsImageAndReturnContent($content);
+                }
+            }
+            elseif (strtolower($extension) === 'svg') {
+                $extension = 'png';
+            }
+
+            $cropInfo = $this->xpdo->moregallery->getCropInfo($this->get('crop'), $image->get('resource'));
+            $newImage = $this->createThumbnail($content, $cropInfo, $extension);
             $thumbFilename = strtolower($this->get('crop')) . '_' . pathinfo($image->get('file'), PATHINFO_FILENAME) . '.' . $extension;
 
             $source->createObject($relativeUrl . '_thumbs/', $thumbFilename, $newImage);
@@ -101,8 +98,7 @@ class mgImageCrop extends xPDOSimpleObject
     {
         // Try to extend the time we have to execute in case of long running processing
         $timeSpent = (microtime(true) - $this->xpdo->startTime);
-        if ($timeSpent > 25)
-        {
+        if ($timeSpent > 25) {
             set_time_limit(15);
         }
         // Increase the memory limit too
@@ -111,9 +107,20 @@ class mgImageCrop extends xPDOSimpleObject
         $width = $this->get('width');
         $height = $this->get('height');
 
-        $originalSize = getimagesizefromstring($image);
-        $originalWidth = $originalSize[0];
-        $originalHeight = $originalSize[1];
+        try {
+            /** @var \Imagine\Image\ImagineInterface $imagine */
+            $imagine = $this->xpdo->moregallery->getImagine();
+
+            // Load the image with imagine and create a resized version
+            $img = $imagine->load($image);
+        } catch (Exception $e) {
+            $this->xpdo->log(modX::LOG_LEVEL_ERROR, 'Exception ' . get_class($e) . ' while loading image for crop ' . $this->get('id') . ': ' . $e->getMessage());
+            return false;
+        }
+
+        $size = $img->getSize();
+        $originalWidth = $size->getWidth();
+        $originalHeight = $size->getHeight();
 
         /**
          * If there is no width or height, we need to calculate that ourselves.
@@ -123,30 +130,25 @@ class mgImageCrop extends xPDOSimpleObject
          *
          * Later, we also apply resizing to the resulting image if necessary and defined on the crop.
          */
-        if ($width < 1 || $height < 1)
-        {
-            $aspect = false;
-            if (isset($cropInfo['default_aspect']))
-            {
-                $aspect = $cropInfo['default_aspect'];
-            }
-            elseif (isset($cropInfo['aspect']))
-            {
-                $aspect = $cropInfo['aspect'];
-            }
+        $aspect = false;
+        if (isset($cropInfo['default_aspect'])) {
+            $aspect = (float)$cropInfo['default_aspect'];
+        }
+        elseif (isset($cropInfo['aspect'])) {
+            $aspect = $cropInfo['aspect'];
+        }
+
+        if ($width < 1 || $height < 1) {
 
             // If we have an aspect ratio, we use that to calculate the proper size
-            if ($aspect !== false)
-            {
-
+            if ($aspect !== false) {
                 // Calculate the height based on the width, and the width based on the height, using the crop defined aspect ratio
                 $heightBasedWidth = floor($originalHeight * $aspect);
                 $widthBasedHeight = floor($originalWidth / $aspect);
 
                 // If the height, derived from the width * aspect, is within the image height we assume the width
                 // stays the same, and we only crop from the height.
-                if ($widthBasedHeight <= $originalHeight)
-                {
+                if ($widthBasedHeight <= $originalHeight) {
                     $width = $originalWidth;
                     $height = $widthBasedHeight;
                     // As the height changes, we take the difference in height, divide it by 2, and set y to that
@@ -156,8 +158,7 @@ class mgImageCrop extends xPDOSimpleObject
                     $this->set('x2', $originalWidth);
                 }
                 // Otherwise, we assume the height stays the same and we crop from the width instead.
-                else
-                {
+                else {
                     $height = $originalHeight;
                     $width = $heightBasedWidth;
                     // As we're changing the width, we take the difference divided by 2 to set x
@@ -181,39 +182,17 @@ class mgImageCrop extends xPDOSimpleObject
 
         }
 
-
-        /**
-         * Using the included phpthumb lib we crop the image.
-         */
         try {
-            require_once dirname(dirname(dirname(__FILE__))).'/model/phpthumb/ThumbLib.inc.php';
-            $options = array(
-                'jpegQuality' => (int)$this->xpdo->moregallery->getOption('moregallery.crop_jpeg_quality', null, '90'),
-            );
-            $thumb = PhpThumbFactory::create($image, $options, true);
-
-            // Make sure PhpThumb knows the format the image should be in.
-            if ($extension === 'png') {
-                $thumb->setFormat('PNG');
-            }
-            elseif ($extension === 'gif') {
-                $thumb->setFormat('GIF');
-            }
-            else {
-                $thumb->setFormat('JPG');
-            }
-
             // Crop the image from the $x and $y defined, for a size of $width and $height.
             $x = $this->get('x');
             $x2 = $this->get('x2');
             $y = $this->get('y');
             $y2 = $this->get('y2');
-            if ($x === 0 && $x2 === $originalWidth && $y === 0 && $y2 === $originalHeight)
-            {
+            if ($x === 0 && $x2 === $originalWidth && $y === 0 && $y2 === $originalHeight) {
                 // We don't need to crop to the full image - it's already full!
             }
             else {
-                $thumb->crop($x, $y, $x2 - $x, $y2 - $y);
+                $img->crop(new Imagine\Image\Point($x, $y), new \Imagine\Image\Box($x2 - $x, $y2 - $y));
             }
 
             /**
@@ -223,27 +202,40 @@ class mgImageCrop extends xPDOSimpleObject
             $resizeHeight = 0;
             $resizeWidth = 0;
             foreach ($cropInfo as $key => $val) {
-                if ($key == 'width') {
+                if ($key === 'width') {
                     $resizeWidth = (int)$val;
                 }
-                if ($key == 'height') {
+                if ($key === 'height') {
                     $resizeHeight = (int)$val;
                 }
             }
 
-            // Do the resizing. This is done after the cropping so we're working with the cropped version and not the original.
-            if ($resizeWidth > 0 || $resizeHeight > 0)
-            {
-                $thumb->resize($resizeWidth, $resizeHeight);
-                $dimensions = $thumb->getCurrentDimensions();
-                $this->set('width', $dimensions['width']);
-                $this->set('height', $dimensions['height']);
+            // If we only have a height or a width, calculate the other based on the actual aspect ratio
+            $baseWidth = $this->get('width');
+            $baseHeight = $this->get('height');
+            if ($resizeHeight > 0 && $resizeWidth == 0) {
+                $resizeWidth = (int)round(($resizeHeight / $baseHeight) * $baseWidth);
+            }
+            elseif ($resizeWidth > 0 && $resizeHeight == 0) {
+                $resizeHeight = (int)round(($resizeWidth / $baseWidth) * $baseHeight);
             }
 
-            // Return the image as string.
-            return $thumb->getImageAsString();
+            // Do the resizing. This is done after the cropping so we're working with the cropped version and not the original.
+            if ($resizeWidth > 0 || $resizeHeight > 0) {
+                $img->resize(new \Imagine\Image\Box($resizeWidth, $resizeHeight));
+                $dimensions = $img->getSize();
+                $this->set('width', $dimensions->getWidth());
+                $this->set('height', $dimensions->getHeight());
+            }
+
+            // Output the thumbnail as a string
+            $options = array(
+                'jpeg_quality' => (int)$this->xpdo->moregallery->getOption('moregallery.crop_jpeg_quality', null, '90'),
+                'png_compression_level' => (int)$this->xpdo->moregallery->getOption('moregallery.crop_png_compression', null, '9'),
+            );
+            return $img->get($extension, $options);
         } catch (Exception $e) {
-            $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, '[moreGallery] Exception while creating thumbnail: ' . $e->getMessage());
+            $this->xpdo->log(xPDO::LOG_LEVEL_ERROR, '[moreGallery] Exception ' . get_class($e) . ' while creating thumbnail: ' . $e->getMessage());
             return $e->getMessage();
         }
     }

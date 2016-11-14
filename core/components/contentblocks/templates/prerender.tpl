@@ -112,7 +112,7 @@
 <script type="text/x-tmpl" id="contentblocks-modal-layout-setting-radio">
 <div class="contentblocks-modal-field contentblocks-setting-radio">
     <label class="field-label" for="setting-{%=o.reference%}">{%=o.title%}</label>
-    <input type="hidden" name="setting-{%=o.reference%}" data-name="{%=o.reference%}" value="{%=o.value%}" />
+    <input type="hidden" name="{%=o.settingInstance%}-setting-{%=o.reference%}" data-name="{%=o.reference%}" value="{%=o.value%}" />
     <div class="contentblocks-options">
     {%#o.options%}
     </div>
@@ -122,7 +122,7 @@
 <script type="text/x-tmpl" id="contentblocks-modal-layout-setting-checkbox">
 <div class="contentblocks-modal-field contentblocks-setting-checkbox">
     <label class="field-label" for="setting-{%=o.reference%}">{%=o.title%}</label>
-    <input type="hidden" name="setting-{%=o.reference%}" data-name="{%=o.reference%}" value="{%=o.value%}" />
+    <input type="hidden" name="{%=o.settingInstance%}-setting-{%=o.reference%}" data-name="{%=o.reference%}" value="{%=o.value%}" />
     <div class="contentblocks-options">
       {%#o.options%}
     </div>
@@ -130,10 +130,10 @@
 </script>
 
 <script type="text/x-tmpl" id="contentblocks-modal-layout-setting-radio-option">
-    <label class="value-label"><input type="radio" name="setting-{%=o.reference%}" value="{%=o.value%}" {%=o.checked%}> {%=o.display%}</label>
+    <label class="value-label"><input type="radio" name="{%=o.settingInstance%}-setting-{%=o.reference%}" value="{%=o.value%}" {%=o.checked%}> {%=o.display%}</label>
 </script>
 <script type="text/x-tmpl" id="contentblocks-modal-layout-setting-checkbox-option">
-    <label class="value-label"><input type="checkbox" name="setting-{%=o.reference%}" value="{%=o.value%}" {%=o.checked%}> {%=o.display%}</label>
+    <label class="value-label"><input type="checkbox" name="{%=o.settingInstance%}-setting-{%=o.reference%}" value="{%=o.value%}" {%=o.checked%}> {%=o.display%}</label>
 </script>
 
 <script type="text/x-tmpl" id="contentblocks-modal-layout-setting-textfield">

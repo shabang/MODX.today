@@ -143,18 +143,22 @@ QuickstartButtons.window.CreateUpdateButton = function(config) {
                     ,fieldLabel: _('quickstartbuttons.buttons.link.action')
                     ,name: 'action_id'
                     ,hiddenName: 'action_id'
+                    ,paging: false
+                    ,editable: true
+                    ,typeAhead: true
+                    ,minChars: 1
+                    ,forceSelection: false
                     ,anchor: '100%'
                     ,url: QuickstartButtons.config.connector_url
                     ,baseParams: {
                         action: 'mgr/common/modaction/getList'
                         ,combo: true
                         ,showNone: true
-                        ,selected: config.record.action_id
+                        ,selected: config.record.action_id || config.record.action_key
                     },
                     namespaceTarget: config.id + '-namespace',
                     listeners: {
                         select: function(combo, record) {
-                            console.log(combo, record);
                             var nsField = Ext.getCmp(combo.namespaceTarget),
                                 value = '';
                             if (record.data.namespace && record.data.namespace.length > 0) {
@@ -164,8 +168,11 @@ QuickstartButtons.window.CreateUpdateButton = function(config) {
                         }
                     }
                 },{
-                    xtype: 'hidden',
+                    xtype: 'modx-combo-namespace',
                     name: 'action_namespace',
+                    fieldLabel: _('quickstartbuttons.buttons.link.namespace'),
+                    anchor: '100%',
+                    hiddenName: 'action_namespace',
                     id: config.id + '-namespace'
                 },{
                     xtype: 'textfield'

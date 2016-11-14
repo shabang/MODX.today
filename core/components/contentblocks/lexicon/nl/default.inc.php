@@ -6,6 +6,8 @@ $_lang['contentblocks.mgr.home'] = "Content Blocks Beheer";
 
 $_lang['contentblocks.general'] = "Algemeen";
 $_lang['contentblocks.properties'] = "Eigenschappen";
+$_lang['contentblocks.clear_filters'] = "Filters legen";
+$_lang['contentblocks.search'] = "Zoeken";
 
 $_lang['contentblocks.link'] = "Koppeling";
 $_lang['contentblocks.link.description'] = "Een veld waarmee koppelingen aangemaakt kunnen worden. Dit ondersteund documenten, email en URL's.";
@@ -30,16 +32,18 @@ $_lang['setting_contentblocks.typeahead.include_introtext_desc'] = 'Wanneer deze
 
 $_lang['contentblocks.error.not_an_export'] = "Het bestand lijkt geen ContentBlocks export te zijn.";
 $_lang['contentblocks.error.importing_row'] = "Fout tijdens importeren:";
-$_lang['contentblocks.error.no_valid_field'] = "Geen veld gevonden";
+$_lang['contentblocks.error.no_valid_field'] = "Geen geldig veld gevonden voor de aanvraag.";
+$_lang['contentblocks.error.no_valid_input'] = "Geen geldig input type gevonden voor aanvraag.";
 $_lang['contentblocks.error.no_snippets'] = "Er zijn geen snippets beschikbaar.";
 $_lang['contentblocks.error.missing_id'] = "ID waarde niet gevonden";
 $_lang['contentblocks.error.input_not_found'] = "Input type niet gevonden";
 $_lang['contentblocks.error.input_not_found.message'] = "Oeps. Een veld met input type \"[[+input]]\" werd geladen, maar dat input type bestaat niet.";
 $_lang['contentblocks.error.field_not_found'] = "Veld niet gevonden.";
+$_lang['contentblocks.error.category_not_found'] = "Categorie niet gevonden";
 $_lang['contentblocks.error.layout_not_found'] = "Layout niet gevonden";
 $_lang['contentblocks.error.error_saving_object'] = "Fout tijdens opslaan van het object";
 $_lang['contentblocks.error.xml_not_loaded'] = "Kon het XML bestand niet laden";
-$_lang['contentblocks.error.no_icons'] = "Could de icons map niet openen";
+$_lang['contentblocks.error.no_icons'] = "Kon de icons map niet openen";
 $_lang['contentblocks.error.no_json'] = "Uw browser ondersteund geen JSON, wat voor ContentBlocks noodzakelijk is. Update alstublieft uw browser.";
 
 $_lang['contentblocks.availability'] = "Beschikbaarheid";
@@ -110,6 +114,7 @@ $_lang['contentblocks.delete_layoutcolumn'] = "Verwijder kolom";
 $_lang['contentblocks.delete_layoutcolumn.confirm'] = "Weet je zeker dat je deze kolom wilt verwijderen? Potentieel rampzalige dingen kunnen gebeuren met alle content die dit Veld gebruiken.";
 $_lang['contentblocks.add_setting'] = "Instelling toevoegen";
 $_lang['contentblocks.edit_setting'] = "Instelling bewerken";
+$_lang['contentblocks.duplicate_setting'] = "Dupliceer instelling";
 $_lang['contentblocks.delete_setting'] = "Verwijder instelling";
 $_lang['contentblocks.delete_setting.confirm'] = "Weet je zeker dat je deze instelling wilt verwijderen?";
 
@@ -169,7 +174,7 @@ $_lang['contentblocks.fieldtype.textfield'] = "Tekstveld";
 $_lang['contentblocks.fieldtype.link'] = "Koppeling";
 $_lang['contentblocks.fieldtype.textarea'] = "Tekstvak";
 $_lang['contentblocks.fieldoptions'] = "Veld Opties";
-$_lang['contentblocks.fieldoptions.description'] = "Alleen voor Selectie veld types gebruiken. Definieer beschikbare waarden als \"Waarde Weergave=placeholder_value\", één per regel. Indien je alleen een enkele waarde per regel invoert (zoiets als \"\"), dan zal dit zowel als weergave en placeholder value gebruikt worden.";
+$_lang['contentblocks.fieldoptions.description'] = "Alleen voor Selectie, radio en checkbox veld types te gebruiken. Definieer beschikbare waarden als \"placeholder_waarde==Getoonde Waarde\", één per regel. (Het formaat \"Getoonde Waarde=placeholder_waarde\" is ook ondersteund, maar zal in 2.0 worden verwijderd.) Indien je alleen een enkele waarde per regel invoert (zoiets als \"foo\"), dan zal dit zowel als getoonde en placeholder waarde gebruikt worden.";
 $_lang['contentblocks.field_is_exposed'] = "Toon Veld";
 $_lang['contentblocks.field_is_exposed.description'] = "Toon veld in het canvas";
 $_lang['contentblocks.field_is_exposed.modal'] = "Toon instelling in een popup scherm";
@@ -181,6 +186,25 @@ $_lang['contentblocks.directory.description'] = 'Een map binnen de media source 
 $_lang['contentblocks.file_types'] = 'Toegestane Extensies';
 $_lang['contentblocks.file_types.description'] = 'Bestanden met deze extensies (kommagescheiden) mogen geupload worden. Laat leeg om alle extensies toe te staan.';
 $_lang['contentblocks.file_types.disallowed'] = 'Bestandstype is niet toegestaan in dit veld.';
+
+// Categories
+$_lang['contentblocks.category'] = "Categorie";
+$_lang['contentblocks.categories'] = "Categorieën";
+$_lang['contentblocks.categories.intro'] = "Gebruik Categorieën om je velden, layouts en templates beter te organiseren. Zodra elementen aan een categorie zijn toegewezen zul je in de vensters om velden en layouts toe te voegen eerst de gecategoriseerde elementen zien, gevolgd door de ongecategoriseerde elementen.";
+$_lang['contentblocks.uncategorized'] = "Ongecategoriseerd";
+$_lang['contentblocks.add_category'] = "Categorie toevoegen";
+$_lang['contentblocks.edit_category'] = "Bewerk categorie";
+$_lang['contentblocks.duplicate_category'] = "Dupliceer categorie";
+$_lang['contentblocks.delete_category'] = "Verwijder categorie";
+$_lang['contentblocks.delete_category.confirm'] = "Weet je zeker dat je deze categorie wilt verwijderen? Elementen die op dit moment gebruik maken van de categorie zullen eerst uit de categorie worden verwijderd.";
+$_lang['contentblocks.delete_category.confirm.js'] = "Weet je zeker dat je deze categorie wilt verwijderen?";
+$_lang['contentblocks.export_category'] = "Exporteer categorie";
+$_lang['contentblocks.export_categories'] = "Exporteer";
+$_lang['contentblocks.export_categories.confirm'] = "Na het bevestigen zal een XML export gemaakt worden met alle categorieeën. Dit bestand kan gebruikt worden om categorieën later weer te importeren of in een andere MODX installatie. Het genereren van het XML bestand kan enkele seconden duren.";
+$_lang['contentblocks.import_categories'] = "Importeer";
+$_lang['contentblocks.import_categories.title'] = "Categorieën Importeren";
+$_lang['contentblocks.import_categories.intro'] = "Door een XML bestand te uploaden en het kiezen van de juiste mode, kun je eerder geëxporteerde Categorieën van een andere site importeren. <b>Wees voorzichtig</b> met het importeren van Categorieën indien je al eerder categorieën hebt toegewezen. Neem contact op met support@modmore.com als je niet zeker weet welke mode je moet kiezen bij het importeren.";
+
 
 // Templates
 $_lang['contentblocks.templates'] = 'Templates';
@@ -282,7 +306,7 @@ $_lang['contentblocks.image.source.description'] = "Laat deze op (geen) om de st
 $_lang['contentblocks.image_template.description'] = "Template voor de afbeelding. Hier wil je waarschijnlijk een <code>&lt;img&gt;</code> tag gebruiken. Beschikbare placeholders: <code>[[+url]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 $_lang['contentblocks.imagewithtitle'] = "Afbeelding met Titel";
 $_lang['contentblocks.imagewithtitle.description'] = "Hetzelfde als Afbeelding, maar deze keer met een tekstveld om een alt of titel attribuut toe te voegen.";
-$_lang['contentblocks.image_with_title'] = $_lang['Afbeelding met titel'];
+$_lang['contentblocks.image_with_title'] = "Afbeelding met Titel";
 $_lang['contentblocks.image_with_title_template.description'] = "Template voor de afbeelding met titel. Hier wil je waarschijnlijk een <code>&lt;img&gt;</code> tag gebruiken. Beschikbare placeholders: <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 
 $_lang['contentblocks.list'] = "Lijst";
@@ -293,7 +317,7 @@ $_lang['contentblocks.list_nested_template.description'] = "Binnenste template v
 
 $_lang['contentblocks.orderedlist'] = "Geordende lijst";
 $_lang['contentblocks.orderedlist.description'] = "Hetzelfde als de Lijst type, behalve dat deze geordende lijst heeft.";
-$_lang['contentblocks.ordered_list'] = $_lang['Geordende Lijst'];
+$_lang['contentblocks.ordered_list'] = "Geordende lijst";
 $_lang['contentblocks.ordered_list_template.description'] = "Template voor individuele lijst items. Zal waarschijnlijk een <code>&lt;li&gt;</code> tag bevatten. Beschikbare placeholders: <code>[[+value]]</code> (de lijst item tekst), <code>[[+idx]]</code> (een verhogend nummer, start op 1 voor elk niveau) en <code>[[+items]]</code> (sub-lijsten, gebruikt dezelfde templates).";
 $_lang['contentblocks.ordered_list_wrapper_template.description'] = "Buitenste template voor lijsten. Zal waarschijnlijk een <code>&lt;ol&gt;</code> tag bevatten. Beschikbare placeholder: <code>[[+items]]</code> (lijst items, opgebouwd middels de andere templates).";
 $_lang['contentblocks.ordered_list_nested_template.description'] = "Binnenste template voor ingesprongen sub-lijsten. Zal waarschijnlijk een <code>&lt;ol&gt;</code> tag bevatten. Beschikbare placeholder: <code>[[+items]]</code> (lijst items, opgebouwd middels de andere templates).";
@@ -316,6 +340,8 @@ $_lang['contentblocks.repeater.max_items.description'] = "Indien ingesteld op ee
 $_lang['contentblocks.repeater.max_items_reached'] = "Sorry, je kunt maximaal [[+max]] items toevoegen.";
 $_lang['contentblocks.repeater.min_items'] = "Minimum aantal items";
 $_lang['contentblocks.repeater.min_items.description'] = "Als dit een nummer groter dan 0 is, dan zal het niet mogelijk zijn om rijen onder dit limiet te verwijderen.";
+$_lang['contentblocks.repeater.add_first_item'] = "Eerste item automatisch toevoegen";
+$_lang['contentblocks.repeater.add_first_item.description'] = "Als je dit inschakelt zal er automatisch een eerste item worden toegevoegd aan een lege repeater.";
 $_lang['contentblocks.repeater.add_item'] = "Item toevoegen";
 $_lang['contentblocks.repeater.delete_item'] = "Item verwijderen";
 $_lang['contentblocks.repeater.wrapper_template.description'] = "Buitenste template waarin het resultaat van de rijen wordt getoond. Hierin moet de <code>[[+rows]]</code> placeholder gebruikt worden om de resultaten te zien. Er is ook een <code>[[+total]]</code> placeholder beschikbaar.";
@@ -352,6 +378,15 @@ $_lang['contentblocks.video.search_youtube'] = "Zoek YouTube";
 $_lang['contentblocks.video.paste_link'] = "Plak hier een link";
 $_lang['contentblocks.video.youtube_not_loaded'] = "De YouTube API is niet geladen. Probeer het nog eens in enkele seconden. Als het probleem blijft bestaan, kan het zijn dat de API niet beschikbaar is op dit moment.";
 $_lang['contentblocks.video.api_error'] = "Oeps, er trad een fout op: [[+message]] (Code [[+code]])";
+
+// Select
+$_lang['contentblocks.dropdown'] = "Dropdown";
+$_lang['contentblocks.dropdown.description'] = "Een eenvoudig dropdown veld waarmee de editor een item uit een voorgeprogrammeerde lijst kan kiezen.";
+$_lang['contentblocks.dropdown_template.description'] = "Template voor het dropdown veld. Beschikbaar placeholders zijn <code>[[+value]]</code> (de waarde voor het gekozen item), en <code>[[+display]]</code> (de getoonde waarde in de dropdown).";
+$_lang['contentblocks.dropdown.options'] = "Dropdown Opties";
+$_lang['contentblocks.dropdown.options.description'] = "Definieer de beschikbare waardes in het formaat \"waarde==Getoonde Waarde\", met één optie per regel. Als je een enkele waarde per regel opgeeft (bijvoorbeeld \"test\"), dan zal die waarde zowel voor de getoonde als placeholder waarde gebruikt worden. Om een optie te blokkeren kun je de regel beginnen met #. Het is ook mogelijk om de @SNIPPET binding te gebruiken om dynamisch opties in te voeren. Bekijk voor gedetailleerde informatie de documentatie op modmo.re/cb.";
+$_lang['contentblocks.dropdown.default_value'] = "Standaard waarde";
+$_lang['contentblocks.dropdown.default_value.description'] = "De standaard waarde die gekozen moet worden als de dropdown aan de content wordt toegevoegd of er is niets is geselecteerd.";
 
 // Snippet
 $_lang['contentblocks.snippet'] = "Snippet";
@@ -473,12 +508,6 @@ $_lang['setting_contentblocks.image.source_desc'] = "Kies de standaard media sou
 $_lang['setting_contentblocks.image.upload_path'] = "Upload Pad";
 $_lang['setting_contentblocks.image.upload_path_desc'] = "Het pad, binnen de gekozen media source, waar bestanden naar geupload moeten worden. Dit ondersteunt [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] en [[+resource]] placeholders";
 
-$_lang['setting_contentblocks.cache_source'] = "Cache Media Source";
-$_lang['setting_contentblocks.cache_source.description'] = "Kies de Media Source om te gebruiken voor afbeelding en gallery thumbnail cache bestanden.";
-
-$_lang['setting_contentblocks.cache_path'] = "Cache Path";
-$_lang['setting_contentblocks.cache_path.description'] = "Het pad binnen de gekozen media source waarin de thumbnail cache files worden opgeslagen.";
-
 $_lang['setting_contentblocks.sanitize_pattern'] = "Opschoon Patroon";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Een RegEx patroon met tekens die opgeschoond moeten worden bij bestandsnamen.";
 
@@ -501,3 +530,6 @@ $_lang['setting_contentblocks.translit_class'] = "Transliteratie Class";
 $_lang['setting_contentblocks.translit_class_desc'] = "De naam van de class om te gebruiken voor transliteratie. Indien deze setting leeg is zal de core \"friendly_alias_translit_class\" setting worden gebruikt.";
 $_lang['setting_contentblocks.translit_class_path'] = "Transliteratie Class Pad";
 $_lang['setting_contentblocks.translit_class_path_desc'] = "Het pad naar de class om te gebruiken voor transliteratie. Indien deze setting leeg is zal de core \"friendly_alias_translit_class_path\" setting worden gebruikt.";
+
+$_lang['setting_contentblocks.base_url_mode'] = "Basis URL Modus";
+$_lang['setting_contentblocks.base_url_mode_desc'] = "Wanneer een afbeeldingen geupload wordt zal de URL automatisch genormaliseerd worden zodat de link relatief is naar de basis url van de MODX site. Afhankelijk van de configuratie, en met name in het geval van multi-context sites, zul je deze modus moeten aanpassen om afbeeldingen juist te kunnen tonen. De geaccepteerde waarden zijn: <code>relative</code> (standaard: afbeeldingen zijn relatief tot de MODX basis url), <code>absolute</code> (afbeelding urls beginnen met de basis URL) of <code>full</code> (afbeeldingen bevatten de complete site url).";

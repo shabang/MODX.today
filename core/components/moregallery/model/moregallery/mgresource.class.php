@@ -32,6 +32,23 @@ class mgResource extends modResource {
         }
     }
 
+    public function duplicate(array $options = array())
+    {
+        $duplicated = parent::duplicate($options);
+        if ($duplicated instanceof mgResource) {
+
+            $images = $this->getMany('Images');
+
+            foreach ($images as $image) {
+                /** @var mgImage $image */
+                $image->copyTo($duplicated, $this);
+            }
+
+        }
+        return $duplicated;
+    }
+
+
     /**
      * Returns the path to moregallery/controllers.
      *
@@ -69,6 +86,10 @@ class mgResource extends modResource {
      * @return string
      */
     public function getSourceRelativeUrl() {
+        if (!$this->moregallery->resource) {
+            $this->moregallery->setResource($this);
+        }
+
         $url = $this->getProperty('relative_url', 'moregallery', 'inherit');
         if ($url === 'inherit') {
             $url = $this->moregallery->getOption('moregallery.source_relative_url', null, 'assets/galleries/');
@@ -79,10 +100,6 @@ class mgResource extends modResource {
             $url = rtrim($url, '/') . '/' . $this->get('id');
         }
         $url = rtrim($url, '/') . '/';
-
-        if (!$this->moregallery->resource) {
-            $this->moregallery->setResource($this);
-        }
         $url = $this->moregallery->parsePathVariables($url);
         return $url;
     }

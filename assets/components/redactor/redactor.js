@@ -302,6 +302,7 @@
 				columns: 'Columns',
 				add_head: 'Add Head',
 				delete_head: 'Delete Head',
+				alt: 'Alternative Text',
 				title: 'Title',
 				image_position: 'Position',
 				none: 'None',
@@ -6533,7 +6534,7 @@
 					this.opts.modal = {
 						imageEdit: String()
 						+ '<section id="redactor-modal-image-edit">'
-							+ '<label>' + this.lang.get('title') + '</label>'
+							+ '<label>' + this.lang.get('alt') + '</label>'
 							+ '<input type="text" id="redactor-image-title" />'
 							+ '<label class="redactor-image-link-option">' + this.lang.get('link') + '</label>'
 							+ '<input type="text" id="redactor-image-link" class="redactor-image-link-option" aria-label="' + this.lang.get('link') + '" />'
@@ -6577,7 +6578,18 @@
 				},
 				addCallback: function(name, callback)
 				{
-					this.modal.callbacks[name] = callback;
+					if(typeof this.modal.callbacks[name] != 'undefined') {
+						if(typeof this.modal.callbacks[name] == 'function') {
+							this.modal.callbacks[name] = [
+								this.modal.callbacks[name],
+								callback
+							]
+						} else { // it is already an Array
+							this.modal.callbacks[name].push(callback);
+						}
+					} else {
+						this.modal.callbacks[name] = callback;
+					}
 				},
 				createTabber: function($modal)
 				{
@@ -6621,6 +6633,8 @@
 				},
 				load: function(templateName, title, width)
 				{
+					var that = this;
+
 					this.modal.templateName = templateName;
 					this.modal.width = width;
 
@@ -6633,7 +6647,14 @@
 					// callbacks
 					if (typeof this.modal.callbacks[templateName] != 'undefined')
 					{
-						this.modal.callbacks[templateName].call(this);
+						if (typeof this.modal.callbacks[templateName] == 'function') {
+							this.modal.callbacks[templateName].call(this);
+						} else {
+							$.each(this.modal.callbacks[templateName],function(index,val){
+								val.call(that);
+							})
+						}
+
 					}
 
 				},

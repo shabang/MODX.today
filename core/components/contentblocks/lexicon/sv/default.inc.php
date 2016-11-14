@@ -6,6 +6,8 @@ $_lang['contentblocks.mgr.home'] = "Content Blocks";
 
 $_lang['contentblocks.general'] = "Allmänt";
 $_lang['contentblocks.properties'] = "Egenskaper";
+$_lang['contentblocks.clear_filters'] = "Rensa filter";
+$_lang['contentblocks.search'] = "Sök";
 
 $_lang['contentblocks.link'] = "Länk";
 $_lang['contentblocks.link.description'] = "Ett fält för att skapa länkar. Resurs, e-post och webbadresser stöds.";
@@ -30,12 +32,14 @@ $_lang['setting_contentblocks.typeahead.include_introtext_desc'] = 'När aktiver
 
 $_lang['contentblocks.error.not_an_export'] = "Filen ser inte ut att vara en export från ContentBlocks";
 $_lang['contentblocks.error.importing_row'] = "Fel vid import av rad:";
-$_lang['contentblocks.error.no_valid_field'] = "Inget giltigt fält hittades";
+$_lang['contentblocks.error.no_valid_field'] = "Inget giltigt fält hittades för din begäran.";
+$_lang['contentblocks.error.no_valid_input'] = "Ingen giltig inmatning hittades för din begäran.";
 $_lang['contentblocks.error.no_snippets'] = "Inga snippets finns tillgängliga att användas";
 $_lang['contentblocks.error.missing_id'] = "ID egenskap saknas";
 $_lang['contentblocks.error.input_not_found'] = "Inmatning hittades inte";
 $_lang['contentblocks.error.input_not_found.message'] = "Åh nej. Ett fält med inmatningstypen \"[[+input]]\" lästes in, men den inmatningstypen finns inte.";
 $_lang['contentblocks.error.field_not_found'] = "Fältet kunde inte hittas";
+$_lang['contentblocks.error.category_not_found'] = "Kategorin hittades inte";
 $_lang['contentblocks.error.layout_not_found'] = "Layouten kunde inte hittas";
 $_lang['contentblocks.error.error_saving_object'] = "Fel vid lagring av objekt";
 $_lang['contentblocks.error.xml_not_loaded'] = "Kunde inte ladda XML filen";
@@ -110,6 +114,7 @@ $_lang['contentblocks.delete_layoutcolumn'] = "Radera kolumn";
 $_lang['contentblocks.delete_layoutcolumn.confirm'] = "Är du säker att du vill radera denna kolumn? Potentiellt katastrofala saker kan hända med allt innehåll som använde denna kolumn. ";
 $_lang['contentblocks.add_setting'] = "Lägg till inställning";
 $_lang['contentblocks.edit_setting'] = "Redigera inställning";
+$_lang['contentblocks.duplicate_setting'] = "Duplicera inställning";
 $_lang['contentblocks.delete_setting'] = "Radera inställning";
 $_lang['contentblocks.delete_setting.confirm'] = "Är du säker att du vill radera denna inställning?";
 
@@ -169,7 +174,7 @@ $_lang['contentblocks.fieldtype.textfield'] = "Text";
 $_lang['contentblocks.fieldtype.link'] = "Länk";
 $_lang['contentblocks.fieldtype.textarea'] = "Textruta";
 $_lang['contentblocks.fieldoptions'] = "Fältalternativ";
-$_lang['contentblocks.fieldoptions.description'] = "Används endast för fälttypen Urvalsfält. Definiera tillgängliga värden som \"Visat värde=platshållarvärde\", en per rad. Om du endast lägger ett värde per rad (så som \"foo\"), kommer det att användas till både visnings- och platshållarvärdet.";
+$_lang['contentblocks.fieldoptions.description'] = "Used for Select field types only. Define available values as \"placeholder_value==Displayed Value\" (\"Displayed Value=placeholder_value\" is also supported, but will be removed in 2.0), one per line. If you only pass a single value per line (such as \"foo\"), that will be used as both displayed and placeholder value.";
 $_lang['contentblocks.field_is_exposed'] = "Gör fältet synligt";
 $_lang['contentblocks.field_is_exposed.description'] = "Visa fältet på canvasen istället för endast efter att ha klickat på inställningsikonen";
 $_lang['contentblocks.field_is_exposed.modal'] = "Visa fältinställning i modalt fönster";
@@ -181,6 +186,25 @@ $_lang['contentblocks.directory.description'] = 'En underkatalog i mediakällan 
 $_lang['contentblocks.file_types'] = 'Tillåtna filändelser';
 $_lang['contentblocks.file_types.description'] = 'Filer med dessa ändelser (komma-separerade) kommer att laddas upp. För obegränsat, lämna tomt.';
 $_lang['contentblocks.file_types.disallowed'] = 'Filtypen tillåts ej i detta fält';
+
+// Categories
+$_lang['contentblocks.category'] = "Kategori";
+$_lang['contentblocks.categories'] = "Kategorier";
+$_lang['contentblocks.categories.intro'] = "Använd kategorier för att bättre organisera dina fält, layouter och mallar. När en kategori har tilldelats ett element, kommer dialogerna för att lägga till innehåll och för att lägga till layout att visa kategoriserade objekt först, följt av en \"okategoriserad\" kategori.";
+$_lang['contentblocks.uncategorized'] = "Okategoriserad";
+$_lang['contentblocks.add_category'] = "Lägg till en kategori";
+$_lang['contentblocks.edit_category'] = "Redigera en kategori";
+$_lang['contentblocks.duplicate_category'] = "Duplicera kategori";
+$_lang['contentblocks.delete_category'] = "Radera kategori";
+$_lang['contentblocks.delete_category.confirm'] = "Är du säker på att du vill radera denna kategori? Alla element som för närvarande använder kategorin sätts som okategoriserade istället.";
+$_lang['contentblocks.delete_category.confirm.js'] = "Är du säker på att du vill radera denna kategori?";
+$_lang['contentblocks.export_category'] = "Exportera kategorin";
+$_lang['contentblocks.export_categories'] = "Exportera";
+$_lang['contentblocks.export_categories.confirm'] = "After clicking Yes below, we will prepare an XML export of all Categories. This can be used to import the Categories later or in a different installation. Generating the XML should only take a few seconds.";
+$_lang['contentblocks.import_categories'] = "Importera";
+$_lang['contentblocks.import_categories.title'] = "Importera kategorier";
+$_lang['contentblocks.import_categories.intro'] = "Genom att ladda upp en XML-fil och välja rätt importläge kan du importera kategorier du exporterade tidigare eller från en annan plats. <b>Var försiktig</b> med att importera kategorier om du har innehåll som använder sig av de nuvarande fälten. Vänligen kontakta support@modmore.com om du är osäker vilket läge som bör användas för importen.";
+
 
 // Templates
 $_lang['contentblocks.templates'] = 'Mallar';
@@ -282,7 +306,7 @@ $_lang['contentblocks.image.source.description'] = "Lämna detta på (none) för
 $_lang['contentblocks.image_template.description'] = "Mall för bild inmatningstypen. Bör förmodligen innehålla en <code>&lt;img&gt;</code> tagg. Tillgängliga platshållare: <code>[[+url]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 $_lang['contentblocks.imagewithtitle'] = "Bild med titel";
 $_lang['contentblocks.imagewithtitle.description'] = "Samma som bild men denna gång med ett textfält för att ange ett alt eller title attribut.";
-$_lang['contentblocks.image_with_title'] = $_lang['contentblocks.imagewithtitle'];
+$_lang['contentblocks.image_with_title'] = "Bild med titel";
 $_lang['contentblocks.image_with_title_template.description'] = "Mall för bild inmatningstypen. Bör förmodligen innehålla en <code>&lt;img&gt;</code> tagg. Tillgängliga platshållare: <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 
 $_lang['contentblocks.list'] = "Lista";
@@ -293,7 +317,7 @@ $_lang['contentblocks.list_nested_template.description'] = "Inre mall för indra
 
 $_lang['contentblocks.orderedlist'] = "Sorterad lista";
 $_lang['contentblocks.orderedlist.description'] = "Samma som typen Lista, men med en sorterad lista istället.";
-$_lang['contentblocks.ordered_list'] = $_lang['contentblocks.orderedlist'];
+$_lang['contentblocks.ordered_list'] = "Sorterad lista";
 $_lang['contentblocks.ordered_list_template.description'] = "Mall för individuella punkter i listan. Denna bör troligen innehålla en <code>&lt;li&gt;</code> tagg. Tillgängliga platshållare: <code>[[+value]]</code> (listpunktens text), <code>[[+idx]]</code> (en växande punktnumrering, med start från 1 på varje nivå) och <code>[[+items]]</code> (underlistor, styrda med de andra mallarna).  ";
 $_lang['contentblocks.ordered_list_wrapper_template.description'] = "Yttersta mallen för listor. Denna bör troligen innehålla en <code>&lt;ol&gt;</code> tagg. Tillgänglig platshållare: <code>[[+items]]</code> (listpunkter styrda med de andra mallarna). ";
 $_lang['contentblocks.ordered_list_nested_template.description'] = "Inre mall för indragna underlistor. Denna bör troligen innehålla en <code>&lt;ol&gt;</code> tagg. Tillgänglig platshållare: <code>[[+items]]</code> (listpunkter styrda med de andra mallarna). ";
@@ -316,6 +340,8 @@ $_lang['contentblocks.repeater.max_items.description'] = "När inställt på ett
 $_lang['contentblocks.repeater.max_items_reached'] = "Tyvärr, du får inte lägga till fler än [[+max]] objekt.";
 $_lang['contentblocks.repeater.min_items'] = "Minsta antal objekt";
 $_lang['contentblocks.repeater.min_items.description'] = "När satt till ett nummer större än 0, kan inte antalet rader blir lägre än denna gräns.";
+$_lang['contentblocks.repeater.add_first_item'] = "Lägg automatiskt till första objektet";
+$_lang['contentblocks.repeater.add_first_item.description'] = "When enabled the Repeater will automatically get a first item added if there are none added yet.";
 $_lang['contentblocks.repeater.add_item'] = "Lägg till objekt";
 $_lang['contentblocks.repeater.delete_item'] = "Radera objekt";
 $_lang['contentblocks.repeater.wrapper_template.description'] = "Yttre mall som omsluter alla övriga behandlade rader. Ska innehålla platshållaren <code>[[+rows]]</code>, kan också innehålla platshållaren <code>[[+total]]</code>.";
@@ -352,6 +378,15 @@ $_lang['contentblocks.video.search_youtube'] = "Sök på YouTube";
 $_lang['contentblocks.video.paste_link'] = "Klistra in en länk här";
 $_lang['contentblocks.video.youtube_not_loaded'] = "YouTube APIn har inte laddats. Vänligen försök igen om några sekunder. Om problemet kvarstår är kanske inte APIn tillgänglig för tillfället.";
 $_lang['contentblocks.video.api_error'] = "Åh nej, ett fel uppstod: [[+message]] (Kod [[+code]])";
+
+// Select
+$_lang['contentblocks.dropdown'] = "Dropdown";
+$_lang['contentblocks.dropdown.description'] = "A simple dropdown field, allowing the editor to choose one item from a number of predefined options.";
+$_lang['contentblocks.dropdown_template.description'] = "Template for the dropdown field. Available placeholders are <code>[[+value]]</code> (the value option for the chosen item), <code>[[+display]]</code> (the displayed value in the dropdown).";
+$_lang['contentblocks.dropdown.options'] = "Drop-down Options";
+$_lang['contentblocks.dropdown.options.description'] = "Define available values as 'value==Displayed Value', with one option per line. If you only pass a single value per line (such as 'foo'), that will be used as both displayed and placeholder value. Prefixing a single value with # will make it a disabled option. You can also use @SNIPPET bindings to dynamically provide option values. For detailed information on specifying options consult the Dropdown documentation at modmo.re/cb.";
+$_lang['contentblocks.dropdown.default_value'] = "Standardvärde";
+$_lang['contentblocks.dropdown.default_value.description'] = "Standardvärdet att välja när listmenyn infogas, eller när ingenting är markerat.";
 
 // Snippet
 $_lang['contentblocks.snippet'] = "Snippet";
@@ -473,12 +508,6 @@ $_lang['setting_contentblocks.image.source_desc'] = "Välj standard media källa
 $_lang['setting_contentblocks.image.upload_path'] = "Uppladdningssökväg";
 $_lang['setting_contentblocks.image.upload_path_desc'] = "Sökvägen, inom den definierade media källan, vart filer skall laddas upp. Detta stöder [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] och [[+resource]] platshållare.";
 
-$_lang['setting_contentblocks.cache_source'] = "Cache källa";
-$_lang['setting_contentblocks.cache_source.description'] = "Välj den mediakälla som ska användas för bilder och cache för galleriets tumnaglar.";
-
-$_lang['setting_contentblocks.cache_path'] = "Cache sökväg";
-$_lang['setting_contentblocks.cache_path.description'] = "Sökvägen, inom den definierade mediakällan, som cache filerna för tumnaglarna ska laddas upp till.";
-
 $_lang['setting_contentblocks.sanitize_pattern'] = "Saniteringsmönster";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Ett RegEx mönster att använda vid sanering av filnamn vid behov.";
 
@@ -501,3 +530,6 @@ $_lang['setting_contentblocks.translit_class'] = "Translit klass";
 $_lang['setting_contentblocks.translit_class_desc'] = "Namnet på den klass som skall användas för transkribering. Om detta vädse är tomt, ärver den det från kärnans \"friendly_alias_translit_class\" inställning.";
 $_lang['setting_contentblocks.translit_class_path'] = "Sökväg till Translit klass";
 $_lang['setting_contentblocks.translit_class_path_desc'] = "Sökvägen till klassen att använda för transkribering. Om detta värde är tomt ärver det från kärnans \"friendly_alias_translit_class_path\" inställning.";
+
+$_lang['setting_contentblocks.base_url_mode'] = "Base URL Mode";
+$_lang['setting_contentblocks.base_url_mode_desc'] = "When uploading images, the URLs are automatically normalised in a way relative to the base url to ensure they show up in the front and back-end. Depending on your MODX setup, especially in multi-context sites, you might need to change this mode for images to show in the front-end. The accepted values are: <code>relative</code> (default: images are relative to the MODX base url), <code>absolute</code> (image urls contain the MODX base url) or <code>full</code> (images contain the full MODX site url)";

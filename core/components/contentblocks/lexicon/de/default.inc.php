@@ -6,6 +6,8 @@ $_lang['contentblocks.mgr.home'] = "Content Blocks";
 
 $_lang['contentblocks.general'] = "Allgemein";
 $_lang['contentblocks.properties'] = "Eigenschaften";
+$_lang['contentblocks.clear_filters'] = "Filter zurücksetzen";
+$_lang['contentblocks.search'] = "Suche";
 
 $_lang['contentblocks.link'] = "Link";
 $_lang['contentblocks.link.description'] = "Ein Feld, um Links zu erstellen. Resourcen, E-Mail-Adressen und URLs werden unterstützt.";
@@ -30,12 +32,14 @@ $_lang['setting_contentblocks.typeahead.include_introtext_desc'] = 'Wenn aktivie
 
 $_lang['contentblocks.error.not_an_export'] = "Diese Datei scheint kein ContentBlocks-Export zu sein";
 $_lang['contentblocks.error.importing_row'] = "Fehler beim Import der Zeile: ";
-$_lang['contentblocks.error.no_valid_field'] = "Kein gültiges Feld gefunden";
+$_lang['contentblocks.error.no_valid_field'] = "No valid field found for request.";
+$_lang['contentblocks.error.no_valid_input'] = "No valid input found for request.";
 $_lang['contentblocks.error.no_snippets'] = "Keine Snippets zur Verwendung verfügbar";
 $_lang['contentblocks.error.missing_id'] = "ID-Eigenschaft fehlt";
 $_lang['contentblocks.error.input_not_found'] = "Eingabe nicht gefunden";
 $_lang['contentblocks.error.input_not_found.message'] = "Hoppla, ein Feld mit einem Eingabetyp \"[[+ Eingabe]]\" war definiert. Dieser Wert existiert aber nicht.";
 $_lang['contentblocks.error.field_not_found'] = "Feld nicht gefunden";
+$_lang['contentblocks.error.category_not_found'] = "Kategorie nicht gefunden";
 $_lang['contentblocks.error.layout_not_found'] = "Layout nicht gefunden";
 $_lang['contentblocks.error.error_saving_object'] = "Fehler beim Speichern des Objekts";
 $_lang['contentblocks.error.xml_not_loaded'] = "Die XML-Datei konnte nicht geladen werden";
@@ -110,6 +114,7 @@ $_lang['contentblocks.delete_layoutcolumn'] = "Spalte löschen";
 $_lang['contentblocks.delete_layoutcolumn.confirm'] = "Sine Sie sicher, dass diese Spalte gelöscht werden soll? Es können unschöne Dinge mit Inhalten passieren, die diese Spalte noch nutzen. ";
 $_lang['contentblocks.add_setting'] = "Einstellung hinzufügen";
 $_lang['contentblocks.edit_setting'] = "Einstellung bearbeiten";
+$_lang['contentblocks.duplicate_setting'] = "Einstellung duplizieren";
 $_lang['contentblocks.delete_setting'] = "Einstellung löschen";
 $_lang['contentblocks.delete_setting.confirm'] = "Sind Sie sicher, dass diese Einstellung gelöscht werden soll?";
 
@@ -169,7 +174,7 @@ $_lang['contentblocks.fieldtype.textfield'] = "Textfeld";
 $_lang['contentblocks.fieldtype.link'] = "Link";
 $_lang['contentblocks.fieldtype.textarea'] = "Mehrzeiliges Textfeld";
 $_lang['contentblocks.fieldoptions'] = "Feld-Optionen";
-$_lang['contentblocks.fieldoptions.description'] = "Nur für Auswahlfelder. Legen Sie mögliche Optionen nach dem Schema \"Angezeigter Wert=platzhalter_wert\", eine Option pro Zeile. Wenn Sie nur einen einzelnen Wert pro Zeile (z.B. \"foo\") angeben, wird dieser sowohl angezeigt als auch als Platzhalter-Wert verwendet.";
+$_lang['contentblocks.fieldoptions.description'] = "Used for Select field types only. Define available values as \"placeholder_value==Displayed Value\" (\"Displayed Value=placeholder_value\" is also supported, but will be removed in 2.0), one per line. If you only pass a single value per line (such as \"foo\"), that will be used as both displayed and placeholder value.";
 $_lang['contentblocks.field_is_exposed'] = "Feld anzeigen";
 $_lang['contentblocks.field_is_exposed.description'] = "Zeige Feld auf Fläche, anstatt erst nach Klick auf das Einstellungen-Icon";
 $_lang['contentblocks.field_is_exposed.modal'] = "Zeige Feld-Einstellungen in einem Modal-Fenster";
@@ -181,6 +186,25 @@ $_lang['contentblocks.directory.description'] = 'Ein Unterordner in einer Medien
 $_lang['contentblocks.file_types'] = 'Erlaubte Dateierweiterungen';
 $_lang['contentblocks.file_types.description'] = 'Dateien mit diesen Erweiterungen (durch Kommata getrennt) werden hochgeladen. Freilassen für keine Beschränkung.';
 $_lang['contentblocks.file_types.disallowed'] = 'Dateityp in diesem Feld nicht erlaubt';
+
+// Categories
+$_lang['contentblocks.category'] = "Kategorie";
+$_lang['contentblocks.categories'] = "Kategorien";
+$_lang['contentblocks.categories.intro'] = "Use Categories to better organise your Fields, Layouts and Templates. When assigned to an element, the Add Content and Add Layout modals will show categorized items first, followed by an \"Uncategorized\" category.";
+$_lang['contentblocks.uncategorized'] = "Unkategorisiert";
+$_lang['contentblocks.add_category'] = "Kategorie hinzufügen";
+$_lang['contentblocks.edit_category'] = "Kategorie bearbeiten";
+$_lang['contentblocks.duplicate_category'] = "Kategorie duplizieren";
+$_lang['contentblocks.delete_category'] = "Kategorie löschen";
+$_lang['contentblocks.delete_category.confirm'] = "Sind Sie sicher, dass Sie diese Kategorie löschen möchten? Alle Elemente, die derzeit die Kategorie verwenden, werden danach unkategorisiert sein.";
+$_lang['contentblocks.delete_category.confirm.js'] = "Sind Sie sicher, dass Sie diese Kategorie löschen möchten?";
+$_lang['contentblocks.export_category'] = "Kategorie exportieren";
+$_lang['contentblocks.export_categories'] = "Exportieren";
+$_lang['contentblocks.export_categories.confirm'] = "After clicking Yes below, we will prepare an XML export of all Categories. This can be used to import the Categories later or in a different installation. Generating the XML should only take a few seconds.";
+$_lang['contentblocks.import_categories'] = "Importieren";
+$_lang['contentblocks.import_categories.title'] = "Import Categories";
+$_lang['contentblocks.import_categories.intro'] = "By uploading an XML file and choosing the right import mode, you can import Categories you exported before or from a different site. <b>Be careful</b> with importing Categories if you have content using the current fields already. Please contact support@modmore.com if you are unsure about what mode to use in the import.";
+
 
 // Templates
 $_lang['contentblocks.templates'] = 'Templates';
@@ -282,7 +306,7 @@ $_lang['contentblocks.image.source.description'] = "Belassen Sie diese Einstellu
 $_lang['contentblocks.image_template.description'] = "Vorlage für den Eingabetyp Bild. Sollte einen <code>&lt; Img &gt;</code>-Tag enthalten. Verfügbare Platzhalter: <code>[[+url]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 $_lang['contentblocks.imagewithtitle'] = "Bild mit Titel";
 $_lang['contentblocks.imagewithtitle.description'] = "Dasselbe wie der Bild-Eingabetyp, aber zusätzlich mit einem Textfeld, über das ein alt- oder title-Attribut angegeben werden kann.";
-$_lang['contentblocks.image_with_title'] = $_lang['contentblocks.imagewithtitle'];
+$_lang['contentblocks.image_with_title'] = "Bild mit Titel";
 $_lang['contentblocks.image_with_title_template.description'] = "Vorlage für den Eingabetyp Bild. Sollte einen <code>&lt;Img&gt;</code>-Tag enthalten. Verfügbare Platzhalter: <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 
 $_lang['contentblocks.list'] = "Liste";
@@ -293,7 +317,7 @@ $_lang['contentblocks.list_nested_template.description'] = "Das Template zum Ums
 
 $_lang['contentblocks.orderedlist'] = "Geordnete Liste";
 $_lang['contentblocks.orderedlist.description'] = "Eingabetyp zur einfachen Erstellung (beliebig verschachtelbarer) geordneter Aufzählungslisten.";
-$_lang['contentblocks.ordered_list'] = $_lang['contentblocks.orderedlist'];
+$_lang['contentblocks.ordered_list'] = "Ordered List";
 $_lang['contentblocks.ordered_list_template.description'] = "Template für einzelne Listen-Einträge. Dies sollte in den meisten Fällen ein <code>&lt;li&gt;</code>-Tag enthalten. Mögliche Platzhalter: <code>[[+value]]</code> (der Text des Listeneintrags), <code>[[+idx]]</code> (eine automatisch hochgezählte Eintragsnummer, beginnend mit 1 auf jedem Level) und <code>[[+items]]</code> (untergeordnete/verschachtelte Listen, wird über die anderen Templates ausgegeben). ";
 $_lang['contentblocks.ordered_list_wrapper_template.description'] = "Das Template zum Umschließen der Liste auf oberster Ebene. Dies sollte in den meisten Fällen ein <code>&lt;ul&gt;</code>-Tag enthalten. Mögliche Platzhalter: <code>[[+items]]</code> (Listeneinträge, diese werden über die anderen Templates ausgegeben. ";
 $_lang['contentblocks.ordered_list_nested_template.description'] = "Das Template zum Umschließen untergeordneter/verschachtelter Listen. Dies sollte in den meisten Fällen ein <code>&lt;ul&gt;</code>-Tag enthalten. Mögliche Platzhalter: <code>[[+items]]</code> (Listeneinträge, diese werden über die anderen Templates ausgegeben). ";
@@ -316,6 +340,8 @@ $_lang['contentblocks.repeater.max_items.description'] = "Wann Sie eine Zahl gr�
 $_lang['contentblocks.repeater.max_items_reached'] = "Tut mir leid, Sie dürfen dieses Element nicht mehr als [[+ max]] mal hinzufügen.";
 $_lang['contentblocks.repeater.min_items'] = "Minimale Anzahl Elemente";
 $_lang['contentblocks.repeater.min_items.description'] = "Wenn der Wert auf eine Zahl größer als 0 gesetzt wird, können Zeilen über diese Grenze hinaus nicht entfernt werden.";
+$_lang['contentblocks.repeater.add_first_item'] = "Erstes Element automatisch hinzufügen";
+$_lang['contentblocks.repeater.add_first_item.description'] = "When enabled the Repeater will automatically get a first item added if there are none added yet.";
 $_lang['contentblocks.repeater.add_item'] = "Eintrag hinzufügen";
 $_lang['contentblocks.repeater.delete_item'] = "Eintrag löschen";
 $_lang['contentblocks.repeater.wrapper_template.description'] = "Die äußere Vorlagen, die alle anderen geparsten Zeilen umschließt. Sollte den <code>[[+row]]</code> Platzhalter enthalten, kann aber auch <code>[[+total]]</code> enthalten.";
@@ -352,6 +378,15 @@ $_lang['contentblocks.video.search_youtube'] = "YouTube durchsuchen";
 $_lang['contentblocks.video.paste_link'] = "Link hier einfügen";
 $_lang['contentblocks.video.youtube_not_loaded'] = "Die YouTube-API wure nicht geladen. Bitte versuchen Sie es erneut in wenigen Sekunden. Bleibt das Problem bestehen, ist die API zurzeit nicht erreichbar.";
 $_lang['contentblocks.video.api_error'] = "Hoppla, hier ist ein Fehler aufgetreten: [[+message]] (Code [[+code]])";
+
+// Select
+$_lang['contentblocks.dropdown'] = "Dropdown";
+$_lang['contentblocks.dropdown.description'] = "A simple dropdown field, allowing the editor to choose one item from a number of predefined options.";
+$_lang['contentblocks.dropdown_template.description'] = "Template for the dropdown field. Available placeholders are <code>[[+value]]</code> (the value option for the chosen item), <code>[[+display]]</code> (the displayed value in the dropdown).";
+$_lang['contentblocks.dropdown.options'] = "Drop-down Options";
+$_lang['contentblocks.dropdown.options.description'] = "Define available values as 'value==Displayed Value', with one option per line. If you only pass a single value per line (such as 'foo'), that will be used as both displayed and placeholder value. Prefixing a single value with # will make it a disabled option. You can also use @SNIPPET bindings to dynamically provide option values. For detailed information on specifying options consult the Dropdown documentation at modmo.re/cb.";
+$_lang['contentblocks.dropdown.default_value'] = "Default Value";
+$_lang['contentblocks.dropdown.default_value.description'] = "The default value to choose when the dropdown is inserted, or nothing is selected.";
 
 // Snippet
 $_lang['contentblocks.snippet'] = "Snippet";
@@ -473,12 +508,6 @@ $_lang['setting_contentblocks.image.source_desc'] = "Wählen Sie die Medienquell
 $_lang['setting_contentblocks.image.upload_path'] = "Upload-Pfad";
 $_lang['setting_contentblocks.image.upload_path_desc'] = "Der Pfad innerhalb der definierten Medienquelle, auf den die Dateien hochgeladen werden sollen. Dieser unterstützt die Platzhalter: [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] und [[+resource]].";
 
-$_lang['setting_contentblocks.cache_source'] = "Cachequelle";
-$_lang['setting_contentblocks.cache_source.description'] = "Wählen Sie die Medienquelle für zur verwendung für Bild und Galerie-Thumbnail-Cache-Dateien.";
-
-$_lang['setting_contentblocks.cache_path'] = "Cachepfad";
-$_lang['setting_contentblocks.cache_path.description'] = "Der Pfad innerhalb der definierten Medien-Quelle in den Thumbnail-Cache-Dateien hochgeladen werden.";
-
 $_lang['setting_contentblocks.sanitize_pattern'] = "Sanitize Pattern";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Ein RegEx-Pattern, welches zum Säubern von säuberungsbedürftigen Dateinamen verwendet wird.";
 
@@ -501,3 +530,6 @@ $_lang['setting_contentblocks.translit_class'] = "Translit Class";
 $_lang['setting_contentblocks.translit_class_desc'] = "Der Name der Klasse, die für Transliteration verwendet werden soll. Falls dieser Wert hier leer ist, wird er von der Core-Einstellung \"friendly_alias_translit_class\" geerbt.";
 $_lang['setting_contentblocks.translit_class_path'] = "Translit Class Path";
 $_lang['setting_contentblocks.translit_class_path_desc'] = "Der Name der Klasse, die für Transliteration verwendet werden soll. Falls dieser Wert hier leer ist, wird er von der Core-Einstellung \"friendly_alias_translit_class\" geerbt.";
+
+$_lang['setting_contentblocks.base_url_mode'] = "Base URL Mode";
+$_lang['setting_contentblocks.base_url_mode_desc'] = "When uploading images, the URLs are automatically normalised in a way relative to the base url to ensure they show up in the front and back-end. Depending on your MODX setup, especially in multi-context sites, you might need to change this mode for images to show in the front-end. The accepted values are: <code>relative</code> (default: images are relative to the MODX base url), <code>absolute</code> (image urls contain the MODX base url) or <code>full</code> (images contain the full MODX site url)";

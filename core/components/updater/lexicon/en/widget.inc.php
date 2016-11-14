@@ -2,8 +2,8 @@
 
 /**
  * Updater
- * 
- * Copyright 2015 inreti GmbH <info@inreti.de>
+ *
+ * Copyright 2016 Jens Külzer <jens.kuelzer@inreti.de>
  * Author: Jens Külzer
  *
  * Updater is free software; you can redistribute it and/or modify it under the
@@ -27,41 +27,66 @@
  * @subpackage lexicon
  */
 
+$ns = 'updater.';
+
 /* ************ Common section ****************/
-$_lang['release_notes'] = 'Release Notes';
+$_lang[$ns.'release_notes'] = 'Release Notes';
+$_lang[$ns.'changelog']     = 'changelog';
+$_lang[$ns.'changelog_text']     = 'Read the';
+
+$_lang[$ns.'widget_button_installer']               = 'Installer';
+$_lang[$ns.'package_tooltip_button_installer']      = 'You can update or install your packages with the installer.';
+
+$_lang[$ns.'widget_button_refresh']                 = 'Refresh';
+$_lang[$ns.'widget_tooltip_button_refresh']         = 'Click here to refresh the data';
+
+$_lang[$ns.'widget_button_download']                = 'Download';
+$_lang[$ns.'widget_button_setup']                   = 'Setup';
+
+$_lang[$ns.'widget_button_retry']                   = 'Retry';
+$_lang[$ns.'widget_tooltip_button_retry']           = 'Click here to retry refreshing the data';
 
 /* ************* Packages section *************/
-$_lang['package_area'] = 'Extras';
+$_lang[$ns.'package_area']                          = 'Extras';
 
-$_lang['package_update_title.single'] = 'Package update available for download';
-$_lang['package_update_title.multi'] = 'Package updates available for download';
-$_lang['package_update_msg_default'] = '[[+count]] packages can be updated.';
-$_lang['package_update_tooltip'] = 'You should update your packages with the installer.';
+$_lang[$ns.'package_msg_update_default']            = '[[+count]] packages can be updated.';
 
-$_lang['package_install_title'] = 'Packages awaiting installation';
-$_lang['package_install_msg.single'] = 'One package is not yet installed.';
-$_lang['package_install_msg.multi'] = '[[+count]] packages are not yet installed.';
-$_lang['package_install_tooltip'] = 'You have packages that are downloaded but not installed.';
-$_lang['package_install_awaiting'] = ' awaiting installation...';
+$_lang[$ns.'package_title_install']                 = 'Extras awaiting installation';
+$_lang[$ns.'package_tooltip_install']               = 'You have packages that are downloaded but not installed.';
+$_lang[$ns.'package_msg_install.single']            = 'Package to install:';
+$_lang[$ns.'package_msg_install.multi']             = '[[+count]] packages to install:';
 
-$_lang['package_uptodate_title'] = 'Packages';
-$_lang['package_uptodate_msg.single'] = 'Your installed package is up to date.';
-$_lang['package_uptodate_msg.multi'] = 'All [[+count]] installed packages are up to date.';
-$_lang['package_uptodate_tooltip'] = '';
+$_lang[$ns.'package_title_update_and_install']      = 'Updates available';
+$_lang[$ns.'package_title_update_and_noinstall']    = 'Updates available';
+$_lang[$ns.'package_title_noupdate_and_noinstall']  = 'All <strong>[[+count]]</strong> installed extra packages are up to date.';
+$_lang[$ns.'package_title_noupdate_and_install']    = 'Extras ready to install';
+$_lang[$ns.'package_tooltip_update']                = 'Updates available';
 
-$_lang['package_buttontext'] = 'Installer';
+$_lang[$ns.'package_title_uptodate']                = 'Extras';
+$_lang[$ns.'package_msg_uptodate.single']           = 'You have <strong>1</strong> package installed.<br/>This package is up to date.';
+$_lang[$ns.'package_msg_uptodate.multi']            = 'You have <strong>[[+count]]</strong> packages installed.<br/>All of them are up to date.';
+$_lang[$ns.'package_tooltip_uptodate']              = 'You are fine. Everything is up to date here.';
+
+$_lang[$ns.'package_stale_title']                   = "Update information outdated";
+$_lang[$ns.'package_stale_msg']                     = "Update state is outdated and needs a refresh.";
 
 /* *********** Core section ***************/
-$_lang['core_area'] = 'Core';
+$_lang[$ns.'core_area'] = 'Core';
 
-$_lang['core_update_title'] = 'System update available!';
-$_lang['core_update_tooltip'] = 'You should update your system immediately. Instructions can be found on modx.com.';
+$_lang[$ns.'core_update_title'] = 'System update[[+multiple]] available!';
+$_lang[$ns.'core_update_tooltip'] = 'You should update your system immediately. Instructions can be found on modx.com.';
 
-$_lang['core_uptodate_title'] = 'System';
-$_lang['core_uptodate_msg'] = 'Your system is up to date ([[+version]]).';
+$_lang[$ns.'core_uptodate_title'] = 'System';
+$_lang[$ns.'core_uptodate_msg'] = 'Your system is up to date ([[+version]]).';
 
-$_lang['core_error_title'] = "Problems with update check";
-$_lang['core_error_msg'] = "Can not determine latest version on github.<br/>Nevertheless, your current version is [[+version]]";
+$_lang[$ns.'core_dev_title'] = 'Development build';
+$_lang[$ns.'core_dev_msg'] = 'You are running a dev build ([[+version]]). Please update via git.';
+
+$_lang[$ns.'core_error_title'] = "Problems with update check";
+$_lang[$ns.'core_error_msg'] = "Can not determine latest version on github.<br/>Nevertheless, your current version is <strong>[[+version]]</strong>";
+
+$_lang[$ns.'core_stale_title'] = "Update information outdated";
+$_lang[$ns.'core_stale_msg'] = "Update state is outdated and needs a refresh.<br/>This version is: <strong>[[+version]]</strong>.";
 
 /* ************* error and network ***********/
-$_lang['github_error_tooltip'] = "Github did not respond in time. Adjust the timeout system settings according to your connection.";
+$_lang[$ns.'github_error_tooltip'] = "Github did not respond in time. Adjust the timeout system settings according to your connection.";

@@ -13,9 +13,6 @@ $_lang['setting_area_general'] = 'Obecné nastavení';
 $_lang['setting_redactor.air'] = 'Air-Mode';
 $_lang['setting_redactor.air_desc'] = 'Pokud je povoleno, Redaktor skryje běžnou lištu nástrojů a místo ní se při označení textu zobrazí menší lištu nástrojů. Pro změnu tlačítek, které se objevují na této liště nástrojů upravte nastavení <code>airButtons</code>.';
 
-$_lang['setting_redactor.autoresize'] = 'Automatické zvětšení';
-$_lang['setting_redactor.autoresize_desc'] = 'Pokud je povoleno, editor se výškou přizpůsobuje textu tak, aby nebylo potřeba scrollovat.';
-
 $_lang['setting_redactor.linkAnchor'] = 'Kotvy';
 $_lang['setting_redactor.linkAnchor_desc'] = 'Pokud je povoleno, okno <em>vložit odkaz</em> bude navíc obsahovat záložku pro vložení kotvy.';
 
@@ -241,7 +238,7 @@ $_lang['setting_redactor.searchImages_desc'] = "Pokud je povoleno, vyhledávací
 
 //$_lang['setting_redactor.convertVideoLinks'] = 'Convert Video Links';
 //$_lang['setting_redactor.convertVideoLinks_desc'] = 'This feature converts links like https://www.youtube.com/watch?v=DcRp9V5GbqQ into Youtube embedded player upon pressing Return key.';
- 
+
 //$_lang['setting_redactor.tidyHtml'] = 'Tidy HTML';
 //$_lang['setting_redactor.tidyHtml_desc'] = 'Set to false to turn off nice output code formatting.';
 

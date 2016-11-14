@@ -4,6 +4,7 @@
             editor: null
         };
 
+        ace.config.set('basePath', ContentBlocksConfig.assets_url + 'js/vendor/9cloud/ace');
         input.init = function() {
             this.editor = ace.edit(data.generated_id + '-editor');
             this.editor.setTheme('ace/theme/' + ContentBlocksConfig['code.theme']);
@@ -11,7 +12,8 @@
             this.editor.setOptions({
                 minLines: 1,
                 maxLines: Infinity,
-                wrap: 'free'
+                wrap: 'free',
+                showPrintMargin: false
             });
             this.editor.on('input', function() {
                 ContentBlocks.fireChange();

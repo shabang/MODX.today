@@ -1,3 +1,5 @@
-<a href="[[+view_url]]" class="th" title="[[+name]]">
-    <img src="[[+mgr_thumb]]" class="img-polaroid" alt="[[+name]]">
-</a>
+<li class="mg-image">
+    <a href="[[+view_url]]" title="[[+name]]">
+        <img src="[[+mgr_thumb]]" alt="[[+name]]">
+    </a>
+</li>

@@ -1,3 +1,95 @@
+++ MoreGallery 1.5.5-pl
+++ Released on 2016-10-12
++++++++++++++++++++++++++
+- Prevent error when using Gitify or Teleport (Cloud Snapshots) to extract MoreGallery resources
+- Fix mgGetTags snippet to show all tags with &resource=0, and current if &resource is empty (default) [#176]
+
+++ MoreGallery 1.5.4-pl
+++ Released on 2016-09-30
++++++++++++++++++++++++++
+- Ensure EXIF and IPTC data get cleaned up properly, even if uploaded prior to 1.4.2 [S10021]
+- Fix back-end not showing images if an image is missing a file value [S10015]
+
+++ MoreGallery 1.5.3-pl
+++ Released on 2016-09-12
++++++++++++++++++++++++++
+- Fix clearing of image caches when adding/removing tags
+- Fix [[+tags]] placeholder not being available in image lists [S9948]
+
+++ MoreGallery 1.5.2-pl
+++ Released on 2016-09-07
++++++++++++++++++++++++++
+- Fix clearing of image caches when an image was sorted/edited [S9924]
+
+++ MoreGallery 1.5.1-pl
+++ Released on 2016-09-01
++++++++++++++++++++++++++
+- Make the add video modal use lexicons
+- Fix the media browser not opening when clicking Import [S9857]
+- Fix issue creating crops when only the width OR height is specified [#175]
+- Prevent E_WARN for loading exif data from non-supported file type
+
+++ MoreGallery 1.5.0-pl
+++ Released on 2016-08-24
++++++++++++++++++++++++++
+- Make sure previous and next urls for mgGetImages single image view respects &singleImageResource
+- Fix &singleImageParam not defaulting to the setting if not set on snippet call
+
+++ MoreGallery 1.5.0-rc2
+++ Released on 2016-08-05
++++++++++++++++++++++++++
+- Fix BC break in 1.5.0-rc1: [[+idx]] now starts at 0 again instead of 1
+- Make sure exceptions are caught properly when generating a thumbnail fails
+- Make sure trying to add a private/non-existent video doesn't crash the gallery [#173]
+
+++ MoreGallery 1.5.0-rc1
+++ Released on 2016-08-03
++++++++++++++++++++++++++
+New features:
+- Automatically duplicate images (and related data, like tags and crops) when duplicating a gallery resource [#94]
+- Add embedding of videos from YouTube and Vimeo, with different chunks per type [#152]
+- Add &singleImageResource property to mgGetImages which allows you to link detail pages to a specific resource [#162]
+- mgGetImages now accepts multiple comma-separated resources in &resource [#26]
+- Ability to limit available features on Galleries through permissions (ACLS) [#125]
+
+Improvements:
+- Refactored mgGetImages snippet to be more easily maintained and extended
+- Replaced internal phpthumb with Imagine library which can use imagick and offers more features for the future
+- SVG uploads will now get PNG thumbnails/crops rather than broken images [#131]
+- Default mgImage chunk now wraps items in a li to accommodate for video embeds
+
+Fixes:
+- Fix rounding issue in certain crops [#111]
+- Prevent double thumbnail generation on upload [#155]
+
+++ MoreGallery 1.4.2-pl
+++ Released on 2016-06-23
++++++++++++++++++++++++++
+- Fix issue showing images when &sortBy is random and &wrapperTpl is set [#167]
+- Fix invalid shutdown callback warning when importing files [#169]
+- Fix opening the media browser a second time, or after opening the browser in TVs [#164]
+- Prevent invalid EXIF or IPTC data from breaking uploads or listing images [S9225]
+
+++ MoreGallery 1.4.1-pl
+++ Released on 2016-05-04
++++++++++++++++++++++++++
+- Properly filter out EXIF and IPTC data from AJAX requests to prevent tripping over mod_security rules [#149]
+- Allow changing the number of thumbnails that are prefetched as base64 in the manager (useful on slow disks) [#148]
+- Add missing allowed_extensions_per_source setting to build
+- Make sure media source specific extensions are checked case insensitively
+- Add DISTINCT to the image query to prevent duplicate results when filtering on tags (Thanks Adam!) [#140]
+- Prevent pretty noisy "[[+resource.id]] is not a valid integer" error [S8750]
+
+++ MoreGallery 1.4.0-pl
+++ Released on 2016-04-06
++++++++++++++++++++++++++
+- Fix logic issue in fetching tags, causing errors to appear in the log when using tags. [S8392]
+
+++ MoreGallery 1.4.0-rc2
+++ Released on 2016-03-29
++++++++++++++++++++++++++
+- Fix critical issue when calling mgGetImages with different resource values (Alpacka v0.2.3) [S8392]
+
 ++ MoreGallery 1.4.0-rc1
 ++ Released on 2016-03-23
 +++++++++++++++++++++++++

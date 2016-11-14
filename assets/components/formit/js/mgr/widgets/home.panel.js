@@ -43,7 +43,7 @@ FormIt.panel.Home = function(config) {
                             select: {
                                 scope: this,
                                 fn: function(contextField, Obj) {
-                                    Ext.getCmp('formit-grid-forms').baseParams.context_key = Obj.data.key
+                                    Ext.getCmp('formit-grid-forms').baseParams.context_key = Obj.data.key;
                                     Ext.getCmp('formit-grid-forms').getBottomToolbar().changePage(1);
                                     Ext.getCmp('formit-grid-forms').refresh();
                                 }
@@ -61,11 +61,13 @@ FormIt.panel.Home = function(config) {
                         ,fieldLabel: _('formit.select_form')
                         ,id: 'form'
                         ,width: 400
+                        ,paging:true
+                        ,pageSize:20
                         ,listeners: {
                             select: {
                                 scope: this,
                                 fn: function(formField, Obj) {
-                                    Ext.getCmp('formit-grid-forms').baseParams.form = Obj.data.form
+                                    Ext.getCmp('formit-grid-forms').baseParams.form = Obj.data.form;
                                     Ext.getCmp('formit-grid-forms').getBottomToolbar().changePage(1);
                                     Ext.getCmp('formit-grid-forms').refresh();
                                 }
@@ -137,6 +139,17 @@ FormIt.panel.Home = function(config) {
                     }]
                 },{
                     xtype: 'formit-grid-forms'
+                    ,preventRender: true
+                    ,cls: 'main-wrapper'
+                }]
+            },{
+                title: _('formit.encryption')
+                ,items: [{
+                    html: '<p>'+_('formit.encryption_msg')+'</p>'
+                    ,border: false
+                    ,bodyCssClass: 'panel-desc'
+                },{
+                    xtype: 'formit-grid-forms-encryption'
                     ,preventRender: true
                     ,cls: 'main-wrapper'
                 }]

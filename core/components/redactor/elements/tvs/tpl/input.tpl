@@ -1,7 +1,7 @@
 <script>
 (function(){
     function loadRedactorJS() {
-        document.write('<script src="{$assetsUrl}redactor-2.0.7.min.js"><\/script>')
+        document.write('<script src="{$assetsUrl}redactor-2.2.0.min.js"><\/script>')
     }
     try {
         if(!window.jQuery || !jQuery.fn.redactor) loadRedactorJS();

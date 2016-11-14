@@ -185,10 +185,10 @@ $_lang['setting_clear_cache_refresh_trees'] = 'Uppdatera träd efter rensning av
 $_lang['setting_clear_cache_refresh_trees_desc'] = 'När den här är aktiverad kommer träden att uppdateras när webbplatsens cache rensas.';
 
 $_lang['setting_compress_css'] = 'Använd komprimerad CSS';
-$_lang['setting_compress_css_desc'] = 'När denna är aktiverad kommer MODX att använda en komprimerad version av sina css-stilmallar i hanterarens gränssnitt. Detta minskar laddnings- och exekveringstiden i hanteraren ordentligt. Avaktivera bara om du modifierar element i kärnan.';
+$_lang['setting_compress_css_desc'] = 'När denna är aktiverad kommer MODX att använda en komprimerad version av sina css-stilmallar i hanterarens gränssnitt.';
 
 $_lang['setting_compress_js'] = 'Använd komprimerade javascript-bibliotek';
-$_lang['setting_compress_js_desc'] = 'När denna är aktiverad kommer MODX att använda en komprimerad version av sina javascript-bibliotek i hanterarens gränssnitt. Detta minskar laddnings- och exekveringstiden i hanteraren ordentligt. Avaktivera bara om du modifierar element i kärnan.';
+$_lang['setting_compress_js_desc'] = 'När denna är aktiverad kommer MODX att använda en komprimerad version av skriptfilerna.';
 
 $_lang['setting_compress_js_groups'] = 'Använd gruppering när javascript komprimeras';
 $_lang['setting_compress_js_groups_desc'] = 'Gruppera javascript för MODX hanterares kärna genom att använda groupsConfig i Minify. Sätt till "Ja" om du använder Suhosin eller andra begränsande faktorer.';
@@ -489,11 +489,17 @@ $_lang['setting_new_file_permissions_desc'] = 'När en ny fil laddas upp med Fil
 $_lang['setting_new_folder_permissions'] = 'Behörigheter för nya kataloger';
 $_lang['setting_new_folder_permissions_desc'] = 'När en ny katalog skapas i Filhanteraren, kommer Filhanteraren att försöka ändra katalogbehörigheterna till dom som anges i denna inställning. Det här kanske inte fungerar på alla system, tex IIS, i vilket fall du blir tvungen att ändra behörigheterna manuellt.';
 
+$_lang['setting_parser_recurse_uncacheable'] = 'Fördröj o-cachebar tolkning';
+$_lang['setting_parser_recurse_uncacheable_desc'] = 'Om den här inaktiveras kan o-cachebara element bli cachade inuti cachebara element. Inaktivera BARA om du har problem med komplex kapslad tolkning som slutat fungera som förväntat.';
+
 $_lang['setting_password_generated_length'] = 'Längd på automatgenererat lösenord';
 $_lang['setting_password_generated_length_desc'] = 'Längden på ett automatgenererat lösenord för en användare.';
 
 $_lang['setting_password_min_length'] = 'Minimal längd för lösenord';
 $_lang['setting_password_min_length_desc'] = 'Den minimala längden på en användares lösenord.';
+
+$_lang['setting_preserve_menuindex'] = 'Bevara menyindex när resurser dupliceras';
+$_lang['setting_preserve_menuindex_desc'] = 'När resurser dupliceras kommer menyindexet/ordningen att bevaras.';
 
 $_lang['setting_principal_targets'] = 'ACL-mål att ladda';
 $_lang['setting_principal_targets_desc'] = 'Anpassa ACL-målen som ska laddas för MODX-användare.';
@@ -667,6 +673,9 @@ $_lang['setting_settings_distro_desc'] = 'Den aktuella installerade distribution
 
 $_lang['setting_set_header'] = 'Sätt HTTP-headers';
 $_lang['setting_set_header_desc'] = 'När denna är aktiverad kommer MODX att försöka sätta HTTP-headers för resurser.';
+
+$_lang['setting_send_poweredby_header'] = 'Skicka headern X-Powered-By';
+$_lang['setting_send_poweredby_header_desc'] = 'När den här är aktiverad kommer MODX att skicka headern "X-Powered-By" för att identifiera att denna webbplats är byggd med MODX. Detta hjälper till att spåra användningen av MODX genom tredjeparts spårningsprogram som besöker din webbplats. Eftersom det här gör det lättare att identifiera vad webbplatsen är byggd med så kan det innebära en något ökad säkerhetsrisk om ett säkerhetsproblem skulle upptäckas i MODX.';
 
 $_lang['setting_show_tv_categories_header'] = 'Visa flikrubriken "Kategorier" med mallvariabler';
 $_lang['setting_show_tv_categories_header_desc'] = 'Om denna sätts till "Ja" kommer MODX att visa rubriken "Kategorier" ovanför den första kategorifliken när mallvariabler redigeras i en resurs.';

@@ -7,15 +7,9 @@
  * @package scheduler
  * @var modX $modx
  */
-// Make sure we don't need load permissions
-define('MODX_REQP', false);
-
 require_once dirname(dirname(dirname(dirname(__FILE__)))).'/config.core.php';
 require_once MODX_CORE_PATH.'config/'.MODX_CONFIG_KEY.'.inc.php';
 require_once MODX_CONNECTORS_PATH.'index.php';
-
-// Ensure we have all other permissions as we want to be able of writing resources from a task
-$modx->user->setSudo(true);
 
 $corePath = $modx->getOption('scheduler.core_path',null,$modx->getOption('core_path').'components/scheduler/');
 require_once $corePath.'model/scheduler/scheduler.class.php';

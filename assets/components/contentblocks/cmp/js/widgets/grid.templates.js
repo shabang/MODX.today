@@ -69,63 +69,78 @@ ContentBlocksComponent.grid.Templates = function (config) {
                 xtype: 'numberfield'
             }
         }],
-        tbar: [
-            {
-                text: _('contentblocks.add_template'),
-                handler: this.addTemplate,
-                scope: this
-            },
-            '->',{
-                xtype: 'contentblocks-combo-category'
-                ,name: 'category'
-                ,id: 'contentblocks-templates-category-filter'
-                ,emptyText: _('contentblocks.category')
-                ,listeners: {
-                    'select': {fn:this.filterCategory,scope:this}
-                }
-            }, {
-                xtype: 'textfield'
-                ,id: 'contentblocks-templates-search-filter'
-                ,emptyText: _('contentblocks.search')
-                ,listeners: {
-                    'change': {fn:this.search,scope:this}
-                    ,'render': {fn: function(cmp) {
-                        new Ext.KeyMap(cmp.getEl(), {
-                            key: Ext.EventObject.ENTER
-                            ,fn: function() {
-                                this.fireEvent('change',this);
-                                this.blur();
-                                return true;
-                            }
-                            ,scope: cmp
-                        });
-                    },scope:this}
-                }
-            },{
-                xtype: 'button'
-                ,id: 'contentblocks-templates-clear-filters'
-                ,text: _('filter_clear')
-                ,listeners: {
-                    'click': {fn: this.clearFilter, scope: this}
-                }
-            },
-            {
-                text: _('contentblocks.export_templates'),
-                handler: this.exportAllTemplates,
-                scope: this
-            },
-            '-',
-            {
-                text: _('contentblocks.import_templates'),
-                handler: this.importTemplates,
-                scope: this
-            }
-        ]
+        tbar: this.getToolbarButtons(config)
     });
     ContentBlocksComponent.grid.Templates.superclass.constructor.call(this, config);
 };
 Ext.extend(ContentBlocksComponent.grid.Templates, MODx.grid.Grid, {
+    getToolbarButtons: function(config) {
+        var buttons = [];
+
+        if (ContentBlocksConfig.permissions.templates_new) {
+            buttons.push({
+                text: _('contentblocks.add_template'),
+                handler: this.addTemplate,
+                scope: this
+            });
+        }
+
+        buttons.push(['->',{
+            xtype: 'contentblocks-combo-category',
+            name: 'category',
+            id: 'contentblocks-templates-category-filter',
+            emptyText: _('contentblocks.category'),
+            listeners: {
+                'select': {fn:this.filterCategory,scope:this}
+            }
+        }, {
+            xtype: 'textfield',
+            id: 'contentblocks-templates-search-filter',
+            emptyText: _('contentblocks.search'),
+            listeners: {
+                'change': {fn:this.search,scope:this}
+                ,'render': {fn: function(cmp) {
+                    new Ext.KeyMap(cmp.getEl(), {
+                        key: Ext.EventObject.ENTER
+                        ,fn: function() {
+                            this.fireEvent('change',this);
+                            this.blur();
+                            return true;
+                        }
+                        ,scope: cmp
+                    });
+                },scope:this}
+            }
+        },{
+            xtype: 'button',
+            id: 'contentblocks-templates-clear-filters',
+            text: _('filter_clear'),
+            listeners: {
+                'click': {fn: this.clearFilter, scope: this}
+            }
+        }]);
+
+        if (ContentBlocksConfig.permissions.templates_export) {
+            buttons.push({
+                text: _('contentblocks.export_templates'),
+                handler: this.exportAllTemplates,
+                scope: this
+            });
+        }
+        if (ContentBlocksConfig.permissions.templates_export) {
+            buttons.push({
+                text: _('contentblocks.import_templates'),
+                handler: this.importTemplates,
+                scope: this
+            });
+        }
+
+        return buttons;
+    },
     addTemplate: function () {
+        if (!ContentBlocksConfig.permissions.templates_new) {
+            return false;
+        }
         var win = MODx.load({
             xtype: 'contentblocks-window-template',
             listeners: {
@@ -139,6 +154,9 @@ Ext.extend(ContentBlocksComponent.grid.Templates, MODx.grid.Grid, {
     },
 
     editTemplate: function () {
+        if (!ContentBlocksConfig.permissions.templates_edit) {
+            return false;
+        }
         var record = this.menu.record;
         var win = MODx.load({
             xtype: 'contentblocks-window-template',
@@ -156,6 +174,9 @@ Ext.extend(ContentBlocksComponent.grid.Templates, MODx.grid.Grid, {
     },
 
     duplicateTemplate: function () {
+        if (!ContentBlocksConfig.permissions.templates_new || !ContentBlocksConfig.permissions.templates_edit) {
+            return false;
+        }
         var record =  vcJquery.extend(true, {}, this.menu.record);
         record.id = 0;
         record.name = _('duplicate_of', {name: record.name});
@@ -177,6 +198,9 @@ Ext.extend(ContentBlocksComponent.grid.Templates, MODx.grid.Grid, {
 
 
     deleteTemplate: function () {
+        if (!ContentBlocksConfig.permissions.templates_delete) {
+            return false;
+        }
         var record = this.menu.record;
 
         MODx.msg.confirm({
@@ -198,32 +222,56 @@ Ext.extend(ContentBlocksComponent.grid.Templates, MODx.grid.Grid, {
     getMenu: function () {
         var m = [];
 
-        m.push({
-            text: _('contentblocks.edit_template'),
-            handler: this.editTemplate,
-            scope: this
-        }, {
-            text: _('contentblocks.duplicate_template'),
-            handler: this.duplicateTemplate,
-            scope: this
-        }, {
-            text: _('contentblocks.export_template'),
-            handler: this.exportTemplate,
-            scope: this
-        }, '-', {
-            text: _('contentblocks.delete_template'),
-            handler: this.deleteTemplate,
-            scope: this
-        });
+        if (ContentBlocksConfig.permissions.templates_edit) {
+            m.push({
+                text: _('contentblocks.edit_template'),
+                handler: this.editTemplate,
+                scope: this
+            });
+        }
+
+        if (ContentBlocksConfig.permissions.templates_edit && ContentBlocksConfig.permissions.templates_new) {
+            m.push({
+                text: _('contentblocks.duplicate_template'),
+                handler: this.duplicateTemplate,
+                scope: this
+            });
+        }
+
+        if (ContentBlocksConfig.permissions.templates_export) {
+            m.push({
+                text: _('contentblocks.export_template'),
+                handler: this.exportTemplate,
+                scope: this
+            });
+        }
+
+        if (ContentBlocksConfig.permissions.templates_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            m.push({
+                text: _('contentblocks.delete_template'),
+                handler: this.deleteTemplate,
+                scope: this
+            });
+        }
+
         return m;
     },
 
     exportTemplate: function() {
+        if (!ContentBlocksConfig.permissions.templates_export) {
+            return false;
+        }
         var record = this.menu.record;
         window.location = ContentBlocksComponent.config.connectorUrl + '?action=mgr/templates/export&items=' + record.id + '&HTTP_MODAUTH=' + MODx.siteId;
     },
 
     exportAllTemplates: function () {
+        if (!ContentBlocksConfig.permissions.templates_export) {
+            return false;
+        }
         Ext.Msg.confirm(_('contentblocks.export_templates'), _('contentblocks.export_templates.confirm'), function (e) {
             if (e == 'yes') {
                 window.location = ContentBlocksComponent.config.connectorUrl + '?action=mgr/templates/export&HTTP_MODAUTH=' + MODx.siteId;
@@ -232,6 +280,9 @@ Ext.extend(ContentBlocksComponent.grid.Templates, MODx.grid.Grid, {
     },
 
     importTemplates: function () {
+        if (!ContentBlocksConfig.permissions.templates_import) {
+            return false;
+        }
         var win = MODx.load({
             xtype: 'contentblocks-window-import',
             title: _('contentblocks.import_templates.title'),
@@ -261,7 +312,7 @@ Ext.extend(ContentBlocksComponent.grid.Templates, MODx.grid.Grid, {
     },
     clearFilter: function() {
         this.getStore().baseParams = {
-            action: 'mgr/fields/getlist'
+            action: 'mgr/templates/getlist'
         };
         Ext.getCmp('contentblocks-templates-search-filter').reset();
         Ext.getCmp('contentblocks-templates-category-filter').reset();

@@ -20,9 +20,15 @@
  * Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-$_lang['setting_updater.debug'] = "Debug-Modus";
-$_lang['setting_updater.debug_desc'] = "Schaltet den Debug-Modus an.";
+/**
+ * German Language file for Updater
+ *
+ * @package updater
+ * @subpackage lexicon
+ */
 
+$_lang['setting_updater.debug'] = "Debug-Modus";
+$_lang['setting_updater.debug_desc'] = "Schaltet den Debug-Modus an. Achtung: diese Einstellung sorgt für sehr viele Logmeldungen von Updater. Aktivieren Sie das Debugging nur, wenn Sie Probleme mit Updater haben und genauere Daten zur Fehlerkorrektur erhalten wollen. Vergessen Sie nicht, den Modus wieder zu deaktivieren, wenn die Fehlersuche abgeschlossen ist, oder Ihr Logfile wird sehr schnell anwachsen.";
 
 /* Area widget */
 $_lang['updater.widget'] = 'Update Status';
@@ -46,7 +52,6 @@ $_lang['setting_updater.modxcom_timeout_desc'] = "Ein Timeoutwert für Anfragen 
 
 $_lang['setting_updater.last_version_crosschecked'] = "Letzte getestete Systemversion";
 $_lang['setting_updater.last_version_crosschecked_desc'] = "Dieser Wert hilft beim entdecken eines kürzlich erfolgten Updates. Wenn er sich von der aktuellen System-Version unterscheidet, dann leert Updater seinen Cache, um seine Benachrichtigungen aktualisieren zu können. <strong>Diesen Wert nicht manuell ändern!</strong>";
-
 
 
 /* Area Core Notifications */
@@ -89,7 +94,7 @@ $_lang['setting_updater.send_notification_hours_desc'] = "Die minimale Stundenza
 
 
 /* Area Persistance */
-$_lang['setting_updater.last_send_core_notification'] = ">Zeitpunkt letzte Core-Nachricht";
+$_lang['setting_updater.last_send_core_notification'] = "Zeitpunkt letzte Core-Nachricht";
 $_lang['setting_updater.last_send_core_notification_desc'] = "<strong>NICHT ÄNDERN!</strong> Einstellung wird automatisch vom System verwaltet.";
 
 $_lang['setting_updater.last_send_package_notification'] = "Zeitpuntk letzte Package-Nachricht";
@@ -106,9 +111,47 @@ $_lang['setting_updater.last_send_packages_desc'] = "<strong>NICHT ÄNDERN!</str
 
 
 /*
-$_lang['setting_updater.'] = "";
-$_lang['setting_updater._desc'] = "";
-*/
+ * don't check for:
+ *  0 no restriction (default)
+ *  1 patch release candidates or pre-releases, _._.x-rcN
+ *  2 patch releases at all
+ *  3 minor version release candidates
+ *  4 minor versions at all
+ *
+ * The higher the value, the less notifications you get.
+ */
+
+$_lang['setting_updater.check_core_release_level'] = "Release level für Core-Prüfung";
+$_lang['setting_updater.check_core_release_level_desc'] = "<p>Der Release-Level, der angezeigt werden soll. Beeinflusst sowohl das Widget als auch die Benachrichtigungen.
+Die folgenden Einstellungen sind möglich::</p>
+     <ul>
+        <li>0 - alle Release Levels, inkl. Dev/Git- und Alpha-Versionenincluding (empfohlen für Git-Umgebungen)</li>
+        <li>1 - nur Beta-Versionen oder besser</li>
+        <li>2 - nur Release Candidates (RC) oder besser (keine Alpha/Beta-Versionen)</li>
+        <li>3 - nur stabilde Versionen (production level, PL)</li>
+     </ul>
+    <p>Standard ist <strong>3</strong>, wodurch nur stabile Versionen angezeigt werden. Dies ist empfohlen für Produktivsysteme.
+    Setzen Sie die Einstellung auf einen kleineren Wert, wenn Sie auch nicht-stabile Versionen oder frühe Veröffentlichungen mit möglichen Fehlern angezeigt bekommen wollen. Installieren Sie diese Versionen nur wenn Sie wissen was Sie tun!
+    </p>";
+
+$_lang['setting_updater.check_core_version_level'] = "Versions-Level für Core-Prüfung";
+$_lang['setting_updater.check_core_version_level_desc'] = "<p>Das anzuzeigende Versions-Level. Beeinflusst sowohl die Widget-Darstellung als auch Benachrichtigungen. Sie haben folgende Möglichkeiten:
+</p>
+    <ul>
+        <li>0 - zeige alle Versionslevel (inkl. Hauptversionen)</li>
+        <li>1 - zeige Nebenversionen und kleiner (keine neuen Hauptversionen, nur kompatible)</li>
+        <li>2 - zeige nur Revisionsversionen (keine Neben- und keine Hauptversionen, nur Fehlerbehebung/Sicherheitsupdates)</li>
+    </ul>
+    <p>Standard ist <strong>1</strong>, d.h. es werden alle Versionen angezeigt, die Fehler beheben und neue Funktionalitäten hinzufügen, aber
+     keine neuen Hauptversionen, die evtl. inkompatibel zu Ihrer Installation sind. Nebenversionen können normalerweise
+     ohne größere Probleme als Update installiert werden. Neu hinzukommende Funktionen können jedoch auch neue Fehler mit sich bringen.
+    <br/>
+    <em>Achtung: die Entwicklung neuer Revisionsversionen kann stillschweigend eingestellt werden, wenn z.B. eine neue Nebenversion
+    existiert, die fortan weiterentwickelt wird. Wenn Sie den Wert auf 2 setzen, kann es passieren, dass Sie durch Updater
+     nie darüber informiert werden, dass es im nächsthöheren Nebenversionslevel neue Versionen gibt, die evtl. auch
+     Fehler in Ihrem aktuellen System beheben. Stellen Sie dann sicher, dass Sie durch andere Kanäle wie slack (modxcommunity.slack.com), das MODX-Forum oder RSS-Feeds
+     über neue Versionen informiert werden!</em></p>";
+
 
 
 

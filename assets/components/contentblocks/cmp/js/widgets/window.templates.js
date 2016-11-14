@@ -142,44 +142,38 @@ ContentBlocksComponent.window.Template = function (config) {
 Ext.extend(ContentBlocksComponent.window.Template, MODx.Window, {
     propHolder: null,
     getWindowButtons: function (config) {
-        var b = [
-            {
-                text: _('cancel'),
-                scope: this,
-                handler: function () {
-                    this.hide();
-                }
-            },
-            '-'
-        ];
+        var b = [{
+            text: _('cancel'),
+            scope: this,
+            handler: function () {
+                this.hide();
+            }
+        }, '-'];
 
-        if (config.isUpdate) {
-            b.push([
-                {
+        if (ContentBlocksConfig.permissions.templates_save) {
+            if (config.isUpdate) {
+                b.push([{
                     text: _('save'),
                     handler: function () {
                         this.submit(false);
                     },
                     scope: this,
                     cls: 'primary-button'
-                },
-                {
+                }, {
                     text: _('save_and_close'),
                     scope: this,
                     handler: this.submit,
                     cls: 'primary-button'
-                }
-            ]);
-        }
-        else {
-            b.push([
-                {
+                }]);
+            }
+            else {
+                b.push([{
                     text: _('save'),
                     scope: this,
                     handler: this.submit,
                     cls: 'primary-button'
-                }
-            ]);
+                }]);
+            }
         }
         return b;
     },

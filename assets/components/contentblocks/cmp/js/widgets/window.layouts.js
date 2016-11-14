@@ -254,26 +254,30 @@ Ext.extend(ContentBlocksComponent.window.Layout, MODx.Window, {
             handler: function() { this.hide(); }
         }];
 
-        if (config.isUpdate) {
-            b.push([{
-                text: _('save'),
-                scope: this,
-                handler: function() { this.submit(false); },
-                cls: 'primary-button'
-            },{
-                text: _('save_and_close'),
-                scope: this,
-                handler: this.submit,
-                cls: 'primary-button'
-            }]);
-        }
-        else {
-            b.push([{
-                text: _('save'),
-                scope: this,
-                handler: this.submit,
-                cls: 'primary-button'
-            }]);
+        if (ContentBlocksConfig.permissions.layouts_save) {
+            if (config.isUpdate) {
+                b.push([{
+                    text: _('save'),
+                    scope: this,
+                    handler: function () {
+                        this.submit(false);
+                    },
+                    cls: 'primary-button'
+                }, {
+                    text: _('save_and_close'),
+                    scope: this,
+                    handler: this.submit,
+                    cls: 'primary-button'
+                }]);
+            }
+            else {
+                b.push([{
+                    text: _('save'),
+                    scope: this,
+                    handler: this.submit,
+                    cls: 'primary-button'
+                }]);
+            }
         }
 
         return b;

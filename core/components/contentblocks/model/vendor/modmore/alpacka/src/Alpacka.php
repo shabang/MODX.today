@@ -287,8 +287,8 @@ class Alpacka
             default:
                 // otherwise look for a transliteration service class (i.e. Translit package) that will accept named transliteration tables
                 if ($this->modx instanceof \modX) {
-                    if ($translit = $this->modx->getService('translit', $translitClass, $translitClassPath)) {
-                        $value = $translit->translate($value, $translit);
+                    if ($transliterate = $this->modx->getService('translit', $translitClass, $translitClassPath)) {
+                        $value = $transliterate->translate($value, $translit);
                     }
                 }
                 break;
@@ -316,7 +316,7 @@ class Alpacka
 
         // Make sure the resource is also added to $modx->resource if there's nothing set there
         // This provides compatibility for dynamic media source paths using snippets relying on $modx->resource
-        if (!$this->modx->resource || ($this->modx->resource->get('id') !== $resource->get('id'))) {
+        if (!$this->modx->resource) {
             $this->modx->resource =& $resource;
             $this->modx->resourceIdentifier = $resource->get('id');
         }
@@ -433,6 +433,27 @@ class Alpacka
     public function setPathVariables(array $array = array())
     {
         $this->pathVariables = array_merge($this->pathVariables, $array);
+    }
+
+    /**
+     * Runs a snippet identified by its class name, passing along the provided properties.
+     *
+     * @param string $class
+     * @param array $properties
+     * @return string
+     */
+    public function runSnippet($class, array $properties = array(), $strict = false)
+    {
+        if (!class_exists($class) && file_exists($this->config['elements_path'] . 'snippets/' . $class . '.php')) {
+            include_once $this->config['elements_path'] . 'snippets/' . $class . '.php';
+        }
+
+        if (class_exists($class)) {
+            /** @var Snippet $snippet */
+            $snippet = new $class($this, $strict);
+            return $snippet->run($properties);
+        }
+        return 'Could not load ' . $class;
     }
 
     /**

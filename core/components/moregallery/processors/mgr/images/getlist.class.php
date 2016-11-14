@@ -38,29 +38,35 @@ class mgImageGetListProcessor extends modObjectGetListProcessor {
     public function prepareRow(xPDOObject $object) {
         $array = $object->toArray('', false, true);
 
-        // Prevent possible issue with binary data in the exif data, plus we don't use it in the front end
-        unset ($array['exif']);
-
-        /**
-         * To provide something to the user as fast as possible, the first
-         * 20 thumbs are included as a base64 encoded data uri. This prevents additional
-         * requests for the images.
-         */
-        if ($this->currentIndex < 20 && $array['_source_is_local']) {
-            // Get the mime type
-            $imageType = null;
-            if (function_exists('exif_imagetype')) {
-                $imageType = @exif_imagetype($array['mgr_thumb_path']);
-            }
-            if ($imageType === null) {
-                $imageType = @getimagesize($array['mgr_thumb_path']);
-                $imageType = $imageType[2];
-            }
-            if ($imageType !== null && file_exists($array['mgr_thumb_path'])) {
-                $mime = image_type_to_mime_type($imageType);
-                $array['mgr_thumb'] = "data:$mime;base64," . base64_encode(file_get_contents($array['mgr_thumb_path']));
+        if ($object instanceof mgVideo) {
+            $array['full_view'] = $object->getManagerEmbed();
+        }
+        else {
+            /**
+             * To provide something to the user as fast as possible, the first
+             * 20 thumbs are included as a base64 encoded data uri. This prevents additional
+             * requests for the images.
+             */
+            $prefetchAmount = (int)$this->modx->getOption('moregallery.prefetch_image_as_base64', null, 20);
+            if ($this->currentIndex < $prefetchAmount && $array['_source_is_local']) {
+                // Get the mime type
+                $imageType = null;
+                if (function_exists('exif_imagetype')) {
+                    $imageType = @exif_imagetype($array['mgr_thumb_path']);
+                }
+                if ($imageType === null) {
+                    $imageType = @getimagesize($array['mgr_thumb_path']);
+                    $imageType = $imageType[2];
+                }
+                if ($imageType !== null && file_exists($array['mgr_thumb_path'])) {
+                    $mime = image_type_to_mime_type($imageType);
+                    $array['mgr_thumb'] = "data:$mime;base64," . base64_encode(file_get_contents($array['mgr_thumb_path']));
+                }
             }
         }
+
+        // Prevent possible issue with binary data in the exif data, plus we don't use it in the front end
+        unset ($array['exif'], $array['iptc']);
 
         $array['crops'] = $this->modx->toJSON($object->getCropsAsArray());
 

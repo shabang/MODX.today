@@ -93,7 +93,7 @@
             There are package updates available for the following packages:
         </p>
         <div class="packages">
-            [[+updater.packages_names_update:default=`No package`]]
+            [[+updater.packages_names_update:nl2br:default=`No package`]]
         </div>
     `:else=`<p>No packages to update.</p>`]]
 
@@ -102,7 +102,7 @@
             These packages are downloaded but not yet installed:
         </p>
         <div class="packages">
-            [[+updater.packages_names_install:default=`No package`]]
+            [[+updater.packages_names_install:nl2br:default=`No package`]]
         </div>
     `:else=`<p>No pending package installations are detected.</p>`]]
 

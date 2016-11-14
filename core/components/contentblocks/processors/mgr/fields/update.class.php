@@ -5,6 +5,7 @@
 class cbFieldUpdateProcessor extends modObjectUpdateProcessor {
     public $classKey = 'cbField';
     public $languageTopics = array('contentblocks:default');
+    public $permission = array('contentblocks_fields_edit' => true, 'contentblocks_fields_save' => true);
 
     /**
      * @return bool

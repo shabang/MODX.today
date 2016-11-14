@@ -53,6 +53,7 @@ ContentBlocksComponent.grid.Settings = function(config) {
 			header: _('contentblocks.default_value'),
 			dataIndex: 'default_value',
 			sortable: true,
+      renderer: Ext.util.Format.htmlEncode,
 			width: .25,
             editor: {
                 xtype: 'textfield'
@@ -119,6 +120,25 @@ Ext.extend(ContentBlocksComponent.grid.Settings,MODx.grid.LocalGrid,{
         });
         win.show();
     },
+    
+    duplicateSetting: function() {
+        var record = Ext.apply({}, this.menu.record);
+
+        var win = MODx.load({
+            xtype: 'contentblocks-window-settings',
+            record: record,
+            grid: this,
+            listeners: {
+                success: {fn: function(r) {
+                    var s = this.getStore();
+                    var rec = new this.propRecord(r);
+                    s.add(rec);
+                }, scope: this},
+                scope: this
+            }
+        });
+        win.show();
+    },
 
     deleteSetting: function() {
         Ext.Msg.confirm(_('warning'), _('contentblocks.delete_setting.confirm'), function(e) {
@@ -134,6 +154,10 @@ Ext.extend(ContentBlocksComponent.grid.Settings,MODx.grid.LocalGrid,{
         m.push({
             text: _('contentblocks.edit_setting'),
             handler: this.editSetting,
+            scope: this
+        },{
+            text: _('contentblocks.duplicate_setting'),
+            handler: this.duplicateSetting,
             scope: this
         },'-',{
             text: _('contentblocks.delete_setting'),

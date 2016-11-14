@@ -2,7 +2,7 @@
 /**
  * Class RepeaterInput
  * 
- * Holy crap! Nested fields?!?
+ * Repeats groups of fields in different rows. Nifty stuff.
  */
 class RepeaterInput extends cbBaseInput {
     public $defaultIcon = 'chunk_A';
@@ -50,6 +50,13 @@ class RepeaterInput extends cbBaseInput {
               'description' => $this->modx->lexicon('contentblocks.repeater.min_items.description'),
               'default' => 0,
               'minValue' => 0
+            ),
+            array(
+              'key' => 'add_first_item',
+              'fieldLabel' => $this->modx->lexicon('contentblocks.repeater.add_first_item'),
+              'xtype' => 'contentblocks-combo-boolean',
+              'description' => $this->modx->lexicon('contentblocks.repeater.add_first_item.description'),
+              'default' => true,
             ),
         );
     }

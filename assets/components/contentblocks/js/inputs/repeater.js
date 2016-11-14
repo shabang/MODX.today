@@ -4,6 +4,7 @@
             emptyRowTmpl = tmpl('contentblocks-repeater-item'),
             maxItems = (data.properties && data.properties.max_items) ? data.properties.max_items : 0,
             minItems = (data.properties && data.properties.min_items) ? data.properties.min_items : 0,
+            addFirstItem = (data.properties && typeof data.properties.add_first_item !== 'undefined') ? ContentBlocks.toBoolean(data.properties.add_first_item) : true,
             buttons = wrapper.siblings('.contentblocks-field-actions-bottom, .contentblocks-field-actions-top');
 
         var input = {
@@ -14,13 +15,13 @@
                     })
                 }
                 else {
-                    if(minItems > 0) {
+                    if(minItems > 1) {
                         for(var i = 0; i < minItems; i++) {
                             this.addRow();
                         }
                         dom.find('.contentblocks-repeater-delete-row').hide();
                     }
-                    else {
+                    else if (addFirstItem) {
                         this.addRow();
                     }
                 }

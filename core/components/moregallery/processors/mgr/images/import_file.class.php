@@ -4,6 +4,7 @@
  */
 class moreGalleryMgrImagesImportProcessor extends modObjectCreateProcessor {
     public $classKey = 'mgImage';
+    public $permission = array('moregallery_view_gallery' => true, 'moregallery_import' => true);
     /** @var mgImage */
     public $object;
 
@@ -157,7 +158,7 @@ class moreGalleryMgrImagesImportProcessor extends modObjectCreateProcessor {
          * Register a shutdown function that will attempt to clean up stuff should the request fail with a fatal
          * error, for example due to image resizing and memory limits.
          */
-        register_shutdown_function(array('moreGalleryMgrImagesUploadProcessor', 'onShutdown'), $this);
+        register_shutdown_function(array('moreGalleryMgrImagesImportProcessor', 'onShutdown'), $this);
         $this->object->loadExifData($file['path']);
         $exif = $this->object->get('exif');
         if (is_array($exif) && isset($exif['Orientation'])) {
@@ -214,8 +215,9 @@ class moreGalleryMgrImagesImportProcessor extends modObjectCreateProcessor {
                 }
             }
 
-            // Ignore EXIF data, this can potentially break the response if it contains invalid characters.
-            unset ($array['exif']);
+            // Ignore EXIF/IPTC data, this can potentially break the response if it contains invalid characters.
+            unset ($array['exif'], $array['exif_dump'], $array['exif_json'],
+                $array['iptc'], $array['iptc_dump'], $array['iptc_json']);
 
             // Triggering getCrops will create the crop records which will generate the cropped images
             // We also need to pass the crops back so they can be edited.

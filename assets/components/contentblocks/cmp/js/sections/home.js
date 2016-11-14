@@ -39,18 +39,33 @@ ContentBlocksComponent.page.Home = function(config) {
                     border: false
                 }
             },
-            items: [{
+            items: this.getTabs(config)
+        }, ContentBlocksComponent.attribution()],
+        buttons: this.getButtons(config)
+    });
+    ContentBlocksComponent.page.Home.superclass.constructor.call(this,config);
+};
+Ext.extend(ContentBlocksComponent.page.Home,MODx.Component,{
+    getTabs: function(config) {
+        var tabs = [];
+        if (ContentBlocksConfig.permissions.fields) {
+            tabs.push({
                 title: _('contentblocks.fields'),
                 id: 'contentblocks-page-home-tabs-fields',
+                hidden: true,
+                hideLabel: true,
                 items: [{
                     xtype: 'panel',
                     bodyCssClass: 'panel-desc',
                     html: '<p>' + _('contentblocks.field_desc') + '</p>'
-                },{
+                }, {
                     xtype: 'contentblocks-grid-fields',
                     cls: 'main-wrapper'
                 }]
-            },{
+            });
+        }
+        if (ContentBlocksConfig.permissions.layouts) {
+            tabs.push({
                 title: _('contentblocks.layouts'),
                 id: 'contentblocks-page-home-tabs-layouts',
                 items: [{
@@ -61,7 +76,10 @@ ContentBlocksComponent.page.Home = function(config) {
                     xtype: 'contentblocks-grid-layouts',
                     cls: 'main-wrapper'
                 }]
-            },{
+            });
+        }
+        if (ContentBlocksConfig.permissions.templates) {
+            tabs.push({
                 title: _('contentblocks.templates'),
                 id: 'contentblocks-page-home-tabs-templates',
                 items: [{
@@ -72,9 +90,14 @@ ContentBlocksComponent.page.Home = function(config) {
                     xtype: 'contentblocks-grid-templates',
                     cls: 'main-wrapper'
                 }]
-            },{
-                xtype: 'tbfill'
-            },{
+            });
+        }
+        tabs.push({
+            xtype: 'tbfill'
+        });
+
+        if (ContentBlocksConfig.permissions.categories) {
+            tabs.push({
                 title: _('contentblocks.categories'),
                 id: 'contentblocks-page-home-tabs-categories',
                 items: [{
@@ -85,7 +108,10 @@ ContentBlocksComponent.page.Home = function(config) {
                     xtype: 'contentblocks-grid-categories',
                     cls: 'main-wrapper'
                 }]
-            },{
+            });
+        }
+        if (ContentBlocksConfig.permissions.defaults) {
+            tabs.push({
                 title: _('contentblocks.defaults'),
                 id: 'contentblocks-page-home-tabs-defaults',
                 items: [{
@@ -96,22 +122,31 @@ ContentBlocksComponent.page.Home = function(config) {
                     xtype: 'contentblocks-grid-defaults',
                     cls: 'main-wrapper'
                 }]
-            }]
-        }, ContentBlocksComponent.attribution()],
-        buttons: [{
+            });
+        }
+
+        return tabs;
+    },
+
+    getButtons: function() {
+        var buttons = [{
             text: _('help_ex'),
             handler: this.loadHelpPane,
             scope: this,
             id: 'modx-abtn-help'
-        }, '-', {
-            text: _('contentblocks.rebuild_content'),
-            handler: this.rebuildContent,
-            scope: this
-        }]
-    });
-    ContentBlocksComponent.page.Home.superclass.constructor.call(this,config);
-};
-Ext.extend(ContentBlocksComponent.page.Home,MODx.Component,{
+        }];
+
+        if (ContentBlocksConfig.permissions.rebuild_content) {
+            buttons.push(['-', {
+                text: _('contentblocks.rebuild_content'),
+                handler: this.rebuildContent,
+                scope: this
+            }]);
+        }
+
+        return buttons;
+    },
+
     loadHelpPane: function() {
         var tabs = Ext.getCmp('contentblocks-page-home-tabs'),
             aTab = tabs.activeTab,

@@ -6,6 +6,8 @@ $_lang['contentblocks.mgr.home'] = "Content blocks";
 
 $_lang['contentblocks.general'] = "Général";
 $_lang['contentblocks.properties'] = "Propriétés";
+$_lang['contentblocks.clear_filters'] = "Réinitialiser les filtres";
+$_lang['contentblocks.search'] = "Recherche";
 
 $_lang['contentblocks.link'] = "Lien";
 $_lang['contentblocks.link.description'] = "Un champ pour créer des liens. Ressource, email et URL sont pris en charge.";
@@ -30,12 +32,14 @@ $_lang['setting_contentblocks.typeahead.include_introtext_desc'] = 'Activez cett
 
 $_lang['contentblocks.error.not_an_export'] = "Le fichier ne semble pas être un export de Content Blocks";
 $_lang['contentblocks.error.importing_row'] = "Erreur d'importation de la ligne:";
-$_lang['contentblocks.error.no_valid_field'] = "Aucun champ valide trouvé";
+$_lang['contentblocks.error.no_valid_field'] = "Aucun champ valide trouvé pour la demande.";
+$_lang['contentblocks.error.no_valid_input'] = "Aucune entrée valide trouvée pour la demande.";
 $_lang['contentblocks.error.no_snippets'] = "Aucun snippet disponible";
 $_lang['contentblocks.error.missing_id'] = "Propriété de l'ID manquante";
 $_lang['contentblocks.error.input_not_found'] = "Entrée introuvable";
 $_lang['contentblocks.error.input_not_found.message'] = "Oh oh. Un champ avec le type d'entrée « [[+input]] » a été chargé, cependant ce type d'entrée n'existe pas.";
 $_lang['contentblocks.error.field_not_found'] = "Champ non trouvé";
+$_lang['contentblocks.error.category_not_found'] = "Catégorie introuvable";
 $_lang['contentblocks.error.layout_not_found'] = "Agencement non trouvé";
 $_lang['contentblocks.error.error_saving_object'] = "Erreur lors de l'enregistrement de l'objet";
 $_lang['contentblocks.error.xml_not_loaded'] = "Impossible de charger le fichier XML";
@@ -110,6 +114,7 @@ $_lang['contentblocks.delete_layoutcolumn'] = "Supprimer la colonne";
 $_lang['contentblocks.delete_layoutcolumn.confirm'] = "Êtes-vous sûr de vouloir supprimer cette colonne? Des événements potentiellement désastreux peuvent arriver à du contenu utilisant cette colonne.";
 $_lang['contentblocks.add_setting'] = "Ajouter un paramètre";
 $_lang['contentblocks.edit_setting'] = "Editer le paramètre";
+$_lang['contentblocks.duplicate_setting'] = "Réglage dupliqué";
 $_lang['contentblocks.delete_setting'] = "Supprimer le paramètre";
 $_lang['contentblocks.delete_setting.confirm'] = "Êtes-vous sûr de vouloir supprimer le paramètre ?";
 
@@ -169,7 +174,7 @@ $_lang['contentblocks.fieldtype.textfield'] = "Texte";
 $_lang['contentblocks.fieldtype.link'] = "Lien";
 $_lang['contentblocks.fieldtype.textarea'] = "Zone de Texte";
 $_lang['contentblocks.fieldoptions'] = "Options du Champ";
-$_lang['contentblocks.fieldoptions.description'] = "Utilisé pour les types de champs Select uniquement. Définit les valeurs disponibles comme \"Valeur affichée = placeholder_value\", une par ligne. Si vous n'écrivez qu'une seule valeur par ligne (comme \"foo\"), elle sera utilisée à la fois comme valeur affichée et valeur de placeholder.";
+$_lang['contentblocks.fieldoptions.description'] = "Utilisé pour les types de champ Select uniquement. Définir les valeurs disponibles comme « placeholder_value == Valeur Affichée » (\"Valeur Affichée = placeholder_value » est également accpetée, mais sera supprimée dans 2.0), une par ligne. Si vous passez uniquement une seule valeur par ligne (par exemple « foo »), celle-ci sera utilisé comme fois affichée et la valeur du placeholder.";
 $_lang['contentblocks.field_is_exposed'] = "Exposer le Champ";
 $_lang['contentblocks.field_is_exposed.description'] = "Montrez le Champ sur le modèle au lieu de seulement après avoir cliqué sur l'icône Paramètres";
 $_lang['contentblocks.field_is_exposed.modal'] = "Afficher les paramètres du Champ dans une fenêtre modale";
@@ -181,6 +186,25 @@ $_lang['contentblocks.directory.description'] = 'Un sous-dossier à l\'intérieu
 $_lang['contentblocks.file_types'] = 'Extensions de fichier autorisées';
 $_lang['contentblocks.file_types.description'] = 'Les fichiers avec ces extensions (séparées par une virgule) seront uploadés. Laisser vide pour n\'appliquer aucune restriction.';
 $_lang['contentblocks.file_types.disallowed'] = 'Type de fichier non autorisé dans ce Champ.';
+
+// Categories
+$_lang['contentblocks.category'] = "Catégorie";
+$_lang['contentblocks.categories'] = "Catégories";
+$_lang['contentblocks.categories.intro'] = "Utilisez les catégories pour mieux organiser vos champs, maquettes et modèles. Quand ils sont assignés à un élément, les modals ajouter du contenu et ajouter la mise en page afficheront les éléments par catégorie en premier, suivis d’une catégorie « Inclassable ».";
+$_lang['contentblocks.uncategorized'] = "Non classé";
+$_lang['contentblocks.add_category'] = "Ajouter une catégorie";
+$_lang['contentblocks.edit_category'] = "Modifier une catégorie";
+$_lang['contentblocks.duplicate_category'] = "Dupliquer une catégorie";
+$_lang['contentblocks.delete_category'] = "Supprimer une catégorie";
+$_lang['contentblocks.delete_category.confirm'] = "Êtes-vous sûr de que vouloir supprimer cette catégorie ? Tous les éléments qui utilisent actuellement la catégorie seront définies sur non classés à la place.";
+$_lang['contentblocks.delete_category.confirm.js'] = "Êtes-vous sûr de vouloir supprimer cette catégorie ?";
+$_lang['contentblocks.export_category'] = "Exporter une catégorie";
+$_lang['contentblocks.export_categories'] = "Exporter";
+$_lang['contentblocks.export_categories.confirm'] = "Après avoir cliqué sur Oui ci-dessous, nous allons préparer un export XML de toutes les catégories. Ceci peut être utilisé pour importer des catégories plus tard ou dans une installation différente. Générer le XML ne devrait prendre que quelques secondes.";
+$_lang['contentblocks.import_categories'] = "Importer";
+$_lang['contentblocks.import_categories.title'] = "Importer des catégories";
+$_lang['contentblocks.import_categories.intro'] = "En uploadant un fichier XML et en choisissant le mode d'importation approprié, vous pouvez importer des catégories que vous avez soit exportés auparavant soit exportés d'un autre site. <b>Attention</b> à l'importation de catégories si vous avez du contenu utilisant déjà lesdites catégories. Merci de contacter support@modmore.com si vous n'êtes pas sûr du mode d'importation à utiliser.";
+
 
 // Templates
 $_lang['contentblocks.templates'] = 'Templates';
@@ -283,7 +307,7 @@ $_lang['contentblocks.image.source.description'] = "Laisser sur (none) pour util
 $_lang['contentblocks.image_template.description'] = "Modèle pour le type d'entrée image. Devrait probablement inclure une balise <code>&lt; img &gt;</code>. Espaces réservés disponibles: <code>[[+ url]]</code> <code>[[+ Taille]]</code>, <code>[[+ Largeur]]</code>, <code>[[+ hauteur]]</code>, <code>[[+ extension]]</code>";
 $_lang['contentblocks.imagewithtitle'] = "Image avec Titre";
 $_lang['contentblocks.imagewithtitle.description'] = "Identique à Image, mais avec en plus un champ texte pour ajouter un attribut Alt ou Title.";
-$_lang['contentblocks.image_with_title'] = $_lang['Image avec titre'];
+$_lang['contentblocks.image_with_title'] = "Image avec titre";
 $_lang['contentblocks.image_with_title_template.description'] = "Modèle pour le type d'entrée image. Devrait probablement inclure une balise <code>&lt; img &gt;</code>. Espaces réservés disponibles: <code>[[+ url]]</code> <code>[[+ title]]</code>, <code>[[+ Taille]]</code>, <code>[[+ Largeur]]</code>, <code>[[+ hauteur]]</code>, <code>[[+ extension]]</code>";
 
 $_lang['contentblocks.list'] = "Liste";
@@ -294,7 +318,7 @@ $_lang['contentblocks.list_nested_template.description'] = "Modèle intérieur p
 
 $_lang['contentblocks.orderedlist'] = "Liste ordonnée";
 $_lang['contentblocks.orderedlist.description'] = "Comme pour le type Liste, mais avec une liste ordonnée à la place.";
-$_lang['contentblocks.ordered_list'] = $_lang['Liste ordonnée'];
+$_lang['contentblocks.ordered_list'] = "Liste ordonnée";
 $_lang['contentblocks.ordered_list_template.description'] = "Modèle pour éléments individuels de liste. Doit probablement contenir un tag <code>&lt;li&gt;</code>.  Espaces réservés (placeholders) disponibles: <code>[[+value]]</code> (le texte de l'élément de liste), <code>[[+idx]]</code> (un numéro d'article à incrémentation, à partir de 1 à chaque niveau) and <code>[[+items]]</code> (sous-listes, mises en forme avec d'autres modèles).";
 $_lang['contentblocks.ordered_list_wrapper_template.description'] = "Modèle externe pour les listes ordonnées. Doit probablement contenir un tag <code>&lt;ul&gt;</code>. Espace réservé (placeholder) disponible: <code>[[+items]]</code> (éléments de la liste mis en forme avec d'autres modèles).";
 $_lang['contentblocks.ordered_list_nested_template.description'] = "Modèle intérieur pour sous-listes avec retrait. Doit probablement contenir un tag <code>&lt;ul&gt;</code>. Espace réservé (placeholder) disponible: <code>[[+items]]</code> (éléments de la liste mis en forme avec d'autres modèles).";
@@ -317,6 +341,8 @@ $_lang['contentblocks.repeater.max_items.description'] = "Lorsque la valeur d'un
 $_lang['contentblocks.repeater.max_items_reached'] = "Désolé, vous n'êtes pas autorisé à ajouter plus de [[+max]] éléments.";
 $_lang['contentblocks.repeater.min_items'] = "Nombre minimal d'éléments";
 $_lang['contentblocks.repeater.min_items.description'] = "Si vous sélectionnez un nombre supérieur à 0, les lignes ne peuvent être enlevées au-delà de cette limite.";
+$_lang['contentblocks.repeater.add_first_item'] = "Ajouter automatiquement le premier élément";
+$_lang['contentblocks.repeater.add_first_item.description'] = "Lorsque activé le répéteur obtiendra automatiquement un premier élément ajouté s’il y en a pas déjà.";
 $_lang['contentblocks.repeater.add_item'] = "Ajouter une entrée";
 $_lang['contentblocks.repeater.delete_item'] = "Supprimer l'entrée";
 $_lang['contentblocks.repeater.wrapper_template.description'] = "Modèle externe contenant toutes les lignes traitées. Doit contenir le code <code>[[+rows]]</code>, peux aussi contenir <code>[[+total]]</code>.";
@@ -353,6 +379,15 @@ $_lang['contentblocks.video.search_youtube'] = "Chercher sur Youtube";
 $_lang['contentblocks.video.paste_link'] = "Coller un lien ici";
 $_lang['contentblocks.video.youtube_not_loaded'] = "L'API YouTube n'a pas été chargée. Merci de réessayer dans quelques instants. Si le problème persiste, l'API peut être indisponible pour l'instant.";
 $_lang['contentblocks.video.api_error'] = "Tiens, tiens , une erreur est survenue : [[+message]] (Code [[+code]])";
+
+// Select
+$_lang['contentblocks.dropdown'] = "Liste déroulante";
+$_lang['contentblocks.dropdown.description'] = "Un champ de liste déroulante simple, permettant à l’éditeur de choisir un élément parmi des options prédéfinies.";
+$_lang['contentblocks.dropdown_template.description'] = "Modèle pour le champ liste déroulante. les espaces réservés (placeholders) disponibles sont <code>[[+ valeur]]</code> (la valeur de l'option pour l’élément choisi), <code>[[+ display]]</code> (la valeur affichée dans la liste déroulante).";
+$_lang['contentblocks.dropdown.options'] = "Options du menu déroulant";
+$_lang['contentblocks.dropdown.options.description'] = "Définir les valeurs disponibles comme « valeur == valeur affichée \", avec une option par ligne. Si vous passez uniquement une seule valeur par ligne (tels que « foo »), qui sera utilisé comme fois affichée et la valeur d’espace réservé. Préfixant une valeur simple avec # il fera une option désactivée. Vous pouvez également utiliser les liaisons @SNIPPET de fournir dynamiquement les valeurs d’option. Pour plus d’informations sur la spécification des options, consultez la documentation de liste déroulante à modmo.re/cb.";
+$_lang['contentblocks.dropdown.default_value'] = "Valeur par défaut";
+$_lang['contentblocks.dropdown.default_value.description'] = "La valeur par défaut à choisir lorsque la liste déroulante est insérée, ou rien n’est sélectionné.";
 
 // Snippet
 $_lang['contentblocks.snippet'] = "Snippet";
@@ -476,12 +511,6 @@ assainir
 $_lang['setting_contentblocks.image.upload_path'] = "Chemin pour l'Upload";
 $_lang['setting_contentblocks.image.upload_path_desc'] = "Le chemin, dans le Media Source défini, vers lequel les fichiers doivent être uploadés. Cela supporte les espaces réservés  (placeholders) [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]].";
 
-$_lang['setting_contentblocks.cache_source'] = "Source du cache";
-$_lang['setting_contentblocks.cache_source.description'] = "Choisissez le média source à utiliser pour les fichiers de cache des miniatures de galerie d'images.";
-
-$_lang['setting_contentblocks.cache_path'] = "Chemin d'accès du cache";
-$_lang['setting_contentblocks.cache_path.description'] = "Le chemin d'accès, au sein du media source, dans lequel les fichiers cache de miniatures doivent être téléchargés.";
-
 $_lang['setting_contentblocks.sanitize_pattern'] = "Assainir le modèle";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Un modèle d'expression rationnelle (RegEx) à utiliser pour assainir les noms de fichiers qui doivent être assainis.";
 
@@ -504,3 +533,6 @@ $_lang['setting_contentblocks.translit_class'] = "Classe de transcription";
 $_lang['setting_contentblocks.translit_class_desc'] = "Le nom de la classe à utiliser pour la transcription. Si cette valeur est vide, elle sera héritée du paramètre core \"friendly_alias_translit_class\".";
 $_lang['setting_contentblocks.translit_class_path'] = "Chemin vers la classe de transcription";
 $_lang['setting_contentblocks.translit_class_path_desc'] = "Le chemin vers la classe de transcription à utiliser. Si cette valeur est vide, la valeur du paramètre \"friendly_alias_translit_class_path\" sera utilisée.";
+
+$_lang['setting_contentblocks.base_url_mode'] = "Mode URL de base";
+$_lang['setting_contentblocks.base_url_mode_desc'] = "Lors du téléchargement d’images, les URL sont automatiquement normalisées par rapport à l’url de base pour s’assurer qu’ils apparaissent dans le front et back-end. Selon votre configuration MODX, surtout dans le contexte multi sites, vous devrez peut-être modifier ce mode pour les images à afficher dans le front-end. Les valeurs acceptées sont : <code>relative</code> (par défaut : images sont relatives à l’url de base de MODX), <code>absolute</code> (image URL contient l’url de base de MODX) ou <code>full</code> (images contiennent l’url complète du site MODX)";

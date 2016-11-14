@@ -9,6 +9,8 @@ $_lang['moregallery.new'] = 'Nowy dokument z galerią';
 $_lang['moregallery.new_description'] = 'Utwórz nową galerię aby móc wgrywać zdjęcia';
 $_lang['moregallery.name'] = 'Dokument z galerią';
 $_lang['moregallery.name_here'] = 'Utwórz tu Galerię';
+$_lang['moregallery.permission_denied'] = 'Sorry, you do not have the necessary permission to manage this gallery.';
+$_lang['moregallery.new_tags_not_allowed'] = 'Sorry, you do not have the necessary permission to add new tags. Please select an existing tag from the typeahead search.';
 $_lang['moregallery.please_save_first'] = 'Zapisz nowy dokument, aby móc wgrać zdjęcia do galerii';
 
 
@@ -35,6 +37,8 @@ $_lang['moregallery.upload_image'] = 'Wgraj obrazy do galerii';
 $_lang['moregallery.upload'] = 'Wgraj';
 $_lang['moregallery.import_image'] = 'Importuj obrazy z innych źródeł';
 $_lang['moregallery.import'] = 'Importuj';
+$_lang['moregallery.add_video'] = 'Add Video';
+$_lang['moregallery.add_video_instructions'] = 'Enter the video url below to import it to the gallery.';
 $_lang['moregallery.refresh'] = 'Odśwież';
 $_lang['moregallery.drop_to_upload'] = 'Przeciągnij tu obrazy aby wgrać je do galerii';
 $_lang['moregallery.images_count'] = 'obrazy/obrazów';
@@ -50,6 +54,7 @@ $_lang['moregallery.preupload_very_big'] = 'Plik "[[+file]]" jest bardzo duży. 
 $_lang['moregallery.upload_error'] = 'Podczas wgrywania pliku [[+file]] pojawił się błąd: [[+message]]';
 $_lang['moregallery.upload_error_huge'] = 'Wgrywany obraz przekracza rozmiar [[+size]]MB. Zmniejsz obraz przed wgrywaniem';
 $_lang['moregallery.model_error'] = 'Nieznany błąd. Nie można załadować modelu obrazu. Spróbuj odświeżyć stronę. ';
+$_lang['moregallery.video_load_error'] = 'The video information could not be loaded. This is most likely because the video does not exist, or that it is marked as private.';
 
 $_lang['moregallery.error_invalid_resource'] = 'Pojawił się nieoczekiwany błąd. Dokument "[[+resource]]" nie jest Dokumentem z galerią';
 $_lang['moregallery.error_loading_source'] = 'Pojawił się błąd podczas ładowania Źródła plików dla tej Galerii.';
@@ -100,6 +105,10 @@ $_lang['setting_moregallery.thumbnail_format'] = 'Format (rozszerzenie) miniatur
 $_lang['setting_moregallery.thumbnail_format_desc'] = 'Ustaw format (png, gif lub jpg) który zostanie użyty podczas generowania miniaturek w menadżerze. Ta opcja nie wpływa na przycięcie oryginalnego obrazu; przycinany obraz pozostanie w takim formacie, jak obraz wejściowy (oryginalny).';
 $_lang['setting_moregallery.prefill_from_iptc'] = 'Prefill from IPTC';
 $_lang['setting_moregallery.prefill_from_iptc_desc'] = 'When enabled the image will automatically populate the name, description and tags with information stored in the image.';
+$_lang['setting_moregallery.vimeo_prefill_description'] = 'Prefill Vimeo Description';
+$_lang['setting_moregallery.vimeo_prefill_description_desc'] = 'When enabled videos loaded from Vimeo will get its description set to the description of the video.';
+$_lang['setting_moregallery.youtube_prefill_description'] = 'Prefill YouTube Description';
+$_lang['setting_moregallery.youtube_prefill_description_desc'] = 'When enabled videos loaded from YouTube will get its description set to the description of the video.';
 
 
 $_lang['setting_moregallery.translit'] = "Transliteracja";
@@ -112,6 +121,11 @@ $_lang['setting_moregallery.translit_class_path_desc'] = "Nazwa klasy użytej do
 $_lang['setting_moregallery.custom_fields'] = "Pola dodatkowe";
 $_lang['setting_moregallery.custom_fields_desc'] = "Pozwala na dodanie dodatkowych opcji do edycji obrazu. To ustawienie musi być wprowadzone jako obiekt JSON. Aby dowiedzieć się więcej na temat jak definiować i używać pól dodatkowych skorzystaj z <a href=\"https://www.modmore.com/moregallery/documentation/custom-fields/\">dostępnej dokumentacji</a>.";
 
+$_lang['setting_moregallery.prefetch_image_as_base64'] = "Prefetch Images as Base64";
+$_lang['setting_moregallery.prefetch_image_as_base64_desc'] = "Set to a number representing the amount of images that should be preloaded as base64 resources. While loading the images as base64 makes images show up near instant (there is no delay where the browser loads the image), it can slow down filling the gallery in the back-end for slow or remote media sources.";
+$_lang['setting_moregallery.allowed_extensions_per_source'] = "Allowed Extensions per Media Source";
+$_lang['setting_moregallery.allowed_extensions_per_source_desc'] = "Enable this setting to look at the media source configuration for determining the allowed extensions during upload. When disabled MoreGallery will look at the upload_images setting for allowed extensions instead. ";
+
 $_lang['setting_mgr_tree_icon_mgresource'] = 'Ikonka galerii w drzewie plików';
 $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'Klasa ikony Font Awesome dodawana w drzewie plików przed folderem galerii ';
 
@@ -121,19 +135,28 @@ $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'Klasa ikony Font Awesome doda
 
 /** mgGetImages */
 $_lang['moregallery.mggetimages.cache_desc'] = 'Cache the Gallery output?';
-$_lang['moregallery.mggetimages.resource_desc'] = 'Specify a resource ID to get images from.';
+$_lang['moregallery.mggetimages.resource_desc'] = 'Specify a resource ID or comma-separated IDs to get images from.';
+$_lang['moregallery.mggetimages.activeonly_desc'] = 'When enabled only active images will be shown. Disable to also show inactive images.';
 $_lang['moregallery.mggetimages.sortby_desc'] = 'The field to sort by. Valid values: filename, name, description, sortorder, uploadedon, editedon';
 $_lang['moregallery.mggetimages.sortdir_desc'] = 'The direction to sort images by. This can be "asc" or "desc".';
 $_lang['moregallery.mggetimages.tags_desc'] = 'A comma separated list of tag names or IDs to filter images on.';
 $_lang['moregallery.mggetimages.tagsfromurl_desc'] = 'Set to the name of a URL parameter to get tags to filter on.';
+$_lang['moregallery.mggetimages.tagseparator_desc'] = 'A string to separate tag templates with for each of the images.';
+$_lang['moregallery.mggetimages.gettags_desc'] = 'When enabled tags will be loaded for each image.';
+$_lang['moregallery.mggetimages.getresourcecontent_desc'] = 'When enabled, the resource content will be loaded for use in the image template.';
+$_lang['moregallery.mggetimages.getresourceproperties_desc'] = 'When enabled, the resource properties will be loaded for use in the image template.';
 $_lang['moregallery.mggetimages.getresourcefields_desc'] = 'When enabled, resource fields will be loaded into the image template.';
 $_lang['moregallery.mggetimages.getresourcetvs_desc'] = 'Provide a comma separated list of TV names to load into the image template.';
 $_lang['moregallery.mggetimages.tagtpl_desc'] = 'The name of a Chunk to load for templating tags.';
 $_lang['moregallery.mggetimages.imagetpl_desc'] = 'The name of a Chunk to load for templating images.';
+$_lang['moregallery.mggetimages.youtubetpl_desc'] = 'The name of a Chunk to load for templating embedded YouTube videos.';
+$_lang['moregallery.mggetimages.vimeotpl_desc'] = 'The name of a Chunk to load for templating embedded Vimeo videos.';
+$_lang['moregallery.mggetimages.singleimagetpl_desc'] = 'The name of a Chunk to load when viewing an image in single image view';
+$_lang['moregallery.mggetimages.singleyoutubetpl_desc'] = 'The name of a Chunk to load when viewing a YouTube video in single image view.';
+$_lang['moregallery.mggetimages.singlevimeotpl_desc'] = 'The name of a Chunk to load when viewing a Vimeo video in single image view.';
 $_lang['moregallery.mggetimages.singleimageenabled_desc'] = 'When set to 1, the snippet will respond to requests with the singleImageParam URL property by showing the single image view.';
-$_lang['moregallery.mggetimages.singleimagetpl_desc'] = 'The name of a Chunk to load when viewing the special one-image view.';
 $_lang['moregallery.mggetimages.singleimageparam_desc'] = 'Może zastąpić ustawienie systemowe moregallery.single_image_url_param na każde wywołanie snippeta. Użyteczne, jeżeli chcesz pokazać wiele galerii na jednej stronie.';
-$_lang['moregallery.mggetimages.tagseparator_desc'] = 'A string to separate tag templates with for each of the images.';
+$_lang['moregallery.mggetimages.singleimageresource_desc'] = 'Used in generating the link in the view_url placeholder. Set this to a resource that should be used for showing single images if it is not the resource the image was uploaded to.';
 $_lang['moregallery.mggetimages.imageseparator_desc'] = 'A string to separate image templates with in gallery view.';
 $_lang['moregallery.mggetimages.wrappertpl_desc'] = 'When not empty, the specified Chunk will be used to wrap the entire output in.';
 $_lang['moregallery.mggetimages.wrapperifempty_desc'] = 'Ustaw wartość na 0 aby użyć wrapperTpl tylko, jeżeli jest przynajmniej 1 wynik. Jeżeli wartość ustawiona na 1 wrapperTpl będzie używany zawsze, nawet bez wyników.';
@@ -143,6 +166,8 @@ $_lang['moregallery.mggetimages.limit_desc'] = 'The number of images to load in 
 $_lang['moregallery.mggetimages.offset_desc'] = 'he number of images to skip in the result set.';
 $_lang['moregallery.mggetimages.scheme_desc'] = 'The scheme to use in generating URLs; defaults to the value of the link_tag_scheme value.';
 $_lang['moregallery.mggetimages.where_desc'] = 'A generic condition to add to the query can be added here, in JSON format. For example {"uploadedby":4} or {"name:LIKE":"%train%"} ';
+$_lang['moregallery.mggetimages.debug_desc'] = 'Enable to show a dump of debug information (useful for bug reports) appended to the snippet output.';
+$_lang['moregallery.mggetimages.timing_desc'] = 'Enable to show the total processing time for the snippet at the end of the snippet output.';
 
 /** mgGetTags */
 $_lang['moregallery.mggettags.cache_desc_desc'] = 'Cache the Tag output?';

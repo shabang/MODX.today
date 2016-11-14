@@ -16,7 +16,7 @@ class RedactorResourceSearchProcessor extends modObjectGetListProcessor {
      */
     public function prepareQueryBeforeCount(xPDOQuery $c) {
         $this->includeIntrotext = $this->modx->redactor->getOption('redactor.typeahead.include_introtext', null, true);
-        
+
         $query = $this->getProperty('query');
         $c->where(array(
             'deleted' => false,
@@ -31,6 +31,22 @@ class RedactorResourceSearchProcessor extends modObjectGetListProcessor {
             $c->orCondition(array(
                 'id' => (int)$query
             ));
+        }
+
+        /**
+        * Preview and Workflow stores additional copies of resources under specific resources. This block of code
+        * ensures that those revision copies don't show up in the link search.
+        */
+        $previewContainers = $this->modx->getOption('preview.resourceHolder');
+        if (!empty($previewContainers)) {
+           $pcs = $this->modx->fromJSON($previewContainers);
+           $containerIds = array_values($pcs);
+           if (!empty($containerIds)) {
+               $c->andCondition(array(
+                   'parent:NOT IN' => $containerIds,
+                   'and:id:NOT IN' => $containerIds
+               ));
+           }
         }
 
         $c->select($this->modx->getSelectColumns('modResource', 'modResource', '', array(

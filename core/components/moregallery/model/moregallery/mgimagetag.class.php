@@ -34,6 +34,8 @@ class mgImageTag extends xPDOSimpleObject {
         $cacheOptions = array(xPDO::OPT_CACHE_KEY => 'moregallery');
         $resource = $this->get('resource');
 
+        $this->xpdo->cacheManager->delete('single-image/'.$resource.'/', $cacheOptions);
+        $this->xpdo->cacheManager->delete('image-collection/'.$resource.'/', $cacheOptions);
         $this->xpdo->cacheManager->delete('mgimage/'.$resource.'/', $cacheOptions);
         $this->xpdo->cacheManager->delete('mgimages/'.$resource.'/', $cacheOptions);
         $this->xpdo->cacheManager->delete('tags/image/'.$this->get('image'), $cacheOptions);

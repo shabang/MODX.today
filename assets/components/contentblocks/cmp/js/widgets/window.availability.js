@@ -13,8 +13,7 @@ ContentBlocksComponent.window.Availability = function(config) {
             name: 'field',
             fieldLabel: _('contentblocks.condition_field'),
             allowBlank: false,
-            anchor: '100%',
-            maxLength: 25
+            anchor: '100%'
         },{
             xtype: 'textfield',
             name: 'value',

@@ -165,11 +165,17 @@ jQuery(function ($) {
             moreGallery.Collections.Tag.each(this.addOne, this);
         },
 
+        // Fired when a user adds a non-existant tag. Existing tags are added through the typeahead:selected event.
         addNewTag: function(e) {
             if (e.type == 'click' || e.keyCode == 13) { // enter
 
                 if (!this.input.val()) {
                     return;
+                }
+
+                if (!moreGallery.config.permissions.image_tags_new) {
+                    alert(moreGallery.lang('new_tags_not_allowed'));
+                    return false;
                 }
 
                 this.collection.create({

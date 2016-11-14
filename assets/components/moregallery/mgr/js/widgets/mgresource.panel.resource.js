@@ -128,52 +128,55 @@ Ext.extend(moreGallery.panel.Resource, MODx.panel.Resource, {
 
     getSettingLeftFields: function(config) {
         var flds = MODx.panel.Resource.prototype.getSettingLeftFields(config);
-        flds.push({
-            xtype: 'contentblocks-combo-source'
-            ,fieldLabel: _('moregallery.source')
-            ,description: _('moregallery.source.desc')
-            ,name: 'properties_source'
-            ,hiddenName: 'properties_source'
-            ,id: 'moregallery-source'
-            ,anchor: '100%'
-            ,value: moreGallery.getResourceProperty(config.record, 'source', 'inherit')
-        },{
-            xtype: 'textfield'
-            ,fieldLabel: _('moregallery.relative_url')
-            ,description: _('moregallery.relative_url.desc')
-            ,name: 'properties_relative_url'
-            ,hiddenName: 'properties_relative_url'
-            ,id: 'moregallery-relative_url'
-            ,anchor: '100%'
-            ,value: moreGallery.getResourceProperty(config.record, 'relative_url', 'inherit')
-        },{
-            xtype: 'moregallery-combo-contentlocation'
-            ,fieldLabel: _('moregallery.content_position')
-            ,description: _('moregallery.content_position.desc')
-            ,name: 'properties_content_position'
-            ,hiddenName: 'properties_content_position'
-            ,id: 'moregallery-content_position'
-            ,anchor: '100%'
-            ,value: moreGallery.getResourceProperty(config.record, 'content_position', 'inherit')
-        },{
-            xtype: 'textfield'
-            ,fieldLabel: _('setting_moregallery.crops')
-            ,description: _('setting_moregallery.crops_desc')
-            ,name: 'properties_crops'
-            ,hiddenName: 'properties_crops'
-            ,id: 'moregallery-crops'
-            ,anchor: '100%'
-            ,value: moreGallery.getResourceProperty(config.record, 'crops', 'inherit')
-        },{
-            xtype: 'textfield'
-            ,fieldLabel: _('setting_moregallery.custom_fields')
-            ,description: _('setting_moregallery.custom_fields_desc')
-            ,name: 'properties_custom_fields'
-            ,hiddenName: 'properties_custom_fields'
-            ,id: 'moregallery-custom_fields'
-            ,anchor: '100%'
-            ,value: moreGallery.getResourceProperty(config.record, 'custom_fields', 'inherit')
-        });
+
+        if (moreGallery.config.permissions.resource_settings) {
+            flds.push({
+                xtype: 'contentblocks-combo-source',
+                fieldLabel: _('moregallery.source'),
+                description: _('moregallery.source.desc'),
+                name: 'properties_source',
+                hiddenName: 'properties_source',
+                id: 'moregallery-source',
+                anchor: '100%',
+                value: moreGallery.getResourceProperty(config.record, 'source', 'inherit')
+            }, {
+                xtype: 'textfield',
+                fieldLabel: _('moregallery.relative_url'),
+                description: _('moregallery.relative_url.desc'),
+                name: 'properties_relative_url',
+                hiddenName: 'properties_relative_url',
+                id: 'moregallery-relative_url',
+                anchor: '100%',
+                value: moreGallery.getResourceProperty(config.record, 'relative_url', 'inherit')
+            }, {
+                xtype: 'moregallery-combo-contentlocation',
+                fieldLabel: _('moregallery.content_position'),
+                description: _('moregallery.content_position.desc'),
+                name: 'properties_content_position',
+                hiddenName: 'properties_content_position',
+                id: 'moregallery-content_position',
+                anchor: '100%',
+                value: moreGallery.getResourceProperty(config.record, 'content_position', 'inherit')
+            }, {
+                xtype: 'textfield',
+                fieldLabel: _('setting_moregallery.crops'),
+                description: _('setting_moregallery.crops_desc'),
+                name: 'properties_crops',
+                hiddenName: 'properties_crops',
+                id: 'moregallery-crops',
+                anchor: '100%',
+                value: moreGallery.getResourceProperty(config.record, 'crops', 'inherit')
+            }, {
+                xtype: 'textfield',
+                fieldLabel: _('setting_moregallery.custom_fields'),
+                description: _('setting_moregallery.custom_fields_desc'),
+                name: 'properties_custom_fields',
+                hiddenName: 'properties_custom_fields',
+                id: 'moregallery-custom_fields',
+                anchor: '100%',
+                value: moreGallery.getResourceProperty(config.record, 'custom_fields', 'inherit')
+            });
+        }
         return flds;
     },
 

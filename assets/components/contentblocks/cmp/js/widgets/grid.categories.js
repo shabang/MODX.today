@@ -65,25 +65,48 @@ ContentBlocksComponent.grid.Categories = function (config) {
                 }
             }
         ],
-        tbar: [{
-            text: _('contentblocks.add_category'),
-            handler: this.addCategory,
-            scope: this
-        }, '->', {
-            text: _('contentblocks.export_fields'),
-            handler: this.exportAllCategories,
-            scope: this
-        }, '-', {
-            text: _('contentblocks.import_fields'),
-            handler: this.importCategories,
-            scope: this
-        }]
+        tbar: this.getToolbarButtons(config)
     });
     ContentBlocksComponent.grid.Categories.superclass.constructor.call(this, config);
     this.propRecord = Ext.data.Record.create(config.fields);
 };
 Ext.extend(ContentBlocksComponent.grid.Categories, MODx.grid.Grid, {
+    getToolbarButtons: function(config) {
+        var buttons = [];
+        
+        if (ContentBlocksConfig.permissions.categories_new) {
+            buttons.push({
+                text: _('contentblocks.add_category'),
+                handler: this.addCategory,
+                scope: this
+            });
+        }
+        
+        buttons.push('->');
+        
+        if (ContentBlocksConfig.permissions.categories_export) {
+            buttons.push({
+                text: _('contentblocks.export_categories'),
+                handler: this.exportAllCategories,
+                scope: this
+            });
+        }
+
+        if (ContentBlocksConfig.permissions.categories_import) {
+            buttons.push({
+                text: _('contentblocks.import_categories'),
+                handler: this.importCategories,
+                scope: this
+            });
+        }
+
+        return buttons;
+    },
+    
     addCategory: function () {
+        if (!ContentBlocksConfig.permissions.categories_new) {
+            return false;
+        }
         var win = MODx.load({
             xtype: 'contentblocks-window-categories',
             listeners: {
@@ -97,6 +120,9 @@ Ext.extend(ContentBlocksComponent.grid.Categories, MODx.grid.Grid, {
     },
 
     editCategory: function () {
+        if (!ContentBlocksConfig.permissions.categories_edit) {
+            return false;
+        }
         var record = this.menu.record;
         var win = MODx.load({
             xtype: 'contentblocks-window-categories',
@@ -116,6 +142,9 @@ Ext.extend(ContentBlocksComponent.grid.Categories, MODx.grid.Grid, {
 
 
     duplicateCategory: function() {
+        if (!ContentBlocksConfig.permissions.categories_new || !ContentBlocksConfig.permissions.categories_edit) {
+            return false;
+        }
         var record =  vcJquery.extend(true, {}, this.menu.record);
         record.id = 0;
         var win = MODx.load({
@@ -137,6 +166,9 @@ Ext.extend(ContentBlocksComponent.grid.Categories, MODx.grid.Grid, {
 
 
     deleteCategory: function () {
+        if (!ContentBlocksConfig.permissions.categories_delete) {
+            return false;
+        }
         var record = this.menu.record;
 
         MODx.msg.confirm({
@@ -158,32 +190,56 @@ Ext.extend(ContentBlocksComponent.grid.Categories, MODx.grid.Grid, {
     getMenu: function () {
         var m = [];
 
-        m.push({
-            text: _('contentblocks.edit_category'),
-            handler: this.editCategory,
-            scope: this
-        }, {
-            text: _('contentblocks.duplicate_category'),
-            handler: this.duplicateCategory,
-            scope: this
-        }, {
-            text: _('contentblocks.export_category'),
-            handler: this.exportCategory,
-            scope: this
-        }, '-', {
-            text: _('contentblocks.delete_category'),
-            handler: this.deleteCategory,
-            scope: this
-        });
+        if (ContentBlocksConfig.permissions.categories_edit) {
+            m.push({
+                text: _('contentblocks.edit_category'),
+                handler: this.editCategory,
+                scope: this
+            });
+        }
+
+        if (ContentBlocksConfig.permissions.categories_new && ContentBlocksConfig.permissions.categories_edit) {
+            m.push({
+                text: _('contentblocks.duplicate_category'),
+                handler: this.duplicateCategory,
+                scope: this
+            });
+        }
+
+        if (ContentBlocksConfig.permissions.categories_export) {
+            m.push({
+                text: _('contentblocks.export_category'),
+                handler: this.exportCategory,
+                scope: this
+            });
+        }
+
+        if (ContentBlocksConfig.permissions.categories_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            m.push({
+                text: _('contentblocks.delete_category'),
+                handler: this.deleteCategory,
+                scope: this
+            });
+        }
+
         return m;
     },
 
     exportCategory: function() {
+        if (!ContentBlocksConfig.permissions.categories_export) {
+            return false;
+        }
         var record = this.menu.record;
         window.location = ContentBlocksComponent.config.connectorUrl + '?action=mgr/categories/export&items=' + record.id + '&HTTP_MODAUTH=' + MODx.siteId;
     },
 
     exportAllCategories: function() {
+        if (!ContentBlocksConfig.permissions.categories_export) {
+            return false;
+        }
         var that = this;
         Ext.Msg.confirm(_('contentblocks.export_categories'), _('contentblocks.export_categories.confirm'), function(e) {
             if (e == 'yes') {
@@ -194,6 +250,9 @@ Ext.extend(ContentBlocksComponent.grid.Categories, MODx.grid.Grid, {
     },
 
     importCategories: function() {
+        if (!ContentBlocksConfig.permissions.categories_import) {
+            return false;
+        }
         var win = MODx.load({
             xtype: 'contentblocks-window-import',
             title: _('contentblocks.import_categories.title'),

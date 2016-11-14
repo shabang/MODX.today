@@ -28,7 +28,7 @@ class modCacheManager extends xPDOCacheManager {
 
     /**
      * Constructor for modCacheManager that overrides xPDOCacheManager constructor to assign modX reference
-     * @param $xpdo A reference to the xPDO/modX instance
+     * @param xPDO $xpdo A reference to the xPDO/modX instance
      * @param array $options An array of configuration options
      */
     function __construct(& $xpdo, array $options = array()) {
@@ -232,15 +232,9 @@ class modCacheManager extends xPDOCacheManager {
                 $v= $setting->get('value');
                 $matches= array();
                 if (preg_match_all('~\{(.*?)\}~', $v, $matches, PREG_SET_ORDER)) {
-                    $matchValue= '';
                     foreach ($matches as $match) {
                         if (isset ($this->modx->config["{$match[1]}"])) {
                             $matchValue= $this->modx->config["{$match[1]}"];
-                        } else {
-                            /* this causes problems with JSON in settings, disabling for now */
-                            //$matchValue= '';
-                        }
-                        if (!empty($matchValue)) {
                             $v= str_replace($match[0], $matchValue, $v);
                         }
                     }
@@ -580,6 +574,12 @@ class modCacheManager extends xPDOCacheManager {
                     /* clean the configurable source cache and remove the include files */
                     $results[$partition] = $this->clean($partOptions);
                     $this->deleteTree($this->getCachePath() . 'includes/');
+                    break;
+                case 'db':
+                    if (!$this->getOption('cache_db', $partOptions, false)) {
+                        continue;
+                    }
+                    $results[$partition] = $this->clean($partOptions);
                     break;
                 default:
                     $results[$partition] = $this->clean($partOptions);

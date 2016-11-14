@@ -5,6 +5,7 @@
 class cbFieldCreateProcessor extends modObjectCreateProcessor {
     public $classKey = 'cbField';
     public $languageTopics = array('contentblocks:default');
+    public $permission = array('contentblocks_fields_new' => true, 'contentblocks_fields_save' => true);
 
     /**
      * @return bool

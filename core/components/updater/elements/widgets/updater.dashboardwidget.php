@@ -12,6 +12,17 @@ if (!$modx->loadClass('Updater', MODX_CORE_PATH . 'components/updater/model/', t
     return;
 }
 
+//$time = microtime(true);
 $updater = new Updater($modx, array());
+//$modx->log(4,"[Updater Widget] class time:\t ".round(microtime(true)-$time,2));
 
-return $updater->generateWidget();
+//$time = microtime(true);
+$output = $updater->generateWidget();
+//$modx->log(4,"[Updater Widget] widget time:\t ".round(microtime(true)-$time,2));
+
+// register scripts
+$modx->regClientStartupScript(MODX_ASSETS_URL.'components/updater/js/spin.min.js');
+$modx->regClientStartupScript(MODX_ASSETS_URL.'components/updater/js/jquery.min.js');
+$modx->regClientStartupScript(MODX_ASSETS_URL.'components/updater/js/updater.widget.js');
+
+return $output;

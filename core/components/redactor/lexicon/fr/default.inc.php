@@ -13,9 +13,6 @@ $_lang['setting_area_general'] = 'Paramètres généraux';
 $_lang['setting_redactor.air'] = 'Air-Mode';
 $_lang['setting_redactor.air_desc'] = 'Activer le mode "air"';
 
-$_lang['setting_redactor.autoresize'] = 'Agrandissement automatique';
-$_lang['setting_redactor.autoresize_desc'] = 'Cette option active l\'agrandisssement automatique, en fonction de la quantité de texe inséré';
-
 $_lang['setting_redactor.linkAnchor'] = 'Ancres (liens)';
 $_lang['setting_redactor.linkAnchor_desc'] = 'Activez cette option pour que la modale <em>insérer un lien</em> ai un onglet permettant d\'ajouter des ancres.';
 
@@ -147,7 +144,7 @@ $_lang['setting_redactor.image_upload_path_desc'] = 'The path, relative to the r
         <li><code>&#91;&#91;+ultimate_parent_alias&#93;&#93;</code> the alias of the current resource.</li>
     </ul>
     Also see <code>Image Upload Path</code>, <code>Media Source</code> and <a href="https://www.modmore.com/extras/redactor/documentation/media-sources/">Using Media Sources with Redactor</a>';
-    
+
 $_lang['setting_redactor.file_upload_path'] = 'Chemin des uploads';
 $_lang['setting_redactor.file_upload_path_desc'] = 'The path, relative to the root of the media source as defined by the <code>Media Source</code> setting, in which file uploads should be placed. You can use the following placeholders (no output filters, please):
     <ul>
@@ -346,7 +343,7 @@ $_lang['setting_redactor.buttonsHideOnMobile_desc'] = 'Avec cette option, vous p
 
 $_lang['setting_redactor.formattingAdd'] = 'Formatting Add';
 $_lang['setting_redactor.formattingAdd_desc'] = 'This setting allows to select tags and styles for the formatting dropdown. formattingAdd can only be applied to p, pre, blockquote and header tags. Each formatting tag gets a CSS class that allows to customize style of each element. See more here: https://www.modmore.com/redactor/documentation/custom-formats/';
-    
+
 $_lang['setting_redactor.tabifier'] = 'Tabifier';
 $_lang['setting_redactor.tabifier_desc'] = 'Sets indent for code when using code.toggle or code.get.';
 
@@ -469,7 +466,7 @@ $_lang['setting_redactor.increment_file_names'] = 'Increment File Names';
 $_lang['setting_redactor.increment_file_names_desc'] = "When enabled and with Filesystem Media sources, will prevent duplicate file names more intuitevly by appending a numeric index rather than a date stamp.";
 
 $_lang['setting_redactor.pastePlainText'] = 'Paste Plain Text';
-$_lang['setting_redactor.pastePlainText_desc'] = "This setting turns on pasting as plain text. The pasted text will be stripped of any tags, line breaks will be marked with 
+$_lang['setting_redactor.pastePlainText_desc'] = "This setting turns on pasting as plain text. The pasted text will be stripped of any tags, line breaks will be marked with
 tag. With this set to 'true' and 'enterKey' set to 'false', line breaks will be replaced by spaces.";
 
 $_lang['setting_redactor.paragraphize'] = 'Paragraphize';

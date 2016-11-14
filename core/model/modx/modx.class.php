@@ -1,24 +1,11 @@
 <?php
 /*
- * MODX Revolution
+ * This file is part of MODX Revolution.
  *
- * Copyright 2006-2015 by MODX, LLC.
- * All rights reserved.
+ * Copyright (c) MODX, LLC. All Rights Reserved.
  *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 /**
@@ -171,6 +158,14 @@ class modX extends xPDO {
      * @var array Version information for this MODX deployment.
      */
     public $version= null;
+    /**
+     * @var string Unique site id for each MODX installation.
+     */
+    public $site_id;
+    /**
+     * @var string Unique uuid for each MODX installation.
+     */
+    public $uuid;
     /**
      * @var boolean Indicates if modX has been successfully initialized for a
      * modContext.
@@ -1056,7 +1051,7 @@ class modX extends xPDO {
                 @include(MODX_CORE_PATH . "error/{$type}.include.php");
             }
             header($this->getOption('error_header', $options, 'HTTP/1.1 503 Service Unavailable'));
-            echo "<html><head><title>{$errorPageTitle}</title></head><body><h1>503 Error</h1><p>{$errorMessage}</p></body></html>";
+            echo "<html><head><title>{$errorPageTitle}</title></head><body>{$errorMessage}</body></html>";
             @session_write_close();
         } else {
             echo ucfirst($type) . "\n";
@@ -1185,7 +1180,7 @@ class modX extends xPDO {
             $options
         );
         $this->invokeEvent('OnPageNotFound', $options);
-        $this->sendForward($this->getOption('error_page', $options, '404'), $options);
+        $this->sendForward($this->getOption('error_page', $options, $this->getOption('site_start')), $options);
     }
 
     /**
@@ -1209,7 +1204,7 @@ class modX extends xPDO {
             $options
         );
         $this->invokeEvent('OnPageUnauthorized', $options);
-        $this->sendForward($this->getOption('unauthorized_page', $options, '401'), $options);
+        $this->sendForward($this->getOption('unauthorized_page', $options, $this->getOption('site_start')), $options);
     }
 
     /**
@@ -1664,12 +1659,18 @@ class modX extends xPDO {
         $isClass = true;
         $processorsPath = isset($options['processors_path']) && !empty($options['processors_path']) ? $options['processors_path'] : $this->config['processors_path'];
         if (isset($options['location']) && !empty($options['location'])) $processorsPath .= ltrim($options['location'],'/') . '/';
-        $processorFile = $processorsPath.ltrim(str_replace('../', '', $action . '.class.php'),'/');
+
+        // Prevent path traversal through the action
+        $action = preg_replace('/(\.+\/)+/', '', htmlspecialchars($action));
+
+        // Find the processor file, preferring class based processors over old-style processors
+        $processorFile = $processorsPath.ltrim($action . '.class.php','/');
         if (!file_exists($processorFile)) {
-            $processorFile = $processorsPath.ltrim(str_replace('../', '', $action . '.php'),'/');
+            $processorFile = $processorsPath.ltrim($action . '.php','/');
             $isClass = false;
         }
 
+        // Prepare a response
         $response = '';
         if (file_exists($processorFile)) {
             if (!isset($this->lexicon)) $this->getService('lexicon', 'modLexicon');
@@ -1896,7 +1897,7 @@ class modX extends xPDO {
                 $userId = $this->user->get('id');
         	}
         }
-        
+
         $ml = $this->newObject('modManagerLog');
         $ml->set('user', (integer) $userId);
         $ml->set('occurred', strftime('%Y-%m-%d %H:%M:%S'));

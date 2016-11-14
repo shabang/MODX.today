@@ -65,6 +65,10 @@ class ContentBlocksImageUploadProcessor extends ContentBlocksImageProcessor {
         $newFileName = reset($this->contentBlocks->renames);
         if (!empty($newFileName)) {
             $baseMediaPath = $this->source->getBasePath() . $this->path;
+            $baseMediaPath = str_replace('://', '__:_/_/', $baseMediaPath);
+            $baseMediaPath = str_replace('//', '/', $baseMediaPath);
+            $baseMediaPath = str_replace('__:_/_/', '://', $baseMediaPath);
+
             $newFileName = substr($newFileName, strlen($baseMediaPath));
             $_FILES['file']['name'] = $newFileName;
         }

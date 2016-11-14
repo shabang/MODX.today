@@ -94,11 +94,23 @@ ContentBlocksComponent.grid.Layouts = function(config) {
                 xtype: 'numberfield'
             }
 		}],
-        tbar: [{
-            text: _('contentblocks.add_layout'),
-            handler: this.addLayout,
-            scope: this
-        }, '->',{
+        tbar: this.getToolbarButtons(config)
+    });
+    ContentBlocksComponent.grid.Layouts.superclass.constructor.call(this,config);
+};
+Ext.extend(ContentBlocksComponent.grid.Layouts,MODx.grid.Grid,{
+    getToolbarButtons: function(config) {
+        var buttons = [];
+
+        if (ContentBlocksConfig.permissions.layouts_new) {
+            buttons.push({
+                text: _('contentblocks.add_layout'),
+                handler: this.addLayout,
+                scope: this
+            });
+        }
+
+        buttons.push(['->', {
             xtype: 'contentblocks-combo-category'
             ,name: 'category'
             ,id: 'contentblocks-layouts-category-filter'
@@ -131,20 +143,30 @@ ContentBlocksComponent.grid.Layouts = function(config) {
             ,listeners: {
                 'click': {fn: this.clearFilter, scope: this}
             }
-        }, {
-            text: _('contentblocks.export_layouts'),
-            handler: this.exportAllLayouts,
-            scope: this
-        }, '-', {
-            text: _('contentblocks.import_layouts'),
-            handler: this.importLayouts,
-            scope: this
-        }]
-    });
-    ContentBlocksComponent.grid.Layouts.superclass.constructor.call(this,config);
-};
-Ext.extend(ContentBlocksComponent.grid.Layouts,MODx.grid.Grid,{
+        }]);
+
+        if (ContentBlocksConfig.permissions.layouts_export) {
+            buttons.push({
+                text: _('contentblocks.export_layouts'),
+                handler: this.exportAllLayouts,
+                scope: this
+            });
+        }
+        if (ContentBlocksConfig.permissions.layouts_import) {
+            buttons.push({
+                text: _('contentblocks.import_layouts'),
+                handler: this.importLayouts,
+                scope: this
+            })
+        }
+
+        return buttons;
+    },
+
     addLayout: function() {
+        if (!ContentBlocksConfig.permissions.layouts_new) {
+            return false;
+        }
         var win = MODx.load({
             xtype: 'contentblocks-window-layout',
             listeners: {
@@ -158,6 +180,9 @@ Ext.extend(ContentBlocksComponent.grid.Layouts,MODx.grid.Grid,{
     },
 
     editLayout: function() {
+        if (!ContentBlocksConfig.permissions.layouts_edit) {
+            return false;
+        }
         var record = this.menu.record;
         var win = MODx.load({
             xtype: 'contentblocks-window-layout',
@@ -175,6 +200,9 @@ Ext.extend(ContentBlocksComponent.grid.Layouts,MODx.grid.Grid,{
     },
 
     duplicateLayout: function() {
+        if (!ContentBlocksConfig.permissions.layouts_new || !ContentBlocksConfig.permissions.layouts_edit) {
+            return false;
+        }
         var record = vcJquery.extend(true, {}, this.menu.record);
         record.id = 0;
         record.name = _('duplicate_of', {name: record.name});
@@ -196,6 +224,9 @@ Ext.extend(ContentBlocksComponent.grid.Layouts,MODx.grid.Grid,{
 
 
     deleteLayout: function() {
+        if (!ContentBlocksConfig.permissions.layouts_delete) {
+            return false;
+        }
         var record = this.menu.record;
 
         MODx.msg.confirm({
@@ -217,32 +248,55 @@ Ext.extend(ContentBlocksComponent.grid.Layouts,MODx.grid.Grid,{
     getMenu: function() {
         var m = [];
 
-        m.push({
-            text: _('contentblocks.edit_layout'),
-            handler: this.editLayout,
-            scope: this
-        }, {
-            text: _('contentblocks.duplicate_layout'),
-            handler: this.duplicateLayout,
-            scope: this
-        }, {
-            text: _('contentblocks.export_layout'),
-            handler: this.exportLayout,
-            scope: this
-        }, '-', {
-            text: _('contentblocks.delete_layout'),
-            handler: this.deleteLayout,
-            scope: this
-        });
+        if (ContentBlocksConfig.permissions.layouts_edit) {
+            m.push({
+                text: _('contentblocks.edit_layout'),
+                handler: this.editLayout,
+                scope: this
+            });
+        }
+
+        if (ContentBlocksConfig.permissions.layouts_new && ContentBlocksConfig.permissions.layouts_edit) {
+            m.push({
+                text: _('contentblocks.duplicate_layout'),
+                handler: this.duplicateLayout,
+                scope: this
+            });
+        }
+
+        if (ContentBlocksConfig.permissions.layouts_export) {
+            m.push({
+                text: _('contentblocks.export_layout'),
+                handler: this.exportLayout,
+                scope: this
+            });
+        }
+
+        if (ContentBlocksConfig.permissions.layouts_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            m.push({
+                text: _('contentblocks.delete_layout'),
+                handler: this.deleteLayout,
+                scope: this
+            });
+        }
         return m;
     },
 
     exportLayout: function() {
+        if (!ContentBlocksConfig.permissions.layouts_export) {
+            return false;
+        }
         var record = this.menu.record;
         window.location = ContentBlocksComponent.config.connectorUrl + '?action=mgr/layouts/export&items=' + record.id + '&HTTP_MODAUTH=' + MODx.siteId;
     },
 
     exportAllLayouts: function() {
+        if (!ContentBlocksConfig.permissions.layouts_export) {
+            return false;
+        }
         Ext.Msg.confirm(_('contentblocks.export_layouts'), _('contentblocks.export_layouts.confirm'), function(e) {
             if (e == 'yes') {
                 window.location = ContentBlocksComponent.config.connectorUrl + '?action=mgr/layouts/export&HTTP_MODAUTH=' + MODx.siteId;
@@ -251,6 +305,9 @@ Ext.extend(ContentBlocksComponent.grid.Layouts,MODx.grid.Grid,{
     },
 
     importLayouts: function() {
+        if (!ContentBlocksConfig.permissions.layouts_import) {
+            return false;
+        }
         var win = MODx.load({
             xtype: 'contentblocks-window-import',
             title: _('contentblocks.import_layouts.title'),
@@ -303,7 +360,7 @@ Ext.extend(ContentBlocksComponent.grid.Layouts,MODx.grid.Grid,{
     },
     clearFilter: function() {
         this.getStore().baseParams = {
-            action: 'mgr/fields/getlist'
+            action: 'mgr/layouts/getlist'
         };
         Ext.getCmp('contentblocks-layouts-search-filter').reset();
         Ext.getCmp('contentblocks-layouts-category-filter').reset();

@@ -109,7 +109,7 @@ abstract class modManagerController {
             $this->modx->lexicon->load($topic);
         }
         $this->setPlaceholder('_lang_topics',implode(',',$languageTopics));
-        $this->setPlaceholder('_lang',$this->modx->lexicon->fetch());
+        $this->setPlaceholder('_lang', $this->modx->lexicon->fetch());
     }
 
     /**
@@ -126,7 +126,7 @@ abstract class modManagerController {
             'action' => $this->config,
         ));
 
-        $this->theme = $this->modx->getOption('manager_theme',null,'default');
+        $this->theme = $this->modx->getOption('manager_theme',null,'default',true);
 
         $this->prepareLanguage();
         $this->setPlaceholder('_ctx',$this->modx->context->get('key'));

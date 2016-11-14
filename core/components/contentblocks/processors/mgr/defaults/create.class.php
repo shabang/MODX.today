@@ -5,6 +5,7 @@
 class cbDefaultCreateProcessor extends modObjectCreateProcessor {
     public $classKey = 'cbDefault';
     public $languageTopics = array('contentblocks:default');
+    public $permission = array('contentblocks_defaults_new' => true, 'contentblocks_defaults_save' => true);
 
     /**
      * @return bool

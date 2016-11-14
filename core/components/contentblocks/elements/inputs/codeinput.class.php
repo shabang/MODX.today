@@ -45,16 +45,8 @@ class CodeInput extends cbBaseInput {
      * @return array
      */
     public function getJavaScripts() {
-        $aceIsInstalled = (bool)$this->modx->getCount('modPlugin', array(
-            'name' => 'Ace',
-            'disabled' => false,
-        ));
-        $aceIsUsed = ($this->contentBlocks->getOption('which_element_editor') == 'Ace');
-
         $js = array();
-        if (!$aceIsInstalled || !$aceIsUsed) {
-            $js[] = $this->contentBlocks->config['assetsUrl'] . 'js/vendor/9cloud/ace/ace.js';
-        }
+        $js[] = $this->contentBlocks->config['assetsUrl'] . 'js/vendor/9cloud/ace/ace.js';
 
         if ($this->contentBlocks->debug) {
             $js[] = $this->contentBlocks->config['assetsUrl'] . 'js/inputs/code.js';

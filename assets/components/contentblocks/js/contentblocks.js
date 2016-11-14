@@ -1,5 +1,7 @@
 var ContentBlocksFields, ContentBlocksLayouts, ContentBlocksCategories, ContentBlocksContents, ContentBlocksConfig, ContentBlocksWrapperCls, ContentBlocksExtraSelectors, ContentBlocksTemplates, ContentBlocksResource;
 
+ContentBlocksConfig.permissions = ContentBlocksConfig.permissions || {};
+
 var vcJquery = $.noConflict();
 (function ($) {
     // For retina icons
@@ -15,7 +17,7 @@ var vcJquery = $.noConflict();
         layoutId: 0,
         addField: function (container, fldId, placeholders, position) {
             var fieldType = (ContentBlocksFields['_'+fldId]) ? $.extend(true, {}, ContentBlocksFields['_'+fldId]) : {
-                input: (Ext.getCmp('modx-resource-richtext') && Ext.getCmp('modx-resource-richtext').getValue()) ? 'richtext' : 'textarea',
+                input: (window.Ext && Ext.getCmp && Ext.getCmp('modx-resource-richtext') && Ext.getCmp('modx-resource-richtext').getValue()) ? 'richtext' : 'textarea',
                 name: 'Content'
             };
             position = (position || position === 0) ? position : 'bottom';
@@ -27,11 +29,6 @@ var vcJquery = $.noConflict();
             ContentBlocks.fldId++;
             placeholders.generated_id = 'contentblocks-field-' + ContentBlocks.fldId;
             placeholders.field = fldId;
-
-            var nameLex = _(placeholders.name);
-            if (nameLex && nameLex.length) {
-                placeholders.name = nameLex;
-            }
 
             // Build the field from its input template
             try {
@@ -111,7 +108,7 @@ var vcJquery = $.noConflict();
                 };
                 
 
-            if (noConfirm || !requireConfirm() || confirm(_('contentblocks.delete_field.confirm.js'))) {
+            if (noConfirm || !requireConfirm() || ContentBlocks.utilities.confirm(_('contentblocks.delete_field.confirm.js'))) {
                 if (input && input.destroy) input.destroy();
                 fieldWrapper.remove();
                 delete ContentBlocks.generatedContentFields[fieldGeneratedId];
@@ -217,13 +214,6 @@ var vcJquery = $.noConflict();
             {
                 container.append('<li><p class="error">Uh oh - tried to add a layout with ID "'+layoutId+'" but it was not found. We also tried to use the default layout ("+ContentBlocksConfig.default_layout+"), but it was also not found. This probably means you either have no layouts defined yet in the ContentBlocks component, or they could not be loaded, or the contentblocks.default_layout setting is not defined properly. Contents of the layout: </p><textarea>' + Ext.encode(content) + '</textarea></li>');
                 return false;
-            }
-
-
-            // i18n for the name
-            var nameLex = _(meta.name);
-            if (nameLex && nameLex.length) {
-                meta.name = nameLex;
             }
 
             // Support for adding per-layout titles to the layout
@@ -366,12 +356,12 @@ var vcJquery = $.noConflict();
             if (!currentData || currentData < 1) currentData = defaultSettings;
 
             if (allLayoutSettings.exposedFields.length) {
-                layoutMeta.exposed_fields_asField = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData, 'asField');
+                layoutMeta.exposed_fields_asField = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData, 'asField', layout.attr('id'));
                 html += tmpl('contentblocks-field-settings-exposed-as-field', layoutMeta);
             }
 
             if (allLayoutSettings.exposedSettingFields.length) {
-                layoutMeta.exposed_fields_asSetting = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData, 'asSetting');
+                layoutMeta.exposed_fields_asSetting = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData, 'asSetting', layout.attr('id'));
                 html += tmpl('contentblocks-field-settings-exposed-as-setting', layoutMeta);
             }
             
@@ -526,7 +516,7 @@ var vcJquery = $.noConflict();
             };
         },
 
-        generateSettingFields: function(settings, defaultSettings, currentData, fieldDisplayType) {
+        generateSettingFields: function(settings, defaultSettings, currentData, fieldDisplayType, settingInstance) {
             fieldDisplayType = (typeof fieldDisplayType === "undefined") ? 'modal' : fieldDisplayType;
             var fields = [],
                 fieldHasOptions = ['select', 'radio', 'checkbox'];
@@ -550,12 +540,32 @@ var vcJquery = $.noConflict();
                             settingValues = setting.value.split(',');
                         setting.options = [];
                         $.each(setting.fieldoptions, function(idx, opt) {
-                            var hasValue = opt.indexOf('=') !== -1;
-                            opt = opt.split('=');
-                            var value = (hasValue) ? opt[1] : opt[0],
-                                selected = (settingValues.indexOf(value) !== -1) ? ' selected="selected"' : '',
+                            var value = false, display = false;
+
+                            // newFormat is for settings of value==Displayed Value
+                            // oldFormat is for settings of Displayed Value=value (@deprecated - to be removed in 2.0)
+                            var newFormat = opt.split('=='),
+                                oldFormat = opt.split('=');
+
+                            // Check if we have the new format with two equals
+                            if (newFormat.length >= 2) {
+                                value = newFormat[0];
+                                display = newFormat[1]
+                            }
+
+                            // If no value, check if we have the old format with a single equals sign
+                            if (!value && oldFormat.length >= 2) {
+                                value = oldFormat[1];
+                                display = oldFormat[0];
+                            }
+
+                            // No values with new or old format? Must be a single value for value and displayed value.
+                            if (!value) {
+                                value = display = opt;
+                            }
+
+                            var selected = (settingValues.indexOf(value) !== -1) ? ' selected="selected"' : '',
                                 checked = (settingValues.indexOf(value) !== -1) ? ' checked="checked"' : '',
-                                display = opt[0],
                                 displayLex = _(display),
                                 tpl = 'contentblocks-modal-layout-setting-' + settingType + '-option';
 
@@ -563,12 +573,13 @@ var vcJquery = $.noConflict();
                                 display = displayLex;
                             }
 
-                            var option = {value : value, selected : selected, checked: checked, display: display, reference: setting.reference};
+                            var option = {value : value, selected : selected, checked: checked, display: display, reference: setting.reference, settingInstance: settingInstance};
 
                             setting.options.push(tmpl(tpl, option));
                         });
                         setting.options = setting.options.join('');
                     }
+                    setting.settingInstance = settingInstance;
                     fields.push(tmpl(tpl, setting));
                 }
             });
@@ -589,7 +600,7 @@ var vcJquery = $.noConflict();
             // ensure that currentData is something. If it isn't, exposed fields freak out.
             if (!currentData || currentData < 1) currentData = defaultSettings;
 
-            layoutMeta.setting_fields = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData);
+            layoutMeta.setting_fields = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData, 'modal', l.attr('id'));
             var html = tmpl('contentblocks-modal-layout-setting', layoutMeta);
 
             ContentBlocks.openModal(_('contentblocks.layout_settings.modal_header', {name: layoutMeta.name}), html, {
@@ -629,12 +640,12 @@ var vcJquery = $.noConflict();
             if (!currentData || currentData < 1) currentData = defaultSettings;
 
             if (allFieldSettings.exposedFields.length) {
-              fieldMeta.exposed_fields_asField = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData, 'asField');
+              fieldMeta.exposed_fields_asField = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData, 'asField', fld.attr('id'));
               html += tmpl('contentblocks-field-settings-exposed-as-field', fieldMeta);
             }
 
             if (allFieldSettings.exposedSettingFields.length) {
-              fieldMeta.exposed_fields_asSetting = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData, 'asSetting');
+              fieldMeta.exposed_fields_asSetting = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData, 'asSetting', fld.attr('id'));
               html += tmpl('contentblocks-field-settings-exposed-as-setting', fieldMeta);
             }
             
@@ -675,7 +686,7 @@ var vcJquery = $.noConflict();
             // ensure that currentData is something. If it isn't, exposed fields freak out.
             if (!currentData || currentData < 1) currentData = defaultSettings;
             
-            fieldMeta.setting_fields = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData, 'modal');
+            fieldMeta.setting_fields = ContentBlocks.generateSettingFields(settings, defaultSettings, currentData, 'modal', fld.attr('id'));
             var html = tmpl('contentblocks-modal-field-setting', fieldMeta);
 
             ContentBlocks.openModal(_('contentblocks.field_settings.modal_header', {name: fieldMeta.name}), html, {
@@ -716,6 +727,7 @@ var vcJquery = $.noConflict();
 
             if (btn.hasClass('contentblocks-add-layout-here')) {
                 container = btn.closest('.contentblocks-layout-wrapper');
+                parentData = container.closest('li.contentblocks-field-outer').data() || false;
                 position = btn.closest('li.contentblocks-layout').index();
             }
 
@@ -762,16 +774,6 @@ var vcJquery = $.noConflict();
                           || data.category != category.id
                         ) {
                             return;
-                        }
-
-                        // I18N
-                        var lexName = _(data.name),
-                          lexDescription = _(data.description);
-                        if (lexName && lexName.length) {
-                            data.name = lexName;
-                        }
-                        if (lexDescription && lexDescription.length) {
-                            data.description = lexDescription;
                         }
 
                         data.icon = data.icon.replace('--DPR--', dpr);
@@ -860,9 +862,9 @@ var vcJquery = $.noConflict();
 
 
             var html = tmpl('contentblocks-modal-add-layout', {
-                hasLayouts: usedLayouts.length > 0,
+                hasLayouts: usedLayouts && usedLayouts.length > 0,
                 category_layout_html: categoryLayoutHtml,
-                hasTemplates: usedTemplates.length > 0,
+                hasTemplates: usedTemplates && usedTemplates.length > 0,
                 category_template_html: categoryTemplateHtml
             });
 
@@ -928,7 +930,7 @@ var vcJquery = $.noConflict();
                 layoutInstanceWrapperId = layout.attr('id'),
                 layoutInstanceId = layoutInstanceWrapperId.substr(0, layoutInstanceWrapperId.length - 8);
                 
-            if (noConfirm || confirm(_('contentblocks.delete_layout.confirm.js', {layoutName: layoutMeta.name}))) {
+            if (noConfirm || ContentBlocks.utilities.confirm(_('contentblocks.delete_layout.confirm.js', {layoutName: layoutMeta.name}))) {
                 delete ContentBlocks.generatedLayouts[layoutInstanceId];
                 layout.remove();
             }
@@ -1134,6 +1136,19 @@ var vcJquery = $.noConflict();
 
         fieldTypes: {},
         utilities: {
+            confirm: function(message) {
+                var timeBefore = new Date(),
+                    confirmation = window.confirm(message),
+                    timeAfter = new Date();
+
+                // If the time between the two is less than 3.5 milliseconds, the user dismissed
+                // the confirm boxes, so we assume they want the action to be confirmed.
+                if ((timeAfter - timeBefore) < 350) {
+                    confirmation = true;
+                }
+                return confirmation;
+            },
+
             getThumbnailUrl: function(url, size) {
                 // Get the normalised urls, forcing it to relative mode so phpthumb can use the cleaned, relative url
                 var normalised = ContentBlocks.utilities.normaliseUrls(url, 'relative');
@@ -1204,6 +1219,17 @@ var vcJquery = $.noConflict();
                 return {
                     'displaySrc': displaySrc,
                     'cleanedSrc': cleanedSrc
+                };
+            },
+            // Thanks, Remy https://remysharp.com/2010/07/21/throttling-function-calls
+            debounce: function(fn, delay) {
+                var timer = null;
+                return function () {
+                    var context = this, args = arguments;
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                        fn.apply(context, args);
+                    }, delay);
                 };
             }
         },
@@ -1513,21 +1539,64 @@ var vcJquery = $.noConflict();
 
             $link.blur();
         },
+        initFields : function() {
+            for (var key in ContentBlocksFields) {
+                if (ContentBlocksFields.hasOwnProperty(key)) {
+                    var nameLex = _(ContentBlocksFields[key].name);
+                    if (nameLex && nameLex.length) {
+                        ContentBlocksFields[key].name = nameLex;
+                    }
+                    var descLex = _(ContentBlocksFields[key].description);
+                    if (descLex && descLex.length) {
+                        ContentBlocksFields[key].description = descLex;
+                    }
+                }
+            }
+        },
+        initLayouts : function() {
+            for (var key in ContentBlocksLayouts) {
+                if (ContentBlocksLayouts.hasOwnProperty(key)) {
+                    var nameLex = _(ContentBlocksLayouts[key].name);
+                    if (nameLex && nameLex.length) {
+                        ContentBlocksLayouts[key].name = nameLex;
+                    }
+                    var descLex = _(ContentBlocksLayouts[key].description);
+                    if (descLex && descLex.length) {
+                        ContentBlocksLayouts[key].description = descLex;
+                    }
+                }
+            }
+        },
+        initTemplates : function() {
+            for (var key in ContentBlocksTemplates) {
+                if (ContentBlocksTemplates.hasOwnProperty(key)) {
+                    var nameLex = _(ContentBlocksTemplates[key].name);
+                    if (nameLex && nameLex.length) {
+                        ContentBlocksTemplates[key].name = nameLex;
+                    }
+                    var descLex = _(ContentBlocksTemplates[key].description);
+                    if (descLex && descLex.length) {
+                        ContentBlocksTemplates[key].description = descLex;
+                    }
+                }
+            }
+        },
         initCategories : function() {
-            categories = [];
-
+            var categories = [];
 
             for (var key in ContentBlocksCategories) {
-                var nameLex = _(ContentBlocksCategories[key].name);
-                if (nameLex && nameLex.length) {
-                    ContentBlocksCategories[key].name = nameLex;
-                }
-                var descLex = _(ContentBlocksCategories[key].description);
-                if (descLex && descLex.length) {
-                    ContentBlocksCategories[key].description = descLex;
-                }
+                if (ContentBlocksCategories.hasOwnProperty(key)) {
+                    var nameLex = _(ContentBlocksCategories[key].name);
+                    if (nameLex && nameLex.length) {
+                        ContentBlocksCategories[key].name = nameLex;
+                    }
+                    var descLex = _(ContentBlocksCategories[key].description);
+                    if (descLex && descLex.length) {
+                        ContentBlocksCategories[key].description = descLex;
+                    }
 
-                categories.push(ContentBlocksCategories[key]);
+                    categories.push(ContentBlocksCategories[key]);
+                }
             }
 
             categories.sort(function(a, b) {
@@ -1553,6 +1622,9 @@ var vcJquery = $.noConflict();
                 }
             });
             ContentBlocks.resourcesSource.initialize();
+            ContentBlocks.initFields();
+            ContentBlocks.initLayouts();
+            ContentBlocks.initTemplates();
             ContentBlocks.initCategories();
 
             // Insert the new content blocks editing stuff

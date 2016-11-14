@@ -6,6 +6,8 @@ $_lang['contentblocks.mgr.home'] = "Content Blocks";
 
 $_lang['contentblocks.general'] = "Obecné";
 $_lang['contentblocks.properties'] = "Vlastnosti";
+$_lang['contentblocks.clear_filters'] = "Clear filters";
+$_lang['contentblocks.search'] = "Search";
 
 $_lang['contentblocks.link'] = "Odkaz";
 $_lang['contentblocks.link.description'] = "Pole pro vytváření odkazů. Dokumenty, e-mailové adresy a URL jsou podporovány.";
@@ -17,12 +19,12 @@ $_lang['contentblocks.link.link_new_tab'] = "Otevřít v nové kartě";
 $_lang['contentblocks.link.add'] = "Přidat odkaz";
 $_lang['contentblocks.link.remove'] = "Odstranit odkaz";
 $_lang['contentblocks.link.placeholder'] = "Začněte psát jméno dokumentu, URL nebo e-mailové adresy";
-$_lang['contentblocks.link.link_detection_pattern_override'] = 'Přepsání vzoru detekce odkazu';
+$_lang['contentblocks.link.link_detection_pattern_override'] = 'Link detection pattern override';
 $_lang['contentblocks.link.link_detection_pattern_override.description'] = 'Regex pro jištění, že je odkaz platný. Pokud tomu tak nebude, přidá se přípona http://.';
 $_lang['contentblocks.link.limit_to_current_context'] = 'Omezit výsledky dokumentů k aktuálnímu kontextu';
 $_lang['contentblocks.link.limit_to_current_context.description'] = 'Omezení Typeahead výsledků pro dokumenty, které se nacházejí ve stejném kontextu jako stránka, která je zrovna upravována';
 
-$_lang['setting_contentblocks.link.link_detection_pattern'] = 'Vzor detekce odkazu';
+$_lang['setting_contentblocks.link.link_detection_pattern'] = 'Link detection pattern';
 $_lang['setting_contentblocks.link.link_detection_pattern_desc'] = 'Regex pro jištění, že je odkaz platný. Pokud tomu tak nebude, přidá se přípona http://.';
 
 $_lang['setting_contentblocks.typeahead.include_introtext'] = 'Zahrnout introtext v Typeahead';
@@ -30,12 +32,14 @@ $_lang['setting_contentblocks.typeahead.include_introtext_desc'] = 'Pokud povole
 
 $_lang['contentblocks.error.not_an_export'] = "Soubor se nezdá být ContentBlocks export";
 $_lang['contentblocks.error.importing_row'] = "Chyba při importu řádku: ";
-$_lang['contentblocks.error.no_valid_field'] = "Žádné platné pole nebylo nalezeno";
+$_lang['contentblocks.error.no_valid_field'] = "No valid field found for request.";
+$_lang['contentblocks.error.no_valid_input'] = "No valid input found for request.";
 $_lang['contentblocks.error.no_snippets'] = "Žádný snippet k použití";
 $_lang['contentblocks.error.missing_id'] = "Chybějící ID";
 $_lang['contentblocks.error.input_not_found'] = "Vstup nebyl nalezen";
 $_lang['contentblocks.error.input_not_found.message'] = "Ups. Pole s typem “[[+input]]” bylo nahráno, ale bohužel tento typ neexistuje.";
 $_lang['contentblocks.error.field_not_found'] = "Pole nebylo nalezeno";
+$_lang['contentblocks.error.category_not_found'] = "Category not found";
 $_lang['contentblocks.error.layout_not_found'] = "Rozvržení nebylo nalezeno";
 $_lang['contentblocks.error.error_saving_object'] = "Chyba při ukládání objektu";
 $_lang['contentblocks.error.xml_not_loaded'] = "Nelze načíst soubor XML";
@@ -110,6 +114,7 @@ $_lang['contentblocks.delete_layoutcolumn'] = "Odstranit sloupec";
 $_lang['contentblocks.delete_layoutcolumn.confirm'] = "Jste si jisti, že chcete odstranit tento sloupec? Jakýkoli obsah, který používá tento sloupec může být ovlivněn.";
 $_lang['contentblocks.add_setting'] = "Přidat nastavení";
 $_lang['contentblocks.edit_setting'] = "Upravit nastavení";
+$_lang['contentblocks.duplicate_setting'] = "Duplicate Setting";
 $_lang['contentblocks.delete_setting'] = "Odstranit nastavení";
 $_lang['contentblocks.delete_setting.confirm'] = "Jste si jisti, že chcete odstranit toto nastavení?";
 
@@ -169,7 +174,7 @@ $_lang['contentblocks.fieldtype.textfield'] = "Text";
 $_lang['contentblocks.fieldtype.link'] = "Odkaz";
 $_lang['contentblocks.fieldtype.textarea'] = "Textarea";
 $_lang['contentblocks.fieldoptions'] = "Možnosti pole";
-$_lang['contentblocks.fieldoptions.description'] = "Používá pouze pro Select pole. Dostupné hodnoty lze definovat “zobrazená hodnota=placeholder_value”, každá hodnota na jeden řádek. Pokud předáte pouze jedinou hodnotu na řádku (například “foo”), tak bude použita jako zobrazená hodnota a placeholder.";
+$_lang['contentblocks.fieldoptions.description'] = "Used for Select field types only. Define available values as \"placeholder_value==Displayed Value\" (\"Displayed Value=placeholder_value\" is also supported, but will be removed in 2.0), one per line. If you only pass a single value per line (such as \"foo\"), that will be used as both displayed and placeholder value.";
 $_lang['contentblocks.field_is_exposed'] = "Zobrazit pole";
 $_lang['contentblocks.field_is_exposed.description'] = "Zobrazit pole na rozvržení místo až po klepnutí na ikonu nastavení";
 $_lang['contentblocks.field_is_exposed.modal'] = "Zobrazit nastavení pole v modálním okně";
@@ -181,6 +186,25 @@ $_lang['contentblocks.directory.description'] = 'Podsložka ve zdroji médií (a
 $_lang['contentblocks.file_types'] = 'Povolené přípony souborů';
 $_lang['contentblocks.file_types.description'] = 'Bude možné odeslat soubory s těmito příponami (oddělené čárkami). Pro žádné omezení ponechte pole prázdné.';
 $_lang['contentblocks.file_types.disallowed'] = 'Tento typ souboru není povolen v tomto poli';
+
+// Categories
+$_lang['contentblocks.category'] = "Category";
+$_lang['contentblocks.categories'] = "Categories";
+$_lang['contentblocks.categories.intro'] = "Use Categories to better organise your Fields, Layouts and Templates. When assigned to an element, the Add Content and Add Layout modals will show categorized items first, followed by an \"Uncategorized\" category.";
+$_lang['contentblocks.uncategorized'] = "Uncategorized";
+$_lang['contentblocks.add_category'] = "Add Category";
+$_lang['contentblocks.edit_category'] = "Edit Category";
+$_lang['contentblocks.duplicate_category'] = "Duplicate Category";
+$_lang['contentblocks.delete_category'] = "Delete Category";
+$_lang['contentblocks.delete_category.confirm'] = "Are you sure you want to delete this Category? Any elements that currently use the category will be set to uncategorized instead.";
+$_lang['contentblocks.delete_category.confirm.js'] = "Are you sure you want to delete this Category?";
+$_lang['contentblocks.export_category'] = "Export Category";
+$_lang['contentblocks.export_categories'] = "Export";
+$_lang['contentblocks.export_categories.confirm'] = "After clicking Yes below, we will prepare an XML export of all Categories. This can be used to import the Categories later or in a different installation. Generating the XML should only take a few seconds.";
+$_lang['contentblocks.import_categories'] = "Import";
+$_lang['contentblocks.import_categories.title'] = "Import Categories";
+$_lang['contentblocks.import_categories.intro'] = "By uploading an XML file and choosing the right import mode, you can import Categories you exported before or from a different site. <b>Be careful</b> with importing Categories if you have content using the current fields already. Please contact support@modmore.com if you are unsure about what mode to use in the import.";
+
 
 // Templates
 $_lang['contentblocks.templates'] = 'Šablony';
@@ -282,7 +306,7 @@ $_lang['contentblocks.image.source.description'] = "Můžete používat základn
 $_lang['contentblocks.image_template.description'] = "Šablona pro obrázek. Měl pravděpodobně obsahovat značku <code>&lt;img&gt;</code>. Dostupné placeholdery: <code>[[+url]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 $_lang['contentblocks.imagewithtitle'] = "Obrázek s nadpisem";
 $_lang['contentblocks.imagewithtitle.description'] = "Stejně jako obrázek, ale tentokrát s textfield pro přidání atributu alt nebo title.";
-$_lang['contentblocks.image_with_title'] = $_lang['Obrázek s titulkem'];
+$_lang['contentblocks.image_with_title'] = "Image with Title";
 $_lang['contentblocks.image_with_title_template.description'] = "Šablona pro obrázek. Měl pravděpodobně obsahovat značku <code>&lt;img&gt;</code>. Dostupné placeholdery: <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 
 $_lang['contentblocks.list'] = "Seznam";
@@ -293,7 +317,7 @@ $_lang['contentblocks.list_nested_template.description'] = "Inner template for i
 
 $_lang['contentblocks.orderedlist'] = "Seřazený seznam";
 $_lang['contentblocks.orderedlist.description'] = "Same as the List type, except with an ordered list instead.";
-$_lang['contentblocks.ordered_list'] = $_lang['Číslovaný seznam'];
+$_lang['contentblocks.ordered_list'] = "Ordered List";
 $_lang['contentblocks.ordered_list_template.description'] = "Template for individual list items. This should probably contain a <code>&lt;li&gt;</code> tag. Available placeholders: <code>[[+value]]</code> (the list item text), <code>[[+idx]]</code> (an incrementing item number, starting at 1 on each level) and <code>[[+items]]</code> (sub-lists, templated with the other templates).";
 $_lang['contentblocks.ordered_list_wrapper_template.description'] = "Outer most template for ordered lists. This should probably contain a <code>&lt;ol&gt;</code> tag. Available placeholder: <code>[[+items]]</code> (list items templated with the other templates).";
 $_lang['contentblocks.ordered_list_nested_template.description'] = "Inner template for indented sub-lists. This should probably contain a <code>&lt;ol&gt;</code> tag. Available placeholder: <code>[[+items]]</code> (list items templated with the other templates).";
@@ -316,6 +340,8 @@ $_lang['contentblocks.repeater.max_items.description'] = "Když je nastaveno č�
 $_lang['contentblocks.repeater.max_items_reached'] = "Promiňte, nejste oprávněni přidat více než [[+max]] položek.";
 $_lang['contentblocks.repeater.min_items'] = "Maximální počet položek";
 $_lang['contentblocks.repeater.min_items.description'] = "Když nastaveno číslo větší než 0, řádky nelze odstranit nad tento limit.";
+$_lang['contentblocks.repeater.add_first_item'] = "Automatically add first item";
+$_lang['contentblocks.repeater.add_first_item.description'] = "When enabled the Repeater will automatically get a first item added if there are none added yet.";
 $_lang['contentblocks.repeater.add_item'] = "Přidat položku";
 $_lang['contentblocks.repeater.delete_item'] = "Odstranit položku";
 $_lang['contentblocks.repeater.wrapper_template.description'] = "Outer template to wrap all other parsed rows in. Should contain the <code>[[+rows]]</code> placeholder, can also contain <code>[[+total]]</code>, .";
@@ -352,6 +378,15 @@ $_lang['contentblocks.video.search_youtube'] = "Vyhledávání na YouTube";
 $_lang['contentblocks.video.paste_link'] = "Vložit odkaz zde";
 $_lang['contentblocks.video.youtube_not_loaded'] = "The YouTube API has not been loaded. Please try again in a few seconds. If the problem persists, the API might not be available currently.";
 $_lang['contentblocks.video.api_error'] = "Uh oh, an error occured: [[+message]] (Code [[+code]])";
+
+// Select
+$_lang['contentblocks.dropdown'] = "Dropdown";
+$_lang['contentblocks.dropdown.description'] = "A simple dropdown field, allowing the editor to choose one item from a number of predefined options.";
+$_lang['contentblocks.dropdown_template.description'] = "Template for the dropdown field. Available placeholders are <code>[[+value]]</code> (the value option for the chosen item), <code>[[+display]]</code> (the displayed value in the dropdown).";
+$_lang['contentblocks.dropdown.options'] = "Drop-down Options";
+$_lang['contentblocks.dropdown.options.description'] = "Define available values as 'value==Displayed Value', with one option per line. If you only pass a single value per line (such as 'foo'), that will be used as both displayed and placeholder value. Prefixing a single value with # will make it a disabled option. You can also use @SNIPPET bindings to dynamically provide option values. For detailed information on specifying options consult the Dropdown documentation at modmo.re/cb.";
+$_lang['contentblocks.dropdown.default_value'] = "Default Value";
+$_lang['contentblocks.dropdown.default_value.description'] = "The default value to choose when the dropdown is inserted, or nothing is selected.";
 
 // Snippet
 $_lang['contentblocks.snippet'] = "Snippet";
@@ -473,12 +508,6 @@ $_lang['setting_contentblocks.image.source_desc'] = "Zvolte výchozí zdroj méd
 $_lang['setting_contentblocks.image.upload_path'] = "Cesta k nahrání";
 $_lang['setting_contentblocks.image.upload_path_desc'] = "Cesta v rámci definovaného zdroje médií, kam mají být nahrány soubory. Lze využít placeholdery: [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] a [[+resource]].";
 
-$_lang['setting_contentblocks.cache_source'] = "Zdroj cache";
-$_lang['setting_contentblocks.cache_source.description'] = "Zvolte zdroj médií pro cache soubory náhledů obrázků a galerií.";
-
-$_lang['setting_contentblocks.cache_path'] = "Cesta k cache";
-$_lang['setting_contentblocks.cache_path.description'] = "Cesta v rámci definovaného zdroje médií, kam mají být uloženy cache soubory s náhledy.";
-
 $_lang['setting_contentblocks.sanitize_pattern'] = "Sanitize vzor";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "RegEx řetězec, který má být použit pro sanitizaci názvů souborů.";
 
@@ -501,3 +530,6 @@ $_lang['setting_contentblocks.translit_class'] = "Translit Class";
 $_lang['setting_contentblocks.translit_class_desc'] = "Název třídy pro přepis. Je-li tato hodnota prázdná, bude dědit z nastavení \"friendly_alias_translit_class\".";
 $_lang['setting_contentblocks.translit_class_path'] = "Translit Class Path";
 $_lang['setting_contentblocks.translit_class_path_desc'] = "Cesta k třídy pro přepis. Je-li tato hodnota prázdná, bude dědit z nastavení “friendly_alias_translit_class_path”.";
+
+$_lang['setting_contentblocks.base_url_mode'] = "Base URL Mode";
+$_lang['setting_contentblocks.base_url_mode_desc'] = "When uploading images, the URLs are automatically normalised in a way relative to the base url to ensure they show up in the front and back-end. Depending on your MODX setup, especially in multi-context sites, you might need to change this mode for images to show in the front-end. The accepted values are: <code>relative</code> (default: images are relative to the MODX base url), <code>absolute</code> (image urls contain the MODX base url) or <code>full</code> (images contain the full MODX site url)";

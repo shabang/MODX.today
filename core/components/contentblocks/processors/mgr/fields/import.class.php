@@ -8,6 +8,16 @@ class cbFieldImportProcessor extends ContentBlocksImportProcessor
     public $classKey = 'cbField';
 
     /**
+     * Checks if the user has sufficient permissions to perform this action.
+     * 
+     * @return bool
+     */
+    public function checkPermissions()
+    {
+        return $this->modx->context->checkPolicy('contentblocks_fields_import');
+    }
+
+    /**
      * Removes existing records in "replace" mode, limited to the current parentc
      */
     public function removeCollection()

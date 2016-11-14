@@ -7,7 +7,7 @@ FormIt.grid.Forms = function(config) {
         ,baseParams: {
             action: 'mgr/form/getlist'
         }
-        ,fields: ['id','form','values', 'ip', 'date']
+        ,fields: ['id','form','values', 'ip', 'date', 'hash']
         ,autoHeight: true
         ,paging: true
         ,remoteSort: true
@@ -22,6 +22,7 @@ FormIt.grid.Forms = function(config) {
             ,dataIndex: 'values'
             ,width: 250
             ,renderer: function(value){
+                value = JSON.parse(value);
                 var output = '';
                 for(var k in value){
                     output += '<b>'+k+'</b>: '+value[k]+'\n';
@@ -36,6 +37,9 @@ FormIt.grid.Forms = function(config) {
                 var formDate = Date.parseDate(value, 'U');
                 return formDate.format('Y/m/d H:i');
             }
+        },{
+            header: _('formit.hash')
+            ,dataIndex: 'hash'
         }]
     });
     FormIt.grid.Forms.superclass.constructor.call(this,config);
@@ -56,10 +60,13 @@ Ext.extend(FormIt.grid.Forms,MODx.grid.Grid,{
         this.addContextMenuItem(m);
     }
     ,viewItem: function(btn,e) {
-        if (!this.menu.record) return false;
+        if (!this.menu.record) {
+            return false;
+        }
+        var values = JSON.parse(this.menu.record.values);
         var fieldsOutput = '';
-        for(var k in this.menu.record.values){
-            fieldsOutput += '<b>'+k+'</b>: '+this.menu.record.values[k]+'<br/>';
+        for(var k in values){
+            fieldsOutput += '<b>'+k+'</b>: '+values[k]+'<br/>';
         }
 
         var formDate = Date.parseDate(this.menu.record.date, 'U');
@@ -99,22 +106,20 @@ Ext.extend(FormIt.grid.Forms,MODx.grid.Grid,{
     }
 
     ,export: function(btn,e) {
-        MODx.Ajax.request({
-            url: FormIt.config.connectorUrl
-            ,params: {
+        var _params = {
                 action: 'mgr/form/export'
                 ,form: Ext.getCmp('form').getValue()
                 ,context_key: Ext.getCmp('context').getValue()
-                ,startDate: Ext.getCmp('startdate').getValue()
-                ,endDate: Ext.getCmp('enddate').getValue()
+                ,startDate: Ext.util.Format.date(Ext.getCmp('startdate').getValue(), 'Y-m-d')
+                ,endDate: Ext.util.Format.date(Ext.getCmp('enddate').getValue(), 'Y-m-d')
+                ,download: false
                 ,limit: 0
+                ,HTTP_MODAUTH: MODx.siteId
             }
-            ,listeners: {
-                'success': {fn:function(r) {
-                    location.href = FormIt.config.connectorUrl+'?HTTP_MODAUTH='+MODx.siteId+'&action=mgr/form/download&file='+r.results.filename
-                },scope:this}
-            }
-        });
+            ,_link = FormIt.config.connectorUrl+'?'+Ext.urlEncode(_params);
+ 
+        var win = window.open(_link, '_blank');
+        win.focus();
     }
 
 });

@@ -87,6 +87,7 @@ ContentBlocksComponent.window.Defaults = function (config) {
                     anchor: '100%'
                 }
             ],
+            buttons: this.getWindowButtons(config),
             listeners: {
                 render: {fn: this.initWindow, scope: this},
                 scope: this
@@ -96,6 +97,24 @@ ContentBlocksComponent.window.Defaults = function (config) {
     this.on('render', this.initWindow);
 };
 Ext.extend(ContentBlocksComponent.window.Defaults, MODx.Window, {
+    getWindowButtons: function(config) {
+        var b = [{
+            text: _('cancel'),
+            scope: this,
+            handler: function() { this.hide(); }
+        },'-'];
+
+        if (ContentBlocksConfig.permissions.defaults_save) {
+            b.push([{
+                text: _('save'),
+                scope: this,
+                handler: this.submit,
+                cls: 'primary-button'
+            }]);
+        }
+        return b;
+    },
+
     inputChange: function(combo) {
         var f = Ext.getCmp(combo.formId),
             value = combo.getValue(),

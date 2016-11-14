@@ -9,6 +9,8 @@ $_lang['moregallery.new'] = 'Nieuwe Galerij';
 $_lang['moregallery.new_description'] = 'Maak een nieuwe Galerij aan om afbeeldingen naar te uploaden.';
 $_lang['moregallery.name'] = 'Galerij';
 $_lang['moregallery.name_here'] = 'Maak een nieuwe galerij hier';
+$_lang['moregallery.permission_denied'] = 'Sorry, je hebt niet de benodigde machtiging om deze galerij te beheren.';
+$_lang['moregallery.new_tags_not_allowed'] = 'Sorry, je hebt niet de juiste machtiging om nieuwe tags toe te voegen. Selecteer een reeds bestaande tag uit de lijst om door te gaan.';
 $_lang['moregallery.please_save_first'] = 'Om afbeeldingen aan de galerij toe te kunnen voegen dient deze eerst opgeslagen te worden. Na het uploaden is het hier mogelijk om afbeeldingen te uploaden.';
 
 
@@ -35,6 +37,8 @@ $_lang['moregallery.upload_image'] = 'Upload afbeeldingen naar de Galerij';
 $_lang['moregallery.upload'] = 'Upload';
 $_lang['moregallery.import_image'] = 'Importeer afbeeldingen van andere bronnen';
 $_lang['moregallery.import'] = 'Importeer';
+$_lang['moregallery.add_video'] = 'Video toevoegen';
+$_lang['moregallery.add_video_instructions'] = 'Voer hieronder een link in naar een video om deze aan de galerij toe te voegen.';
 $_lang['moregallery.refresh'] = 'Ververs';
 $_lang['moregallery.drop_to_upload'] = 'Laat bestanden los om deze naar de Galerij te uploaden.';
 $_lang['moregallery.images_count'] = 'afbeeldingen';
@@ -50,6 +54,7 @@ $_lang['moregallery.preupload_very_big'] = 'Het betand [[+file]] is erg groot. H
 $_lang['moregallery.upload_error'] = 'Oeps, er is iets niet goed gegaan tijdens het uploaden van het bestand [[+file]]: [[+message]]';
 $_lang['moregallery.upload_error_huge'] = 'Het geuploade bestand was ruim [[+size]]mb in grootte, wat mogelijk te groot is geweest voor de server om te uploaden of te verwerken. Probeer om het bestand te verkleinen voor deze te uploaden.';
 $_lang['moregallery.model_error'] = 'Een onverwachte fout is opgetreden, de afbeelding representatie kon niet worden gevonden. Probeer de pagina te verversen.';
+$_lang['moregallery.video_load_error'] = 'De video informatie kon niet worden geladen. Dit kan zijn omdat de video niet bestaat, of omdat deze als privé is gemarkeerd.';
 
 $_lang['moregallery.error_invalid_resource'] = 'Een onverwachte fout is opgetreden, document "[[+resource]]" is geen Galerij.';
 $_lang['moregallery.error_loading_source'] = 'Er is een fout opgetreden bij het laden van de Media Source voor deze Galerij.';
@@ -98,8 +103,12 @@ $_lang['setting_moregallery.crop_jpeg_quality'] = 'JPEG Crop Kwaliteit';
 $_lang['setting_moregallery.crop_jpeg_quality_desc'] = 'Voor JPEG afbeeldingen is het mogelijk de kwaliteit van de gegenereerde thumbnails aan te geven, met een nummer tussen 0 en 100.';
 $_lang['setting_moregallery.thumbnail_format'] = 'Manager Thumbnail Format';
 $_lang['setting_moregallery.thumbnail_format_desc'] = 'De indeling (png, gif of jpg) dat gebruikt wordt voor thumbnails in de manager (mgr_thumb waarde). Dit heeft geen effect op image crops; die gebruiken altijd dezelfde indeling als het originele bestand.';
-$_lang['setting_moregallery.prefill_from_iptc'] = 'Prefill from IPTC';
-$_lang['setting_moregallery.prefill_from_iptc_desc'] = 'When enabled the image will automatically populate the name, description and tags with information stored in the image.';
+$_lang['setting_moregallery.prefill_from_iptc'] = 'Voorvullen uit IPTC';
+$_lang['setting_moregallery.prefill_from_iptc_desc'] = 'Wanneer deze instelling is ingeschakeld zullen de naam, omschrijving en tags automatisch worden voorgevuld met Iptc gegevens uit de afbeelding.';
+$_lang['setting_moregallery.vimeo_prefill_description'] = 'Vimeo omschrijving voorvullen';
+$_lang['setting_moregallery.vimeo_prefill_description_desc'] = 'Als deze instelling is ingeschakeld zal de omschrijving van videos die vanuit Vimeo ingeladen zijn, automatisch worden gevuld met de omschrijving van de video op Vimeo.';
+$_lang['setting_moregallery.youtube_prefill_description'] = 'YouTube omschrijving voorvullen';
+$_lang['setting_moregallery.youtube_prefill_description_desc'] = 'Als deze instelling is ingeschakeld zal de omschrijving van videos die vanuit YouTube ingeladen zijn, automatisch worden gevuld met de omschrijving van de video op YouTube.';
 
 
 $_lang['setting_moregallery.translit'] = "Transliteratie";
@@ -112,6 +121,11 @@ $_lang['setting_moregallery.translit_class_path_desc'] = "Het pad naar de class 
 $_lang['setting_moregallery.custom_fields'] = "Extra Velden";
 $_lang['setting_moregallery.custom_fields_desc'] = "Maakt het mogelijk om extra velden of opties toe te voegen aan de window waarin afbeeldingen worden bewerkt. Deze setting verwacht een JSON object. Voor meer informatie over hoe custom velden gedefinieerd en gebruikt worden <a href=\"https://www.modmore.com/moregallery/documentation/custom-fields/\">kunt u de documentatie hier vinden</a>.";
 
+$_lang['setting_moregallery.prefetch_image_as_base64'] = "Prefetch afbeeldingen als Base64";
+$_lang['setting_moregallery.prefetch_image_as_base64_desc'] = "Stel hier het aantal afbeeldingen in die ingeladen moeten worden als base64 documenten. Tijdens het laden van afbeeldingen in de manager zijn afbeeldingen die als base64 zijn ingeladen vrijwel direct zichtbaar. Dit kan wel het laden van de galerij in de back-end trager maken in het geval van langzame of externe mediabronnen.";
+$_lang['setting_moregallery.allowed_extensions_per_source'] = "Toegestane bestandsformaten per mediabron";
+$_lang['setting_moregallery.allowed_extensions_per_source_desc'] = "Schakel deze instelling in om per mediabron te bepalen welke afbeeldingsformaten toegestaan zijn tijdens upload. Als deze instelling uit staat zal naar de upload_images instelling worden gekeken. ";
+
 $_lang['setting_mgr_tree_icon_mgresource'] = 'Galerij Icoon';
 $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'De Font Awesome icoon class om te gebruiken in de document tree om een Galerij toe te voegen. ';
 
@@ -121,19 +135,28 @@ $_lang['setting_mgr_tree_icon_mgresource_desc'] = 'De Font Awesome icoon class o
 
 /** mgGetImages */
 $_lang['moregallery.mggetimages.cache_desc'] = 'De galerij output cachen?';
-$_lang['moregallery.mggetimages.resource_desc'] = 'Geef een document ID op om afbeeldingen van te laden.';
+$_lang['moregallery.mggetimages.resource_desc'] = 'Geef een resource ID, of komma gescheiden lijst van resource IDs, waar afbeeldingen van geladen moeten worden.';
+$_lang['moregallery.mggetimages.activeonly_desc'] = 'Met deze optie ingeschakeld worden alleen actieve afbeeldingen getoond. Schakel deze instelling uit om ook inactieve afbeeldingen te tonen.';
 $_lang['moregallery.mggetimages.sortby_desc'] = 'Het veld waarop afbeeldingen worden gesorteerd. De mogelijk waarden zijn: filename, name, description, sortorder, uploadedon, editedon';
 $_lang['moregallery.mggetimages.sortdir_desc'] = 'De richting voor het sorteren van de afbeeldingen. Dit kan "asc" of "desc" zijn. ';
 $_lang['moregallery.mggetimages.tags_desc'] = 'Een komma gescheiden lijst met tag namen of IDs om afbeeldingen op te filteren.';
 $_lang['moregallery.mggetimages.tagsfromurl_desc'] = 'Stel de naam van een URL paramater in waarmee op tags gefilterd kan worden.';
+$_lang['moregallery.mggetimages.tagseparator_desc'] = 'Een tekenreeks om tag templates van elkaar te scheiden in de afbeelding templates.';
+$_lang['moregallery.mggetimages.gettags_desc'] = 'Als dit is ingeschakeld zullen tags voor elke afbeeldingen worden geladen.';
+$_lang['moregallery.mggetimages.getresourcecontent_desc'] = 'Indien ingeschakeld zal de resource content in de afbeeldingstemplate beschikbaar zijn.';
+$_lang['moregallery.mggetimages.getresourceproperties_desc'] = 'Indien ingeschakeld zullen de document properties in de afbeeldingstemplate beschikbaar zijn.';
 $_lang['moregallery.mggetimages.getresourcefields_desc'] = 'Indien ingeschakeld zullen document velden in de afbeeldingstemplate beschikbaar zijn. ';
 $_lang['moregallery.mggetimages.getresourcetvs_desc'] = 'Geef een komma gescheiden lijst op van template variabel namen die geladen moeten worden in de afbeelding template.';
 $_lang['moregallery.mggetimages.tagtpl_desc'] = 'De naam van een chunk om voor tags te gebruiken.';
 $_lang['moregallery.mggetimages.imagetpl_desc'] = 'De naam van een chunk om te gebruiken als template voor de afbeeldingen.';
+$_lang['moregallery.mggetimages.youtubetpl_desc'] = 'De naam van een chunk om te gebruiken als template voor YouTube videos.';
+$_lang['moregallery.mggetimages.vimeotpl_desc'] = 'De naam van een chunk om te gebruiken als template voor Vimeo videos.';
+$_lang['moregallery.mggetimages.singleimagetpl_desc'] = 'De naam van een chunk om te gebruiken wanneer een afbeelding in single-image-view getoond wordt';
+$_lang['moregallery.mggetimages.singleyoutubetpl_desc'] = 'De naam van een chunk om te gebruiken wanneer een YouTube video in single-image-view getoond wordt.';
+$_lang['moregallery.mggetimages.singlevimeotpl_desc'] = 'De naam van een chunk om te gebruiken wanneer een Vimeo video in single-image-view getoond wordt.';
 $_lang['moregallery.mggetimages.singleimageenabled_desc'] = 'Wanneer ingesteld op 1 zal de snippet reageren op requests met de singleImageParam URL parameter, door een enkele afbeelding te tonen.';
-$_lang['moregallery.mggetimages.singleimagetpl_desc'] = 'De naam van een chunk om te gebruiken wanneer er een enkele afbeelding wordt getoond.';
 $_lang['moregallery.mggetimages.singleimageparam_desc'] = 'Kan gebruikt worden om de moregallery.single_image_url_param systeem instelling te overschrijven per snippet call. Handig als je meerdere galerijen op dezelfde pagina wilt tonen.';
-$_lang['moregallery.mggetimages.tagseparator_desc'] = 'Een tekenreeks om tag templates van elkaar te scheiden in de afbeelding templates.';
+$_lang['moregallery.mggetimages.singleimageresource_desc'] = 'Dit wordt gebruikt in de view_url placeholder. Stel hier de resource in waar de single-image-view op getoond moet worden, als dit niet dezelfde resource is waar de afbeelding van geladen wordt.';
 $_lang['moregallery.mggetimages.imageseparator_desc'] = 'Een tekenreeks om afbeelding templates van elkaar te scheiden in de galerijweergave.';
 $_lang['moregallery.mggetimages.wrappertpl_desc'] = 'Indien opgegeven zal deze naam van een chunk gebruikt worden als wrapper voor de complete output.';
 $_lang['moregallery.mggetimages.wrapperifempty_desc'] = 'Stel in op 0 om de wrapperTpl alleen te gebruiken als er minstens 1 resultaat is. Wanneer deze property is ingesteld op 1 zal de wrapperTpl altijd gebruikt worden, zelfs zonder resultaten.';
@@ -143,6 +166,8 @@ $_lang['moregallery.mggetimages.limit_desc'] = 'Het aantal afbeeldingen dat gela
 $_lang['moregallery.mggetimages.offset_desc'] = 'Het aantal afbeeldingen dat aan het begin van de resultaten overgeslagen moet worden.';
 $_lang['moregallery.mggetimages.scheme_desc'] = 'Het schema wat gebruikt moet worden voor het generen van URLs; standaard zal dit de waarde zijn van de link_tag_scheme instelling.';
 $_lang['moregallery.mggetimages.where_desc'] = 'Een generieke conditie kan door middel van deze parameter worden toegevoegd aan de query, in JSON formaat. Bijvoorbeeld {"uploadedby":4} of {"name:LIKE":"%train%"} ';
+$_lang['moregallery.mggetimages.debug_desc'] = 'Indien ingeschakeld zal er een debug log getoond worden (bijvoorbeeld voor bug reports) aan het einde van de snippet output.';
+$_lang['moregallery.mggetimages.timing_desc'] = 'Indien ingeschakeld zal de totale verwerkingstijd voor de snippet aan het eind van de uitvoer worden toegevoegd.';
 
 /** mgGetTags */
 $_lang['moregallery.mggettags.cache_desc_desc'] = 'Cache de Tag resultaten?';

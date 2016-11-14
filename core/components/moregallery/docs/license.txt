@@ -5,3 +5,5 @@ While we hope MoreGallery is useful to you and we will try to help you successfu
 By using and installing this package, you acknowledge that you shall only use this on a single MODX installation.
 
 Redistribution in any shape or form is strictly prohibited. You may customize or change the provided source code to tailor MoreGallery for your own use, as long as no attempt is made to remove license protection measures. By changing source code you acknowledge you void the right to support unless coordinated with modmore support.
+
+This software includes other libraries which have been used under open source licenses.

@@ -46,6 +46,11 @@ Ext.extend(moreGallery,Ext.Component,{
 
         // Strip fields we don't want to pass back to the processors
         params.data.exif = undefined;
+        params.data.exif_dump = undefined;
+        params.data.exif_json = undefined;
+        params.data.iptc = undefined;
+        params.data.iptc_dump = undefined;
+        params.data.iptc_json = undefined;
         params.data.mgr_thumb = undefined;
         params.data.mgr_thumb_path = undefined;
         params.data.file_url = undefined;

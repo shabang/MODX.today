@@ -550,7 +550,7 @@
           font-size: 18px;
         }
       }
-      &:hover {
+      .moregallery-permission-image-edit &:hover {
         cursor: hand;
         cursor: pointer;
 
@@ -810,6 +810,7 @@
   width: 100%;
   height: 100%;
   position: absolute;
+  top: 0;
   display: none;
   z-index: 1;
 }
@@ -848,6 +849,41 @@
       max-height: 700px;
     }
   }
+  input, textarea, select {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 5px;
+
+    background: #fbfbfb;
+    border: 1px #CCC solid;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -o-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px;
+    line-height: 20px;
+    height: 32px;
+
+    .moregallery_v23 & {
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      -o-border-radius: 3px;
+      -ms-border-radius: 3px;
+      border-radius: 3px;
+    }
+
+    &:focus {
+      border-color: #658F1A;
+      background: #FFF;
+
+      .moregallery_v23 & {
+        border-color: #2d86b7;
+      }
+    }
+  }
+  textarea {
+    min-height: 9em;
+  }
   .edit-form {
     width: 55%;
     margin-left: 45%;
@@ -861,42 +897,6 @@
       .moregallery_v23 & {
         color: #555;
       }
-    }
-
-    input, textarea, select {
-      width: 100%;
-      margin-bottom: 8px;
-      padding: 5px;
-
-      background: #fbfbfb;
-      border: 1px #CCC solid;
-      -moz-border-radius: 2px;
-      -webkit-border-radius: 2px;
-      -o-border-radius: 2px;
-      -ms-border-radius: 2px;
-      border-radius: 2px;
-      line-height: 20px;
-      height: 32px;
-
-      .moregallery_v23 & {
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -o-border-radius: 3px;
-        -ms-border-radius: 3px;
-        border-radius: 3px;
-      }
-
-      &:focus {
-        border-color: #658F1A;
-        background: #FFF;
-
-        .moregallery_v23 & {
-          border-color: #2d86b7;
-        }
-      }
-    }
-    textarea {
-      min-height: 9em;
     }
 
     h3 {
@@ -917,6 +917,34 @@
     .moregallery_v23 & {
       top: -5px;
     }
+  }
+
+  .video-identified {
+    #video-url {
+      border: 1px solid #00ad00;
+      background-color: #ecffd8;
+    }
+  }
+
+  .supported-services {
+    position: relative;
+    top: -3em;
+    right: 0.5em;
+    float: right;
+    pointer-events: none;
+
+    li {
+      display: inline-block;
+
+      &.service-youtube, &.service-vimeo {
+        font-size: 150%;
+      }
+    }
+  }
+
+  .video-identified-youtube .service-youtube,
+  .video-identified-vimeo .service-vimeo {
+    color: #00ad00;
   }
 }
 

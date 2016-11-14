@@ -8,7 +8,7 @@ require_once(dirname(__FILE__) . '/imageinput.class.php');
  */
 class ImageWithTitleInput extends ImageInput {
     public $defaultIcon = 'image';
-    public $defaultTpl = '<img src="[[+url]]" width="[[+width]]" height="[[+height]]" alt="[[+title]]">';
+    public $defaultTpl = '<img src="[[+url]]" width="[[+width]]" height="[[+height]]" alt="[[+title:htmlent]]">';
     /**
      * @return array
      */

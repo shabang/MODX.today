@@ -443,7 +443,8 @@
   border: 1px solid #CCC;
   font: normal 13px arial, tahoma, helvetica, sans-serif; }
   .contentblocks-field input[type=text].ace_text-input, .contentblocks-field textarea.ace_text-input, .contentblocks-field select.ace_text-input, .contentblocks-modal-field input[type=text].ace_text-input, .contentblocks-modal-field textarea.ace_text-input, .contentblocks-modal-field select.ace_text-input {
-    position: absolute; }
+    position: absolute;
+    padding: 0; }
 
 .contentblocks-field textarea, .contentblocks-modal-field textarea {
   min-height: 60px; }
@@ -1057,9 +1058,9 @@ ul.contentblocks-field-list-outer {
   .contentblocks-repeater-item-wrapper > li > .contentblocks-field-wrap {
     border-bottom: none;
     padding: 5px 15px; }
-    .contentblocks-repeater-item-wrapper > li > .contentblocks-field-wrap > .contentblocks-field > .contentblocks-field-actions {
+    .contentblocks-repeater-item-wrapper > li > .contentblocks-field-wrap > .contentblocks-field > .contentblocks-field-actions > .contentblocks-field-delete {
       display: none; }
-  .contentblocks-repeater-item-wrapper > li .contentblocks-add-content-here {
+  .contentblocks-repeater-item-wrapper > li > .contentblocks-add-content-here {
     display: none; }
 
 .contentblocks-repeater-item-wrapper:after {
@@ -1222,6 +1223,9 @@ a.contentblocks-field-delete-video {
   .contentblocks-field-chunk_selector-add-property select, .contentblocks-field-chunk_selector-uncached select {
     float: left;
     width: 40%; }
+
+.contentblocks-field-chunk .chunkOutput img, .contentblocks-field-chunk .chunkOutput object, .contentblocks-field-chunk .chunkOutput embed, .contentblocks-field-chunk .chunkOutput iframe, .contentblocks-field-chunk .chunkOutput div {
+  max-width: 100%; }
 
 .contentblocks-exposed-fields-wrapper {
   clear: both;

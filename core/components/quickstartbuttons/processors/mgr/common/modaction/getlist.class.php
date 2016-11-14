@@ -33,7 +33,7 @@ class QuickstartButtonsModActonGetListProcessor extends modObjectGetListProcesso
             'element/propertyset/index', 'element/snippet', 'element/snippet/create',
             'element/snippet/update', 'element/template', 'element/template/create',
             'element/template/tvsort', 'element/template/update', 'element/tv',
-            'element/tv/create', 'element/tv/update', 'element/view', 'help',
+            'element/tv/create', 'element/tv/update', 'element/view', 'help', 'media/browser',
             'resource', 'resource/create', 'resource/data', 'resource/empty_recycle_bin',
             'resource/site_schedule', 'resource/tvs', 'resource/update', 'search', 'security',
             'security/access/policy/template/update', 'security/access/policy/update',
@@ -62,17 +62,19 @@ class QuickstartButtonsModActonGetListProcessor extends modObjectGetListProcesso
     public function prepareQueryBeforeCount(xPDOQuery $c) {
 
         $selected = $this->getProperty('selected');
-        if(!empty($selected)) {
+        if(!empty($selected) && is_numeric($selected)) {
             $newSort = 'FIELD(id, '.$selected.') DESC, '.$this->defaultSortField;
             $this->setProperty('sort', $newSort);
         }
 
         $query = $this->getProperty('query');
         if(!empty($query)) {
+            $this->setProperty('showNone', false);
             $this->query = $query;
             $c->andCondition(array(
                 'id' => $query,
-                'OR:name:LIKE' => '%'.$query.'%',
+                'OR:namespace:LIKE' => '%'.$query.'%',
+                'OR:controller:LIKE' => '%'.$query.'%',
             ));
         }
 

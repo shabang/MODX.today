@@ -51,7 +51,7 @@ class RedactorInputRender extends modTemplateVarInputRender {
         foreach ($params as $key => $value) {
             if (($value == 'inherit' || $value == '') && isset($systemOptions[$key])) {
                 $params[$key] = $systemOptions[$key];
-            } 
+            }
 
             $systemValue = (isset($systemOptions[$key])) ? $systemOptions[$key] : null;
             $params[$key] = $this->_fixValueType($params[$key], $systemValue);
@@ -66,8 +66,8 @@ class RedactorInputRender extends modTemplateVarInputRender {
 		if(isset($params['clipsJson']) && !empty($params['clipsJson'])) $params['plugins'][] = "clips";
 		if(isset($params['stylesJson']) && !empty($params['stylesJson'])) $params['plugins'][] = "styles";
         ($params['buttonFullScreen']) ? $params['plugins'][] = "fullscreen" : $params['plugins'] = array_diff($params['plugins'],array('fullscreen'));
-        
-        $ps = array('breadcrumb','contrast','counter','download','eureka','fontcolor','fontfamily','imagepx','limiter','norphan','replacer','speek','syntax','table','textdirection','textexpander');
+
+        $ps = array('breadcrumb','contrast','counter','download','eureka','fontcolor','fontfamily','imagepx','limiter','norphan','replacer','speek','syntax','table','textdirection','textexpander','video','fontsize');
         foreach($ps as $p) {
             // If we have a value for this plugin, check what to do
             if (isset($params[$p])) {
@@ -86,7 +86,7 @@ class RedactorInputRender extends modTemplateVarInputRender {
                         unset($params['plugins'][$key]);
                     }
                 }
-                // Not enabled or set to inherit? Make sure it's disabled 
+                // Not enabled or set to inherit? Make sure it's disabled
                 else {
                     if (($key = array_search($p, $params['plugins'])) !== false) {
                         unset($params['plugins'][$key]);
@@ -101,7 +101,7 @@ class RedactorInputRender extends modTemplateVarInputRender {
                 }
             }
         }
-        
+
         if((bool)$this->redactor->getOption('redactor.plugin_baseurls', null, true)) {
             $params['plugins'][] = 'baseurls';
         }
@@ -109,31 +109,31 @@ class RedactorInputRender extends modTemplateVarInputRender {
         if($params['use_uploadcare'] !== '0' && ($params['use_uploadcare'] == '1' || (bool)$this->redactor->getOption('redactor.plugin_uploadcare', null, true))) {
             $params['plugins'][] = 'uploadcare';
         }
-        
+
         if($params['eureka'] == '1' && !(bool)$this->redactor->getOption('redactor.plugin_eureka', null, true)) {
             if(!$this->greedyPlugins) $pluginFiles[] = $this->assetsUrl . "lib/eureka.js";
             $params['plugins'][] = 'eureka';
-            $this->modx->controller->addCSS($this->redactor->assetsUrl . 'lib/eureka/css/eureka.1.0.0.min.css');
+            $this->modx->controller->addCSS($this->redactor->assetsUrl . 'lib/eureka/css/eureka.1.2.0.min.css');
             $this->modx->controller->addJavascript($this->redactor->assetsUrl . 'lib/eureka/js/vendor/modernizr-2.8.3.min.js');
-            if((bool)$this->redactor->getOption('redactor.plugin_eureka_shivie9', null, true)) {    
-                $this->modx->controller->addJavascript($this->redactor->assetsUrl . 'lib/eureka/js/eureka.dom4.1.0.0.min.js');
-                $this->modx->controller->addJavascript($this->redactor->assetsUrl . 'lib/eureka/js/eureka.no-flexbox.1.0.0.min.js');
+            if((bool)$this->redactor->getOption('redactor.plugin_eureka_shivie9', null, true)) {
+                $this->modx->controller->addJavascript($this->redactor->assetsUrl . 'lib/eureka/js/eureka.dom4.1.2.0.min.js');
+                $this->modx->controller->addJavascript($this->redactor->assetsUrl . 'lib/eureka/js/eureka.no-flexbox.1.2.0.min.js');
             }
-            $this->modx->controller->addJavascript($this->redactor->assetsUrl . 'lib/eureka/js/muckboot.eureka.1.0.0.min.js');
-            $this->modx->controller->addJavascript($this->redactor->assetsUrl . 'lib/eureka/js/eureka.1.0.0.min.js');
+            $this->modx->controller->addJavascript($this->redactor->assetsUrl . 'lib/eureka/js/muckboot.eureka.1.2.0.min.js');
+            $this->modx->controller->addJavascript($this->redactor->assetsUrl . 'lib/eureka/js/eureka.1.2.0.min.js');
         }
-        
+
         if($params['eureka'] == '0' || ($params['eureka'] !== '1' && !(bool)$this->redactor->getOption('redactor.plugin_eureka', null, true))) {
             $params['plugins'][] = 'imagemanager';
             $params['plugins'][] = 'filemanager';
         }
-        
+
         if($params['syntax'] == '1') {
 $script = <<<HERE
 <script>try {ace} catch(e) { document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js"><\/script>') }</script>
 HERE;
             $this->modx->regClientStartupHTMLBlock($script);
-            
+
             $params['plugins'][] = 'syntax';
             if(!$this->redactor->greedyPlugins) $this->modx->controller->addJavascript($this->redactor->assetsUrl . 'lib/syntax.min.js');
             $params['aceTheme'] = 'ace/theme/' . ($this->redactor->getOption('ace.theme', null, 'chrome'));
@@ -146,20 +146,20 @@ HERE;
             $params['aceTabSize'] = ($this->redactor->getOption('ace.tab_size', null, 4));
             $params['aceOfflineSource'] = $this->redactor->assetsUrl . 'lib/ace/ace.js';
         }
-        
+
         if($params['codemirror'] == '0') $params['codemirror'] = false;
-        
+
         /**
          * Set placeholders and register CSS/JS files.
          */
         if (!empty($params['lang']) && ($params['lang'] != 'en')) {
             $this->setPlaceholder('langFile', '<script type="text/javascript" src="' . $this->redactor->config['assetsUrl'] . 'lang/' . $params['lang'] . '.js"></script>');
         }
-        
+
         if(!empty($params['plugin_files'])) {
             $this->setPlaceholder('pluginFiles',$params['plugin_files']);
         }
-                
+
         $this->setPlaceholder('assetsUrl', $this->redactor->config['assetsUrl']);
         $this->setPlaceholder('params', $params);
         $this->setPlaceholder('params_json', $this->modx->toJSON($params));
@@ -200,10 +200,10 @@ HERE;
     }
 
     protected function registerStuff() {
-        $this->modx->controller->addCSS($this->redactor->config['assetsUrl'].'redactor-2.0.7.min.css');
+        $this->modx->controller->addCSS($this->redactor->config['assetsUrl'].'redactor-2.2.0.min.css');
         if($this->redactor->degradeUI) $this->modx->controller->addCSS($this->redactor->config['assetsUrl'].'buttons-legacy.min.css');
         if($this->redactor->rebeccaDay) $this->modx->controller->addCSS($this->redactor->config['assetsUrl'].'rebecca.min.css');
-        $this->modx->controller->addJavascript($this->redactor->config['assetsUrl'].'redactor-2.0.7.min.js');
+        $this->modx->controller->addJavascript($this->redactor->config['assetsUrl'].'redactor-2.2.0.min.js');
 $script = <<<HERE
 <script>try {ace} catch(e) { document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.9/ace.js"><\/script>') }</script>
 HERE;

@@ -118,7 +118,7 @@ switch ($modx->event->name) {
             'partition' => $environment['partitions']['modChunk'],
         );
         break;
-
+    
     case 'OnSnipFormSave':
         /**
          * @var int $mode

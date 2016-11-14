@@ -18,7 +18,8 @@ var mg$ = $.noConflict();
             });
 
             window.appView = window.appView || new moreGallery.ImageAppView({
-                el: $('#mgresource-backbone')
+                el: $('#mgresource-backbone'),
+                permissions: [[+permissions_json]]
             });
             appView.render();
         });

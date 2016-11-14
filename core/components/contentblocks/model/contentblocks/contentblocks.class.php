@@ -47,6 +47,7 @@ class ContentBlocks extends Alpacka {
         'chunk',
         'chunk_selector',
         'code',
+        'dropdown',
         'gallery',
         'file',
         'heading',
@@ -88,7 +89,7 @@ class ContentBlocks extends Alpacka {
 
     /**
      * The main constructor for ContentBlocks. This doesn't hardcode the instance to the modX class as that might change in
-     * the future, and we don't want to manually update all derivative service classes when that happens.
+     * the future, and we don't want to manually update all derivative service classes when that happens. 
      *
      * @param \modX $instance
      * @param array $config
@@ -96,7 +97,7 @@ class ContentBlocks extends Alpacka {
     public function __construct($instance, array $config = array())
     {
         parent::__construct($instance, $config);
-        $this->setVersion(1, 4, 0, 'pl');
+        $this->setVersion(1, 5, 1, 'pl');
 
         /**
          * @deprecated
@@ -128,10 +129,24 @@ class ContentBlocks extends Alpacka {
             'hideLogo' => (bool)$this->getOption('contentblocks.hide_logo', null, false),
             'modx_base_url' => $this->modx->getOption('base_url'),
             'modx_site_url' => $this->modx->getOption('site_url'),
+            'permissions' => array(),
         ),$config);
         /**
          * /end @deprecated
          */
+
+        // Grab all the ContentBlocks permissions and store 'm in the config for easy access
+        $permissions = array(
+            'component', 'rebuild_content',
+            'fields', 'fields_new', 'fields_edit', 'fields_save', 'fields_delete', 'fields_import', 'fields_export',
+            'layouts', 'layouts_new', 'layouts_edit', 'layouts_save', 'layouts_delete', 'layouts_import', 'layouts_export',
+            'templates', 'templates_new', 'templates_edit', 'templates_save', 'templates_delete', 'templates_import', 'templates_export',
+            'categories', 'categories_new', 'categories_edit', 'categories_save', 'categories_delete', 'categories_import', 'categories_export',
+            'defaults', 'defaults_new', 'defaults_edit', 'defaults_save', 'defaults_delete',
+        );
+        foreach ($permissions as $key) {
+            $this->config['permissions'][$key] = $this->modx->context->checkPolicy('contentblocks_' . $key);
+        }
 
         $this->debug = (bool)$this->getOption('contentblocks.debug',null,false);
 
@@ -435,7 +450,7 @@ class ContentBlocks extends Alpacka {
      * @param int $idx
      * @return string
      */
-    public function generateFieldHtml($fieldData, $field = false, $idx) {
+    public function generateFieldHtml($fieldData, $field = false, $idx = 0) {
         if (!isset($fieldData['idx'])) {
             $fieldData['idx'] = $idx;
         }
@@ -509,7 +524,7 @@ class ContentBlocks extends Alpacka {
         }
 
         // If we have more placeholders, run it through the parser
-        if (strpos($tpl, '[[+') !== -1) {
+        if (strpos($tpl, '[[+') !== false) {
             $oldphs = $this->modx->placeholders;
             // Prevent settings from being parsed, for using system settings w/ context overrides
             foreach ($this->modx->placeholders as $key => $value) {
@@ -946,20 +961,22 @@ HTML;
      * @param $vc
      * @return array
      */
-    public function summarizeContent($vc)
+    public function summarizeContent($vc, &$linear = array(), &$counts = array())
     {
-        $linear = array();
-        $counts = array();
         foreach ($vc as $layout) {
             foreach ($layout['content'] as $column => $content) {
                 foreach ($content as $field) {
                     $id = $field['field'];
                     $linear[] = $field;
                     $counts[$id] = (isset($counts[$id])) ? $counts[$id] + 1 : 1;
+
+                    if(isset($field['child_layouts'])) {
+                        $this->summarizeContent($field['child_layouts'], $linear, $counts);
+                    }
                 }
             }
         }
-        return array('linear' => $linear, 'fieldcounts' => $counts, 'summaryVersion' => '1.1');
+        return array('linear' => $linear, 'fieldcounts' => $counts, 'summaryVersion' => '1.2');
     }
 
     /**
@@ -983,7 +1000,8 @@ HTML;
                         $defaultLayoutPart => array(
                             array(
                                 'field' => $defaultField,
-                                'value' => $content
+                                'value' => $content,
+                                'properties' => array(),
                             )
                         )
                     )

@@ -41,7 +41,7 @@ abstract class ContentblocksManagerController extends modExtraManagerController 
      * @return bool
      */
     public function checkPermissions() {
-        return true;
+        return $this->modx->context->checkPolicy('contentblocks_component');
     }
 
     public function loadRichTextEditor() {

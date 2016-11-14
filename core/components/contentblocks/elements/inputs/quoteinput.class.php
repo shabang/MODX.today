@@ -10,6 +10,24 @@ class QuoteInput extends cbBaseInput {
     public $defaultTpl = '<blockquote>[[+value]]
     <cite>[[+cite]]</cite>
 </blockquote>';
+
+
+    /**
+     * @return array
+     */
+    public function getFieldProperties()
+    {
+        return array(
+            array(
+                'key' => 'use_tinyrte',
+                'fieldLabel' => $this->modx->lexicon('contentblocks.use_tinyrte'),
+                'xtype' => 'contentblocks-combo-boolean',
+                'default' => false,
+                'description' => $this->modx->lexicon('contentblocks.use_tinyrte.description')
+            ),
+        );
+    }
+
     /**
      * @return array
      */

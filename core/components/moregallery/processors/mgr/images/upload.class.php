@@ -4,6 +4,7 @@
  */
 class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
     public $classKey = 'mgImage';
+    public $permission = array('moregallery_view_gallery' => true, 'moregallery_upload' => true);
     /** @var mgImage */
     public $object;
 
@@ -36,22 +37,10 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
      * @return bool|string
      */
     public function beforeSet() {
-        $resource = (int)$this->getProperty('resource', 0);
-        $this->resource = $this->modx->getObject('modResource', $resource);
-        if (!$this->resource || !($this->resource instanceof mgResource)) {
-            return $this->modx->lexicon('moregallery.error_invalid_resource', array('resource' => $resource));
+        $prepped = $this->getResourceAndSource();
+        if ($prepped !== true) {
+            return $prepped;
         }
-        if (!$this->resource->_getSource()) {
-            return $this->modx->lexicon('moregallery.error_loading_source');
-        }
-
-        $this->path = $this->resource->getSourceRelativeUrl();
-
-        /**
-         * Make sure the upload path exists. We unset errors to prevent issues if it already exists.
-         */
-        $this->resource->source->createContainer($this->path,'/');
-        $this->resource->source->errors = array();
 
         /**
          * Handle getting data for the mgImage.
@@ -77,7 +66,7 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
         if ($sourceSpecificExtensions) {
             $properties = $this->resource->source->getPropertyList();
             if (isset($properties['imageExtensions']) && !empty($properties['imageExtensions'])) {
-                $allowedExtensions = $properties['imageExtensions'];
+                $allowedExtensions = strtolower($properties['imageExtensions']);
             }
         }
         if (!$allowedExtensions) {
@@ -104,8 +93,35 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
 
         $this->setProperty('name', $name);
         $this->setProperty('filename', $fileName . '.' . $fileExtension);
-        $this->setProperty('sortorder', $this->modx->getCount('mgImage', array('resource' => $resource)) + 1);
+        $this->setProperty('sortorder', $this->modx->getCount('mgImage', array('resource' => $this->resource->get('id'))) + 1);
         return parent::beforeSet();
+    }
+
+    /**
+     * Loads the resource and media source, while also preparing the upload path.
+     *
+     * @return null|string
+     */
+    public function getResourceAndSource()
+    {
+        $resource = (int)$this->getProperty('resource', 0);
+        $this->resource = $this->modx->getObject('modResource', $resource);
+        if (!$this->resource || !($this->resource instanceof mgResource)) {
+            return $this->modx->lexicon('moregallery.error_invalid_resource', array('resource' => $resource));
+        }
+        if (!$this->resource->_getSource()) {
+            return $this->modx->lexicon('moregallery.error_loading_source');
+        }
+
+        $this->path = $this->resource->getSourceRelativeUrl();
+
+        /**
+         * Make sure the upload path exists. We unset errors to prevent issues if it already exists.
+         */
+        $this->resource->source->createContainer($this->path, '/');
+        $this->resource->source->createContainer($this->path . '_thumbs/' ,'/');
+        $this->resource->source->errors = array();
+        return true;
     }
 
     /**
@@ -187,13 +203,13 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
         /**
          * Grab exif data and use to fix the orientation if needed
          */
+        $format = pathinfo($uploadedFile['name'], PATHINFO_EXTENSION);
         $this->object->loadExifData($file['path']);
         $exif = $this->object->get('exif');
         if (is_array($exif) && isset($exif['Orientation'])) {
             $orientation = $exif['Orientation'];
-            $fixedOrientation = $this->object->fixOrientation($file['content'], $orientation);
-            if ($fixedOrientation !== false)
-            {
+            $fixedOrientation = $this->object->fixOrientation($file['content'], $orientation, $format);
+            if ($fixedOrientation !== false) {
                 $file['content'] = $fixedOrientation;
                 $this->resource->source->updateObject($this->path . $uploadedFile['name'], $fixedOrientation);
             }
@@ -202,7 +218,7 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
         /**
          * Create a copy of the image as a smaller manager thumbnail
          */
-        $this->object->createThumbnail($file['content']);
+        $this->object->createThumbnail($file['content'], $format);
 
         // Save again; we added some more details.
         $this->object->save();
@@ -247,8 +263,9 @@ class moreGalleryMgrImagesUploadProcessor extends modObjectCreateProcessor {
                 }
             }
 
-            // Ignore EXIF data, this can potentially break the response if it contains invalid characters.
-            unset ($array['exif']);
+            // Ignore EXIF/IPTC data, this can potentially break the response if it contains invalid characters.
+            unset ($array['exif'], $array['exif_dump'], $array['exif_json'],
+                $array['iptc'], $array['iptc_dump'], $array['iptc_json']);
 
             // Triggering getCrops will create the crop records which will generate the cropped images
             // We also need to pass the crops back so they can be edited.

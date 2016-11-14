@@ -92,10 +92,12 @@ class ListInput extends cbBaseInput {
                 $item['items'] = '';
             }
 
-            $item['idx'] = $idx;
-            $item = array_merge($settings, $item);
-            $output[] = $this->contentBlocks->parse($itemTpl, $item);
-            $idx++;
+            if($item['value'] != '' || !empty($item['items'])) {
+                $item['idx'] = $idx;
+                $item = array_merge($settings, $item);
+                $output[] = $this->contentBlocks->parse($itemTpl, $item);
+                $idx++;
+            }
         }
         $output = implode('', $output);
         $settings['items'] = $output;
@@ -123,12 +125,13 @@ class ListInput extends cbBaseInput {
                 $item['items'] = '';
             }
 
+            if($item['value'] != '' || !empty($item['items'])) {
+                $item['idx'] = $idx;
 
-            $item['idx'] = $idx;
-
-            $item = array_merge($settings, $item);
-            $output[] = $this->contentBlocks->parse($itemTpl, $item);
-            $idx++;
+                $item = array_merge($settings, $item);
+                $output[] = $this->contentBlocks->parse($itemTpl, $item);
+                $idx++;
+            }
         }
         $output = implode('', $output);
         $settings['items'] = $output;

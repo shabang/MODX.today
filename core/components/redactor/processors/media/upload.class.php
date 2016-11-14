@@ -51,8 +51,16 @@ class RedactorUploadMediaProcessor extends RedactorBaseProcessor
         }
 
         if (!empty($files)) {
+            $this->redactor->renames = array();
             $success = $this->source->uploadObjectsToContainer($path, $_FILES);
             if ($success) {
+                $newFileName = reset($this->redactor->renames);
+                if (!empty($newFileName)) {
+                    $baseMediaPath = $this->source->getBasePath() . $path;
+                    $newFileName = substr($newFileName, strlen($baseMediaPath));
+                    $newLink = $this->source->getObjectUrl($path . $newFileName);
+                    $files[0]['filelink'] = $newLink;
+                }
                 return $this->modx->toJSON($files);
             }
 

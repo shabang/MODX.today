@@ -13,9 +13,6 @@ $_lang['setting_area_general'] = 'Algemeen';
 $_lang['setting_redactor.air'] = 'Air Modus';
 $_lang['setting_redactor.air_desc'] = 'Als deze optie ingeschakeld is zal Redactor de standaard toolbar verborgen worden en zal in plaats daarvan een simpelere toolbar getoond worden wanneer tekst geselecteerd wordt. Om de buttons in de air modus toolbar aan te passen is de <code>airButtons</code> configuratie optie beschikbaar.';
 
-$_lang['setting_redactor.autoresize'] = 'Automatisch grootte aanpassen';
-$_lang['setting_redactor.autoresize_desc'] = 'Wanneer ingeschakeld zal de editor groter worden  naarmate er meer tekst inkomt, zodat er niet gescrolled hoeft te worden binnen het frame.';
-
 $_lang['setting_redactor.linkAnchor'] = 'Ankor Links';
 $_lang['setting_redactor.linkAnchor_desc'] = 'Indien ingeschakeld zal de <em>insert link</em> modal een tab bevatten voor anchor links.';
 
@@ -211,7 +208,7 @@ $_lang['setting_redactor.image_upload_path_desc'] = 'The path, relative to the r
         <li><code>&#91;&#91;+ultimate_parent_alias&#93;&#93;</code> the alias of the current resource.</li>
     </ul>
     Also see <code>Image Upload Path</code>, <code>Media Source</code> and <a href="https://www.modmore.com/extras/redactor/documentation/media-sources/">Using Media Sources with Redactor</a>';
-    
+
 $_lang['setting_redactor.file_upload_path'] = 'Bestand Upload Pad';
 $_lang['setting_redactor.file_upload_path_desc'] = 'The path, relative to the root of the media source as defined by the <code>Media Source</code> setting, in which file uploads should be placed. You can use the following placeholders (no output filters, please):
     <ul>
@@ -413,7 +410,7 @@ $_lang['setting_redactor.buttonsHideOnMobile_desc'] = 'With this option, you can
 
 $_lang['setting_redactor.formattingAdd'] = 'Formatting Add';
 $_lang['setting_redactor.formattingAdd_desc'] = 'This setting allows to select tags and styles for the formatting dropdown. formattingAdd can only be applied to p, pre, blockquote and header tags. Each formatting tag gets a CSS class that allows to customize style of each element. See more here: https://www.modmore.com/redactor/documentation/custom-formats/';
-    
+
 $_lang['setting_redactor.tabifier'] = 'Tabifier';
 $_lang['setting_redactor.tabifier_desc'] = 'Sets indent for code when using code.toggle or code.get.';
 
@@ -536,7 +533,7 @@ $_lang['setting_redactor.increment_file_names'] = 'Increment File Names';
 $_lang['setting_redactor.increment_file_names_desc'] = "When enabled and with Filesystem Media sources, will prevent duplicate file names more intuitevly by appending a numeric index rather than a date stamp.";
 
 $_lang['setting_redactor.pastePlainText'] = 'Paste Plain Text';
-$_lang['setting_redactor.pastePlainText_desc'] = "This setting turns on pasting as plain text. The pasted text will be stripped of any tags, line breaks will be marked with 
+$_lang['setting_redactor.pastePlainText_desc'] = "This setting turns on pasting as plain text. The pasted text will be stripped of any tags, line breaks will be marked with
 tag. With this set to 'true' and 'enterKey' set to 'false', line breaks will be replaced by spaces.";
 
 $_lang['setting_redactor.paragraphize'] = 'Paragraphize';

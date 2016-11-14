@@ -81,13 +81,14 @@
     <p>
         There is a core update available for your installation.
     
-        Please read the <a href="[[+changelog_url]]">changelog</a> and
+        Please read the <a href="[[+core_changelog_url]]">changelog</a> and
         update your site <a href="[[~[[++site_start]]? &scheme=`full`]]">[[++site_name]]</a>.
     </p>
 
     <footer>
-        This email is send to you because either your email address is added as a SysAdmin address OR
-        you have the permission granted to receive these notifications.
+        This email is send to you because either your email address is added as a SysAdmin adress OR
+        you have the permission granted to receive these notifications.<br/>
+        Contact your MODx site administrator if you do not want to receive emails of this type again.
     </footer>
 </div>
 </body>

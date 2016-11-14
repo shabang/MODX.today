@@ -1,4 +1,21 @@
 <?php
+$alpackaPath = MODX_CORE_PATH . 'components/alpacka/';
+$loaderPath = $alpackaPath . 'vendor/autoload.php';
+
+if (file_exists($loaderPath)) {
+    require_once $loaderPath;
+}
+else {
+    $modx->log(modX::LOG_LEVEL_ERROR, 'UNABLE TO INSTANTIATE MOREGALLERY SERVICE CLASS due to missing autoloader, expected in ' . $loaderPath . ' - make sure Alpacka is installed and up to date.');
+    class moreGallery {
+        public function __toString()
+        {
+            return 'Unable to instantiate MoreGallery due to missing autoloader - make sure Alpacka is installed and up to date.';
+        }
+    }
+    return;
+}
+
 require_once dirname(dirname(__FILE__)) . '/vendor/autoload.php';
 
 /**
@@ -13,6 +30,7 @@ class moreGallery extends \modmore\Alpacka\Alpacka {
     public $debug = false;
     protected $_resources = array();
     protected $_memoryLimitIncreased = false;
+    protected $_imagine = null;
 
     /**
      * This array keeps track of renamed file uploads in order to make sure image links don't break when
@@ -28,10 +46,9 @@ class moreGallery extends \modmore\Alpacka\Alpacka {
      * @param modX $instance
      * @param array $config
      */
-    public function __construct($instance, array $config = array())
-    {
+    public function __construct($instance, array $config = array()) {
         parent::__construct($instance, $config);
-        $this->setVersion(1, 4, 0, 'rc1');
+        $this->setVersion(1, 5, 5, 'pl');
 
         if (isset($config['resource']) && is_numeric($config['resource']))
         {
@@ -55,9 +72,19 @@ class moreGallery extends \modmore\Alpacka\Alpacka {
             'crops' => $this->getOption('moregallery.crops', null, ''),
             'use_rte_for_images' => $this->getOption('moregallery.use_rte_for_images', null, true),
             'memory_limit' => $this->_getMemoryLimit(),
+            'permissions' => array(),
 
             'version_string' => '?mgv=' . $this->version,
         ),$config);
+
+        $permissions = array(
+            'view_gallery', 'upload', 'import', 'video', 'resource_settings',
+            'image_active', 'image_delete', 'image_edit', 'image_tags', 'image_tags_new', 'image_crop_edit',
+        );
+        foreach ($permissions as $key) {
+            $this->config['permissions'][$key] = $this->modx->context->checkPolicy('moregallery_' . $key);
+        }
+        $this->config['permissions_json'] = json_encode($this->config['permissions']);
 
         $modelPath = $this->config['model_path'];
 
@@ -65,6 +92,38 @@ class moreGallery extends \modmore\Alpacka\Alpacka {
         $this->modx->loadClass('mgImage', $modelPath . 'moregallery/');
 
         $this->debug = $this->getOption('moregallery.debug', null, false);
+    }
+
+
+    /**
+     * Loads the Imagick or GD based Imagine service.
+     *
+     * @return bool|\Imagine\Gd\Imagine|\Imagine\Imagick\Imagine|null
+     */
+    public function getImagine()
+    {
+        if ($this->_imagine) {
+            return $this->_imagine;
+        }
+        
+        $imagine = false;
+        try {
+            $imagine = new \Imagine\Imagick\Imagine();
+        } catch (\Imagine\Exception\RuntimeException $e) {
+            $this->modx->log(modX::LOG_LEVEL_WARN, '[MoreGallery] Unable of loading Imagick driver for Imagine because ' . $e->getMessage() . '; falling back to GD.');
+            try {
+                $imagine = new \Imagine\Gd\Imagine();
+            } catch (\Imagine\Exception\RuntimeException $e) {
+                $this->modx->log(modX::LOG_LEVEL_ERROR, '[MoreGallery] Unable of loading an Imagine instance for handling thumbnails, neither Imagick or GD extensions are available in the proper versions.');
+            }
+        }
+
+        if ($imagine) {
+            $this->_imagine =& $imagine;
+            return $this->_imagine;
+        }
+
+        return false;
     }
 
     public function mg()
@@ -98,7 +157,7 @@ class moreGallery extends \modmore\Alpacka\Alpacka {
         // the .pubkey_c file contains a unix timestamp saying when the pubkey was last checked
         $modified = file_exists($pubKeyFile . '_c') ? file_get_contents($pubKeyFile . '_c') : false;
         if (!$modified ||
-            $modified < (time() - (60 * 60 * 24 * 1)) ||
+            $modified < (time() - (60 * 60 * 24 * 7)) ||
             $modified > time()) {
             $check = true;
         }
@@ -201,7 +260,8 @@ HTML;
      *
      * @return array|mixed
      */
-    public function getTagIds() {
+    public function getTagIds()
+    {
         $tagNames = $this->modx->cacheManager->get('tags/ids', $this->cacheOptions);
         if (empty($tagNames)) {
             $tagNames = array();
@@ -254,7 +314,8 @@ HTML;
      * @param $name
      * @return mixed
      */
-    public function sanitizeFileName($name) {
+    public function sanitizeFileName($name)
+    {
         return $this->sanitize($name);
     }
 
@@ -271,7 +332,7 @@ HTML;
         if ($resource instanceof modResource) {
             $crops = $resource->getProperty('crops', 'moregallery', 'inherit');
         }
-        if (empty($crops) || $crops == 'inherit') {
+        if (empty($crops) || $crops === 'inherit') {
             $crops = $this->getOption('moregallery.crops', null, '');
         }
         return $this->parseCrops($crops);
@@ -290,7 +351,7 @@ HTML;
             $fields = $this->resource->getProperty('custom_fields', 'moregallery', false);
         }
 
-        if (empty($fields) || $fields == 'inherit') {
+        if (empty($fields) || $fields === 'inherit') {
             $fields = $this->getOption('moregallery.custom_fields', null, '{}');
         }
 
@@ -312,7 +373,9 @@ HTML;
     public function getCropInfo($crop, $resource = null)
     {
         $crops = $this->getCrops($resource);
-        if (isset($crops[$crop])) return $crops[$crop];
+        if (isset($crops[$crop])) {
+            return $crops[$crop];
+        }
         return false;
     }
 
@@ -327,7 +390,9 @@ HTML;
         $cropString = array_map('trim', explode('|', $cropString));
         foreach ($cropString as $crop)
         {
-            if (empty($crop)) continue;
+            if (empty($crop)) {
+                continue;
+            }
 
             list ($name, $options) = explode(':', $crop);
             $opts = explode(',', $options);
@@ -362,7 +427,9 @@ HTML;
 
     public function setMemoryLimit()
     {
-        if ($this->_memoryLimitIncreased) return;
+        if ($this->_memoryLimitIncreased) {
+            return;
+        }
         $before = ini_get('memory_limit');
         $unit = strtoupper(substr($before, -1));
         $number = substr($before, 0, -1);
@@ -378,5 +445,34 @@ HTML;
             }
         }
         $this->_memoryLimitIncreased = true;
+    }
+
+    public function writePdfAsImageAndReturnContent($content, $extension = 'png')
+    {
+        $imagine = $this->getImagine();
+
+        // First we write the PDF
+        $tmpFile = MODX_CORE_PATH . 'cache/moregallery/tmp_upload_' . uniqid('mgt', $extension) . '.pdf';
+        $h = fopen($tmpFile, 'w+');
+        fwrite($h, $content);
+        fclose($h);
+        
+        // We open the PDF from file
+        $pdf = $imagine->open($tmpFile);
+        
+        // Then create the image based on it
+        // @todo figure out how to get this to not overlap pages
+        $tmpImageFile = MODX_CORE_PATH . 'cache/moregallery/tmp_upload_' . uniqid('mgt', $extension) . '.' . $extension;
+        $pdf->save($tmpImageFile);
+        
+        // Get the raw content of the generated image file
+        $content = file_get_contents($tmpImageFile);
+        
+        // Clean up again
+        unlink($tmpFile);
+        unlink($tmpImageFile);
+
+        // Return the raw content
+        return $content;
     }
 }

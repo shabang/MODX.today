@@ -12,6 +12,11 @@ class ContentBlocksRebuildProcessor extends modProcessor {
     public $updateProgressInterval = 1;
     public $contexts = array();
 
+    public function checkPermissions()
+    {
+        return $this->modx->context->checkPolicy('contentblocks_rebuild_content');
+    }
+
     /** @var ContentBlocks */
     public $contentBlocks;
 

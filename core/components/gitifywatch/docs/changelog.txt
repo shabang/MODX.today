@@ -1,4 +1,15 @@
-++ Gitify Watch 1.0.0-rc1
-++ Released on 2015-04-15
+++ Gitify Watch 1.0.0-rc3
+++ Released on 2015-10-07
 +++++++++++++++++++++++++
-- First public release
+- Fix undefined function error
+
+++ Gitify Watch 1.0.0-rc2
+++ Released on 2015-10-05
++++++++++++++++++++++++++
+- Improved error handling related to fetching the environment information
+- Make sure the push always targets the current branch
+
+++ Gitify Watch 1.0.0-rc1
+++ Released on 2015-09-30
++++++++++++++++++++++++++
+- First testable release

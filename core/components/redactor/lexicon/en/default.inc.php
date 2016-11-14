@@ -13,9 +13,6 @@ $_lang['setting_area_general'] = 'General settings';
 $_lang['setting_redactor.air'] = 'Air-Mode';
 $_lang['setting_redactor.air_desc'] = 'When enabled, Redactor will hide the regular toolbar and instead show a smaller toolbar when you select text inside the edit panel. To change the available buttons with Air-Mode enabled, see the <code>airButtons</code> configuration option.';
 
-$_lang['setting_redactor.autoresize'] = 'Autoresize';
-$_lang['setting_redactor.autoresize_desc'] = 'When enabled, the editor will automatically grow as big as needed to show all the text without having to scroll inside the frame. ';
-
 $_lang['setting_redactor.linkAnchor'] = 'Anchor Links';
 $_lang['setting_redactor.linkAnchor_desc'] = 'When enabled, the <em>insert link</em> modal will include a tab for inserting anchor links.';
 
@@ -26,7 +23,7 @@ $_lang['setting_redactor.linkResource'] = 'Resource Links';
 $_lang['setting_redactor.linkResource_desc'] = 'When enabled, the <em>resource link</em> modal will include a tab for inserting links to other MODX Resources.';
 
 $_lang['setting_redactor.minHeight'] = 'Min Height';
-$_lang['setting_redactor.minHeight_desc'] = 'Used together with the <code>Autoresize</code> option, the Min Height configuration lets you set either a minimum (when autoresize is enabled) or fixed (when autoresize is disabled) height for the text area. The height is in pixels and only needs the integer numbers added in the setting.';
+$_lang['setting_redactor.minHeight_desc'] = 'The Min Height configuration lets you set a minimum height for the text area. The height is in pixels and only needs the integer numbers added in the setting.';
 
 $_lang['setting_redactor.modalOverlay'] = 'Overlay';
 $_lang['setting_redactor.modalOverlay_desc'] = 'When enabled, an overlay will prevent clicking other things when Redactor opens a modal window (for links, uploads etc.)';
@@ -211,7 +208,7 @@ $_lang['setting_redactor.image_upload_path_desc'] = 'The path, relative to the r
         <li><code>&#91;&#91;+ultimate_parent_alias&#93;&#93;</code> the alias of the current resource.</li>
     </ul>
     Also see <code>Image Upload Path</code>, <code>Media Source</code> and <a href="https://www.modmore.com/extras/redactor/documentation/media-sources/">Using Media Sources with Redactor</a>';
-    
+
 $_lang['setting_redactor.file_upload_path'] = 'File Upload Path';
 $_lang['setting_redactor.file_upload_path_desc'] = 'The path, relative to the root of the media source as defined by the <code>Media Source</code> setting, in which file uploads should be placed. You can use the following placeholders (no output filters, please):
     <ul>
@@ -413,7 +410,7 @@ $_lang['setting_redactor.buttonsHideOnMobile_desc'] = 'With this option, you can
 
 $_lang['setting_redactor.formattingAdd'] = 'Formatting Add';
 $_lang['setting_redactor.formattingAdd_desc'] = 'This setting allows to select tags and styles for the formatting dropdown. formattingAdd can only be applied to p, pre, blockquote and header tags. Each formatting tag gets a CSS class that allows to customize style of each element. See more here: https://www.modmore.com/redactor/documentation/custom-formats/';
-    
+
 $_lang['setting_redactor.tabifier'] = 'Tabifier';
 $_lang['setting_redactor.tabifier_desc'] = 'Sets indent for code when using code.toggle or code.get.';
 
@@ -539,7 +536,7 @@ $_lang['setting_redactor.increment_file_names'] = 'Increment File Names';
 $_lang['setting_redactor.increment_file_names_desc'] = "When enabled and with Filesystem Media sources, will prevent duplicate file names more intuitevly by appending a numeric index rather than a date stamp.";
 
 $_lang['setting_redactor.pastePlainText'] = 'Paste Plain Text';
-$_lang['setting_redactor.pastePlainText_desc'] = "This setting turns on pasting as plain text. The pasted text will be stripped of any tags, line breaks will be marked with 
+$_lang['setting_redactor.pastePlainText_desc'] = "This setting turns on pasting as plain text. The pasted text will be stripped of any tags, line breaks will be marked with
 tag. With this set to 'true' and 'enterKey' set to 'false', line breaks will be replaced by spaces.";
 
 $_lang['setting_redactor.paragraphize'] = 'Paragraphize';
@@ -571,6 +568,10 @@ $_lang['setting_redactor.loadIntrotext_desc'] = "When enabled, adds Redactor to 
 
 $_lang['setting_redactor.limiter'] = 'Limiter Character Count';
 $_lang['setting_redactor.limiter_desc'] = "With the plugin_limiter setting enabled, this setting controls how many characters the user is allowed to enter into the editor.";
+
+
+$_lang['setting_redactor.initial_directory_depth'] = 'Initial Directory Depth';
+$_lang['setting_redactor.initial_directory_depth_desc'] = "Set to the number of directories to recursively list when listing media sources.";
 
 $_lang['setting_redactor.eurekaUpload'] = 'Eureka Upload';
 $_lang['setting_redactor.eurekaUpload_desc'] = "When enabled, files can be uploaded to current directory within the Insert Image Choose Tab.";

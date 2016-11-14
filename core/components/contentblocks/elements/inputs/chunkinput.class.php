@@ -71,7 +71,10 @@ class ChunkInput extends cbBaseInput {
             }
             
             foreach($data as $key => $val) {
-                if(!is_array($val) && (isset($data['chunk_properties']) && !in_array($val, $data['chunk_properties'])) && $key != 'idx' && $key != 'field') {
+                if (!is_array($val)
+                    && (!isset($data['chunk_properties']) || !in_array($key, $data['chunk_properties']))
+                    && $key !== 'idx'
+                    && $key !== 'field') {
                     $properties[] = "&$key=`$val`";
                 }
             }

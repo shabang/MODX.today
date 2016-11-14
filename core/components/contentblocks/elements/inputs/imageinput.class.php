@@ -7,7 +7,7 @@
  */
 class ImageInput extends cbBaseInput {
     public $defaultIcon = 'heading';
-    public $defaultTpl = '<img src="[[+url]]" width="[[+width]]" height="[[+height]]">';
+    public $defaultTpl = '<img src="[[+url]]" width="[[+width]]" height="[[+height]]" alt="">';
     /**
      * @return array
      */

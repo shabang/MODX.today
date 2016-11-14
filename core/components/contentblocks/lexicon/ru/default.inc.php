@@ -6,6 +6,8 @@ $_lang['contentblocks.mgr.home'] = "Content Blocks";
 
 $_lang['contentblocks.general'] = "Общее";
 $_lang['contentblocks.properties'] = "Свойства";
+$_lang['contentblocks.clear_filters'] = "Clear filters";
+$_lang['contentblocks.search'] = "Search";
 
 $_lang['contentblocks.link'] = "Ссылка";
 $_lang['contentblocks.link.description'] = "Поле для создания ссылок. Ресурсов, электронной почты и URL-адреса.";
@@ -17,12 +19,12 @@ $_lang['contentblocks.link.link_new_tab'] = "Открыть в новой вкл
 $_lang['contentblocks.link.add'] = "Добавить ссылку";
 $_lang['contentblocks.link.remove'] = "Удалить ссылку";
 $_lang['contentblocks.link.placeholder'] = "Начните вводить имя ресурса, внешнюю ссылку или адрес электронной почты";
-$_lang['contentblocks.link.link_detection_pattern_override'] = 'Link detectection pattern override';
+$_lang['contentblocks.link.link_detection_pattern_override'] = 'Link detection pattern override';
 $_lang['contentblocks.link.link_detection_pattern_override.description'] = 'Регулярное выражение, чтобы определить, корректность ссылкию Если нет, то будет добавляться http://.';
 $_lang['contentblocks.link.limit_to_current_context'] = 'Limit resource results to current context';
 $_lang['contentblocks.link.limit_to_current_context.description'] = 'Limits typeahead results to resources contained within the same context as the page being edited';
 
-$_lang['setting_contentblocks.link.link_detection_pattern'] = 'Link detectection pattern';
+$_lang['setting_contentblocks.link.link_detection_pattern'] = 'Link detection pattern';
 $_lang['setting_contentblocks.link.link_detection_pattern_desc'] = 'Регулярное выражение, чтобы определить, корректность ссылкию Если нет, то будет добавляться http://.';
 
 $_lang['setting_contentblocks.typeahead.include_introtext'] = 'Include Introtext in Typeahead';
@@ -30,12 +32,14 @@ $_lang['setting_contentblocks.typeahead.include_introtext_desc'] = 'When enabled
 
 $_lang['contentblocks.error.not_an_export'] = "The file does not seem to be a ContentBlocks export";
 $_lang['contentblocks.error.importing_row'] = "Не удалось импортировать строку: ";
-$_lang['contentblocks.error.no_valid_field'] = "Имеются неправильно заполненные поля";
+$_lang['contentblocks.error.no_valid_field'] = "No valid field found for request.";
+$_lang['contentblocks.error.no_valid_input'] = "No valid input found for request.";
 $_lang['contentblocks.error.no_snippets'] = "Нет доступных сниппетов";
 $_lang['contentblocks.error.missing_id'] = "Отсутствует поле ID";
 $_lang['contentblocks.error.input_not_found'] = "Input not found";
 $_lang['contentblocks.error.input_not_found.message'] = "Uh oh. A field with input type \"[[+input]]\" was loaded, however that input type does not exist.";
 $_lang['contentblocks.error.field_not_found'] = "Поле не найдено";
+$_lang['contentblocks.error.category_not_found'] = "Category not found";
 $_lang['contentblocks.error.layout_not_found'] = "Layout not found";
 $_lang['contentblocks.error.error_saving_object'] = "Error saving object";
 $_lang['contentblocks.error.xml_not_loaded'] = "Не удалось загрузить XML-файл";
@@ -110,6 +114,7 @@ $_lang['contentblocks.delete_layoutcolumn'] = "Удалить колонку";
 $_lang['contentblocks.delete_layoutcolumn.confirm'] = "Are you sure you want to delete this Column? Potentially disastrous things can happen with any content that used this Column.";
 $_lang['contentblocks.add_setting'] = "Add Setting";
 $_lang['contentblocks.edit_setting'] = "Edit Setting";
+$_lang['contentblocks.duplicate_setting'] = "Duplicate Setting";
 $_lang['contentblocks.delete_setting'] = "Delete Setting";
 $_lang['contentblocks.delete_setting.confirm'] = "Are you sure you want to delete this Setting?";
 
@@ -169,7 +174,7 @@ $_lang['contentblocks.fieldtype.textfield'] = "Текст";
 $_lang['contentblocks.fieldtype.link'] = "Link";
 $_lang['contentblocks.fieldtype.textarea'] = "Текстовая область";
 $_lang['contentblocks.fieldoptions'] = "Field Options";
-$_lang['contentblocks.fieldoptions.description'] = "Used for Select field types only. Define available values as \"Displayed Value=placeholder_value\", one per line. If you only pass a single value per line (such as \"foo\"), that will be used as both displayed and placeholder value.";
+$_lang['contentblocks.fieldoptions.description'] = "Used for Select field types only. Define available values as \"placeholder_value==Displayed Value\" (\"Displayed Value=placeholder_value\" is also supported, but will be removed in 2.0), one per line. If you only pass a single value per line (such as \"foo\"), that will be used as both displayed and placeholder value.";
 $_lang['contentblocks.field_is_exposed'] = "Expose field";
 $_lang['contentblocks.field_is_exposed.description'] = "Show field on canvas instead of only after clicking settings icon";
 $_lang['contentblocks.field_is_exposed.modal'] = "Show field setting in modal window";
@@ -181,6 +186,25 @@ $_lang['contentblocks.directory.description'] = 'A subfolder within the media so
 $_lang['contentblocks.file_types'] = 'Allowed File Extensions';
 $_lang['contentblocks.file_types.description'] = 'Files with these extensions (comma-separated) will be uploaded. For no restriction, leave blank.';
 $_lang['contentblocks.file_types.disallowed'] = 'File type not allowed in this field';
+
+// Categories
+$_lang['contentblocks.category'] = "Category";
+$_lang['contentblocks.categories'] = "Categories";
+$_lang['contentblocks.categories.intro'] = "Use Categories to better organise your Fields, Layouts and Templates. When assigned to an element, the Add Content and Add Layout modals will show categorized items first, followed by an \"Uncategorized\" category.";
+$_lang['contentblocks.uncategorized'] = "Uncategorized";
+$_lang['contentblocks.add_category'] = "Add Category";
+$_lang['contentblocks.edit_category'] = "Edit Category";
+$_lang['contentblocks.duplicate_category'] = "Duplicate Category";
+$_lang['contentblocks.delete_category'] = "Delete Category";
+$_lang['contentblocks.delete_category.confirm'] = "Are you sure you want to delete this Category? Any elements that currently use the category will be set to uncategorized instead.";
+$_lang['contentblocks.delete_category.confirm.js'] = "Are you sure you want to delete this Category?";
+$_lang['contentblocks.export_category'] = "Export Category";
+$_lang['contentblocks.export_categories'] = "Export";
+$_lang['contentblocks.export_categories.confirm'] = "After clicking Yes below, we will prepare an XML export of all Categories. This can be used to import the Categories later or in a different installation. Generating the XML should only take a few seconds.";
+$_lang['contentblocks.import_categories'] = "Import";
+$_lang['contentblocks.import_categories.title'] = "Import Categories";
+$_lang['contentblocks.import_categories.intro'] = "By uploading an XML file and choosing the right import mode, you can import Categories you exported before or from a different site. <b>Be careful</b> with importing Categories if you have content using the current fields already. Please contact support@modmore.com if you are unsure about what mode to use in the import.";
+
 
 // Templates
 $_lang['contentblocks.templates'] = 'Templates';
@@ -282,7 +306,7 @@ $_lang['contentblocks.image.source.description'] = "Leave this at (none) to use 
 $_lang['contentblocks.image_template.description'] = "Template for the image input type. Should probably include an <code>&lt;img&gt;</code> tag. Available Placeholders: <code>[[+url]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 $_lang['contentblocks.imagewithtitle'] = "Image with Title";
 $_lang['contentblocks.imagewithtitle.description'] = "Same as image, but this time with a textfield to add an alt or title attribute.";
-$_lang['contentblocks.image_with_title'] = $_lang['contentblocks.imagewithtitle'];
+$_lang['contentblocks.image_with_title'] = "Image with Title";
 $_lang['contentblocks.image_with_title_template.description'] = "Template for the image input type. Should probably include an <code>&lt;img&gt;</code> tag. Available placeholders: <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code>, <code>[[+width]]</code>, <code>[[+height]]</code>, <code>[[+extension]]</code>";
 
 $_lang['contentblocks.list'] = "Список";
@@ -293,7 +317,7 @@ $_lang['contentblocks.list_nested_template.description'] = "Inner template for i
 
 $_lang['contentblocks.orderedlist'] = "Нумерованный список";
 $_lang['contentblocks.orderedlist.description'] = "Same as the List type, except with an ordered list instead.";
-$_lang['contentblocks.ordered_list'] = $_lang['contentblocks.orderedlist'];
+$_lang['contentblocks.ordered_list'] = "Ordered List";
 $_lang['contentblocks.ordered_list_template.description'] = "Template for individual list items. This should probably contain a <code>&lt;li&gt;</code> tag. Available placeholders: <code>[[+value]]</code> (the list item text), <code>[[+idx]]</code> (an incrementing item number, starting at 1 on each level) and <code>[[+items]]</code> (sub-lists, templated with the other templates).";
 $_lang['contentblocks.ordered_list_wrapper_template.description'] = "Outer most template for ordered lists. This should probably contain a <code>&lt;ol&gt;</code> tag. Available placeholder: <code>[[+items]]</code> (list items templated with the other templates).";
 $_lang['contentblocks.ordered_list_nested_template.description'] = "Inner template for indented sub-lists. This should probably contain a <code>&lt;ol&gt;</code> tag. Available placeholder: <code>[[+items]]</code> (list items templated with the other templates).";
@@ -316,6 +340,8 @@ $_lang['contentblocks.repeater.max_items.description'] = "When set to a number l
 $_lang['contentblocks.repeater.max_items_reached'] = "Sorry, you are not allowed to add more than [[+max]] items.";
 $_lang['contentblocks.repeater.min_items'] = "Minimum number of Items";
 $_lang['contentblocks.repeater.min_items.description'] = "When set to a number larger than 0, rows cannot be removed beyond this limit.";
+$_lang['contentblocks.repeater.add_first_item'] = "Automatically add first item";
+$_lang['contentblocks.repeater.add_first_item.description'] = "When enabled the Repeater will automatically get a first item added if there are none added yet.";
 $_lang['contentblocks.repeater.add_item'] = "Add Item";
 $_lang['contentblocks.repeater.delete_item'] = "Delete Item";
 $_lang['contentblocks.repeater.wrapper_template.description'] = "Outer template to wrap all other parsed rows in. Should contain the <code>[[+rows]]</code> placeholder, can also contain <code>[[+total]]</code>, .";
@@ -352,6 +378,15 @@ $_lang['contentblocks.video.search_youtube'] = "Search YouTube";
 $_lang['contentblocks.video.paste_link'] = "Paste a link here";
 $_lang['contentblocks.video.youtube_not_loaded'] = "The YouTube API has not been loaded. Please try again in a few seconds. If the problem persists, the API might not be available currently.";
 $_lang['contentblocks.video.api_error'] = "Uh oh, an error occured: [[+message]] (Code [[+code]])";
+
+// Select
+$_lang['contentblocks.dropdown'] = "Dropdown";
+$_lang['contentblocks.dropdown.description'] = "A simple dropdown field, allowing the editor to choose one item from a number of predefined options.";
+$_lang['contentblocks.dropdown_template.description'] = "Template for the dropdown field. Available placeholders are <code>[[+value]]</code> (the value option for the chosen item), <code>[[+display]]</code> (the displayed value in the dropdown).";
+$_lang['contentblocks.dropdown.options'] = "Drop-down Options";
+$_lang['contentblocks.dropdown.options.description'] = "Define available values as 'value==Displayed Value', with one option per line. If you only pass a single value per line (such as 'foo'), that will be used as both displayed and placeholder value. Prefixing a single value with # will make it a disabled option. You can also use @SNIPPET bindings to dynamically provide option values. For detailed information on specifying options consult the Dropdown documentation at modmo.re/cb.";
+$_lang['contentblocks.dropdown.default_value'] = "Default Value";
+$_lang['contentblocks.dropdown.default_value.description'] = "The default value to choose when the dropdown is inserted, or nothing is selected.";
 
 // Snippet
 $_lang['contentblocks.snippet'] = "Сниппет";
@@ -473,12 +508,6 @@ $_lang['setting_contentblocks.image.source_desc'] = "Choose the default media so
 $_lang['setting_contentblocks.image.upload_path'] = "Upload Path";
 $_lang['setting_contentblocks.image.upload_path_desc'] = "The path, within the defined media source, to which the files should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders.";
 
-$_lang['setting_contentblocks.cache_source'] = "Cache Source";
-$_lang['setting_contentblocks.cache_source.description'] = "Choose the media source to use for image and gallery thumbnail cache files.";
-
-$_lang['setting_contentblocks.cache_path'] = "Cache Path";
-$_lang['setting_contentblocks.cache_path.description'] = "The path, within the defined media source, to which the thumbnail cache files should be uploaded.";
-
 $_lang['setting_contentblocks.sanitize_pattern'] = "Sanitize Pattern";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "A RegEx pattern to use in sanitizing file names that need to be sanitized.";
 
@@ -501,3 +530,6 @@ $_lang['setting_contentblocks.translit_class'] = "Translit Class";
 $_lang['setting_contentblocks.translit_class_desc'] = "The name of the class to use for transliteration. If this value is empty, it will inherit from the core \"friendly_alias_translit_class\" setting.";
 $_lang['setting_contentblocks.translit_class_path'] = "Translit Class Path";
 $_lang['setting_contentblocks.translit_class_path_desc'] = "The path to the class to use for transliteration. If this value is empty, it will inherit from the core \"friendly_alias_translit_class_path\" setting.";
+
+$_lang['setting_contentblocks.base_url_mode'] = "Base URL Mode";
+$_lang['setting_contentblocks.base_url_mode_desc'] = "When uploading images, the URLs are automatically normalised in a way relative to the base url to ensure they show up in the front and back-end. Depending on your MODX setup, especially in multi-context sites, you might need to change this mode for images to show in the front-end. The accepted values are: <code>relative</code> (default: images are relative to the MODX base url), <code>absolute</code> (image urls contain the MODX base url) or <code>full</code> (images contain the full MODX site url)";

@@ -22,20 +22,6 @@ MODx.load({
         labelAlign: 'top',
         items: [{
             xtype: 'radiogroup'
-            ,fieldLabel: '{/literal}{$_lang['setting_redactor.autoresize']|escape:javascript}{literal}'
-            ,name: 'inopt_autoresize'
-            ,hiddenName: 'inopt_autoresize'
-            ,columns: 1
-            ,items: [
-                {boxLabel: 'On', name: 'inopt_autoresize', inputValue: '1', description: '{/literal}{$_lang['setting_redactor.autoresize_desc']|escape:javascript}{literal}'},
-                {boxLabel: 'Off', name: 'inopt_autoresize', inputValue: '0', description: '{/literal}{$_lang['setting_redactor.autoresize_desc']|escape:javascript}{literal}'},
-                {boxLabel: 'Inherit', name: 'inopt_autoresize', inputValue: 'inherit', description: '{/literal}{$_lang['setting_redactor.autoresize_desc']|escape:javascript}{literal}'}
-            ]
-            ,listeners: oc
-            ,value: params['autoresize']
-            ,defaultValue: 'inherit'
-        },{
-            xtype: 'radiogroup'
             ,fieldLabel: '{/literal}{$_lang['setting_redactor.advAttrib'|escape:javascript]}{literal}'
             ,name: 'inopt_advAttrib'
             ,hiddenName: 'inopt_advAttrib'

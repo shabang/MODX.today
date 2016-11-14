@@ -9,7 +9,8 @@
         -->
     </object>
 
-    <object class="mgImage" table="moregallery_image" extends="xPDOSimpleObject">
+    <object class="mgImage" table="moregallery_image" extends="xPDOSimpleObject" inherit="single">
+        <field key="class_key" dbtype="varchar" precision="100" phptype="string" null="false" default="mgImage" />
         <field key="resource" dbtype="int" precision="11" phptype="integer" null="false" />
 
         <field key="filename" dbtype="varchar" precision="250" phptype="string" null="false" default="" />
@@ -34,6 +35,11 @@
 
         <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
 
+        <field key="properties" dbtype="text" phptype="array" null="true" />
+
+        <index alias="class_key" name="class_key" primary="false" unique="false" type="BTREE">
+            <column key="class_key" length="" collation="A" null="false" />
+        </index>
         <index alias="resource" name="resource" primary="false" unique="false" type="BTREE">
             <column key="resource" length="" collation="A" null="false" />
         </index>
@@ -50,6 +56,9 @@
         <aggregate alias="Resource" class="mgResource" local="resource" foreign="id" cardinality="one" owner="foreign" />
         <composite alias="Tags" class="mgImageTag" local="id" foreign="image" cardinality="many" owner="local" />
     </object>
+    <object class="mgVideo" extends="mgImage" inherit="single" />
+    <object class="mgYouTubeVideo" extends="mgVideo" inherit="single" />
+    <object class="mgVimeoVideo" extends="mgVideo" inherit="single" />
 
     <object class="mgTag" table="moregallery_tag" extends="xPDOSimpleObject">
         <field key="display" dbtype="varchar" precision="250" phptype="string" null="false" default="" />

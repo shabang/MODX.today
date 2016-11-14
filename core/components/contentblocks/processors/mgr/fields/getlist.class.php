@@ -42,7 +42,7 @@ class cbFieldGetListProcessor extends modObjectGetListProcessor {
 
         if ($inputs = $this->getProperty('inputs')) {
             $c->where(array(
-              'cbField.input:IN' => $inputs,
+                'cbField.input:IN' => explode(',',$inputs),
             ));
         }
 

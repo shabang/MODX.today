@@ -97,19 +97,28 @@ ContentBlocksComponent.grid.Defaults = function (config) {
 
             }
         ],
-        tbar: [
-            {
-                text: _('contentblocks.add_default'),
-                handler: this.addDefault,
-                scope: this
-            }
-        ]
+        tbar: this.getToolbarButtons(config)
     });
     ContentBlocksComponent.grid.Defaults.superclass.constructor.call(this, config);
     this.propRecord = Ext.data.Record.create(config.fields);
 };
 Ext.extend(ContentBlocksComponent.grid.Defaults, MODx.grid.Grid, {
+    getToolbarButtons: function(config) {
+        var buttons = [];
+        if (ContentBlocksConfig.permissions.defaults_new) {
+            buttons.push({
+                text: _('contentblocks.add_default'),
+                handler: this.addDefault,
+                scope: this
+            });
+        }
+        return buttons;
+    },
+
     addDefault: function () {
+        if (!ContentBlocksConfig.permissions.defaults_new) {
+            return false;
+        }
         var win = MODx.load({
             xtype: 'contentblocks-window-defaults',
             listeners: {
@@ -123,6 +132,9 @@ Ext.extend(ContentBlocksComponent.grid.Defaults, MODx.grid.Grid, {
     },
 
     editDefault: function () {
+        if (!ContentBlocksConfig.permissions.defaults_edit) {
+            return false;
+        }
         var record = this.menu.record;
         var win = MODx.load({
             xtype: 'contentblocks-window-defaults',
@@ -142,6 +154,9 @@ Ext.extend(ContentBlocksComponent.grid.Defaults, MODx.grid.Grid, {
 
 
     deleteDefault: function () {
+        if (!ContentBlocksConfig.permissions.defaults_delete) {
+            return false;
+        }
         var record = this.menu.record;
 
         MODx.msg.confirm({
@@ -163,15 +178,25 @@ Ext.extend(ContentBlocksComponent.grid.Defaults, MODx.grid.Grid, {
     getMenu: function () {
         var m = [];
 
-        m.push({
-            text: _('contentblocks.edit_default'),
-            handler: this.editDefault,
-            scope: this
-        }, '-', {
-            text: _('contentblocks.delete_default'),
-            handler: this.deleteDefault,
-            scope: this
-        });
+        if (ContentBlocksConfig.permissions.defaults_edit) {
+            m.push({
+                text: _('contentblocks.edit_default'),
+                handler: this.editDefault,
+                scope: this
+            });
+        }
+
+        if (ContentBlocksConfig.permissions.defaults_delete) {
+            if (m.length > 0) {
+                m.push('-');
+            }
+            m.push({
+                text: _('contentblocks.delete_default'),
+                handler: this.deleteDefault,
+                scope: this
+            });
+        }
+
         return m;
     },
 

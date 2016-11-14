@@ -1,3 +1,80 @@
+++ ContentBlocks 1.5.1-pl
+++ Released on 2016-09-23
+++++++++++++++++++++++++++
+- Fix "Add content here" button being hidden within layouts in a repeater
+
+++ ContentBlocks 1.5.0-pl
+++ Released on 2016-09-13
+++++++++++++++++++++++++++
+- Fix chunk inputs in the template builder
+
+++ ContentBlocks 1.5.0-rc2
+++ Released on 2016-09-05
+++++++++++++++++++++++++++
+- Prevent images/common objects from taking more than 100% width in a dynamic chunk preview [#412]
+- Store nested field data in $linear variable so that cbHasField / cbGetFieldContent can access the data of nested fields
+- Fix clearing Layout/Template filter resetting the grid to show fields [S9791]
+- Add empty alt attribute to default image input, and htmlent filter to image with title input [#418]
+
+++ ContentBlocks 1.5.0-rc1
+++ Released on 2016-08-03
+++++++++++++++++++++++++++
+New Features:
+- Full control over what users can do in the ContentBlocks component with a new Access Policy with 35 permissions [#389]
+- Add property add_first_item to repeaters to control if an empty first item should be automatically added [#386]
+- Property added to enable TinyRTE on textfield, textarea and quote input types [#347]
+- Added ability to duplicate a field/layout setting
+- Add new dropdown input type [#217]
+- Chunk fields will now show a dynamically updated preview
+
+Improvements:
+- Select, radio and checkbox settings now support "value==Displayed Value" format on top of "Displayed Value=value"
+- Detect when alerts have been dismissed in the browser to still allow removing fields/layouts
+
+Fixes:
+- Fix incorrect strpos check causing the parser to be called more often than necessary [#399]
+- Fix "available templates" on layout fields not being respected when adding a layout between existing layouts [#398]
+- Prevent js error when generating the canvas on an existing non-richtext resource
+- Fix exposed radio/checkbox settings sharing the same name attribute [#406]
+
+Deprecations:
+- "Displayed Value=value" format for field and layout settings and new dropdown input will be removed in 2.0. Recommended to use the new "value==Displayed Value" instead.
+
+++ ContentBlocks 1.4.5-pl
+++ Released on 2016-05-18
+++++++++++++++++++++++++++
+- Update ace to build 18.02.16 (src-min-noconflict) to resolve conflicts with the MODX Ace package in the component
+
+++ ContentBlocks 1.4.4-pl
+++ Released on 2016-05-17
+++++++++++++++++++++++++++
+- Load translations from lexicon before rendering to make sure they're always applied [#394]
+- Fix issue outputting empty list items [#333]
+- Fix html in setting default values getting parsed in the grid [#325]
+- Prevent moving list items into unrelated sortables [#334]
+- Fix syntax highlighting on code input when the Ace package is installed and active
+
+++ ContentBlocks 1.4.3-pl
+++ Released on 2016-04-25
+++++++++++++++++++++++++++
+- Fix video input breaking the MODX Media Manager and dropdown TVs, caused by Google JS API [#387]
+- Fix issue selecting availability fields in certain languages due to max length option [#388]
+
+++ ContentBlocks 1.4.2-pl
+++ Released on 2016-04-11
+++++++++++++++++++++++++++
+- Fix MySQL error caused by the templates "Target Field" dropdown [S8482]
+- Fix viewing layouts and templates on layout fields when "allowed templates" or "allowed layouts" is set to -1. [S8356]
+
+++ ContentBlocks 1.4.1-pl
+++ Released on 2016-04-04
+++++++++++++++++++++++++++
+- Only hide delete button on repeater fields [#380]
+- Fix E_NOTICE caused by lexicon files
+- Fix the template builder being broken since 1.4 [#385]
+- Hide filter options on subfield grids [#383]
+- Fix ID conflicts in the subfield grids when editing a repeater
+
 ++ ContentBlocks 1.4.0-pl
 ++ Released on 2016-03-23
 ++++++++++++++++++++++++++

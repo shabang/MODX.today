@@ -17,7 +17,7 @@
             }
             dom.find('ul, ol').sortable({
                 items: 'li',
-                connectWith: 'ul, ol',
+                connectWith: '.contentblocks-field-list-outer ul, .contentblocks-field-list-outer ol',
                 forceHelperSize: true,
                 forcePlaceholderSizeType: true,
                 placeholder: 'ui-sortable-list-placeholder',

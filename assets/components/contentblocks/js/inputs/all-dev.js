@@ -50,10 +50,16 @@
     ContentBlocks.fieldTypes.textarea = function(dom, data) {
         return {
             init: function () {
-                setTimeout(function() {
-                    dom.find('.contentblocks-field-textarea textarea').autoGrow()
-                        .on('change', ContentBlocks.fixColumnHeights);
-                }, 100);
+                if (ContentBlocks.toBoolean(data.properties.use_tinyrte)) {
+                    var field = dom.find('#' + data.generated_id + '_textarea');
+                    ContentBlocks.addTinyRte(field);
+                }
+                else {
+                    setTimeout(function() {
+                        dom.find('.contentblocks-field-textarea textarea').autoGrow()
+                            .on('change', ContentBlocks.fixColumnHeights);
+                    }, 100);
+                }
             },
             getData: function () {
                 return {
@@ -90,6 +96,13 @@
 
     ContentBlocks.fieldTypes.textfield = function(dom, data) {
         return {
+            init: function() {
+                if (ContentBlocks.toBoolean(data.properties.use_tinyrte)) {
+                    var field = dom.find('#' + data.generated_id + '_textfield');
+                    ContentBlocks.addTinyRte(field);
+                }
+            },
+
             getData: function () {
                 return {
                     value: dom.find('.contentblocks-field-text input').val()
@@ -101,9 +114,15 @@
     ContentBlocks.fieldTypes.quote = function(dom, data) {
         return {
             init: function () {
-                setTimeout(function() {
-                    dom.find('.contentblocks-field-textarea textarea').autoGrow().on('change', ContentBlocks.fixColumnHeights);
-                }, 100);
+                if (ContentBlocks.toBoolean(data.properties.use_tinyrte)) {
+                    var field = dom.find('#' + data.generated_id + '_quote');
+                    ContentBlocks.addTinyRte(field);
+                }
+                else {
+                    setTimeout(function () {
+                        dom.find('.contentblocks-field-textarea textarea').autoGrow().on('change', ContentBlocks.fixColumnHeights);
+                    }, 100);
+                }
                 if (data.cite) {
                     dom.find('.contentblocks-field-text input').val(data.cite);
                 }
@@ -845,7 +864,9 @@
     ContentBlocks.fieldTypes.chunk = function(dom, data) {
         var input = {
             preview: dom.find('.chunkOutput'),
-            propList: dom.find('.contentblocks-properties-list')
+            propList: dom.find('.contentblocks-properties-list'),
+            dynamicPreview: true,
+            fieldWrapper: dom.closest('.contentblocks-field-outer')
         };
 
         input.init = function() {
@@ -854,17 +875,47 @@
                 return;
             }
 
-            var loadPreview = true;
             if (data.properties.custom_preview && data.properties.custom_preview.length > 1) {
-                loadPreview = false;
+                input.dynamicPreview = false;
                 input.preview.html(data.properties.custom_preview);
             }
             else {
                 dom.addClass('contentblocks-field-loading');
+                var resourcePanel = (window.Ext && Ext.getCmp) ? Ext.getCmp('modx-panel-resource') : null;
+                if (resourcePanel) {
+                    resourcePanel.on('success', function(o) {
+                        input.loadPreview(false, input.getPreviewData());
+                    });
+                }
             }
+
+            // Watch for changes in input types on the entire field
+            input.fieldWrapper.on('input change', 'input, textarea, select', ContentBlocks.utilities.debounce(function() {
+                ContentBlocks.fireChange();
+                if (input.dynamicPreview) {
+                    input.loadPreview(false, input.getPreviewData());
+                }
+            }, 300));
+
+            // Load the preview now
+            input.loadPreview(true, input.getPreviewData(true));
+        };
+
+        input.getPreviewData = function(loadProperties) {
+            loadProperties = loadProperties || false;
+            var previewData = $.extend({
+                settings: Ext.decode(input.fieldWrapper.data('settings')) || {}
+            }, input.getData());
+            if (loadProperties) {
+                previewData.chunk_properties = data.chunk_properties;
+            }
+            return previewData;
+        };
+        
+        input.loadPreview = function(loadProperties, dataValues) {
             $.ajax({
                 dataType: 'json',
-                url: MODx.config.connector_url ? MODx.config.connector_url : MODx.config.connectors_url + "/element/chunk.php",
+                url: ContentBlocksConfig.connector_url,
                 type: "POST",
                 beforeSend:function(xhr, settings){
                     if(!settings.crossDomain) {
@@ -872,8 +923,11 @@
                     }
                 },
                 data: {
-                    action: MODx.config.connector_url ? 'element/chunk/get' : 'get',
-                    id: data.properties.chunk
+                    action: 'content/chunk/get',
+                    id: data.properties.chunk,
+                    field: data.field,
+                    resource: ContentBlocksResource && ContentBlocksResource.id ? ContentBlocksResource.id : 0,
+                    data: dataValues
                 },
                 context: this,
                 success: function(result) {
@@ -882,13 +936,13 @@
                         ContentBlocks.alert(result.message);
                     }
                     else {
-                        if (loadPreview) {
-                            var content = result.object.content;
+                        if (input.dynamicPreview) {
+                            var content = result.object.preview;
                             content = content.replace(/(<\s*\/?\s*)script(\s*([^>]*)?\s*>)/gi ,'$1jscript$2');
                             dom.find('.chunkOutput').html(content);
                         }
 
-                        if (result.object.properties) {
+                        if (loadProperties && result.object.properties) {
                             this.loadProperties(result.object.properties);
                         }
                     }
@@ -926,15 +980,87 @@
                             input.propList.append(tmpl('contentblocks-field-chunk-property', property));
                             break;
                     }
-
-                    var prop = input.propList.find('#' + property.id);
-                    prop.find('input,select').on('change', function() {
-                        ContentBlocks.fireChange();
-                    })
                 });
                 input.propList.show();
                 ContentBlocks.fixColumnHeights();
             }
+        };
+
+        return input;
+    }
+})(vcJquery, ContentBlocks);
+
+(function ($, ContentBlocks) {
+    ContentBlocks.fieldTypes.dropdown = function(dom, data) {
+        var input = {
+            fieldId: data.field,
+            select: null,
+            options: {}
+        };
+
+        input.init = function() {
+            dom.addClass('contentblocks-field-loading');
+            this.select = dom.find('.contentblocks-field-dropdown-select select');
+
+            $.ajax({
+                dataType: 'json',
+                url: ContentBlocksConfig.connectorUrl,
+                data: {
+                    action: 'content/dropdown/getlist',
+                    field: input.fieldId
+                },
+                context: this,
+                beforeSend:function(xhr, settings){
+                    if(!settings.crossDomain) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                    }
+                },
+                success: function(result) {
+                    if (result.results) {
+                        input.setOptions(result.results);
+                        this.optionsLoaded();
+                    }
+                    else {
+                        ContentBlocks.alert(_('contentblocks.dropdown.none_available'))
+                    }
+                    dom.removeClass('contentblocks-field-loading');
+                }
+            });
+
+        };
+
+        input.setOptions = function(options) {
+            input.options = options;
+            input.optionsLoaded();
+        };
+
+        input.optionsLoaded = function() {
+            input.select.empty();
+            $.each(input.options, function(idx, option) {
+                var opt = $('<option></option>');
+                opt.attr('value', option.value);
+                opt.text(option.display);
+                if (option.disabled) {
+                    opt.attr('disabled', 'disabled');
+                }
+
+                input.select.append(opt);
+            });
+
+            if (!data.value) {
+                data.value = data.properties.default_value;
+            }
+
+            if (data.value) {
+                input.select.val(data.value);
+            }
+        };
+
+        input.getData = function () {
+            return {
+                value: input.select.val() || '',
+                display: input.select.find(':selected').text()
+            };
         };
 
         return input;

@@ -12,4 +12,13 @@ $xpdo_meta_map = array (
     2 => 'mgImageTag',
     3 => 'mgImageCrop',
   ),
+  'mgImage' => 
+  array (
+    0 => 'mgVideo',
+  ),
+  'mgVideo' => 
+  array (
+    0 => 'mgYouTubeVideo',
+    1 => 'mgVimeoVideo',
+  ),
 );

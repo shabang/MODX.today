@@ -5,6 +5,7 @@
 class cbLayoutCreateProcessor extends modObjectCreateProcessor {
     public $classKey = 'cbLayout';
     public $languageTopics = array('contentblocks:default');
+    public $permission = array('contentblocks_layouts_new' => true, 'contentblocks_layouts_save' => true);
 
     /**
      * @return bool

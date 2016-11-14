@@ -3,7 +3,7 @@
 /**
  * Updater
  *
- * Copyright 2015 inreti GmbH <info@inreti.de>
+ * Copyright 2016 Jens Külzer <jens.kuelzer@inreti.de>
  * Author: Jens Külzer
  *
  * Updater is free software; you can redistribute it and/or modify it under the
@@ -27,41 +27,66 @@
  * @subpackage lexicon
  */
 
+$ns = 'updater.';
+
 /* ************ Common section ****************/
-$_lang['release_notes'] = 'Hinweise zur Veröffentlichung';
+$_lang[$ns.'release_notes']                         = 'Release Notes';
+$_lang[$ns.'changelog']     = 'Changelog';
+$_lang[$ns.'changelog_text']     = 'Lesen Sie das';
+
+$_lang[$ns.'widget_button_installer']               = 'Installer';  // The german "Package Verwaltung" is a bad word and too long
+$_lang[$ns.'package_tooltip_button_installer']      = 'Installieren oder aktualisieren Sie Ihre Extras mit dem Paket-Manager.';
+
+$_lang[$ns.'widget_button_refresh']                 = 'Aktualisieren';
+$_lang[$ns.'widget_tooltip_button_refresh']         = 'Klicken Sie hier um die Update-Daten zu erneuern.';
+
+$_lang[$ns.'widget_button_download']                = 'Download';
+$_lang[$ns.'widget_button_setup']                   = 'Setup';
+
+$_lang[$ns.'widget_button_retry']                   = 'Retry';
+$_lang[$ns.'widget_tooltip_button_retry']           = 'Klicken Sie hier, um einen erneuten Aktualisierungsversuch zu starten.';
 
 /* ************* Packages section *************/
-$_lang['package_area'] = 'Extras';
+$_lang[$ns.'package_area']                          = 'Extras';
 
-$_lang['package_update_title.single'] = 'Paket-Update zum Download verfügbar';
-$_lang['package_update_title.multi'] = 'Paket-Updates zum Download verfügbar';
-$_lang['package_update_msg_default'] = '[[+count]] Pakete können aktualisiert werden.';
-$_lang['package_update_tooltip'] = 'Sie sollten die Pakete im Installer jetzt aktualisieren.';
+$_lang[$ns.'package_msg_update_default']            = '[[+count]] Extras können aktualisiert werden.';
 
-$_lang['package_install_title'] = 'Pakete noch nicht installiert';
-$_lang['package_install_msg.single'] = 'Ein Paket ist noch nicht installiert worden.';
-$_lang['package_install_msg.multi'] = '[[+count]] Pakete wurden noch nicht installiet.';
-$_lang['package_install_tooltip'] = 'Sie haben Pakete, die heruntergeladen aber noch nicht installiert sind.';
-$_lang['package_install_awaiting'] = ' warten auf Installation...';
+$_lang[$ns.'package_title_install']                 = 'Extras zum Installieren';
+$_lang[$ns.'package_tooltip_install']               = 'Sie haben Extras im System, die heruntergeladen\naber noch nicht installiert wurden.';
+$_lang[$ns.'package_msg_install.single']            = 'Extra zum Installieren:';
+$_lang[$ns.'package_msg_install.multi']             = '[[+count]] Extras zum Installieren:';
 
-$_lang['package_uptodate_title'] = 'Pakete';
-$_lang['package_uptodate_msg.single'] = 'Das installierte Paket ist aktuell.';
-$_lang['package_uptodate_msg.multi'] = 'Alle [[+count]] installierten Pakete sind aktuell.';
-$_lang['package_uptodate_tooltip'] = '';
+$_lang[$ns.'package_title_update_and_install']      = 'Aktualisierungen verfügbar!';
+$_lang[$ns.'package_title_update_and_noinstall']    = 'Aktualisierungen verfügbar!';
+$_lang[$ns.'package_title_noupdate_and_noinstall']  = 'Alle [[+count]] installierten Extras sind aktuell.';
+$_lang[$ns.'package_title_noupdate_and_install']    = 'Extras bereit zum installieren';
+$_lang[$ns.'package_tooltip_update']                = 'Extras sind bereit zum installieren/erneuern.';
 
-$_lang['package_buttontext'] = 'Installer';
+$_lang[$ns.'package_title_uptodate']                = 'Extras';
+$_lang[$ns.'package_msg_uptodate.single']           = 'Sie haben <strong>[[+count]]</strong> Extra installiert.<br/>Dieses ist aktuell.';
+$_lang[$ns.'package_msg_uptodate.multi']            = 'Sie haben <strong>[[+count]]</strong> Extras installiert.<br/>Alle sind aktuell.';
+$_lang[$ns.'package_tooltip_uptodate']              = 'Alles bestens. Extras sind alle aktuell.';
+
+$_lang[$ns.'package_stale_title']                   = "Update information veraltet";
+$_lang[$ns.'package_stale_msg']                     = "Der Update-Status ist veraltet und muss aktualisiert werden.";
 
 /* *********** Core section ***************/
-$_lang['core_area'] = 'Core';
+$_lang[$ns.'core_area']             = 'Core';
 
-$_lang['core_update_title'] = 'Systemupdate verfügbar!';
-$_lang['core_update_tooltip'] = 'Aktualisieren Sie Ihr System jetzt! Hinweise und Hilfe finden Sie auf modx.com.';
+$_lang[$ns.'core_update_title']     = 'System-Update[[+multiple]] verfügbar!';
+$_lang[$ns.'core_update_tooltip']   = 'Aktualisieren Sie Ihr System jetzt! Hinweise und Hilfe finden Sie auf modx.com.';
 
-$_lang['core_uptodate_title'] = 'System';
-$_lang['core_uptodate_msg'] = 'Installation ist aktuell ([[+version]]).';
+$_lang[$ns.'core_uptodate_title']   = 'System';
+$_lang[$ns.'core_uptodate_msg']     = 'Installation ist aktuell ([[+version]]).';
 
-$_lang['core_error_title'] = "Probleme beim Prüfen der Updates";
-$_lang['core_error_msg'] = "Die Versionen konnten nicht auf GitHub ermittelt werden.<br/>Ihre aktuelle Version ist [[+version]].";
+$_lang[$ns.'core_error_title']      = "Probleme beim Prüfen der Updates";
+$_lang[$ns.'core_error_msg']        = "Die Versionen konnten nicht auf GitHub ermittelt werden.<br/>Ihre aktuelle Version ist [[+version]].";
+
+$_lang[$ns.'core_dev_title']        = "Entwicklungsumgebung";
+$_lang[$ns.'core_dev_msg']          = "Es läuft ein Dev-System ([[+version]]).<br/>Bitte über git aktualisieren!";
+
+$_lang[$ns.'core_stale_title']      = "Update information veraltet";
+$_lang[$ns.'core_stale_msg']        = "Der Update-Status ist veraltet und muss aktualisiert werden.<br/>Diese Version ist: <strong>[[+version]]</strong>.";
 
 /* ************* error and network ***********/
-$_lang['github_error_tooltip'] = "Github antwortet nicht. Passen Sie ggf. die Timeout-Einstellungen bei den Systemeinstellungen an Ihre Verbindung an.";
+$_lang[$ns.'github_error_tooltip'] = "Github antwortet nicht. Passen Sie ggf. die Timeout-Einstellungen bei den Systemeinstellungen an Ihre Verbindung an.";
