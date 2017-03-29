@@ -57,11 +57,23 @@ Ext.extend(moreGallery,Ext.Component,{
         params.data.file_path = undefined;
         params.data.view_url = undefined;
         params.data._source_is_local = undefined;
+        params.data.properties = undefined;
 
         // Ensure that we have a URL.
         if (!options.url) {
             params.url = underscore.result(model, 'url') || MODx.config.connectors_url;
         }
+
+        var successHandler = options.success;
+        options.success = function(responseData) {
+            if (responseData.success === false && responseData.message && responseData.message.length > 0) {
+                alert(responseData.message);
+                model.destroy();
+            }
+            else if (successHandler) {
+                successHandler(responseData);
+            }
+        };
 
         // Make the request, allowing the user to override any Ajax options.
         var xhr = options.xhr = Backbone.ajax(underscore.extend(params, options));

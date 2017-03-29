@@ -198,21 +198,27 @@ var vcJquery = $.noConflict();
 
         buildLayout: function (layoutId, content, settings, container, title, position) {
             position = (position || position === 0) ? position : 'bottom';
-            ContentBlocks.layoutId++;
-            var meta = $.extend(true, {}, ContentBlocksLayouts['_'+layoutId]);
-
             container = container || $('.contentblocks-wrapper > .contentblocks-layout-wrapper');
+            ContentBlocks.layoutId++;
+            var meta = null;
+
+            if (ContentBlocksLayouts['_' + layoutId]) {
+                meta = $.extend(true, {}, ContentBlocksLayouts['_'+layoutId]);
+            }
 
             // Layout not found? Fall back to the default layout
-            if (!meta)
-            {
-                meta = ContentBlocksLayouts['_' + ContentBlocksConfig.default_layout];
+            if (!meta && ContentBlocksLayouts['_' + ContentBlocksConfig.default_layout]) {
+                meta = $.extend(true, {}, ContentBlocksLayouts['_' + ContentBlocksConfig.default_layout]);
             }
 
             // Still not?
-            if (!meta)
-            {
-                container.append('<li><p class="error">Uh oh - tried to add a layout with ID "'+layoutId+'" but it was not found. We also tried to use the default layout ("+ContentBlocksConfig.default_layout+"), but it was also not found. This probably means you either have no layouts defined yet in the ContentBlocks component, or they could not be loaded, or the contentblocks.default_layout setting is not defined properly. Contents of the layout: </p><textarea>' + Ext.encode(content) + '</textarea></li>');
+            if (!meta) {
+                container.append('<li class="contentblocks-layout">' +
+                    '<div class="contentblocks-region-container">' +
+                    '   <div class="contentblocks-region-content" style="padding: 2em;">' +
+                    '<p class="error"><b>Layout #' + layoutId + ' was requested, but it does not exist.</b> The default layout #' + ContentBlocksConfig.default_layout + ' was also not found. This probably means you either have no layouts defined yet in the ContentBlocks component, the contentblocks.default_layout setting is not defined properly, or a layout that was in use has been removed. <a href="https://support.modmore.com/faq/8-contentblocks/#faq_149">Read more about this issue and how to resolve it.</a></p>' +
+                    '<p>When you save this resource, the content of this layout will be deleted. If you may need to restore the content, copy the following raw data to a safe place before saving.</p><textarea>' + Ext.encode(content) + '</textarea>' +
+                    '</div></div></li>');
                 return false;
             }
 
@@ -537,31 +543,34 @@ var vcJquery = $.noConflict();
                     if (fieldHasOptions.indexOf(setting.fieldtype) >= 0 && setting.fieldoptions.length) {
                         setting.value = String(setting.value || '');
                         var settingType = setting.fieldtype,
-                            settingValues = setting.value.split(',');
+                            settingValues = (setting.fieldtype === 'checkbox') ? setting.value.split(',') : [setting.value];
                         setting.options = [];
                         $.each(setting.fieldoptions, function(idx, opt) {
                             var value = false, display = false;
 
-                            // newFormat is for settings of value==Displayed Value
-                            // oldFormat is for settings of Displayed Value=value (@deprecated - to be removed in 2.0)
-                            var newFormat = opt.split('=='),
-                                oldFormat = opt.split('=');
-
-                            // Check if we have the new format with two equals
-                            if (newFormat.length >= 2) {
-                                value = newFormat[0];
-                                display = newFormat[1]
+                            // new format is for settings of value==Displayed Value
+                            // old format is for settings of Displayed Value=value (@deprecated - to be removed in 2.0)
+                            opt = opt.split('==');
+                            // if it's an array longer than 1, it's the new format
+                            if(opt.length > 1) {
+                                value = opt[0];
+                                display = opt[1];
                             }
-
-                            // If no value, check if we have the old format with a single equals sign
-                            if (!value && oldFormat.length >= 2) {
-                                value = oldFormat[1];
-                                display = oldFormat[0];
-                            }
-
-                            // No values with new or old format? Must be a single value for value and displayed value.
-                            if (!value) {
-                                value = display = opt;
+                            // if it's 1, it's the old format
+                            // or the value and display should be the same
+                            else {
+                                opt = opt[0].split('=');
+                                // if it's still 1, then the first value in the array
+                                // should be both the value and the display
+                                // because there were no equal signs
+                                if(opt.length == 1) {
+                                    value = display = opt[0];
+                                }
+                                // otherwise, it's the old format
+                                else {
+                                    value = opt[1];
+                                    display = opt[0];
+                                }
                             }
 
                             var selected = (settingValues.indexOf(value) !== -1) ? ' selected="selected"' : '',
@@ -905,11 +914,17 @@ var vcJquery = $.noConflict();
             });
         },
         
-        repeatLayout: function () {
+        repeatLayout: function (event) {
             var layout = $(this).closest('.contentblocks-layout'),
                 layoutId = layout.data('layout'),
-                container = $(this).closest('.contentblocks-layout-wrapper');
-                var builtLayout = ContentBlocks.buildLayout(layoutId, [], Ext.decode(layout.data('settings')), container);
+                container = $(this).closest('.contentblocks-layout-wrapper'),
+                builtLayout = ContentBlocks.buildLayout(layoutId, [], Ext.decode(layout.data('settings')), container);
+
+            // shim in window.event for all browsers (it only exists in IE)
+            // this allows us to test for whether we're repeating the layout in
+            // the layout input js, so we don't pop up the add layout modal
+            // when repeating layouts
+            window.event = event;
                 
                 // Add fields to the layout
                 var layoutFields = ContentBlocks.getLayoutFields(layout);
@@ -945,7 +960,10 @@ var vcJquery = $.noConflict();
                     allFields: []
                 };
 
-            $.each(layout.find('.contentblocks-content'), function (partIndex, part) {
+            layout.find('.contentblocks-content').filter(function () {
+                var $this = $(this);
+                return $this.parent().closest('.contentblocks-layout').is(layout);
+            }).each(function (partIndex, part) {
                 var $part = $(part),
                     partName = $part.data('part'),
                     partFields = [];
@@ -976,7 +994,7 @@ var vcJquery = $.noConflict();
 
             $.each(root.children('.contentblocks-layout-wrapper').children('li'), function (index, region) {
                 var $region = $(region),
-                    layoutId = $region.data('layout'),
+                    layoutId = $region.data('layout') || false,
                     layoutDomId = $region.attr('id'),
                     // have to get parent() first because $(this) is an li
                     parent = $(this).parent().closest('li.contentblocks-field-outer').data('field') || 0,
@@ -987,6 +1005,11 @@ var vcJquery = $.noConflict();
                         parent: parent,
                         title: ''
                     };
+
+                // Don't include layouts without an ID
+                if (!layoutId) {
+                    return;
+                }
 
                 // Custom titles per layout requires a bit of processing and ugly searching
                 var title = $region.find('> .contentblocks-region-container > .contentblocks-region-container-header .contentblocks-layout-title').text(),
@@ -1438,8 +1461,7 @@ var vcJquery = $.noConflict();
 
         getResourceName: function(link, displayLocation) {
             var l = parseInt(link);
-            ContentBlocks.resourcesSource.get(link, function(suggestions) {
-                var that = this;
+            var fillLink = function(suggestions) {
                 $(suggestions).each(function(i, suggestion) {
                     if(suggestion.id == l) {
                         // are we sending an input field or some other node type?
@@ -1450,11 +1472,12 @@ var vcJquery = $.noConflict();
                         else {
                             $(displayLocation).text(suggestion.pagetitle);
                         }
-                        
                         return false;
                     }
                 });
-            });
+            };
+
+            ContentBlocks.resourcesSource.search(link, fillLink, fillLink);
         },
         
         initializeLinkField : function(input, data) {
@@ -1502,9 +1525,9 @@ var vcJquery = $.noConflict();
                 source: ContentBlocks.resourcesSource.ttAdapter(),
                 templates: {
                     suggestion: function (datum) {
-                        return '<p class="resource-id">#' + datum.id + '</p>' +
+                        return '<div><p class="resource-id">#' + datum.id + '</p>' +
                             '<p class="resource-name">' + datum.pagetitle + '</p>' +
-                            '<p class="resource-introtext">' + datum.introtext + '</p>';
+                            '<p class="resource-introtext">' + datum.introtext + '</p></div>';
                     }
                 },
                 displayKey: 'id'
@@ -1621,7 +1644,7 @@ var vcJquery = $.noConflict();
                     }
                 }
             });
-            ContentBlocks.resourcesSource.initialize();
+            ContentBlocks.resourcesSource = ContentBlocks.resourcesSourceInit();
             ContentBlocks.initFields();
             ContentBlocks.initLayouts();
             ContentBlocks.initTemplates();
@@ -1646,7 +1669,7 @@ var vcJquery = $.noConflict();
                 $body.addClass('contentblocks_loaded');
                 $body.prepend('<div id="contentblocks-modal-mask"></div><div id="contentblocks-modal" class="' + ContentBlocksWrapperCls + '"></div>');
             }
-            
+
             // Resize before showing. Seems somewhat counter-intuitive that it would work, but it does.
             $(window).resize();
             // Show ContentBlocks!
@@ -1682,26 +1705,32 @@ var vcJquery = $.noConflict();
         },
         
         // set up the resource source for resource link typeahead
-        resourcesSource: new Bloodhound({
-            prefetch: {
-                url: (typeof ContentBlocksResource !== 'undefined') ? ContentBlocksConfig.connectorUrl + '?action=content/resources/prefetch&context=' + ContentBlocksResource.context_key : ContentBlocksConfig.connectorUrl + '?action=content/resources/prefetch',
-                ttl: 3600000
-            },
-            remote: {
-                url: ContentBlocksConfig.connectorUrl + '?action=content/resources/search&query=%TERM%',
-                wildcard: '%TERM%',
-                rateLimitWait: 0, // kill rate limiting or link names won't show up when CB is initialized
-                rateLimitBy: 'throttle' // same as above
-            },
-            limit: 15,
-            dupDetector: function(remoteMatch, localMatch) {
-                return remoteMatch.id == localMatch.id;
-            },
-            datumTokenizer: function(d) { 
-                return d.tokens; 
-            },
-            queryTokenizer: Bloodhound.tokenizers.whitespace
-        }),
+        resourcesSource: false,
+
+        resourcesSourceInit: function() {
+            var source = new Bloodhound({
+                prefetch: {
+                    url: (typeof ContentBlocksResource !== 'undefined') ? ContentBlocksConfig.connectorUrl + '?action=content/resources/prefetch&context=' + ContentBlocksResource.context_key : ContentBlocksConfig.connectorUrl + '?action=content/resources/prefetch',
+                    ttl: 3600000
+                },
+                remote: {
+                    url: ContentBlocksConfig.connectorUrl + '?action=content/resources/search&query=%TERM%',
+                    wildcard: '%TERM%',
+                    rateLimitWait: 0, // kill rate limiting or link names won't show up when CB is initialized
+                    rateLimitBy: 'throttle' // same as above
+                },
+                limit: 15,
+                dupDetector: function (remoteMatch, localMatch) {
+                    return remoteMatch.id == localMatch.id;
+                },
+                datumTokenizer: function (d) {
+                    return d.tokens;
+                },
+                queryTokenizer: Bloodhound.tokenizers.whitespace
+            });
+            source.initialize();
+            return source;
+        },
 
         render: function(selector) {
             var contentBody = $(selector);

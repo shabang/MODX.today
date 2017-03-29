@@ -80,6 +80,7 @@ $_lang['contentblocks.duplicate_field'] = "Duplicera fält";
 $_lang['contentblocks.delete_field'] = "Radera fält";
 $_lang['contentblocks.delete_field.confirm'] = "Är du säker att du vill radera detta fält? Potentiellt katastrofala saker kan hända med allt innehåll som använde detta fält. ";
 $_lang['contentblocks.delete_field.confirm.js'] = "Är du säker att du vill radera detta fält?";
+$_lang['contentblocks.delete_field.is_default'] = "Det här fältet kan inte tas bort eftersom det är konfigurerat som standardfält. Detta ställs in med systeminställningen <code>contentblocks.default_field</code>. Mer information om hur du konfigurerar standardinnehåll finns i <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">dokumentationen för standardmallar</a>.";
 $_lang['contentblocks.export_field'] = "Exportera fält";
 $_lang['contentblocks.export_fields'] = "Exportera";
 $_lang['contentblocks.export_fields.confirm'] = "Efter att ha klickat Ja nedan kommer vi att bereda en XML export av alla fält. Detta kan användas för att importera fälten senare eller på en annan installation. Genererandet av XMLen kan ta ett par sekunder beroende på antalet fält du har konfigurerat.";
@@ -96,6 +97,7 @@ $_lang['contentblocks.export_layout'] = "Exportera layout";
 $_lang['contentblocks.delete_layout'] = "Radera layout";
 $_lang['contentblocks.delete_layout.confirm'] = "Är du säker att du vill radera denna layout? Potentiellt katastrofala saker kan hända med allt innehåll som använde denna layout. ";
 $_lang['contentblocks.delete_layout.confirm.js'] = "Är du säker att du vill radera denna [[+layoutName]] layout? All dess innehåll kommer att raderas tillsammas med den om du fortsätter.";
+$_lang['contentblocks.delete_layout.is_default'] = "Denna layout kan inte tas bort eftersom den är konfigurerad som standardlayout. Detta ställs in med systeminställningen <code>contentblocks.default_layout</code>. Mer information om hur du konfigurerar standardinnehåll finns i <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">dokumentation för standardmallar</a>.";
 $_lang['contentblocks.export_layouts'] = "Exportera";
 $_lang['contentblocks.export_layouts.confirm'] = "Efter att ha klickat Ja nedan kommer vi att bereda en XML export av alla layouter. Detta kan användas för att importera layouterna senare eller på en annan installation. Genererandet av XMLen kan ta ett par sekunder beroende på antalet layouter du har konfigurerat.";
 $_lang['contentblocks.import_layouts'] = "Importera";
@@ -174,7 +176,7 @@ $_lang['contentblocks.fieldtype.textfield'] = "Text";
 $_lang['contentblocks.fieldtype.link'] = "Länk";
 $_lang['contentblocks.fieldtype.textarea'] = "Textruta";
 $_lang['contentblocks.fieldoptions'] = "Fältalternativ";
-$_lang['contentblocks.fieldoptions.description'] = "Used for Select field types only. Define available values as \"placeholder_value==Displayed Value\" (\"Displayed Value=placeholder_value\" is also supported, but will be removed in 2.0), one per line. If you only pass a single value per line (such as \"foo\"), that will be used as both displayed and placeholder value.";
+$_lang['contentblocks.fieldoptions.description'] = "Används endast för fälttypen Urvalsfält. Definiera tillgängliga värden som \"platshållarvärde==visat värde\" (\"visat värde=platshållarvärde\" stöds också, men kommer att tas bort i version 2.0), en per rad. Om du endast lägger ett värde per rad (så som \"foo\"), kommer det att användas till både visnings- och platshållarvärdet.";
 $_lang['contentblocks.field_is_exposed'] = "Gör fältet synligt";
 $_lang['contentblocks.field_is_exposed.description'] = "Visa fältet på canvasen istället för endast efter att ha klickat på inställningsikonen";
 $_lang['contentblocks.field_is_exposed.modal'] = "Visa fältinställning i modalt fönster";
@@ -200,7 +202,7 @@ $_lang['contentblocks.delete_category.confirm'] = "Är du säker på att du vill
 $_lang['contentblocks.delete_category.confirm.js'] = "Är du säker på att du vill radera denna kategori?";
 $_lang['contentblocks.export_category'] = "Exportera kategorin";
 $_lang['contentblocks.export_categories'] = "Exportera";
-$_lang['contentblocks.export_categories.confirm'] = "After clicking Yes below, we will prepare an XML export of all Categories. This can be used to import the Categories later or in a different installation. Generating the XML should only take a few seconds.";
+$_lang['contentblocks.export_categories.confirm'] = "Efter att du har klickat på Ja här nedan kommer vi att skapa en XML-export av alla Kategorier. Den kan användas för att importera kategorierna vid ett senare tillfälle eller i en annan installation. Det ska bara ta några få sekunder att generera XML-filen.";
 $_lang['contentblocks.import_categories'] = "Importera";
 $_lang['contentblocks.import_categories.title'] = "Importera kategorier";
 $_lang['contentblocks.import_categories.intro'] = "Genom att ladda upp en XML-fil och välja rätt importläge kan du importera kategorier du exporterade tidigare eller från en annan plats. <b>Var försiktig</b> med att importera kategorier om du har innehåll som använder sig av de nuvarande fälten. Vänligen kontakta support@modmore.com om du är osäker vilket läge som bör användas för importen.";
@@ -277,7 +279,7 @@ $_lang['contentblocks.gallery.thumb_size.small'] = "Liten";
 $_lang['contentblocks.gallery.thumb_size.medium'] = "Medel";
 $_lang['contentblocks.gallery.thumb_size.large'] = "Stor";
 $_lang['contentblocks.gallery.show_description'] = "Visa beskrivning";
-$_lang['contentblocks.gallery.show_description.description'] = "Visa en beskrivningslåda för att tillåta redigören att ge en längre beskrivning till varje bild. ";
+$_lang['contentblocks.gallery.show_description.description'] = "Visa ett beskrivningsfält för att tillåta redigerarem att ge en längre beskrivning till varje bild.";
 $_lang['contentblocks.gallery.show_link_field'] = "Visa länk fält";
 $_lang['contentblocks.gallery.show_link_field.description'] = "Visa ett länkfält så att bilder kan kopplas till resurser eller externa webbplatser.";
 
@@ -341,7 +343,7 @@ $_lang['contentblocks.repeater.max_items_reached'] = "Tyvärr, du får inte läg
 $_lang['contentblocks.repeater.min_items'] = "Minsta antal objekt";
 $_lang['contentblocks.repeater.min_items.description'] = "När satt till ett nummer större än 0, kan inte antalet rader blir lägre än denna gräns.";
 $_lang['contentblocks.repeater.add_first_item'] = "Lägg automatiskt till första objektet";
-$_lang['contentblocks.repeater.add_first_item.description'] = "When enabled the Repeater will automatically get a first item added if there are none added yet.";
+$_lang['contentblocks.repeater.add_first_item.description'] = "När aktiverad kommer Uppreparen automatiskt att få ett objekt tillagt om det inte finns något sedan tidigare.";
 $_lang['contentblocks.repeater.add_item'] = "Lägg till objekt";
 $_lang['contentblocks.repeater.delete_item'] = "Radera objekt";
 $_lang['contentblocks.repeater.wrapper_template.description'] = "Yttre mall som omsluter alla övriga behandlade rader. Ska innehålla platshållaren <code>[[+rows]]</code>, kan också innehålla platshållaren <code>[[+total]]</code>.";
@@ -380,11 +382,11 @@ $_lang['contentblocks.video.youtube_not_loaded'] = "YouTube APIn har inte laddat
 $_lang['contentblocks.video.api_error'] = "Åh nej, ett fel uppstod: [[+message]] (Kod [[+code]])";
 
 // Select
-$_lang['contentblocks.dropdown'] = "Dropdown";
-$_lang['contentblocks.dropdown.description'] = "A simple dropdown field, allowing the editor to choose one item from a number of predefined options.";
-$_lang['contentblocks.dropdown_template.description'] = "Template for the dropdown field. Available placeholders are <code>[[+value]]</code> (the value option for the chosen item), <code>[[+display]]</code> (the displayed value in the dropdown).";
-$_lang['contentblocks.dropdown.options'] = "Drop-down Options";
-$_lang['contentblocks.dropdown.options.description'] = "Define available values as 'value==Displayed Value', with one option per line. If you only pass a single value per line (such as 'foo'), that will be used as both displayed and placeholder value. Prefixing a single value with # will make it a disabled option. You can also use @SNIPPET bindings to dynamically provide option values. For detailed information on specifying options consult the Dropdown documentation at modmo.re/cb.";
+$_lang['contentblocks.dropdown'] = "Listruta";
+$_lang['contentblocks.dropdown.description'] = "En vanlig listruta, som tillåter redigeraren att välja ett objekt från ett antal fördefinierade val.";
+$_lang['contentblocks.dropdown_template.description'] = "Mall att använda för fältet listruta. Tillgängliga platshållare är <code>[[+value]]</code> (värdet för det valda objektet) och <code>[[+display]]</code> (den text som ska visas i listrutan).";
+$_lang['contentblocks.dropdown.options'] = "Alternativ för listruta";
+$_lang['contentblocks.dropdown.options.description'] = "Ange tillgängliga värden som 'värde==visat värde', med ett alternativ per rad. Om du bara anger ett värde per rad (så som 'foo'), kommer det att användas både som visat värde och platshållarvärde. Om ett enstaka värde inleds med # kommer det att visas som ett inaktiverat alternativ. Du kan också använda @SNIPPET bindningar för att dynamiskt tillhandahålla möjliga värden. Detaljerad information om hur du anger alternativ finns i Dropdown dokumentationen på modmo.re/cb.";
 $_lang['contentblocks.dropdown.default_value'] = "Standardvärde";
 $_lang['contentblocks.dropdown.default_value.description'] = "Standardvärdet att välja när listmenyn infogas, eller när ingenting är markerat.";
 
@@ -439,6 +441,10 @@ $_lang['contentblocks.add_layout'] = "Lägg till layout";
 $_lang['contentblocks.add_layout.introduction'] = "Väl layouten du vill lägga till i innehållet.";
 $_lang['contentblocks.upload'] = "Ladda upp";
 $_lang['contentblocks.choose'] = "Välj";
+$_lang['contentblocks.from_url'] = "Från URL";
+$_lang['contentblocks.from_url_title'] = "Lägg till bild från URL";
+$_lang['contentblocks.from_url_prompt'] = "Ange en URL för en bild som ska läggas till. Det ska antingen vara en fullständig URL för en bild på en annan webbplats, eller en relativ URL från roten av denna webbplats. Filen kommer att sparas på servern.";
+$_lang['contentblocks.from_url_notfound'] = "Den efterfrågade bilden kunde inte laddas ner.";
 $_lang['contentblocks.image.or_drop_images'] = "eller släpp bilder här";
 $_lang['contentblocks.image.or_drop_image'] = "eller släpp en bild här";
 $_lang['contentblocks.use_tinyrte'] = "Använd Tiny RTE?";
@@ -461,6 +467,7 @@ $_lang['contentblocks.generating_canvas'] = "Genererar din innehållscanvas... d
 $_lang['contentblocks.content'] = "Mallinnehåll";
 $_lang['contentblocks.open_template_builder'] = "Skapa mall";
 $_lang['contentblocks.template_builder'] = "Mallskapare";
+$_lang['contentblocks.close_modal'] = "Stäng dialogrutan";
 
 /**
  * Settings. Oh boy.
@@ -478,6 +485,9 @@ $_lang['setting_contentblocks.debug_desc'] = "När funktionen är aktiv kommer C
 $_lang['setting_contentblocks.disabled'] = "Inaktiverad";
 $_lang['setting_contentblocks.disabled_desc'] = "Sätt denna inställning till 1 för att inaktivera ContentBlocks helt på denna hemsida. Detta kan åsidosättas på kontextnivå för att endast använda det på specifika kontexter.";
 
+$_lang['setting_contentblocks.show_resource_option'] = "Visa resursinställningarna";
+$_lang['setting_contentblocks.show_resource_option_desc'] = "När aktiverad har du möjligheten att aktivera eller inaktivera ContentBlocks på specifika resurser, med inställningen 'Använd ContentBlocks' under resursinställningarna.";
+
 $_lang['setting_contentblocks.implode_string'] = "Kombinera sträng";
 $_lang['setting_contentblocks.implode_string_desc'] = "Limmet mellan individuella fält och layout utskrifter när innehållet parsas.";
 
@@ -489,6 +499,9 @@ $_lang['setting_contentblocks.default_layout_part_desc'] = "Ange referensen till
 
 $_lang['setting_contentblocks.default_field'] = "Standardfält";
 $_lang['setting_contentblocks.default_field_desc'] = "Ange ID för ett fält att infoga i standardkolumnen för standardlayouten du angett. När satt till 0, kommer ett enkelt rik-text fält eller textruta att användas. Från och med 1.2 gäller detta endast när ingen standardmall finns.";
+
+$_lang['setting_contentblocks.defaults_allowed_inputs'] = "Tillåtna inmatningsfält i standardmallar";
+$_lang['setting_contentblocks.defaults_allowed_inputs_desc'] = "En kommaseparerad lista med inmatningsfält (namn) som är tillgängliga i rullistan \"Målfält\" när en standardmall skapas eller editeras.";
 
 $_lang['setting_contentblocks.code.theme'] = "Kodtema";
 $_lang['setting_contentblocks.code.theme_desc'] = "Det tema som skall användas vid inmatning av kod. Hänvisa till Ace dokumentationen för att hitta de olika möjligheterna.";
@@ -506,7 +519,10 @@ $_lang['setting_contentblocks.image.source'] = "Källa";
 $_lang['setting_contentblocks.image.source_desc'] = "Välj standard media källa att använda för bild och galleri inmatningstyper. Detta kan åsidosättas på fält nivå.";
 
 $_lang['setting_contentblocks.image.upload_path'] = "Uppladdningssökväg";
-$_lang['setting_contentblocks.image.upload_path_desc'] = "Sökvägen, inom den definierade media källan, vart filer skall laddas upp. Detta stöder [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] och [[+resource]] platshållare.";
+$_lang['setting_contentblocks.image.upload_path_desc'] = "Sökvägen, inom den valda mediakällan, dit bilderna ska laddas upp. Platshållarna [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] och [[+resource]] stöds. Resursfälten är också tillgängliga, så som [[+pagetitle]] eller [[+alias]] samt mallvariabler enligt [[+tv.namn_på_mallvariabeln]]. Detta kan åsidosättas per fält genom att redigera dess egenskaper.";
+
+$_lang['setting_contentblocks.file.upload_path'] = "Uppladdningssökväg";
+$_lang['setting_contentblocks.file.upload_path_desc'] = "Sökvägen, inom den valda mediakällan, dit filerna ska laddas upp. Platshållarna [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] och [[+resource]] stöds. Resursfälten är också tillgängliga, så som [[+pagetitle]] eller [[+alias]] samt mallvariabler enligt [[+tv.namn_på_mallvariabeln]]. Detta kan åsidosättas per fält genom att redigera dess egenskaper.";
 
 $_lang['setting_contentblocks.sanitize_pattern'] = "Saniteringsmönster";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Ett RegEx mönster att använda vid sanering av filnamn vid behov.";
@@ -531,5 +547,5 @@ $_lang['setting_contentblocks.translit_class_desc'] = "Namnet på den klass som 
 $_lang['setting_contentblocks.translit_class_path'] = "Sökväg till Translit klass";
 $_lang['setting_contentblocks.translit_class_path_desc'] = "Sökvägen till klassen att använda för transkribering. Om detta värde är tomt ärver det från kärnans \"friendly_alias_translit_class_path\" inställning.";
 
-$_lang['setting_contentblocks.base_url_mode'] = "Base URL Mode";
-$_lang['setting_contentblocks.base_url_mode_desc'] = "When uploading images, the URLs are automatically normalised in a way relative to the base url to ensure they show up in the front and back-end. Depending on your MODX setup, especially in multi-context sites, you might need to change this mode for images to show in the front-end. The accepted values are: <code>relative</code> (default: images are relative to the MODX base url), <code>absolute</code> (image urls contain the MODX base url) or <code>full</code> (images contain the full MODX site url)";
+$_lang['setting_contentblocks.base_url_mode'] = "Inställning för baswebbadress (base URL)";
+$_lang['setting_contentblocks.base_url_mode_desc'] = "När bilder laddas upp, kommer webbadresserna automatiskt att normaliseras på ett visst sätt i förhållande till baswebbadressen (base URL) för att säkerställa att de visas korrekt både i frontend och backend. Beroende på dina inställningar för MODX, särskilt om flera kontexter används, kan du behöva ändra denna inställning för att bilderna ska visas korrekt i frontend. Tillåtna värden är: <code>relativ</code> (standard: bilder visas relativt MODX baswebbaddress), <code>absolut</code> (bildernas webbadress innehåller MODX baswebbadress) eller <code>full</code> (bildernas webbaddress innehåller den fullständiga webbaddressen)";

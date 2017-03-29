@@ -80,6 +80,7 @@ $_lang['contentblocks.duplicate_field'] = "Veld dupliceren";
 $_lang['contentblocks.delete_field'] = "Verwijder veld";
 $_lang['contentblocks.delete_field.confirm'] = "Weet je zeker dat je dit veld wilt verwijderen? Potentieel rampzalige dingen kunnen gebeuren met alle content die dit Veld gebruiken.";
 $_lang['contentblocks.delete_field.confirm.js'] = "Weet je zeker dat je dit veld wilt verwijderen?";
+$_lang['contentblocks.delete_field.is_default'] = "This field cannot be removed because it is configured as the default field. This is set up with the <code>contentblocks.default_field</code> system setting. For more information on setting up default content, see the <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">Default Templates documentation</a>.";
 $_lang['contentblocks.export_field'] = "Exporteer veld";
 $_lang['contentblocks.export_fields'] = "Exporteer";
 $_lang['contentblocks.export_fields.confirm'] = "Na het klikken op Ja hieronder, zullen wij een XML export voorbereiden van alle Velden. Deze kan gebruikt worden om Velden te importeren in een andere installatie. Het genereren van deze XML kan enkele seconden duren, afhankelijk van het aantal Velden dat je hebt geconfigureerd.";
@@ -96,6 +97,7 @@ $_lang['contentblocks.export_layout'] = "Exporteer layout";
 $_lang['contentblocks.delete_layout'] = "Verwijder Layout";
 $_lang['contentblocks.delete_layout.confirm'] = "Weet je zeker dat je dit Layout wilt verwijderen? Potentieel rampzalige dingen kunnen gebeuren met alle content die dit Veld gebruiken.";
 $_lang['contentblocks.delete_layout.confirm.js'] = "Weet je zeker dat je de [[+layoutName]] layout wilt verwijderen? Alle inhoud zal worden verwijderd als je doorgaat.";
+$_lang['contentblocks.delete_layout.is_default'] = "This layout cannot be removed because it is configured as the default layout. This is set up with the <code>contentblocks.default_layout</code> system setting. For more information on setting up default content, see the <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">Default Templates documentation</a>.";
 $_lang['contentblocks.export_layouts'] = "Exporteer";
 $_lang['contentblocks.export_layouts.confirm'] = "Na het klikken op Ja hieronder, zullen wij een XML export voorbereiden van alle Layouts. Deze kan gebruikt worden om Layouts te importeren in een andere installatie. Het genereren van deze XML kan enkele seconden duren, afhankelijk van het aantal Layouts dat je hebt geconfigureerd.";
 $_lang['contentblocks.import_layouts'] = "Importeer";
@@ -439,6 +441,10 @@ $_lang['contentblocks.add_layout'] = "Layout toevoegen";
 $_lang['contentblocks.add_layout.introduction'] = "Kies het layout om toe te voegen aan de Content.";
 $_lang['contentblocks.upload'] = "Upload";
 $_lang['contentblocks.choose'] = "Kies";
+$_lang['contentblocks.from_url'] = "From URL";
+$_lang['contentblocks.from_url_title'] = "Insert image from URL";
+$_lang['contentblocks.from_url_prompt'] = "Enter an URL to an image to insert. This should be either a full URL to the image on a different website, or the relative url from the root of the website. The file will be saved on the server.";
+$_lang['contentblocks.from_url_notfound'] = "The requested image could not be downloaded. ";
 $_lang['contentblocks.image.or_drop_images'] = "of drop afbeeldingen hier";
 $_lang['contentblocks.image.or_drop_image'] = "of drop een afbeelding hier";
 $_lang['contentblocks.use_tinyrte'] = "Gebruik Tiny RTE?";
@@ -461,6 +467,7 @@ $_lang['contentblocks.generating_canvas'] = "Je Content Canvas wordt gegenereerd
 $_lang['contentblocks.content'] = "Template Content";
 $_lang['contentblocks.open_template_builder'] = "Bouw Template";
 $_lang['contentblocks.template_builder'] = "Template Bouwer";
+$_lang['contentblocks.close_modal'] = "Close Modal";
 
 /**
  * Settings. Oh boy.
@@ -478,6 +485,9 @@ $_lang['setting_contentblocks.debug_desc'] = "Indien ingeschakeld zal ContentBlo
 $_lang['setting_contentblocks.disabled'] = "Uitgeschakeld";
 $_lang['setting_contentblocks.disabled_desc'] = "Zet deze setting op 1 om ContentBlocks compleet uit te schakelen op deze site. Dit kan op context niveau worden overschreven om het alleen op specifieke contexts te gebruiken.";
 
+$_lang['setting_contentblocks.show_resource_option'] = "Show Resource Option";
+$_lang['setting_contentblocks.show_resource_option_desc'] = "When enabled you will have the option to enable or disable ContentBlocks on specific resources, with the 'Use ContentBlocks' option on the resource settings.";
+
 $_lang['setting_contentblocks.implode_string'] = "Implodeer String";
 $_lang['setting_contentblocks.implode_string_desc'] = "De tekst of markup om tussen individuele velden en layouts te plaatsen wanneer de content wordt geparsed.";
 
@@ -489,6 +499,9 @@ $_lang['setting_contentblocks.default_layout_part_desc'] = "Geef de verwijzing v
 
 $_lang['setting_contentblocks.default_field'] = "Standaard veld";
 $_lang['setting_contentblocks.default_field_desc'] = "Geef het ID op van een veld welke standaard gebruikt moet worden in de standaard layout die je hebt opgegeven. Bij een waarde van 0 zal een simpel rich text of txt veld worden gebruikt. Sinds versie 1.2 is dit alleen nog van toepassing als er geen standaard template is gevonden.";
+
+$_lang['setting_contentblocks.defaults_allowed_inputs'] = "Allowed Inputs in Default Templates";
+$_lang['setting_contentblocks.defaults_allowed_inputs_desc'] = "A comma separated list of input types (names) that are available in the \"Target Field\" dropdown when creating or editing default templates.";
 
 $_lang['setting_contentblocks.code.theme'] = "Code Thema";
 $_lang['setting_contentblocks.code.theme_desc'] = "Het thema om te gebruiken voor de code input. Zie de Ace documentatie voor de mogelijke waarden.";
@@ -506,7 +519,10 @@ $_lang['setting_contentblocks.image.source'] = "Source";
 $_lang['setting_contentblocks.image.source_desc'] = "Kies de standaard media source om te gebruiken voor afbeeldingen en gallerij input types. Dit kan per veld overschreven worden.";
 
 $_lang['setting_contentblocks.image.upload_path'] = "Upload Pad";
-$_lang['setting_contentblocks.image.upload_path_desc'] = "Het pad, binnen de gekozen media source, waar bestanden naar geupload moeten worden. Dit ondersteunt [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] en [[+resource]] placeholders";
+$_lang['setting_contentblocks.image.upload_path_desc'] = "The path, within the chosen media source, to which the images should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders. Resource fields are also available, like [[+pagetitle]] or [[+alias]], and template variables with [[+tv.name_of_tv]]. This value can be overridden per field by editing its properties.";
+
+$_lang['setting_contentblocks.file.upload_path'] = "Upload Pad";
+$_lang['setting_contentblocks.file.upload_path_desc'] = "The path, within the chosen media source, to which the files should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders. Resource fields are also available, like [[+pagetitle]] or [[+alias]], and template variables with [[+tv.name_of_tv]]. This value can be overridden per field by editing its properties.";
 
 $_lang['setting_contentblocks.sanitize_pattern'] = "Opschoon Patroon";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Een RegEx patroon met tekens die opgeschoond moeten worden bij bestandsnamen.";

@@ -7,7 +7,7 @@ $_lang['contentblocks.mgr.home'] = "Content Blocks";
 $_lang['contentblocks.general'] = "Generale";
 $_lang['contentblocks.properties'] = "Proprietà";
 $_lang['contentblocks.clear_filters'] = "Clear filters";
-$_lang['contentblocks.search'] = "Search";
+$_lang['contentblocks.search'] = "Ricerca";
 
 $_lang['contentblocks.link'] = "Link";
 $_lang['contentblocks.link.description'] = "A field for creating links. Resource, email, and URLs are supported.";
@@ -61,7 +61,7 @@ $_lang['contentblocks.condition_field.ultimateparent'] = "Ultimate Parent ID";
 $_lang['contentblocks.condition_field.class_key'] = "Class Key";
 $_lang['contentblocks.condition_field.context'] = "Contesto";
 $_lang['contentblocks.condition_field.template'] = "Template (ID)";
-$_lang['contentblocks.condition_field.usergroup'] = "User Group (name)";
+$_lang['contentblocks.condition_field.usergroup'] = "Gruppo utenti (nome)";
 $_lang['contentblocks.condition_value'] = "Valore/i";
 $_lang['contentblocks.availibility.layouts'] = "Layout";
 $_lang['contentblocks.availibility.layouts.description'] = "Restrict usage of this Field to one or more (comma separated) Layouts. If left empty, this field is available on all layouts, otherwise it is restricted to the ones you specify.";
@@ -80,10 +80,11 @@ $_lang['contentblocks.duplicate_field'] = "Duplica campo";
 $_lang['contentblocks.delete_field'] = "Elimina campo";
 $_lang['contentblocks.delete_field.confirm'] = "Are you sure you want to delete this Field? Potentially disastrous things can happen with any content that used this Field.";
 $_lang['contentblocks.delete_field.confirm.js'] = "Sei sicuro di voler eliminare questo campo?";
+$_lang['contentblocks.delete_field.is_default'] = "This field cannot be removed because it is configured as the default field. This is set up with the <code>contentblocks.default_field</code> system setting. For more information on setting up default content, see the <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">Default Templates documentation</a>.";
 $_lang['contentblocks.export_field'] = "Export Field";
-$_lang['contentblocks.export_fields'] = "Export";
+$_lang['contentblocks.export_fields'] = "Esporta";
 $_lang['contentblocks.export_fields.confirm'] = "After clicking Yes below, we will prepare an XML export of all Fields. This can be used to import the Fields later or in a different installation. Generating the XML can take a few seconds depending on the number of fields you have configured.";
-$_lang['contentblocks.import_fields'] = "Import";
+$_lang['contentblocks.import_fields'] = "Importa";
 $_lang['contentblocks.import_fields.title'] = "Import Fields";
 $_lang['contentblocks.import_fields.intro'] = "By uploading an XML file and choosing the right import mode, you can import Fields you exported before or from a different site. <b>Be careful</b> with importing Fields if you have content using the current fields already. Please contact support@modmore.com if you are unsure about what mode to use in the import.";
 
@@ -96,13 +97,14 @@ $_lang['contentblocks.export_layout'] = "Export Layout";
 $_lang['contentblocks.delete_layout'] = "Elimina layout";
 $_lang['contentblocks.delete_layout.confirm'] = "Are you sure you want to delete this Layout? Potentially disastrous things can happen with any content that used this Layout.";
 $_lang['contentblocks.delete_layout.confirm.js'] = "Are you sure you want to delete this [[+layoutName]] layout? All its content will be deleted with it if you continue.";
+$_lang['contentblocks.delete_layout.is_default'] = "This layout cannot be removed because it is configured as the default layout. This is set up with the <code>contentblocks.default_layout</code> system setting. For more information on setting up default content, see the <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">Default Templates documentation</a>.";
 $_lang['contentblocks.export_layouts'] = "Esportazione";
 $_lang['contentblocks.export_layouts.confirm'] = "After clicking Yes below, we will prepare an XML export of all Layouts. This can be used to import the Layouts later or in a different installation. Generating the XML can take a few seconds depending on the number of layouts you have configured.";
 $_lang['contentblocks.import_layouts'] = "Importazione";
 $_lang['contentblocks.import_layouts.title'] = "Import Layouts";
 $_lang['contentblocks.import_layouts.intro'] = "By uploading an XML file and choosing the right import mode, you can import Layouts you exported before or from a different site. <b>Be careful</b> with importing Layouts if you have content using the current Layouts already. Please contact support@modmore.com if you are unsure about what mode to use in the import.";
 
-$_lang['contentblocks.layout_settings'] = "Layout Settings";
+$_lang['contentblocks.layout_settings'] = "Impostazioni di layout";
 $_lang['contentblocks.layout_settings.modal_header'] = "[[+name]] Settings";
 
 $_lang['contentblocks.field_settings'] = "Content Settings";
@@ -147,62 +149,62 @@ $_lang['contentblocks.layout.description'] = "A wrapper for fields";
 $_lang['contentblocks.layouts'] = "Layout";
 $_lang['contentblocks.layoutcolumn'] = "Colonna";
 $_lang['contentblocks.layoutcolumns'] = "Colonne";
-$_lang['contentblocks.setting'] = "Setting";
-$_lang['contentblocks.settings'] = "Settings";
+$_lang['contentblocks.setting'] = "Impostazione";
+$_lang['contentblocks.settings'] = "Impostazioni";
 $_lang['contentblocks.settings.layout_description'] = "Settings are user-defined properties that can be tweaked when a layout has been added to the content. The setting values are then available in the template as placeholders, for example [[+class]] for a setting with reference \"class\".";
 $_lang['contentblocks.settings.field_description'] = "Settings are user-defined properties that can be tweaked when a field has been added to the content by clicking the cog icon in the top right of the field. The setting values are then available in the template as placeholders, for example [[+class]] for a setting with reference \"class\".";
 $_lang['contentblocks.input'] = "Input Type";
 $_lang['contentblocks.inputs'] = "Input Types";
-$_lang['contentblocks.name'] = "Name";
-$_lang['contentblocks.columns'] = "Columns";
+$_lang['contentblocks.name'] = "Nome";
+$_lang['contentblocks.columns'] = "Colonne";
 $_lang['contentblocks.columns.description'] = "Columns define how the layout is displayed in the manager, where the width is defined as a percentage. The reference is used for a placeholder which you can use in the Template.";
 $_lang['contentblocks.sortorder'] = "Sort Order";
 $_lang['contentblocks.icon'] = "Icon";
-$_lang['contentblocks.description'] = "Description";
-$_lang['contentblocks.template'] = "Template";
+$_lang['contentblocks.description'] = "Descrizione";
+$_lang['contentblocks.template'] = "Modello";
 $_lang['contentblocks.template.description'] = "The template for the layout has several available placeholders, depending on the Columns and Settings you define in the tabs on the left.";
-$_lang['contentblocks.width'] = "Width";
+$_lang['contentblocks.width'] = "Larghezza";
 $_lang['contentblocks.width.description'] = "The width of the field (in percentages) that this field will take up in the canvas. Fields are floated left so you can create some basic layouts with this option.";
-$_lang['contentblocks.save'] = "Save";
+$_lang['contentblocks.save'] = "Salva";
 $_lang['contentblocks.reference'] = "Reference";
 $_lang['contentblocks.default_value'] = "Valore di default";
 $_lang['contentblocks.fieldtype'] = "Tipo di campo";
-$_lang['contentblocks.fieldtype.select'] = "Select";
+$_lang['contentblocks.fieldtype.select'] = "Seleziona";
 $_lang['contentblocks.fieldtype.radio'] = "Radio options";
 $_lang['contentblocks.fieldtype.checkbox'] = "Checkbox options";
 $_lang['contentblocks.fieldtype.textfield'] = "Testo";
 $_lang['contentblocks.fieldtype.link'] = "Link";
-$_lang['contentblocks.fieldtype.textarea'] = "Textarea";
+$_lang['contentblocks.fieldtype.textarea'] = "Area di testo";
 $_lang['contentblocks.fieldoptions'] = "Field Options";
 $_lang['contentblocks.fieldoptions.description'] = "Used for Select field types only. Define available values as \"placeholder_value==Displayed Value\" (\"Displayed Value=placeholder_value\" is also supported, but will be removed in 2.0), one per line. If you only pass a single value per line (such as \"foo\"), that will be used as both displayed and placeholder value.";
 $_lang['contentblocks.field_is_exposed'] = "Expose field";
 $_lang['contentblocks.field_is_exposed.description'] = "Show field on canvas instead of only after clicking settings icon";
-$_lang['contentblocks.field_is_exposed.modal'] = "Show field setting in modal window";
+$_lang['contentblocks.field_is_exposed.modal'] = "Visualizza l'impostazione del campo nella finestra modale";
 $_lang['contentblocks.field_is_exposed.exposedassetting'] = "Expose field on canvas as a setting";
 $_lang['contentblocks.field_is_exposed.exposedasfield'] = "Expose field on canvas as a regular field";
 
 $_lang['contentblocks.directory'] = 'Directory';
 $_lang['contentblocks.directory.description'] = 'A subfolder within the media source (whether overridden or using the ContentBlocks system setting)';
-$_lang['contentblocks.file_types'] = 'Allowed File Extensions';
-$_lang['contentblocks.file_types.description'] = 'Files with these extensions (comma-separated) will be uploaded. For no restriction, leave blank.';
-$_lang['contentblocks.file_types.disallowed'] = 'File type not allowed in this field';
+$_lang['contentblocks.file_types'] = 'Estensioni di File consentite';
+$_lang['contentblocks.file_types.description'] = 'Verranno caricati i file con queste estensioni (separati da virgola). Lasciare vuoto se non volete restrizioni.';
+$_lang['contentblocks.file_types.disallowed'] = 'Tipo di file non consentito in questo campo';
 
 // Categories
-$_lang['contentblocks.category'] = "Category";
-$_lang['contentblocks.categories'] = "Categories";
+$_lang['contentblocks.category'] = "Categoria";
+$_lang['contentblocks.categories'] = "Categorie";
 $_lang['contentblocks.categories.intro'] = "Use Categories to better organise your Fields, Layouts and Templates. When assigned to an element, the Add Content and Add Layout modals will show categorized items first, followed by an \"Uncategorized\" category.";
 $_lang['contentblocks.uncategorized'] = "Uncategorized";
-$_lang['contentblocks.add_category'] = "Add Category";
-$_lang['contentblocks.edit_category'] = "Edit Category";
-$_lang['contentblocks.duplicate_category'] = "Duplicate Category";
-$_lang['contentblocks.delete_category'] = "Delete Category";
-$_lang['contentblocks.delete_category.confirm'] = "Are you sure you want to delete this Category? Any elements that currently use the category will be set to uncategorized instead.";
-$_lang['contentblocks.delete_category.confirm.js'] = "Are you sure you want to delete this Category?";
-$_lang['contentblocks.export_category'] = "Export Category";
+$_lang['contentblocks.add_category'] = "Aggiungi categoria";
+$_lang['contentblocks.edit_category'] = "Modifica categoria";
+$_lang['contentblocks.duplicate_category'] = "Duplica categoria";
+$_lang['contentblocks.delete_category'] = "Elimina categoria";
+$_lang['contentblocks.delete_category.confirm'] = "Sei sicuro di che voler eliminare questa categoria? Tutti gli elementi che ne fanno uso verranno impostati come senza categoria.";
+$_lang['contentblocks.delete_category.confirm.js'] = "Sei sicuro di che voler eliminare questa categoria?";
+$_lang['contentblocks.export_category'] = "Esporta categoria";
 $_lang['contentblocks.export_categories'] = "Export";
 $_lang['contentblocks.export_categories.confirm'] = "After clicking Yes below, we will prepare an XML export of all Categories. This can be used to import the Categories later or in a different installation. Generating the XML should only take a few seconds.";
-$_lang['contentblocks.import_categories'] = "Import";
-$_lang['contentblocks.import_categories.title'] = "Import Categories";
+$_lang['contentblocks.import_categories'] = "Importa";
+$_lang['contentblocks.import_categories.title'] = "Importa categoria";
 $_lang['contentblocks.import_categories.intro'] = "By uploading an XML file and choosing the right import mode, you can import Categories you exported before or from a different site. <b>Be careful</b> with importing Categories if you have content using the current fields already. Please contact support@modmore.com if you are unsure about what mode to use in the import.";
 
 
@@ -227,20 +229,20 @@ $_lang['contentblocks.chunk.description'] = "Define a chunk to be inserted into 
 $_lang['contentblocks.chunk.choose_chunk'] = "Choose Chunk";
 $_lang['contentblocks.chunk.choose_chunk.description'] = "Choose the chunk that needs to be inserted.";
 $_lang['contentblocks.chunk_template.description'] = "A template for the chunk. Available placeholders: <code>[[+tag]]</code>, <code>[[+chunk_name]]</code>";
-$_lang['contentblocks.chunk.custom_preview'] = "Custom Preview";
+$_lang['contentblocks.chunk.custom_preview'] = "Anteprima personalizzata";
 $_lang['contentblocks.chunk.custom_preview.description'] = "By default if this field is left empty, the Chunk Input will load the actual chunk and display that as preview. If you want, you can override that preview by entering the HTML for the preview here.";
 $_lang['contentblocks.chunk.no_chunk_set'] = "Uh oh.. there is no chunk defined for this field.";
 
-$_lang['contentblocks.chunkselector'] = 'Chunk Selector';
+$_lang['contentblocks.chunkselector'] = 'Selettore di Chunks';
 $_lang['contentblocks.chunk_selector_template.description'] = 'The template for the selected chunk. Available placeholders: <code>[[+value]]</code> (contains the full chunk tag), <code>[[+chunk_name]]</code> (contains the name of the selected chunk)';
-$_lang['contentblocks.chunkselector.description'] = 'Choose a chunk to display';
+$_lang['contentblocks.chunkselector.description'] = 'Scegliere un Chunk da visualizzare';
 $_lang['contentblocks.chunkselector.available_chunks'] = "Name or IDs of allowed chunks (Optional)";
 $_lang['contentblocks.chunkselector.available_chunks.description'] = "To limit the available chunks for the editor, specify a comma separated list of chunks names or IDs. Chunks in this list will always be available, irrespective of the other properties below.";
 $_lang['contentblocks.chunkselector.available_categories'] = "Categorie";
 $_lang['contentblocks.chunkselector.available_categories.description'] = "Specify a list of category names or IDs to limit the available chunks to.";
 
-$_lang['contentblocks.code'] = "Code";
-$_lang['contentblocks.code.description'] = "Shows a textarea with code highlighting.";
+$_lang['contentblocks.code'] = "Codice";
+$_lang['contentblocks.code.description'] = "Mostra un'area di testo con evidenziazione del codice.";
 $_lang['contentblocks.code_template.description'] = "The value of the code input is stored in the <code>[[+value]]</code> placeholder. Depending on your anticipated usage of this field, you would just add the placeholder to the template, or you would encode it (e.g. by doing <code>&lt;pre&gt;&lt;code&gt;[[+value:htmlent]]&lt;/code&gt;&lt;/pre&gt;) for display instead of execution. The <code>[[+lang]]</code> placeholder contains the selected language in the dropdown.";
 $_lang['contentblocks.code.available_languages'] = "Lingue disponibili";
 $_lang['contentblocks.code.available_languages.description'] = "Specify a comma-separated list of <code>value=display</code> entries for the available languages with syntax highlighting. If there is only one language specified, it will be selected and the language dropdown hidden.";
@@ -250,24 +252,24 @@ $_lang['contentblocks.code.language'] = "Lingua";
 $_lang['contentblocks.code.entities'] = "Encode Entities?";
 $_lang['contentblocks.code.entities.description'] = "When enabled, the entered code will have entities and MODX tags encoded for displaying code.";
 
-$_lang['contentblocks.file'] = 'File Input';
+$_lang['contentblocks.file'] = 'File di Input';
 $_lang['contentblocks.file.description'] = 'Add files for linking';
 $_lang['contentblocks.file_template.description'] = 'Valid placeholders are <code>[[+url]]</code>, <code>[[+title]]</code>, <code>[[+size]]</code> (in bytes), <code>[[+upload_date]]</code>, and <code>[[+extension]]</code>';
 $_lang['contentblocks.file.remove_file'] = 'Rimuovi file';
 $_lang['contentblocks.file.max_files'] = 'Numero massimo di file';
-$_lang['contentblocks.file.file.or_drop_files'] = 'or drop files here';
+$_lang['contentblocks.file.file.or_drop_files'] = 'o trascinare i file qui';
 $_lang['contentblocks.file.max_files'] = 'Numero massimo di file';
 $_lang['contentblocks.file.max_files.description'] = 'Defines the maximum number of files allowed per upload field. Additional files over the limit will be refused.';
 $_lang['contentblocks.file.max_files.reached'] = 'Sorry, you cannot use more than [[+max]] files in this section.';
 $_lang['contentblocks.file.directory'] = 'Directory';
 $_lang['contentblocks.file.directory.description'] = 'A subfolder within the media source (whether overridden or using the ContentBlocks system setting)';
-$_lang['contentblocks.file.file_types'] = 'Allowed File Extensions';
-$_lang['contentblocks.file.file_types.description'] = 'Files with these extensions (comma-separated) will be uploaded. For no restriction, leave blank.';
-$_lang['contentblocks.file.file_types.disallowed'] = 'File type not allowed in this field';
-$_lang['contentblocks.file.choose_file'] = 'Choose file';
+$_lang['contentblocks.file.file_types'] = 'Estensioni di File consentite';
+$_lang['contentblocks.file.file_types.description'] = 'Verranno caricati i file con queste estensioni (separati da virgola). Lasciare vuoto se non volete restrizioni.';
+$_lang['contentblocks.file.file_types.disallowed'] = 'Tipo di file non consentito in questo campo';
+$_lang['contentblocks.file.choose_file'] = 'Scegli un file';
 
-$_lang['contentblocks.gallery'] = "Gallery";
-$_lang['contentblocks.gallery.description'] = "A simple gallery input featuring easy multi-image uploads, drag/drop sorting and title attributes.";
+$_lang['contentblocks.gallery'] = "Galleria";
+$_lang['contentblocks.gallery.description'] = "Una semplice gallery con upload semplificato multi-immagine, ordinamento drag/drop e titolo.";
 $_lang['contentblocks.gallery_template.description'] = "Used to wrap individual images. Available placeholders:  <code>[[+url]]</code> (the full link to the image), <code>[[+title]]</code> (the entered title for the image), <code>[[+size]]</code>, <code>[[+extension]]</code>";
 $_lang['contentblocks.gallery_wrapper_template.description'] = "Used for wrapping all images in (as container). Available placeholders: <code>[[+images]]</code>";
 $_lang['contentblocks.gallery_max_images.description'] = "Defines the maximum number of images allowed per gallery. Additional images over the limit will be refused.";
@@ -281,11 +283,11 @@ $_lang['contentblocks.gallery.show_description.description'] = "Show a Descripti
 $_lang['contentblocks.gallery.show_link_field'] = "Show Link field";
 $_lang['contentblocks.gallery.show_link_field.description'] = "Show a link field so images can be linked to resources or external websites.";
 
-$_lang['contentblocks.heading'] = "Heading";
+$_lang['contentblocks.heading'] = "Intestazione";
 $_lang['contentblocks.heading.description'] = "A combination of a select field for the heading level, and a textfield.";
 $_lang['contentblocks.heading_template.description'] = "Template for the heading field. Available placeholders are <code>[[+level]]</code> (the value of the level dropdown) and <code>[[+value]]</code>(the value of the text input).";
-$_lang['contentblocks.default_level'] = "Default Level";
-$_lang['contentblocks.available_levels'] = "Available Levels";
+$_lang['contentblocks.default_level'] = "Livello predefinito";
+$_lang['contentblocks.available_levels'] = "Livelli disponibili";
 $_lang['contentblocks.heading_default_level.description'] = "The value that should be selected by default on new instances of the Heading input.";
 $_lang['contentblocks.heading_available_levels.description'] = "A list, separated by commas, of <code>value=display</code> items for available levels in the dropdown. For the display value, a lexicon prefix of <code>contentblocks.</code> is checked and used if available. Example: <code>h1=heading_1, h2=Second Level,h3=heading_3</code>";
 $_lang['contentblocks.heading_1'] = "Heading 1";
@@ -345,7 +347,7 @@ $_lang['contentblocks.repeater.add_first_item.description'] = "When enabled the 
 $_lang['contentblocks.repeater.add_item'] = "Aggiungi elemento";
 $_lang['contentblocks.repeater.delete_item'] = "Elimina elemento";
 $_lang['contentblocks.repeater.wrapper_template.description'] = "Outer template to wrap all other parsed rows in. Should contain the <code>[[+rows]]</code> placeholder, can also contain <code>[[+total]]</code>, .";
-$_lang['contentblocks.repeater.row_separator'] = "Row Separator";
+$_lang['contentblocks.repeater.row_separator'] = "Separatore di riga";
 $_lang['contentblocks.repeater.row_separator.description'] = "A string to glue together individual rows. This could just be some line breaks, like in the default, or it could be a bunch of html you want in between rows.";
 
 
@@ -360,19 +362,19 @@ $_lang['contentblocks.table.row_template'] = "Row Template";
 $_lang['contentblocks.table.row_template.description'] = "The template for each of the rows in the table, probably contains a <code>&lt;tr&gt;</code> tag. Available placeholder: <code>[[+row]]</code> (contains each of the cells in this row), <code>[[+idx]]</code>";
 $_lang['contentblocks.table.wrapper_template.description'] = "The wrapper template for the entire table. Available placeholder: <code>[[+body]]</code>, <code>[[+total]]</code>.";
 
-$_lang['contentblocks.textarea'] = "Text Area";
-$_lang['contentblocks.textarea.description'] = "Simple multi-line text field.";
+$_lang['contentblocks.textarea'] = "Area di testo";
+$_lang['contentblocks.textarea.description'] = "Semplice campo di testo multi-linea.";
 
-$_lang['contentblocks.textfield'] = "Text Field";
-$_lang['contentblocks.textfield.description'] = "Simple single-line text field.";
+$_lang['contentblocks.textfield'] = "Campo di testo";
+$_lang['contentblocks.textfield.description'] = "Campo di testo semplice a riga singola.";
 $_lang['contentblocks.textfield_template.description'] = "For the textfield simply use the <code>[[+value]]</code> placeholder with a container of choice (a paragraph, heading etc).";
 
 $_lang['contentblocks.video'] = "Video";
 $_lang['contentblocks.video.description'] = "YouTube integration allowing keyword search and pasting in YouTube links to insert videos easily.";
 $_lang['contentblocks.video_template.description'] = "When using a Video input, the YouTube Video ID is stored in the <code>[[+value]]</code> placeholder. This can be used to generate the embed code in this template.";
-$_lang['contentblocks.video.search'] = "Search!";
+$_lang['contentblocks.video.search'] = "Ricerca!";
 $_lang['contentblocks.video.search_introduction'] = "Use the search box below to search YouTube for videos.";
-$_lang['contentblocks.video.enter_keywords'] = "Enter one or more keywords..";
+$_lang['contentblocks.video.enter_keywords'] = "Immettere una o più parole chiave...";
 $_lang['contentblocks.video.load_more_results'] = "Carica più risultati";
 $_lang['contentblocks.video.search_youtube'] = "Cerca su YouTube";
 $_lang['contentblocks.video.paste_link'] = "Incolla un link qui";
@@ -439,6 +441,10 @@ $_lang['contentblocks.add_layout'] = "Aggiungi layout";
 $_lang['contentblocks.add_layout.introduction'] = "Choose the Layout to add to the Content.";
 $_lang['contentblocks.upload'] = "Upload";
 $_lang['contentblocks.choose'] = "Choose";
+$_lang['contentblocks.from_url'] = "From URL";
+$_lang['contentblocks.from_url_title'] = "Inserisci immagine da un URL";
+$_lang['contentblocks.from_url_prompt'] = "Enter an URL to an image to insert. This should be either a full URL to the image on a different website, or the relative url from the root of the website. The file will be saved on the server.";
+$_lang['contentblocks.from_url_notfound'] = "The requested image could not be downloaded. ";
 $_lang['contentblocks.image.or_drop_images'] = "or drop images here";
 $_lang['contentblocks.image.or_drop_image'] = "or drop an image here";
 $_lang['contentblocks.use_tinyrte'] = "Use Tiny RTE?";
@@ -461,6 +467,7 @@ $_lang['contentblocks.generating_canvas'] = "Generating your Content Canvas... t
 $_lang['contentblocks.content'] = "Template Contents";
 $_lang['contentblocks.open_template_builder'] = "Build Template";
 $_lang['contentblocks.template_builder'] = "Template Builder";
+$_lang['contentblocks.close_modal'] = "Close Modal";
 
 /**
  * Settings. Oh boy.
@@ -478,6 +485,9 @@ $_lang['setting_contentblocks.debug_desc'] = "When enabled ContentBlocks will us
 $_lang['setting_contentblocks.disabled'] = "Disabilitato";
 $_lang['setting_contentblocks.disabled_desc'] = "Set this setting to 1 to completely disable ContentBlocks on this site. This can be overridden on the context level to only use it on specific contexts. ";
 
+$_lang['setting_contentblocks.show_resource_option'] = "Show Resource Option";
+$_lang['setting_contentblocks.show_resource_option_desc'] = "When enabled you will have the option to enable or disable ContentBlocks on specific resources, with the 'Use ContentBlocks' option on the resource settings.";
+
 $_lang['setting_contentblocks.implode_string'] = "Implode String";
 $_lang['setting_contentblocks.implode_string_desc'] = "The glue between individual field and layout outputs when parsing the content. ";
 
@@ -489,6 +499,9 @@ $_lang['setting_contentblocks.default_layout_part_desc'] = "Specify the referenc
 
 $_lang['setting_contentblocks.default_field'] = "Campo di default";
 $_lang['setting_contentblocks.default_field_desc'] = "Specify the ID of a field to insert into the default column of the default layout you specified. When set to 0, a simple rich text or textarea field will be used. As of 1.2, this only applies when no Default Template is found.";
+
+$_lang['setting_contentblocks.defaults_allowed_inputs'] = "Allowed Inputs in Default Templates";
+$_lang['setting_contentblocks.defaults_allowed_inputs_desc'] = "A comma separated list of input types (names) that are available in the \"Target Field\" dropdown when creating or editing default templates.";
 
 $_lang['setting_contentblocks.code.theme'] = "Code Theme";
 $_lang['setting_contentblocks.code.theme_desc'] = "The theme to use for the Code Input. Refer to the Ace documentation to find the possibilities.";
@@ -506,7 +519,10 @@ $_lang['setting_contentblocks.image.source'] = "Sorgente";
 $_lang['setting_contentblocks.image.source_desc'] = "Choose the default media source to use for image and gallery input types. This can be overriden on the Field level.";
 
 $_lang['setting_contentblocks.image.upload_path'] = "Upload Path";
-$_lang['setting_contentblocks.image.upload_path_desc'] = "The path, within the defined media source, to which the files should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders.";
+$_lang['setting_contentblocks.image.upload_path_desc'] = "The path, within the chosen media source, to which the images should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders. Resource fields are also available, like [[+pagetitle]] or [[+alias]], and template variables with [[+tv.name_of_tv]]. This value can be overridden per field by editing its properties.";
+
+$_lang['setting_contentblocks.file.upload_path'] = "Upload Path";
+$_lang['setting_contentblocks.file.upload_path_desc'] = "The path, within the chosen media source, to which the files should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders. Resource fields are also available, like [[+pagetitle]] or [[+alias]], and template variables with [[+tv.name_of_tv]]. This value can be overridden per field by editing its properties.";
 
 $_lang['setting_contentblocks.sanitize_pattern'] = "Sanitize Pattern";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "A RegEx pattern to use in sanitizing file names that need to be sanitized.";

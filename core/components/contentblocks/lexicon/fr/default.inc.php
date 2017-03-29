@@ -80,6 +80,7 @@ $_lang['contentblocks.duplicate_field'] = "Dupliquer le Champs";
 $_lang['contentblocks.delete_field'] = "Supprimer le Champs";
 $_lang['contentblocks.delete_field.confirm'] = "Êtes-vous sûr de vouloir supprimer ce Champs? Des événements potentiellement désastreux peuvent arriver à du contenu utilisant ce Champs.";
 $_lang['contentblocks.delete_field.confirm.js'] = "Êtes-vous sûr de vouloir supprimer ce Champs?";
+$_lang['contentblocks.delete_field.is_default'] = "Ce champ ne peut pas être retiré parce qu’il est configuré comme champ par défaut. Cela est mis en place avec le réglage système <code>contentblocks.default_field</code>. Pour plus d’informations sur le paramétrage de contenu par défaut, consultez la <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\"> Documentation des modèles par défaut</a>.";
 $_lang['contentblocks.export_field'] = "Exporter le champ";
 $_lang['contentblocks.export_fields'] = "Exporter";
 $_lang['contentblocks.export_fields.confirm'] = "En cliquant Oui ci-dessous, nous préparerons un export XML de tous les Champs. Ceci peut-être utilisé pour importer les Champs plus tard ou dans une autre installation. La génération du fichier XML peut prendre quelques secondes, selon le nombre de Champs que vous avez configurés.";
@@ -96,6 +97,7 @@ $_lang['contentblocks.export_layout'] = "Exporter le layout";
 $_lang['contentblocks.delete_layout'] = "Supprimer l'agencement";
 $_lang['contentblocks.delete_layout.confirm'] = "Êtes-vous sûr de vouloir supprimer cet agencement? Des événements potentiellement désastreux peuvent arriver à du contenu utilisant cet agencement.";
 $_lang['contentblocks.delete_layout.confirm.js'] = "Êtes-vous sûr de vouloir supprimer cet agencement [[+layoutName]] ? Tous ses contenus seront supprimés avec si vous confirmez.";
+$_lang['contentblocks.delete_layout.is_default'] = "Ce champ ne peut pas être retiré parce qu’il est configuré comme champ par défaut. Cela est mis en place avec le réglage système <code>contentblocks.default_field</code>. Pour plus d’informations sur le paramétrage de contenu par défaut, consultez la <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\"> Documentation des modèles par défaut</a>.";
 $_lang['contentblocks.export_layouts'] = "Exporter";
 $_lang['contentblocks.export_layouts.confirm'] = "En cliquant Oui ci-dessous, nous préparerons un export XML de tous les agencements. Ceci peut-être utilisé pour importer les agencements plus tard ou dans une autre installation. La génération du fichier XML peut prendre quelques secondes, selon le nombre d'agencements que vous avez configurés.";
 $_lang['contentblocks.import_layouts'] = "Importer";
@@ -440,6 +442,10 @@ $_lang['contentblocks.add_layout'] = "Ajouter un agencement";
 $_lang['contentblocks.add_layout.introduction'] = "Choisir l'agencement à ajouter au contenu.";
 $_lang['contentblocks.upload'] = "Envoyer";
 $_lang['contentblocks.choose'] = "Choisir";
+$_lang['contentblocks.from_url'] = "Depuis l'URL";
+$_lang['contentblocks.from_url_title'] = "Insérer l’image depuis l’URL";
+$_lang['contentblocks.from_url_prompt'] = "Entrez une URL vers une image à insérer. Cela doit être une URL complète vers l’image sur un autre site Web, ou l’url relative de la racine du site Web. Le fichier sera enregistré sur le serveur.";
+$_lang['contentblocks.from_url_notfound'] = "L’image demandée n’a pas pu être téléchargé. ";
 $_lang['contentblocks.image.or_drop_images'] = "ou déposez des images ici";
 $_lang['contentblocks.image.or_drop_image'] = "ou déposez une image ici";
 $_lang['contentblocks.use_tinyrte'] = "Utiliser Tiny RTE ?";
@@ -462,6 +468,7 @@ $_lang['contentblocks.generating_canvas'] = "Génération du contenu du Canvas..
 $_lang['contentblocks.content'] = "Contenus de modèle";
 $_lang['contentblocks.open_template_builder'] = "Créer le modèle";
 $_lang['contentblocks.template_builder'] = "Générateur de modèle";
+$_lang['contentblocks.close_modal'] = "Fermer la fenêtre modale";
 
 /**
  * Settings. Oh boy.
@@ -479,6 +486,9 @@ $_lang['setting_contentblocks.debug_desc'] = "Lorsque cette option est activée,
 $_lang['setting_contentblocks.disabled'] = "Désactivé";
 $_lang['setting_contentblocks.disabled_desc'] = "Régler ce paramètre sur 1 pour désactiver entièrement ContentBlocks sur ce site. Cela peut-être outrepassé au niveau du Contexte pour utiliser ContentBlocks uniquement dans certains Contextes spécifiques. ";
 
+$_lang['setting_contentblocks.show_resource_option'] = "Afficher les options de la Ressource";
+$_lang['setting_contentblocks.show_resource_option_desc'] = "Lorsque activé vous aurez l’option d'activer ou désactiver ContentBlocks sur des ressources spécifiques, avec l’option « Utiliser ContentBlocks » dans les paramètres des ressources.";
+
 $_lang['setting_contentblocks.implode_string'] = "Imploser la Chaîne";
 $_lang['setting_contentblocks.implode_string_desc'] = "Le lien entre le Champ individuel et l'affichage des Blocs  lors de l'analyse du contenu.";
 
@@ -490,6 +500,9 @@ $_lang['setting_contentblocks.default_layout_part_desc'] = "Indiquez la référe
 
 $_lang['setting_contentblocks.default_field'] = "Champ par défaut";
 $_lang['setting_contentblocks.default_field_desc'] = "Indiquez l'ID d'un champ à insérer dans la colonne par défaut de l'agencement par défaut que vous avez indiqué. Lorsque 0 est utilisé, un champ simple éditeur de texte ou textarea sera utilisé. Depuis la version 1.2, ceci ne s'applique que lorsqu'aucun modèle par défaut n'est trouvé.";
+
+$_lang['setting_contentblocks.defaults_allowed_inputs'] = "Entrées autorisées dans les modèles par défaut";
+$_lang['setting_contentblocks.defaults_allowed_inputs_desc'] = "Liste des types d’entrée (noms) séparés par une virgule disponibles dans la liste déroulante de « Champ cible » lors de la création ou de la modification des modèles par défaut.";
 
 $_lang['setting_contentblocks.code.theme'] = "Thème Code";
 $_lang['setting_contentblocks.code.theme_desc'] = "Le thème à utiliser pour l'insertion de Code. Voir la documentation de Ace pour les possibilités.";
@@ -509,7 +522,10 @@ assainir
 ";
 
 $_lang['setting_contentblocks.image.upload_path'] = "Chemin pour l'Upload";
-$_lang['setting_contentblocks.image.upload_path_desc'] = "Le chemin, dans le Media Source défini, vers lequel les fichiers doivent être uploadés. Cela supporte les espaces réservés  (placeholders) [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]].";
+$_lang['setting_contentblocks.image.upload_path_desc'] = "Le chemin d’accès, au sein du Media Source choisi, vers lequel les images doivent être téléchargées. Placeholders supportés: [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] et [[+resource]]. Champs de ressources également disponibles, comme [[+pagetitle]] ou [[+alias]] et des variables de template avec [[+ tv.name_of_tv]]. Cette valeur peut être substituée par champ en modifiant ses propriétés.";
+
+$_lang['setting_contentblocks.file.upload_path'] = "Chemin pour l'Upload";
+$_lang['setting_contentblocks.file.upload_path_desc'] = "Le chemin d’accès, au sein du Media Source choisi, vers lequel les images doivent être téléchargées. Placeholders supportés: [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] et [[+resource]]. Champs de ressources également disponibles, comme [[+pagetitle]] ou [[+alias]] et des variables de template avec [[+ tv.name_of_tv]]. Cette valeur peut être substituée par champ en modifiant ses propriétés.";
 
 $_lang['setting_contentblocks.sanitize_pattern'] = "Assainir le modèle";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Un modèle d'expression rationnelle (RegEx) à utiliser pour assainir les noms de fichiers qui doivent être assainis.";

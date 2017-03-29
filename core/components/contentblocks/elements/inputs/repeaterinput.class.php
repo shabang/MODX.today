@@ -169,7 +169,7 @@ class RepeaterInput extends cbBaseInput {
         $rowFields = array();
         // Loop over each key in the row and its value (array)
         foreach ($row as $key => $value) {
-            $field = $group[$key];
+            $field = array_key_exists($key, $group) ? $group[$key] : false;
             if ($field instanceof cbField) {
                 $inputType = $field->get('input');
 

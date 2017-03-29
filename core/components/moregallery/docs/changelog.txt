@@ -1,3 +1,25 @@
+++ MoreGallery 1.5.8-pl
+++ Released on 2017-01-18
++++++++++++++++++++++++++
+- Prevent potential mod_security related issue caused by video metadata
+- Don't allow empty tags to be created, and make sure errors are shown to the user
+- Automatically remove empty tags that already exist in the database
+- Fix bug where a gallery might get filtered by empty tag when not specified [S11105]
+- Add ability to prefer GD over Imagick with `moregallery.imagine_prefer_gd` for cases where Imagick is broken [S11109]
+- Add cache busting to 2 files that weren't cachebusted yet [S11093]
+
+++ MoreGallery 1.5.7-pl
+++ Released on 2017-01-18
++++++++++++++++++++++++++
+- Prevent E_FATAL error breaking the manager if alpacka is missing [S10730]
+- Silence E_WARNING for exif data in certain environments
+- Fix usage of global jQuery instead of scoped version [S10945]
+
+++ MoreGallery 1.5.6-pl
+++ Released on 2016-11-24
++++++++++++++++++++++++++
+- Clean invalid characters out of IPTC data
+
 ++ MoreGallery 1.5.5-pl
 ++ Released on 2016-10-12
 +++++++++++++++++++++++++

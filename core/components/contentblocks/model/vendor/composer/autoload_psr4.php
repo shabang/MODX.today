@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'modmore\\Alpacka\\' => array($vendorDir . '/modmore/alpacka/src'),
+    'modmore\\Alpacka\\' => array($vendorDir . '/modmore/alpacka/core/components/alpacka/src'),
 );

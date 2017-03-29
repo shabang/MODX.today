@@ -97,7 +97,7 @@ class ContentBlocks extends Alpacka {
     public function __construct($instance, array $config = array())
     {
         parent::__construct($instance, $config);
-        $this->setVersion(1, 5, 1, 'pl');
+        $this->setVersion(1, 6, 3, 'pl');
 
         /**
          * @deprecated
@@ -216,7 +216,14 @@ class ContentBlocks extends Alpacka {
 
             if (array_key_exists($input, $this->inputs) && $this->inputs[$input] instanceof cbBaseInput) {
                 $topics = $this->inputs[$input]->getLexiconTopics();
-                foreach ($topics as $topic) $this->modx->controller->addLexiconTopic($topic);
+                foreach ($topics as $topic) {
+                    if ($this->modx->controller instanceof modManagerController) {
+                        $this->modx->controller->addLexiconTopic($topic);
+                    }
+                    else {
+                        $this->modx->lexicon->load($topic);
+                    }
+                }
             }
         }
 
@@ -315,17 +322,17 @@ class ContentBlocks extends Alpacka {
             $js[] = $assetsUrl . 'js/contentblocks-min.js'.$version;
         }
         else {
-            $js[] = $assetsUrl . 'js/vendor/jquery.latest.js'.$version;
+            $js[] = $assetsUrl . 'js/bower_components/jquery/dist/jquery.min.js'.$version;
             $js[] = $assetsUrl . 'js/vendor/tinyrte/tinyrte.js'.$version;
             $js[] = $assetsUrl . 'js/vendor/jquery.autogrowtextarea.js'.$version;
             $js[] = $assetsUrl . 'js/vendor/jquery.powertip-1.2.0/jquery.powertip.js'.$version;
-            $js[] = $assetsUrl . 'js/vendor/jqueryui/jquery-ui-1.10.3.custom.min.js'.$version;
-            $js[] = $assetsUrl . 'js/vendor/jquery.iframe-transport.js'.$version;
-            $js[] = $assetsUrl . 'js/vendor/jquery.fileupload.js'.$version;
-            $js[] = $assetsUrl . 'js/vendor/tmpl/js/tmpl.js'.$version;
-            $js[] = $assetsUrl . 'js/vendor/bloodhound.min.js'.$version;
+            $js[] = $assetsUrl . 'js/vendor/jqueryui/jquery-ui-1.12.1.custom.min.js'.$version;
+            $js[] = $assetsUrl . 'js/bower_components/blueimp-file-upload/js/jquery.iframe-transport.js'.$version;
+            $js[] = $assetsUrl . 'js/bower_components/blueimp-file-upload/js/jquery.fileupload.js'.$version;
+            $js[] = $assetsUrl . 'js/bower_components/blueimp-tmpl/js/tmpl.js'.$version;
+            $js[] = $assetsUrl . 'js/bower_components/typeahead.js/dist/bloodhound.min.js'.$version;
             $js[] = $assetsUrl . 'js/vendor/hogan-2.0.0.js'.$version;
-            $js[] = $assetsUrl . 'js/vendor/typeahead.js'.$version;
+            $js[] = $assetsUrl . 'js/bower_components/typeahead.js/dist/typeahead.bundle.js'.$version;
             $js[] = $assetsUrl . 'js/contentblocks.js'.$version;
         }
         $assets = $this->getAssetsForInputs();
@@ -842,9 +849,10 @@ HTML;
      * @return string
      */
     public function wrapInputTpl($input, $content) {
+        $label = htmlentities($this->modx->lexicon('contentblocks.add_content'), ENT_QUOTES, 'utf-8');
         $content = '<li data-field="{%=o.field%}" id="{%=o.generated_id%}" class="contentblocks-field-outer"><div class="contentblocks-field-wrap">
         ' . $content
-        . '</div><div class="contentblocks-add-content-here"><a href="javascript:void(0);" class="contentblocks-add-content-here-link">+</a></div>
+        . '</div><div class="contentblocks-add-content-here"><a href="javascript:void(0);" class="contentblocks-add-content-here-link" aria-label="' . $label . '" title="' . $label . '">+</a></div>
         </li>';
         return $this->wrapTpl('contentblocks-field-' . $input, $content);
     }
@@ -1090,14 +1098,18 @@ HTML;
                 $value = $resource->get($constraintField);
                 break;
 
-            case $constraintField == 'ultimateparent':
+            case $constraintField === 'context':
+                $value = $resource->get('context_key');
+                break;
+
+            case $constraintField === 'ultimateparent':
                 $value = $this->getUltimateParent($resource->get('id'), $resource->get('context_key'));
                 if ($value < 1) {
                     $value = $this->getUltimateParent($resource->get('parent'), $resource->get('context_key'));
                 }
                 break;
 
-            case $constraintField == 'usergroup':
+            case $constraintField === 'usergroup':
                 $groupIds = $this->modx->user->getUserGroups();
                 $groupNames = $this->modx->user->getUserGroupNames();
 

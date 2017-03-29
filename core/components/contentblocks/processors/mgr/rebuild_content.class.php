@@ -68,6 +68,7 @@ class ContentBlocksRebuildProcessor extends modProcessor {
             // Update the progress indicator
             $this->updateProgress();
 
+            $this->contentBlocks->setResource($resource);
             // Make sure the resource is allowed to use CB, based on class_key and context
             if (!$this->contentBlocks->useContentBlocks($resource)) {
                 $this->totalSkipped++;

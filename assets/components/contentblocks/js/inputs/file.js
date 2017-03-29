@@ -49,7 +49,8 @@
                 alert(_('contentblocks.file.max_files.reached', {max: maxFiles}));
                 return false;
             }
-            if (!this.fileBrowser) this.fileBrowser = MODx.load({
+
+            var fileBrowser = MODx.load({
                 xtype: 'modx-browser',
                 id: Ext.id(),
                 multiple: true,
@@ -63,9 +64,9 @@
                 title: _('contentblocks.file.choose_file'),
                 source: input.source
             });
-            this.fileBrowser.setSource(input.source);
+            fileBrowser.setSource(input.source);
 
-            this.fileBrowser.show();
+            fileBrowser.show();
         };
 
         input.chooseFileCallback = function(fileData) {

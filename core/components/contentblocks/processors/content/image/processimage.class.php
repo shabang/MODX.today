@@ -14,7 +14,7 @@
         /** @var ContentBlocks $contentBlocks */
         public $contentBlocks;
         public $pathSetting = 'contentblocks.image.upload_path';
-        public $allowedFileTypes = 'png,gif,jpg,jpeg';
+        public $allowedFileTypes = 'png,gif,jpg,jpeg,svg';
         public $mgr_thumb;
 
         /**
@@ -30,7 +30,14 @@
         public function _getSource() {
             if ($this->source) return $this->source;
 
-            $id = $this->contentBlocks->getOption('contentblocks.image.source', null, 1);
+            // Get the system / context default. If that's somehow not set, things will
+            // fall through eventually to modMediaSource::getDefaultSource, which should
+            // fix it. If it doesn't, there's something wrong with the MODX setup, which
+            // isn't really something we can account for.
+
+            $default = $this->contentBlocks->getOption('default_media_source');
+            $id = $this->contentBlocks->getOption('contentblocks.image.source', null, false);
+            $id = $id ? $id : $default;
 
             $fieldId = (int)$this->getProperty('field');
             if ($fieldId > 0 && $field = $this->modx->getObject('cbField', $fieldId)) {
@@ -40,8 +47,10 @@
                 }
             }
 
+
             $this->modx->loadClass('sources.modMediaSource');
             $this->source = modMediaSource::getDefaultSource($this->modx, $id);
+
             if ($this->source) {
                 $this->source->getWorkingContext();
                 $this->source->initialize();
@@ -99,6 +108,12 @@
 
             $path = rtrim($path, '/') . '/';
             $this->path = $this->contentBlocks->parsePathVariables($path);
+
+            /**
+             * Make sure the upload path exists. We unset errors to prevent issues if it already exists.
+             */
+            $this->source->createContainer($this->path, '/');
+            $this->source->errors = array();
         }
 
         /**
@@ -139,6 +154,18 @@
             }
 
             return $fileName . '.' . $fileExtension;
+        }
+
+        public function getAllowedFileTypes()
+        {
+            $fileTypes = $this->allowedFileTypes;
+            if ($this->field) {
+                // override default if set
+                $fileTypes = $this->field->get('file_types');
+
+            }
+            $fileTypes = explode(',', strtolower($fileTypes));
+            return $fileTypes;
         }
     }
 

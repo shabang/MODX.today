@@ -80,6 +80,7 @@ $_lang['contentblocks.duplicate_field'] = "Duplicate Field";
 $_lang['contentblocks.delete_field'] = "Удалить поле";
 $_lang['contentblocks.delete_field.confirm'] = "Are you sure you want to delete this Field? Potentially disastrous things can happen with any content that used this Field.";
 $_lang['contentblocks.delete_field.confirm.js'] = "Are you sure you want to delete this Field?";
+$_lang['contentblocks.delete_field.is_default'] = "This field cannot be removed because it is configured as the default field. This is set up with the <code>contentblocks.default_field</code> system setting. For more information on setting up default content, see the <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">Default Templates documentation</a>.";
 $_lang['contentblocks.export_field'] = "Export Field";
 $_lang['contentblocks.export_fields'] = "Экспорт";
 $_lang['contentblocks.export_fields.confirm'] = "After clicking Yes below, we will prepare an XML export of all Fields. This can be used to import the Fields later or in a different installation. Generating the XML can take a few seconds depending on the number of fields you have configured.";
@@ -96,6 +97,7 @@ $_lang['contentblocks.export_layout'] = "Export Layout";
 $_lang['contentblocks.delete_layout'] = "Удаление макета";
 $_lang['contentblocks.delete_layout.confirm'] = "Are you sure you want to delete this Layout? Potentially disastrous things can happen with any content that used this Layout.";
 $_lang['contentblocks.delete_layout.confirm.js'] = "Are you sure you want to delete this [[+layoutName]] layout? All its content will be deleted with it if you continue.";
+$_lang['contentblocks.delete_layout.is_default'] = "This layout cannot be removed because it is configured as the default layout. This is set up with the <code>contentblocks.default_layout</code> system setting. For more information on setting up default content, see the <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">Default Templates documentation</a>.";
 $_lang['contentblocks.export_layouts'] = "Экспорт";
 $_lang['contentblocks.export_layouts.confirm'] = "After clicking Yes below, we will prepare an XML export of all Layouts. This can be used to import the Layouts later or in a different installation. Generating the XML can take a few seconds depending on the number of layouts you have configured.";
 $_lang['contentblocks.import_layouts'] = "Импорт";
@@ -439,6 +441,10 @@ $_lang['contentblocks.add_layout'] = "Add Layout";
 $_lang['contentblocks.add_layout.introduction'] = "Choose the Layout to add to the Content.";
 $_lang['contentblocks.upload'] = "Upload";
 $_lang['contentblocks.choose'] = "Выбрать";
+$_lang['contentblocks.from_url'] = "From URL";
+$_lang['contentblocks.from_url_title'] = "Insert image from URL";
+$_lang['contentblocks.from_url_prompt'] = "Enter an URL to an image to insert. This should be either a full URL to the image on a different website, or the relative url from the root of the website. The file will be saved on the server.";
+$_lang['contentblocks.from_url_notfound'] = "The requested image could not be downloaded. ";
 $_lang['contentblocks.image.or_drop_images'] = "or drop images here";
 $_lang['contentblocks.image.or_drop_image'] = "or drop an image here";
 $_lang['contentblocks.use_tinyrte'] = "Use Tiny RTE?";
@@ -461,6 +467,7 @@ $_lang['contentblocks.generating_canvas'] = "Generating your Content Canvas... t
 $_lang['contentblocks.content'] = "Template Contents";
 $_lang['contentblocks.open_template_builder'] = "Build Template";
 $_lang['contentblocks.template_builder'] = "Template Builder";
+$_lang['contentblocks.close_modal'] = "Close Modal";
 
 /**
  * Settings. Oh boy.
@@ -478,6 +485,9 @@ $_lang['setting_contentblocks.debug_desc'] = "When enabled ContentBlocks will us
 $_lang['setting_contentblocks.disabled'] = "Disabled";
 $_lang['setting_contentblocks.disabled_desc'] = "Set this setting to 1 to completely disable ContentBlocks on this site. This can be overridden on the context level to only use it on specific contexts. ";
 
+$_lang['setting_contentblocks.show_resource_option'] = "Show Resource Option";
+$_lang['setting_contentblocks.show_resource_option_desc'] = "When enabled you will have the option to enable or disable ContentBlocks on specific resources, with the 'Use ContentBlocks' option on the resource settings.";
+
 $_lang['setting_contentblocks.implode_string'] = "Implode String";
 $_lang['setting_contentblocks.implode_string_desc'] = "The glue between individual field and layout outputs when parsing the content. ";
 
@@ -489,6 +499,9 @@ $_lang['setting_contentblocks.default_layout_part_desc'] = "Specify the referenc
 
 $_lang['setting_contentblocks.default_field'] = "Default Field";
 $_lang['setting_contentblocks.default_field_desc'] = "Specify the ID of a field to insert into the default column of the default layout you specified. When set to 0, a simple rich text or textarea field will be used. As of 1.2, this only applies when no Default Template is found.";
+
+$_lang['setting_contentblocks.defaults_allowed_inputs'] = "Allowed Inputs in Default Templates";
+$_lang['setting_contentblocks.defaults_allowed_inputs_desc'] = "A comma separated list of input types (names) that are available in the \"Target Field\" dropdown when creating or editing default templates.";
 
 $_lang['setting_contentblocks.code.theme'] = "Code Theme";
 $_lang['setting_contentblocks.code.theme_desc'] = "The theme to use for the Code Input. Refer to the Ace documentation to find the possibilities.";
@@ -506,7 +519,10 @@ $_lang['setting_contentblocks.image.source'] = "Источник";
 $_lang['setting_contentblocks.image.source_desc'] = "Choose the default media source to use for image and gallery input types. This can be overriden on the Field level.";
 
 $_lang['setting_contentblocks.image.upload_path'] = "Upload Path";
-$_lang['setting_contentblocks.image.upload_path_desc'] = "The path, within the defined media source, to which the files should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders.";
+$_lang['setting_contentblocks.image.upload_path_desc'] = "The path, within the chosen media source, to which the images should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders. Resource fields are also available, like [[+pagetitle]] or [[+alias]], and template variables with [[+tv.name_of_tv]]. This value can be overridden per field by editing its properties.";
+
+$_lang['setting_contentblocks.file.upload_path'] = "Upload Path";
+$_lang['setting_contentblocks.file.upload_path_desc'] = "The path, within the chosen media source, to which the files should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders. Resource fields are also available, like [[+pagetitle]] or [[+alias]], and template variables with [[+tv.name_of_tv]]. This value can be overridden per field by editing its properties.";
 
 $_lang['setting_contentblocks.sanitize_pattern'] = "Sanitize Pattern";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "A RegEx pattern to use in sanitizing file names that need to be sanitized.";

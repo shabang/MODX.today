@@ -4,7 +4,7 @@
         
         input.init = function() {
             ContentBlocks.initializeLinkField(dom.find('input[id].linkfield'), data);
-        }
+        };
 
         input.getData = function () {
             var $link = dom.find('input[id].linkfield');

@@ -382,6 +382,7 @@ Redi.window.CreateUpdateRedirect = function(config) {
             },{
                 columnWidth: .5
                 ,defaults: { msgTarget: 'under' ,border: false }
+                ,style: 'padding-top:15px'
                 ,items: [{
                     html: Ext.util.Format.nl2br(_('redirector.regex_explain'))
                     ,border: false

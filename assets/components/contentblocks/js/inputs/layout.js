@@ -2,7 +2,8 @@
     ContentBlocks.fieldTypes.layout = function(dom, data) {
         var input = {};
         input.init = function() {
-            var children = data.child_layouts || {};
+            var children = data.child_layouts || {},
+                isRepeatLayout = false;
             if (data.properties.available_layouts) {
                 dom.data('layouts', data.properties.available_layouts);
             }
@@ -10,8 +11,13 @@
                 dom.data('templates', data.properties.available_templates);
             }
 
+            if(typeof window.event !== 'undefined') {
+                var target = $(window.event.target);
+                isRepeatLayout = target.hasClass('contentblocks-repeat-layout');
+            }
+
             // Automatically open the add layout modal when adding a layout field
-            if ($.isEmptyObject(children) && ContentBlocks.initialized) {
+            if (!isRepeatLayout && $.isEmptyObject(children) && ContentBlocks.initialized) {
                 setTimeout(function() {
                     dom.find('.contentblocks-add-layout').click();
                 }, 500);

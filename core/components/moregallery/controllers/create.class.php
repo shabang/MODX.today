@@ -53,13 +53,14 @@ class mgResourceCreateManagerController extends ResourceCreateManagerController 
             return;
         }
         // Instantiate the gallery
+        $version = '?mgv=' . $moreGallery->version;
         $moreGallery->setWorkingContext($this->resource->get('context_key'));
         $moreGallery->mg();
 
         $this->addHtml('<script type="text/javascript">
             moreGallery.config = '.$this->modx->toJSON($moreGallery->config).';
         </script>');
-        $this->addJavascript($assetsUrl.'mgr/js/moregallery.class.js');
-        $this->addJavascript($assetsUrl.'mgr/js/widgets/mgresource.panel.resource.js');
+        $this->addJavascript($assetsUrl.'mgr/js/moregallery.class.js' . $version);
+        $this->addJavascript($assetsUrl.'mgr/js/widgets/mgresource.panel.resource.js' . $version);
     }
 }

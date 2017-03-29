@@ -287,14 +287,20 @@
 
             // Handle paste
             editor.find("body").on("paste", function (e) {
-                e.preventDefault();
-
-                var text = e.originalEvent.clipboardData.getData("text/plain");
-                var temp = document.createElement("div");
-                temp.innerHTML = text;
-                text = temp.textContent.replace(/\r?\n|\r/g, "");
-
-                that.runCMD("insertText", text);
+                if (that.inPasteHandler) { return; }
+                that.inPasteHandler = true;
+                try {
+                    var clip = e.originalEvent.clipboardData || window.clipboardData;
+                    var text = clip.getData("text");
+                    var temp = document.createElement("div");
+                    temp.innerHTML = text;
+                    text = temp.textContent.replace(/\r?\n|\r/g, "");
+                    that.runCMD("insertText", text);
+                    e.preventDefault();
+                } catch (e) {
+                    if (console) { console.error('could not run paste cleanup', e); }
+                }
+                that.inPasteHandler = false;
             });
 
             // Bind the keyup event, to check for changes
@@ -468,7 +474,11 @@
           					
                 execed = this.editor.contentWindow.document.execCommand("unlink", false, null);
             } else if (cmd === "insertText") {
-                execed = this.editor.contentWindow.document.execCommand(cmd, false, value);
+                if (this.editor.contentWindow.document.queryCommandSupported('insertText')) {
+                    execed = this.editor.contentWindow.document.execCommand('insertText', false, value);
+                } else {
+                    execed = this.editor.contentWindow.document.execCommand('paste', false, value);
+                }
             } else {
                 execed = this.editor.contentWindow.document.execCommand(cmd);
             }

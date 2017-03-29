@@ -1,15 +1,15 @@
 <?php
 
-require_once dirname(dirname(__FILE__)) . '/model/redirector/redirector.class.php';
-
 abstract class RedirectorManagerController extends modExtraManagerController {
-
-    /** @var Redirector $redirector */
+    /**
+     * @var Redirector $redirector
+     */
     public $redirector;
 
     public function initialize() {
-        $this->redirector = new Redirector($this->modx);
-        
+        $path = $this->modx->getOption('redirector.core_path', null, MODX_CORE_PATH . 'components/redirector/');
+        $this->redirector = $this->modx->getService('redirector', 'model.redirector.Redirector', $path);
+
         $this->addCss($this->redirector->config['cssUrl'].'mgr.css');
         $this->addJavascript($this->redirector->config['jsUrl'].'mgr/redirector.js');
         $this->addJavascript($this->redirector->config['jsUrl'].'mgr/combos.js');
@@ -26,10 +26,10 @@ abstract class RedirectorManagerController extends modExtraManagerController {
     public function getLanguageTopics() {
         return array('redirector:default');
     }
-
-    public function checkPermissions() { return true;}
 }
 
-class ControllersIndexManagerController extends RedirectorManagerController {
-    public static function getDefaultController() { return 'home'; }
+class IndexManagerController extends RedirectorManagerController {
+    public static function getDefaultController() {
+        return 'home';
+    }
 }

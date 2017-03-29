@@ -80,6 +80,7 @@ $_lang['contentblocks.duplicate_field'] = "Duplikovat pole";
 $_lang['contentblocks.delete_field'] = "Odstranit pole";
 $_lang['contentblocks.delete_field.confirm'] = "Jste si jisti, že chcete odstranit toto pole? Jakýkoli obsah, který používá toto pole může být ovlivněn.";
 $_lang['contentblocks.delete_field.confirm.js'] = "Jste si jisti, že chcete odstranit toto pole?";
+$_lang['contentblocks.delete_field.is_default'] = "This field cannot be removed because it is configured as the default field. This is set up with the <code>contentblocks.default_field</code> system setting. For more information on setting up default content, see the <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">Default Templates documentation</a>.";
 $_lang['contentblocks.export_field'] = "Exportovat pole";
 $_lang['contentblocks.export_fields'] = "Exportovat";
 $_lang['contentblocks.export_fields.confirm'] = "Po klepnutí na tlačítko Ano, připravíme XML export všech polí. Slouží k pozdějšímu importu polí nebo k použití v jiné instalaci. Generování XML může trvat několik sekund v závislosti na počtu polí, které jste si nakonfigurovali.";
@@ -96,6 +97,7 @@ $_lang['contentblocks.export_layout'] = "Exportovat rozvržení";
 $_lang['contentblocks.delete_layout'] = "Odstranit rozložení";
 $_lang['contentblocks.delete_layout.confirm'] = "Jste si jisti, že chcete odstranit toto rozvržení? Jakýkoli obsah, který používá toto rozvržení může být ovlivněn.";
 $_lang['contentblocks.delete_layout.confirm.js'] = "Opravdu chcete odstranit toto [[+layoutName]] rozvržení? budete-li pokračovat, veškerý její obsah bude s ním odstraněn.";
+$_lang['contentblocks.delete_layout.is_default'] = "This layout cannot be removed because it is configured as the default layout. This is set up with the <code>contentblocks.default_layout</code> system setting. For more information on setting up default content, see the <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">Default Templates documentation</a>.";
 $_lang['contentblocks.export_layouts'] = "Exportovat";
 $_lang['contentblocks.export_layouts.confirm'] = "Po klepnutí na tlačítko Ano, připravíme XML export všechny rozvržení. Slouží k pozdějšímu importu rozvržení nebo k použití v jiné instalaci. Generování XML může trvat několik sekund v závislosti na počtu rozvržení, které jste si nakonfigurovali.";
 $_lang['contentblocks.import_layouts'] = "Importovat";
@@ -439,6 +441,10 @@ $_lang['contentblocks.add_layout'] = "Přidat rozvržení";
 $_lang['contentblocks.add_layout.introduction'] = "Zvolte rozvržení, které chcete přidat do obsahu.";
 $_lang['contentblocks.upload'] = "Nahrát";
 $_lang['contentblocks.choose'] = "Zvolte";
+$_lang['contentblocks.from_url'] = "From URL";
+$_lang['contentblocks.from_url_title'] = "Insert image from URL";
+$_lang['contentblocks.from_url_prompt'] = "Enter an URL to an image to insert. This should be either a full URL to the image on a different website, or the relative url from the root of the website. The file will be saved on the server.";
+$_lang['contentblocks.from_url_notfound'] = "The requested image could not be downloaded. ";
 $_lang['contentblocks.image.or_drop_images'] = "nebo sem přetáhněte obrázky";
 $_lang['contentblocks.image.or_drop_image'] = "nebo sem přetáněte obrázek";
 $_lang['contentblocks.use_tinyrte'] = "Použít Tiny RTE?";
@@ -461,6 +467,7 @@ $_lang['contentblocks.generating_canvas'] = "Generování obsahu… toto by měl
 $_lang['contentblocks.content'] = "Obsah šablony";
 $_lang['contentblocks.open_template_builder'] = "Vytvořit šablonu";
 $_lang['contentblocks.template_builder'] = "Sestavovatel šablony";
+$_lang['contentblocks.close_modal'] = "Close Modal";
 
 /**
  * Settings. Oh boy.
@@ -478,6 +485,9 @@ $_lang['setting_contentblocks.debug_desc'] = "Když povolené, tak ContentBlocks
 $_lang['setting_contentblocks.disabled'] = "Zakázáno";
 $_lang['setting_contentblocks.disabled_desc'] = "Toto nastavte na hodnotu 1 pokud chcete zcela zakázat ContentBlocks na tomto webu. Toto může být přepsáno na kontextové úrovni pokud je chcete používat pouze v konkrétních kontextech. ";
 
+$_lang['setting_contentblocks.show_resource_option'] = "Show Resource Option";
+$_lang['setting_contentblocks.show_resource_option_desc'] = "When enabled you will have the option to enable or disable ContentBlocks on specific resources, with the 'Use ContentBlocks' option on the resource settings.";
+
 $_lang['setting_contentblocks.implode_string'] = "Spojit řetězec";
 $_lang['setting_contentblocks.implode_string_desc'] = "Spojující řetěz mezi jednotlivými poli výstupy šablony, když je zpracován obsah. ";
 
@@ -489,6 +499,9 @@ $_lang['setting_contentblocks.default_layout_part_desc'] = "Specify the referenc
 
 $_lang['setting_contentblocks.default_field'] = "Výchozí pole";
 $_lang['setting_contentblocks.default_field_desc'] = "Specify the ID of a field to insert into the default column of the default layout you specified. When set to 0, a simple rich text or textarea field will be used. As of 1.2, this only applies when no Default Template is found.";
+
+$_lang['setting_contentblocks.defaults_allowed_inputs'] = "Allowed Inputs in Default Templates";
+$_lang['setting_contentblocks.defaults_allowed_inputs_desc'] = "A comma separated list of input types (names) that are available in the \"Target Field\" dropdown when creating or editing default templates.";
 
 $_lang['setting_contentblocks.code.theme'] = "Téma kód editoru";
 $_lang['setting_contentblocks.code.theme_desc'] = "Téma, které chcete použít pro zadání kódu. Možnosti naleznete v dokumentaci Ace.";
@@ -506,7 +519,10 @@ $_lang['setting_contentblocks.image.source'] = "Zdroj";
 $_lang['setting_contentblocks.image.source_desc'] = "Zvolte výchozí zdroj médií pro pole typy obrázek a galerie. Toto může být přepsáno na úrovni samotné definice pole.";
 
 $_lang['setting_contentblocks.image.upload_path'] = "Cesta k nahrání";
-$_lang['setting_contentblocks.image.upload_path_desc'] = "Cesta v rámci definovaného zdroje médií, kam mají být nahrány soubory. Lze využít placeholdery: [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] a [[+resource]].";
+$_lang['setting_contentblocks.image.upload_path_desc'] = "The path, within the chosen media source, to which the images should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders. Resource fields are also available, like [[+pagetitle]] or [[+alias]], and template variables with [[+tv.name_of_tv]]. This value can be overridden per field by editing its properties.";
+
+$_lang['setting_contentblocks.file.upload_path'] = "Upload Path";
+$_lang['setting_contentblocks.file.upload_path_desc'] = "The path, within the chosen media source, to which the files should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders. Resource fields are also available, like [[+pagetitle]] or [[+alias]], and template variables with [[+tv.name_of_tv]]. This value can be overridden per field by editing its properties.";
 
 $_lang['setting_contentblocks.sanitize_pattern'] = "Sanitize vzor";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "RegEx řetězec, který má být použit pro sanitizaci názvů souborů.";

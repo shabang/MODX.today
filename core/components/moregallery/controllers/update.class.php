@@ -65,6 +65,8 @@ class mgResourceUpdateManagerController extends ResourceUpdateManagerController 
             return;
         }
 
+        $version = '?mgv=' . $moreGallery->version;
+
         // Instantiate the gallery
         $moreGallery->setResource($this->resource);
         $crops = $moreGallery->getCrops($this->resource);
@@ -76,8 +78,8 @@ class mgResourceUpdateManagerController extends ResourceUpdateManagerController 
             moreGallery.crops = ' . $this->modx->toJSON($crops) . ';
             moreGallery.customFields = ' . $customFields . ';
         </script>');
-        $this->addJavascript($assetsUrl.'mgr/js/moregallery.class.js');
-        $this->addJavascript($assetsUrl.'mgr/js/widgets/mgresource.panel.resource.js');
+        $this->addJavascript($assetsUrl.'mgr/js/moregallery.class.js' . $version);
+        $this->addJavascript($assetsUrl.'mgr/js/widgets/mgresource.panel.resource.js' . $version);
 
         $moreGallery->mg();
         $tpl = $moreGallery->getChunk('mgr/update', $moreGallery->config);

@@ -2,6 +2,78 @@
 This file shows the changes in recent releases of MODX. The most current release is usually the
 development release, and is only shown to give an idea of what's currently in the pipeline.
 
+MODX Revolution 2.5.6-pl (March 28, 2017)
+====================================
+- Enable Resource Group access column to be sorted [#12426]
+- Prevent warning from array_key_exists when aliasMap not available [#13297]
+- Fix broken images in File tree when media source above doc root [#13292]
+- Encode HTML in the template description to prevent potential XSS [#13290]
+- Use (but limit) setting for results per page in package management grid [#12518]
+- Added validation for min and max length of text TV configuration [#9039]
+- Allow value '0' for multi select TV items [#9492]
+- Fix "undefined" on package management breadcrumb when updating [#12567]
+- Reduce log level to INFO for links not found by modContext->makeUrl() [#13268]
+- Fix error in Firefox preventing using enter in the uberbar [#12714]
+- Fix error when deleting a file from a TV [#12417]
+- On new installs set base_help_url setting to the new docs subdomain [#13309]
+- Refresh resource tree and context grid on create and delete [#12495]
+- Only call generateContext once when saving a resource [#13347]
+- In get/setTVValue, consider numeric strings as ID instead of name [#12542]
+- Validate chmod input [#13352]
+- Prevent drag/drop of directories messing up directory structures [#13165]
+- Get rid of duplicate scrollbars in the help window [#12914]
+- Show proper error page when viewing an inaccessible symlink [#12380]
+- Avoid duplication of modLexiconEntry objects when updating context settings [#12823]
+- Fix system info's database tables tab on sqlsrv [#9854]
+- Add comment to config.core.php files that its contents are overwritten on update [#10299]
+- Fix double dots in the filename of downloaded static resources [#10267]
+- Fix duplicating resource children which are hidden from the tree [#13298]
+- Show proper error message when trying to rename a file/folder that already exists [#13256]
+- Fix missing caption when duplicating a TV via the Edit TV page [#13317]
+- Fix empty error popup when adding a usergroup to a media source without a policy [#12701]
+- Fix close button on resource overview page [#12822]
+- Hide database username, password and database name from advanced setup [#13090]
+- Fix "Cannot read property 'style' of undefined" error when resizing viewport after closing a modal [#13294]
+- Fix "o.field is undefined" error when checking a resource group [#13296]
+- Fix phpdoc for modAccessibleObject->checkPolicy [#13301]
+
+MODX Revolution 2.5.5-pl (February 8, 2017)
+====================================
+- Respect new_file_permissions setting when create/upload files in manager [#13246]
+- Escape regular expression special characters in last query string of a superboxselect [#13236]
+- Improve logging of bad links [#13268]
+- Fix a few Smarty variables not being defined [#13117]
+- Only load manager layout when the controller is not "browser" [#13135]
+- Add autoHeight in the Create/UpdateSetting window [#13220]
+- Address various potential security issues in setup [#13261]
+- Validate file extension when renaming/creating files in file browser [#13240]
+- Examples to rewrite all domains of one installation with/without www [#13249]
+- Update MODX Transport Provider to use SSL URL [#13260]
+- Add site name to the login title [#13254]
+- Fix File Unzip feature [#13223]
+- Fix truncating filename at space by downloading via filemanager [#13171]
+
+MODX Revolution 2.5.4-pl (January 3, 2017)
+====================================
+- Update xPDO to 2.5.3 release to avoid xPDOQuery class not found error
+
+MODX Revolution 2.5.3-pl (January 3, 2017)
+====================================
+- Fix listing packages on systems with non-utf8 locales [#13182]
+- Update PHPMailer to 5.2.21 for CVE-2016-10045 patch [#13229]
+- Access chunk array instead of chunk object instance [#13210]
+- Update PhpMailer to 5.2.19 to protect against RCE vulnerability [#13227]
+- Add various missing permission checks to processors [#13174]
+- Update xPDO to 2.5.2 release
+- Improve phpThumb InitializeTempDirSetting [#13151]
+- Validate Resources when dropped onto weblinks and symlinks [#13212]
+- Fix Resources not loading in the tree in sqlsrv [#12845]
+- More specific removal of critical settings in MODX.config [#13180]
+- Fix broken list of previously installed package versions [#13179]
+- Fix incorrect media source name on Files tab [#12596]
+- Update Font Awesome to 4.7.0
+- Remove placeholders from login screen to fix accessibility bug/confusing screenreading [#13186]
+
 MODX Revolution 2.5.2-pl (November 14, 2016)
 ====================================
 - [SECURITY] Hide critical settings in MODx.config [#13170]

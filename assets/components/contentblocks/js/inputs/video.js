@@ -55,9 +55,24 @@
                         var form = modal.find('form'),
                             field = form.find('.query');
 
-                        input.resultsHolder = modal.find('.youtube-search-results'),
+                        input.resultsHolder = modal.find('.youtube-search-results');
                         input.moreBtn = modal.find('.contentblocks-search-results-more');
                         input.moreBtn.hide();
+
+                        // Listen for choosing a video (@todo make accessible, yuck!)
+                        input.resultsHolder.on('click', 'a', function(e) {
+                            if (e.ctrlKey || e.metaKey) {
+                                return true;
+                            }
+                            e.preventDefault();
+                            var vidId = $(this).data('video_id');
+                            if (vidId != '') {
+                                input.selectVideo(vidId);
+                                ContentBlocks.closeModal();
+                                ContentBlocks.fireChange();
+                            }
+                            return false;
+                        });
 
                         form.on('submit', function(e) {
                             e.preventDefault();
@@ -73,36 +88,6 @@
                                 nextPageToken = input.moreBtn.data('token');
 
                             input.loadResults(q, false, nextPageToken);
-
-                            // Request the data
-                            /*request.execute(function(response) {
-                                // check for errors and display them
-                                if (response.error) {
-                                    results.append('<p class="error">' + _('contentblocks.video.api_error', {message: response.error.message, code: response.error.code}) + '</p>');
-                                }
-                                // No errors, so display the video results
-                                else {
-                                    var html = [];
-                                    $.each(response.items, function(idx, video) {
-                                        video.snippet.publishedAt = new Date(video.snippet.publishedAt).format(MODx.config.manager_date_format);
-                                        html.push(tmpl('contentblocks-field-video-item', video));
-                                    });
-                                    html = html.join('');
-                                    results.append(html);
-
-                                    if (response.result.nextPageToken) {
-                                        moreBtn.data('token',response.result.nextPageToken).show();
-                                    }
-                                    results.find('li').on('click', function() {
-                                        var vidId = $(this).data('video_id');
-                                        if (vidId != '') {
-                                            ContentBlocks.closeModal();
-                                            input.selectVideo(vidId);
-                                            ContentBlocks.fireChange();
-                                        }
-                                    });
-                                }
-                            })*/
                         });
                     }
                 });
@@ -138,16 +123,6 @@
                 else {
                     input.resultsHolder.append(html);
                 }
-
-                // Listen for choosing a video (@todo make accessible, yuck!)
-                input.resultsHolder.find('li').on('click', function() {
-                    var vidId = $(this).data('video_id');
-                    if (vidId != '') {
-                        input.selectVideo(vidId);
-                        ContentBlocks.closeModal();
-                        ContentBlocks.fireChange();
-                    }
-                });
 
                 // Keep track of the nextPageToken for pagination
                 if (respData.nextPageToken) {

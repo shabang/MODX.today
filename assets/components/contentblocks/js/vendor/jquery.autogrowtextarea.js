@@ -1,4 +1,5 @@
-/*
+/*!
+ * https://github.com/jevin/Autogrow-Textarea/blob/master/jquery.autogrowtextarea.js
  * ----------------------------------------------------------------------------
  * "THE BEER-WARE LICENSE" (Revision 42):
  * <jevin9@gmail.com> wrote this file. As long as you retain this notice you
@@ -15,8 +16,11 @@
  * Date: October 15, 2012
  */
 
-jQuery.fn.autoGrow = function() {
+jQuery.fn.autoGrow = function(options) {
 	return this.each(function() {
+		var settings = jQuery.extend({
+			extraLine: true,
+		}, options);
 
 		var createMirror = function(textarea) {
 			jQuery(textarea).after('<div class="autogrow-textarea-mirror"></div>');
@@ -24,7 +28,16 @@ jQuery.fn.autoGrow = function() {
 		}
 
 		var sendContentToMirror = function (textarea) {
-			mirror.innerHTML = String(textarea.value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br />') + '.<br/>.';
+			mirror.innerHTML = String(textarea.value)
+					.replace(/&/g, '&amp;')
+					.replace(/"/g, '&quot;')
+					.replace(/'/g, '&#39;')
+					.replace(/</g, '&lt;')
+					.replace(/>/g, '&gt;')
+					.replace(/ /g, '&nbsp;')
+					.replace(/\n/g, '<br />') +
+				(settings.extraLine? '.<br/>.' : '')
+			;
 
 			if (jQuery(textarea).height() != jQuery(mirror).height())
 				jQuery(textarea).height(jQuery(mirror).height());
@@ -41,11 +54,16 @@ jQuery.fn.autoGrow = function() {
 		mirror.style.display = 'none';
 		mirror.style.wordWrap = 'break-word';
 		mirror.style.whiteSpace = 'normal';
-		mirror.style.padding = jQuery(this).css('padding');
+		mirror.style.padding = jQuery(this).css('paddingTop') + ' ' +
+			jQuery(this).css('paddingRight') + ' ' +
+			jQuery(this).css('paddingBottom') + ' ' +
+			jQuery(this).css('paddingLeft');
+
 		mirror.style.width = jQuery(this).css('width');
 		mirror.style.fontFamily = jQuery(this).css('font-family');
 		mirror.style.fontSize = jQuery(this).css('font-size');
 		mirror.style.lineHeight = jQuery(this).css('line-height');
+		mirror.style.letterSpacing = jQuery(this).css('letter-spacing');
 
 		// Style the textarea
 		this.style.overflow = "hidden";
@@ -53,6 +71,7 @@ jQuery.fn.autoGrow = function() {
 
 		// Bind the textarea's event
 		this.onkeyup = growTextarea;
+		this.onfocus = growTextarea;
 
 		// Fire the event for text already present
 		sendContentToMirror(this);

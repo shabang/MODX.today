@@ -412,6 +412,9 @@ class mgImage extends xPDOSimpleObject
     public function createThumbnail($content, $extension = 'jpg', $width = 250, $height = 250) {
         /** @var \Imagine\Image\ImagineInterface $imagine */
         $imagine = $this->xpdo->moregallery->getImagine();
+        if (!$imagine) {
+            return false;
+        }
 
         // If the image is a PDF file, it needs a bit more work to get it propery parsed.
         if ($extension === 'pdf') {
@@ -479,7 +482,7 @@ class mgImage extends xPDOSimpleObject
         if (in_array(strtolower($ext), array('jpeg', 'jpg', 'tiff'), true) && function_exists('exif_read_data')) {
             try {
                 // Fetch EXIF data if we have it.
-                $exif = exif_read_data($file, NULL, false, false);
+                $exif = @exif_read_data($file, NULL, false, false);
                 if (is_array($exif)) {
                     foreach ($exif as $key => $value) {
                         $exif[$key] = $this->cleanInvalidData($value);
@@ -506,11 +509,16 @@ class mgImage extends xPDOSimpleObject
         $newIptc = array();
         if (is_array($iptc)) {
             foreach ($iptc as $key => $value) {
-                if (isset($this->iptcHeaderArray[$key])) {
+                if (array_key_exists($key, $this->iptcHeaderArray)) {
                     $key = $this->iptcHeaderArray[$key];
                 }
 
-                if (count($value) == 1) {
+                foreach ($value as &$v) {
+                    $v = $this->cleanInvalidData($v);
+                }
+                unset ($v);
+
+                if (count($value) === 1) {
                     $value = $value[0];
                 }
 
@@ -590,6 +598,9 @@ class mgImage extends xPDOSimpleObject
         try {
             /** @var \Imagine\Image\ImagineInterface $imagine */
             $imagine = $this->xpdo->moregallery->getImagine();
+            if (!$imagine) {
+                return false;
+            }
 
             // Load the image with imagine and create a resized version
             $thumb = $imagine->load($content);

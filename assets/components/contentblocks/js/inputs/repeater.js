@@ -19,76 +19,85 @@
                         for(var i = 0; i < minItems; i++) {
                             this.addRow();
                         }
-                        dom.find('.contentblocks-repeater-delete-row').hide();
                     }
                     else if (addFirstItem) {
                         this.addRow();
                     }
                 }
 
+                if (minItems > 0 && minItems === maxItems) {
+                    dom.addClass('contentblocks-repeater-fixed-count');
+                    if (minItems == 1) {
+                        dom.addClass('contentblocks-repeater-single-item');
+                    }
+                }
+
                 buttons.on('click', '.contentblocks-repeater-add-item', input.addEmptyRow);
                 dom.on('click', '.contentblocks-repeater-delete-row', input.deleteRow);
-                dom.on('click', '.contentblocks-repeater-expanded', function() {
-                    $(this).removeClass('contentblocks-repeater-expanded').addClass('contentblocks-repeater-collapsed').text('+').closest('.contentblocks-field-repeater').children('.contentblocks-repeater-wrapper').slideUp(300, function() {
-                        ContentBlocks.fixColumnHeights();
-                    });
-                }).on('click', '.contentblocks-repeater-collapsed', function() {
-                    $(this).removeClass('contentblocks-repeater-collapsed').addClass('contentblocks-repeater-expanded').text('-').closest('.contentblocks-field-repeater').children('.contentblocks-repeater-wrapper').slideDown(300, function() {
-                        ContentBlocks.fixColumnHeights();
-                    });
-                });
 
-                dom.on('click', '.contentblocks-repeater-item-expanded', function() {
-                    $(this).removeClass('contentblocks-repeater-item-expanded').addClass('contentblocks-repeater-item-collapsed').text('+').closest('.contentblocks-repeater-row').children('.contentblocks-repeater-item-wrapper').slideUp(300, function() {
-                        ContentBlocks.fixColumnHeights();
+                // Collapse/expand the entire repeater
+                dom.find('> .contentblocks-field-wrap > .contentblocks-field')
+                    .on('click', '> .contentblocks-repeater-expanded', function() {
+                        $(this).removeClass('contentblocks-repeater-expanded').addClass('contentblocks-repeater-collapsed').text('+').closest('.contentblocks-field-repeater').children('.contentblocks-repeater-wrapper').slideUp(300, function() {
+                            ContentBlocks.fixColumnHeights();
+                        });
+                    }).on('click', '> .contentblocks-repeater-collapsed', function() {
+                        $(this).removeClass('contentblocks-repeater-collapsed').addClass('contentblocks-repeater-expanded').text('-').closest('.contentblocks-field-repeater').children('.contentblocks-repeater-wrapper').slideDown(300, function() {
+                            ContentBlocks.fixColumnHeights();
+                        });
                     });
-                }).on('click', '.contentblocks-repeater-item-collapsed', function() {
-                    $(this).removeClass('contentblocks-repeater-item-collapsed').addClass('contentblocks-repeater-item-expanded').text('-').closest('.contentblocks-repeater-row').children('.contentblocks-repeater-item-wrapper').slideDown(300, function() {
-                        ContentBlocks.fixColumnHeights();
+
+                // Collapse/expand specific repeater items
+                dom.find('> .contentblocks-field-wrap > .contentblocks-field > .contentblocks-repeater-wrapper > .contentblocks-repeater-row')
+                    .on('click', '> .contentblocks-repeater-item-expanded', function() {
+                        $(this).removeClass('contentblocks-repeater-item-expanded').addClass('contentblocks-repeater-item-collapsed').text('+').closest('.contentblocks-repeater-row').children('.contentblocks-repeater-item-wrapper').slideUp(300, function() {
+                            ContentBlocks.fixColumnHeights();
+                        });
+                    }).on('click', '> .contentblocks-repeater-item-collapsed', function() {
+                        $(this).removeClass('contentblocks-repeater-item-collapsed').addClass('contentblocks-repeater-item-expanded').text('-').closest('.contentblocks-repeater-row').children('.contentblocks-repeater-item-wrapper').slideDown(300, function() {
+                            ContentBlocks.fixColumnHeights();
+                        });
                     });
-                });
 
-                wrapper.sortable({
-                    items: '> li',
-                    forceHelperSize: true,
-                    forcePlaceholderSize: true,
-                    placeholder: 'ui-sortable-placeholder',
-                    tolerance: 'pointer',
-                    cursor: 'move',
-                    cancel: 'input,textarea,button,select,option,.prevent-drag',
-                    update: function(event, ui) {
-                        ui.item.trigger('contentblocks:field_dragged');
-                        ContentBlocks.fixColumnHeights();
-                        ContentBlocks.fireChange();
-                    },
+                if (maxItems === '0' || maxItems === 0 || maxItems > 1) {
+                    wrapper.sortable({
+                        items: '> li',
+                        forceHelperSize: true,
+                        forcePlaceholderSize: true,
+                        placeholder: 'ui-sortable-placeholder',
+                        tolerance: 'pointer',
+                        cursor: 'move',
+                        cancel: 'input,textarea,button,select,option,.prevent-drag',
+                        update: function (event, ui) {
+                            ui.item.trigger('contentblocks:field_dragged');
+                            ContentBlocks.fixColumnHeights();
+                            ContentBlocks.fireChange();
+                        },
 
-                    start: function(event, ui) {
-                        ui.placeholder.height(ui.item.height());
-                    },
+                        start: function (event, ui) {
+                            ui.placeholder.height(ui.item.height());
+                        },
 
-                    stop: function(event, ui) {
-                        if (window.tinymce) {
-                            var tinyInstance = ui.item.find('.mceEditor');
-                            if (tinyInstance.length > 0) {
-                                var tinyId = $(tinyInstance[0]).attr('id').replace('textarea_parent','textarea');
-                                tinymce.execCommand('mceRemoveControl', true, tinyId);
-                                tinymce.execCommand('mceAddControl', true, tinyId);
+                        stop: function (event, ui) {
+                            if (window.tinymce) {
+                                var tinyInstance = ui.item.find('.mceEditor');
+                                if (tinyInstance.length > 0) {
+                                    var tinyId = $(tinyInstance[0]).attr('id').replace('textarea_parent', 'textarea');
+                                    tinymce.execCommand('mceRemoveControl', true, tinyId);
+                                    tinymce.execCommand('mceAddControl', true, tinyId);
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
             },
 
             deleteRow: function() {
                 var currentItems = wrapper.children().length;
 
-                if(currentItems > minItems) {
+                if (currentItems > minItems) {
                     $(this).closest('.contentblocks-repeater-row').remove();
                     currentItems--;
-                    // current items should never be able to get to be lower than minItems, but who knows?
-                    if(currentItems <= minItems) {
-                        dom.find('.contentblocks-repeater-delete-row').hide();
-                    }
                 }
                 if (maxItems > 0) {
                     if(currentItems == (maxItems - 1)) {
@@ -149,7 +158,7 @@
                     }
                 }
                 if (minItems > 0) {
-                    if(currentItems > minItems) {
+                    if (currentItems > minItems) {
                         dom.find('.contentblocks-repeater-delete-row').show();
                     }
                 }

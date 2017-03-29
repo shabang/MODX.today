@@ -45,7 +45,7 @@ abstract class ContentBlocksExportProcessor extends modProcessor
 
         $collection = $this->modx->getCollection($this->classKey, $c);
         $xml = $this->generateXml($collection);
-        $name = $this->classKey . '_' . strtolower(str_replace(' ', '-', $this->contentBlocks->getOption('site_name'))) . '_' .  date('Y-m-d@H:i:s') . '.xml';
+        $name = $this->classKey . '_' . strtolower(str_replace(' ', '-', $this->contentBlocks->getOption('site_name'))) . '_' .  date('Y-m-d@H-i-s') . '.xml';
 
         if ($this->getProperty('save', false)) {
             file_put_contents(MODX_CORE_PATH . 'export/' . $name, $xml);

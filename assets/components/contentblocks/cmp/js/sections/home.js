@@ -8,39 +8,41 @@ Ext.onReady(function() {
 ContentBlocksComponent.page.Home = function(config) {
     config = config || {};
     Ext.applyIf(config,{
-        cls: 'container form-with-labels',
         border: false,
         id : 'contentblocks-page-wrapper',
         components: [{
-            xtype: 'panel',
-            html: '<h2>' + _('contentblocks.mgr.home') + '</h2>',
-            border: false,
-            id: 'modx-contentblocks-header',
-            cls: 'modx-page-header'
-        },{
-            xtype: 'modx-tabs',
-            id: 'contentblocks-page-home-tabs',
-            width: '98%',
-            border: true,
-
-            stateful: true,
-            stateId: 'contentblocks-page-home',
-            stateEvents: ['tabchange'],
-            getState: function() {
-                return {
-                    activeTab:this.items.indexOf(this.getActiveTab())
-                };
-            },
-
-            defaults: {
+            cls: 'container form-with-labels',
+            xtype: 'modx-formpanel',
+            items: [{
+                html: '<h2>' + _('contentblocks.mgr.home') + '</h2>',
                 border: false,
-                autoHeight: true,
+                id: 'modx-contentblocks-header',
+                cls: 'modx-page-header'
+            }, {
+                xtype: 'modx-tabs',
+                id: 'contentblocks-page-home-tabs',
+                width: '98%',
+                border: false,
+
+                stateful: true,
+                stateId: 'contentblocks-page-home',
+                stateEvents: ['tabchange'],
+                getState: function () {
+                    return {
+                        activeTab: this.items.indexOf(this.getActiveTab())
+                    };
+                },
+
                 defaults: {
-                    border: false
-                }
-            },
-            items: this.getTabs(config)
-        }, ContentBlocksComponent.attribution()],
+                    border: false,
+                    autoHeight: true,
+                    defaults: {
+                        border: false
+                    }
+                },
+                items: this.getTabs(config)
+            }, ContentBlocksComponent.attribution()],
+        }],
         buttons: this.getButtons(config)
     });
     ContentBlocksComponent.page.Home.superclass.constructor.call(this,config);

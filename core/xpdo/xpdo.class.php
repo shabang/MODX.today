@@ -359,6 +359,7 @@ class xPDO {
                     }
                 }
             }
+            $this->loadClass('xPDOQuery');
             $this->loadClass('xPDOObject');
             $this->loadClass('xPDOSimpleObject');
             if (isset($this->config[xPDO::OPT_BASE_CLASSES])) {
@@ -838,6 +839,7 @@ class xPDO {
     */
     public function getObject($className, $criteria= null, $cacheFlag= true) {
         $instance= null;
+        $this->sanitizePKCriteria($className, $criteria);
         if ($criteria !== null) {
             $instance = $this->call($className, 'load', array(& $this, $className, $criteria, $cacheFlag));
         }
@@ -1132,21 +1134,7 @@ class xPDO {
      * @return xPDOCriteria A criteria object or null if not found.
      */
     public function getCriteria($className, $type= null, $cacheFlag= true) {
-        $c = $this->newQuery($className);
-        $c->cacheFlag = $cacheFlag;
-        if (!empty($type)) {
-            if ($type instanceof xPDOCriteria) {
-                $c->wrap($type);
-            } elseif (is_scalar($type)) {
-                if ($pk = $this->getPK($className)) {
-                    $c->where(array($pk => $type));
-                }
-            } else {
-                $c->where($type);
-            }
-        }
-
-        return $c;
+        return $this->newQuery($className, $type, $cacheFlag);
     }
 
     /**
@@ -2748,6 +2736,37 @@ class xPDO {
             else $type= PDO::PARAM_STR;
         }
         return $type;
+    }
+
+    /**
+     * Sanitize criteria expected to represent primary key values.
+     *
+     * @param string $className The name of the class.
+     * @param mixed  &$criteria A reference to the criteria being used.
+     */
+    protected function sanitizePKCriteria($className, &$criteria) {
+        if (is_scalar($criteria)) {
+            $pkType = $this->getPKType($className);
+            if (is_string($pkType)) {
+                if (is_string($criteria) && !xPDOQuery::isValidClause($criteria)) {
+                    $criteria = null;
+                } else {
+                    switch ($pkType) {
+                        case 'int':
+                        case 'integer':
+                            $criteria = (int)$criteria;
+                            break;
+                        case 'string':
+                            if (is_int($criteria)) {
+                                $criteria = (string)$criteria;
+                            }
+                            break;
+                    }
+                }
+            } elseif (is_array($pkType)) {
+                $criteria = null;
+            }
+        }
     }
 }
 

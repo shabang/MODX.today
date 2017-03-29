@@ -37,7 +37,7 @@ $_lang['contentblocks.error.no_valid_input'] = "No valid input found for request
 $_lang['contentblocks.error.no_snippets'] = "Keine Snippets zur Verwendung verfügbar";
 $_lang['contentblocks.error.missing_id'] = "ID-Eigenschaft fehlt";
 $_lang['contentblocks.error.input_not_found'] = "Eingabe nicht gefunden";
-$_lang['contentblocks.error.input_not_found.message'] = "Hoppla, ein Feld mit einem Eingabetyp \"[[+ Eingabe]]\" war definiert. Dieser Wert existiert aber nicht.";
+$_lang['contentblocks.error.input_not_found.message'] = "Hoppla, ein Feld mit einem Eingabetyp \"[[+input]]\" war definiert. Dieser Eingabetyp existiert aber nicht.";
 $_lang['contentblocks.error.field_not_found'] = "Feld nicht gefunden";
 $_lang['contentblocks.error.category_not_found'] = "Kategorie nicht gefunden";
 $_lang['contentblocks.error.layout_not_found'] = "Layout nicht gefunden";
@@ -80,6 +80,7 @@ $_lang['contentblocks.duplicate_field'] = "Feld duplizieren";
 $_lang['contentblocks.delete_field'] = "Feld löschen";
 $_lang['contentblocks.delete_field.confirm'] = "Sind Sie sicher, dass Sie dieses Feld löschen möchten? Es können unschöne Dinge mit Inhalten passieren, die dieses Feld noch verwenden! ";
 $_lang['contentblocks.delete_field.confirm.js'] = "Sind Sie sicher, dass Sie dieses Feld löschen möchten?";
+$_lang['contentblocks.delete_field.is_default'] = "This field cannot be removed because it is configured as the default field. This is set up with the <code>contentblocks.default_field</code> system setting. For more information on setting up default content, see the <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">Default Templates documentation</a>.";
 $_lang['contentblocks.export_field'] = "Feld exportieren";
 $_lang['contentblocks.export_fields'] = "Exportieren";
 $_lang['contentblocks.export_fields.confirm'] = "Wenn Sie unten Ja klicken, wird ein XML-Export aller Felder erzeugt. Dieser kann dazu genutzt werden, Felder später oder in einer anderen Installation wieder importieren zu können. Die Generierung kann abhängig von der Anzahl der konfigurierten Felder ein paar Sekunden in Anspruch nehmen.";
@@ -96,6 +97,7 @@ $_lang['contentblocks.export_layout'] = "Layout exportieren";
 $_lang['contentblocks.delete_layout'] = "Layout löschen";
 $_lang['contentblocks.delete_layout.confirm'] = "Sind Sie sichder, dass dieses Layout gelöscht werden soll? Es können unschöne Dinge mit Inhalten passieren, die dieses Layout noch verwenden! ";
 $_lang['contentblocks.delete_layout.confirm.js'] = "Sind Sie sicher, dass dieses Layout [[+layoutName]] gelöscht werden soll? Auch sein Inhalt wird gelöscht, wenn Sie fortfahren.";
+$_lang['contentblocks.delete_layout.is_default'] = "This layout cannot be removed because it is configured as the default layout. This is set up with the <code>contentblocks.default_layout</code> system setting. For more information on setting up default content, see the <a href=\"https://docs.modmore.com/en/ContentBlocks/v1.x/Default_Templates.html\" target=\"_blank\">Default Templates documentation</a>.";
 $_lang['contentblocks.export_layouts'] = "Exportieren";
 $_lang['contentblocks.export_layouts.confirm'] = "Wenn Sie unten Ja klicken, wird ein XML-Export aller Layouts generiert. Dieser kann dazu genutzt werden, Layouts später oder in einer anderen Installation wieder zu importieren. Die Generierung der XML-Datei kann in Abhängigkeit von der Anzahl der konfigurierten Layouts ein paar Sekunden dauern.";
 $_lang['contentblocks.import_layouts'] = "Importieren";
@@ -439,6 +441,10 @@ $_lang['contentblocks.add_layout'] = "Layout hinzufügen";
 $_lang['contentblocks.add_layout.introduction'] = "Bitte wählen Sie das hinzuzufügende Layout!";
 $_lang['contentblocks.upload'] = "Upload";
 $_lang['contentblocks.choose'] = "Auswählen";
+$_lang['contentblocks.from_url'] = "From URL";
+$_lang['contentblocks.from_url_title'] = "Insert image from URL";
+$_lang['contentblocks.from_url_prompt'] = "Enter an URL to an image to insert. This should be either a full URL to the image on a different website, or the relative url from the root of the website. The file will be saved on the server.";
+$_lang['contentblocks.from_url_notfound'] = "The requested image could not be downloaded. ";
 $_lang['contentblocks.image.or_drop_images'] = "oder Bilder hier ablegen";
 $_lang['contentblocks.image.or_drop_image'] = "oder ein Bild hier ablegen";
 $_lang['contentblocks.use_tinyrte'] = "Soll Tiny RTE verwendet werden?";
@@ -461,6 +467,7 @@ $_lang['contentblocks.generating_canvas'] = "Erzeuge Ihren Inhaltsbereich … da
 $_lang['contentblocks.content'] = "Inhalte der Template";
 $_lang['contentblocks.open_template_builder'] = "Template erzeugen";
 $_lang['contentblocks.template_builder'] = "Template-Generator";
+$_lang['contentblocks.close_modal'] = "Close Modal";
 
 /**
  * Settings. Oh boy.
@@ -478,6 +485,9 @@ $_lang['setting_contentblocks.debug_desc'] = "Wenn aktiviert, wird ContentBlocks
 $_lang['setting_contentblocks.disabled'] = "Deaktiviert";
 $_lang['setting_contentblocks.disabled_desc'] = "Setzen Sie diese Einstellung auf 1, um ContentBlocks komplett auf dieser Site zu deaktivieren. Dies kann auf Kontext-Ebene überschrieben werden, um es nur auf bestimmten Kontexten zu verwenden. ";
 
+$_lang['setting_contentblocks.show_resource_option'] = "Show Resource Option";
+$_lang['setting_contentblocks.show_resource_option_desc'] = "When enabled you will have the option to enable or disable ContentBlocks on specific resources, with the 'Use ContentBlocks' option on the resource settings.";
+
 $_lang['setting_contentblocks.implode_string'] = "Zeichenkette zusammenfügen";
 $_lang['setting_contentblocks.implode_string_desc'] = "Die Zeichen zwischen einzelnem Feld und Layout-Ausgabe, wenn der Inhalt geparst wird. ";
 
@@ -489,6 +499,9 @@ $_lang['setting_contentblocks.default_layout_part_desc'] = "Geben Sie die Refere
 
 $_lang['setting_contentblocks.default_field'] = "Standardfeld";
 $_lang['setting_contentblocks.default_field_desc'] = "Geben Sie die ID des Feldes an, welches in der default Spalte des von Ihnen definierten default Layouts eingefügt werden soll. Wenn die ID auf 0 gesetzt ist, wird eine einfaches Rich-Text oder textarea-Feld verwendet. Ab 1.2 wird dies nur angewendet, wenn keine Standardvorlage gefunden wird.";
+
+$_lang['setting_contentblocks.defaults_allowed_inputs'] = "Allowed Inputs in Default Templates";
+$_lang['setting_contentblocks.defaults_allowed_inputs_desc'] = "A comma separated list of input types (names) that are available in the \"Target Field\" dropdown when creating or editing default templates.";
 
 $_lang['setting_contentblocks.code.theme'] = "Code-Thema";
 $_lang['setting_contentblocks.code.theme_desc'] = "Das Thema für Code-Eingabe. Lesen Sie die Ace-Dokumentation für mögliche Eingaben.";
@@ -506,7 +519,10 @@ $_lang['setting_contentblocks.image.source'] = "Medienquelle";
 $_lang['setting_contentblocks.image.source_desc'] = "Wählen Sie die Medienquelle, die für Bild- und Galerie-Eingabetypen verwendet werden soll. Sie kann auf Feld-Ebene überschieben werden.";
 
 $_lang['setting_contentblocks.image.upload_path'] = "Upload-Pfad";
-$_lang['setting_contentblocks.image.upload_path_desc'] = "Der Pfad innerhalb der definierten Medienquelle, auf den die Dateien hochgeladen werden sollen. Dieser unterstützt die Platzhalter: [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] und [[+resource]].";
+$_lang['setting_contentblocks.image.upload_path_desc'] = "The path, within the chosen media source, to which the images should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders. Resource fields are also available, like [[+pagetitle]] or [[+alias]], and template variables with [[+tv.name_of_tv]]. This value can be overridden per field by editing its properties.";
+
+$_lang['setting_contentblocks.file.upload_path'] = "Upload Path";
+$_lang['setting_contentblocks.file.upload_path_desc'] = "The path, within the chosen media source, to which the files should be uploaded. This supports [[+year]], [[+month]], [[+day]], [[+user]], [[+username]] and [[+resource]] placeholders. Resource fields are also available, like [[+pagetitle]] or [[+alias]], and template variables with [[+tv.name_of_tv]]. This value can be overridden per field by editing its properties.";
 
 $_lang['setting_contentblocks.sanitize_pattern'] = "Sanitize Pattern";
 $_lang['setting_contentblocks.sanitize_pattern_desc'] = "Ein RegEx-Pattern, welches zum Säubern von säuberungsbedürftigen Dateinamen verwendet wird.";

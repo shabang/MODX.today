@@ -50,7 +50,7 @@
     ContentBlocks.fieldTypes.textarea = function(dom, data) {
         return {
             init: function () {
-                if (ContentBlocks.toBoolean(data.properties.use_tinyrte)) {
+                if (data.properties && ContentBlocks.toBoolean(data.properties.use_tinyrte)) {
                     var field = dom.find('#' + data.generated_id + '_textarea');
                     ContentBlocks.addTinyRte(field);
                 }

@@ -3,7 +3,7 @@ jQuery(function($) {
     var templates = {
         image: '<div data-id="<%= cid %>" class="inner <% if (active) { %> image_active <% } else { %> image_inactive <% } %>"><div class="image-wrapper">' +
             '<div class="image" style="background-image: url(<%= mgr_thumb %>);">' +
-            '   <div class="mask">' +
+            '   <div class="mask" tabindex="0">' +
             '       <div class="image-actions">' +
                 '       <a class="zoom mgsearchicon icon icon-search" href="javascript:void(0); //View full-size image" title="<%= moreGallery.lang("view_full_size_image") %>"></a>' +
                 '       <% if (moreGallery.config.permissions.image_active) { %>' +
@@ -16,7 +16,7 @@ jQuery(function($) {
             '       </div>' +
             '   </div>' +
             '</div>' +
-            '<div class="meta">' +
+            '<div class="meta" tabindex="0">' +
             '   <p class="name"><%= name %></p>' +
             '   <p class="filename"><%= filename %></p>' +
             '   <% if (moreGallery.config.permissions.image_edit) {%>' +
@@ -427,7 +427,7 @@ jQuery(function($) {
             };
 
             var appView = this;
-            jQuery.ajax({
+            $.ajax({
                 url: moreGallery.config.connector_url + '?action=mgr/images/import_file',
                 data: postData,
                 dataType: 'json',
@@ -436,7 +436,7 @@ jQuery(function($) {
                     // Successful processor?
                     if (data.success) {
                         var record = data.object;
-                        jQuery.each(record, function(key, value) {
+                        $.each(record, function(key, value) {
                             image.set(key, value);
                         });
                         image.trigger('uploadComplete');
@@ -523,7 +523,7 @@ jQuery(function($) {
                 };
 
                 var appView = this;
-                jQuery.ajax({
+                $.ajax({
                     url: moreGallery.config.connector_url + '?action=mgr/videos/select',
                     data: postData,
                     dataType: 'json',
@@ -532,7 +532,7 @@ jQuery(function($) {
                         // Successful processor?
                         if (data.success) {
                             var record = data.object;
-                            jQuery.each(record, function (key, value) {
+                            $.each(record, function (key, value) {
                                 video.set(key, value);
                             });
                             video.trigger('uploadComplete');

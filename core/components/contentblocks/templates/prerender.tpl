@@ -16,15 +16,15 @@
         <div class="contentblocks-region-container-header">
             <div class="contentblocks-region-container-tools">
                 <a href="javascript:void(0);" class="contentblocks-layout-settings"><span class="icon icon-cog"></span> {%=_('contentblocks.layout_settings')%}</a>
-                <a href="javascript:void(0);" class="contentblocks-layout-move-up">&#9650;</a>
-                <a href="javascript:void(0);" class="contentblocks-layout-move-down">&#9660;</a>
+                <a href="javascript:void(0);" class="contentblocks-layout-move-up" aria-label="{%=_('contentblocks.move_layout_up')%}" title="{%=_('contentblocks.move_layout_up')%}">&#9650;</a>
+                <a href="javascript:void(0);" class="contentblocks-layout-move-down" aria-label="{%=_('contentblocks.move_layout_down')%}" title="{%=_('contentblocks.move_layout_down')%}">&#9660;</a>
 
                 <div class="contentblocks-dropmenu-container">
                     <a href="javascript:void(0);" class="contentblocks-layout-menu contentblocks-dropmenu-title"></a>
                     <ul class="contentblocks-dropmenu-items">
                         <li><a href="javascript:void(0);" class="contentblocks-repeat-layout">{%=_('contentblocks.repeat_layout')%}</a></li>
                         <li class="separator"></li>
-                        <li><a href="javascript:void(0);" class="contentblocks-layout-delete">&times; {%=_('contentblocks.delete_layout')%}</a></li>
+                        <li><a href="javascript:void(0);" class="contentblocks-layout-delete"><span aria-hidden>&times;</span> {%=_('contentblocks.delete_layout')%}</a></li>
                     </ul>
                 </div>
             </div>
@@ -54,7 +54,7 @@
 
 <script type="text/x-tmpl" id="contentblocks-modal-wrapper">
 <div class="contentblocks-modal-header">
-    <a href="javascript:void(0);" class="close">&times;</a>
+    <a href="javascript:void(0);" class="close" aria-label="{%=_('contentblocks.close_modal')%}" title="{%=_('contentblocks.close_modal')%}">&times;</a>
     <h3>{%=o.title%}</h3>
 </div>
 <div class="contentblocks-modal-content {%=o.classes%}">
@@ -163,10 +163,9 @@
     <div class="contentblocks-setting-link">
         <input type="text" id="tinyrte-link" class="linkfield" value="{%=o.value%}" placeholder="{%=_('contentblocks.link.placeholder')%}">
     </div>
-    <div class="contentblocks-actions">
-        <a href="javascript:void(0);" class="big contentblocks-field-button save-button">{%=_('contentblocks.save')%}</a>
-        <a href="javascript:void(0);" class="big contentblocks-field-button delete-button right">&times; {%=_('contentblocks.delete')%}</a>
-    </div>
+</div>
+<div class="contentblocks-modal-actions">
+    <a href="javascript:void(0);" class="big contentblocks-field-button save-button">{%=_('contentblocks.save')%}</a>
 </div>
 </script>
 
@@ -242,7 +241,7 @@
 </script>
 
 <script type="text/x-tmpl" id="contentblocks-button-delete-field">
-<a href="javascript:void(0);" class="contentblocks-field-delete">&times; {%=_('contentblocks.delete')%}</a>
+<a href="javascript:void(0);" class="contentblocks-field-delete contentblocks-field-button-destructive"><span aria-hidden>&times;</span> {%=_('contentblocks.delete')%}</a>
 </script>
 
 <script type="text/x-tmpl" id="contentblocks-button-field-settings">

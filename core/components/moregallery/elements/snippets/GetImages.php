@@ -525,7 +525,7 @@ class GetImages extends Snippet {
     {
         $rawTags = $this->getProperty('tags');
         $param = $this->getProperty('tagsFromUrl');
-        if (isset($_REQUEST[$param])) {
+        if (!empty($param) && isset($_REQUEST[$param])) {
             $rawTags = $_REQUEST[$param];
         }
         $rawTags = explode(',', $rawTags);
@@ -552,10 +552,13 @@ class GetImages extends Snippet {
 
         // Loop over the requested tags to find their respective IDs
         $tags = $this->getProperty('tags');
-        $tags = explode(',', $tags);
+        $tags = array_map('trim', explode(',', $tags));
         if (count($tags) > 0) {
             $this->debug('Adding conditions for tags: ' . implode(', ', $tags));
             foreach ($tags as $tag) {
+                if ($tag === '') {
+                    continue;
+                }
                 $exclude = strpos($tag, '-') === 0;
                 $tag = ($exclude) ? substr($tag, 1) : $tag;
                 if (is_numeric($tag)) {

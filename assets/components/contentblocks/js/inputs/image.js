@@ -39,11 +39,27 @@
             dom.find('.contentblocks-field-image-choose').on('click', $.proxy(function() {
                 this.chooseImage();
             }, this));
+            dom.find('.contentblocks-field-image-url').on('click', $.proxy(function() {
+                this.promptImage();
+            }, this));
 
             this.initUpload();
+            this.initDropReceiver();
+        };
+
+        input.initDropReceiver = function() {
+            MODx.load({
+                xtype: 'modx-treedrop'
+                ,target: dom
+                ,targetEl: dom.get(0)
+                ,onInsert: function(val) {
+                    input.insertFromUrl(val);
+                }
+            });
         };
 
         input.initUpload = function() {
+
             var id = dom.attr('id');
             dom.find('#' + id + '-upload').fileupload({
                 url: ContentBlocksConfig.connectorUrl + '?action=content/image/upload',
@@ -197,6 +213,67 @@
             this.loadTinyRTE();
         };
 
+        // Prompts the user to enter an image url directly.
+        input.promptImage = function() {
+            Ext.Msg.prompt(_('contentblocks.from_url_title'),
+                _('contentblocks.from_url_prompt'),
+                function(btn, url, prompt) {
+                    // The user cancelled
+                    if (btn !== 'ok') {
+                        return;
+                    }
+
+                    input.insertFromUrl(url);
+                }, this);
+        };
+
+        input.insertFromUrl = function(url) {
+            if (!url || url.length < 3) {
+                ContentBlocks.alert('No URL provided.');
+                return;
+            }
+
+            dom.addClass('contentblocks-field-loading');
+            $.ajax({
+                dataType: 'json',
+                url: ContentBlocksConfig.connector_url,
+                type: "POST",
+                beforeSend:function(xhr, settings){
+                    if(!settings.crossDomain) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                    }
+                },
+                data: {
+                    action: 'content/image/download',
+                    field: data.field,
+                    resource: ContentBlocksResource && ContentBlocksResource.id ? ContentBlocksResource.id : 0,
+                    url: url
+                },
+                context: this,
+                success: function(result) {
+                    dom.removeClass('contentblocks-field-loading');
+                    if (!result.success) {
+                        ContentBlocks.alert(result.message);
+                    }
+                    else {
+                        var urls = ContentBlocks.utilities.normaliseUrls(result.object.url);
+
+                        dom.find('.url').val(urls.cleanedSrc);
+                        dom.find('.size').val(result.object.size);
+                        dom.find('.width').val(result.object.width);
+                        dom.find('.height').val(result.object.height);
+                        dom.find('.extension').val(result.object.extension);
+                        dom.find('img').attr('src', (data.properties.thumbnail_size)
+                            ? ContentBlocks.utilities.getThumbnailUrl(urls.cleanedSrc, data.properties.thumbnail_size)
+                            : urls.displaySrc);
+                        dom.addClass('preview');
+                        ContentBlocks.fireChange();
+                        this.loadTinyRTE();
+                    }
+                }
+            });
+        };
+
         input.getData = function () {
             return {
                 url: dom.find('.url').val(),
@@ -252,8 +329,12 @@
             dom.find('.contentblocks-field-image-choose').on('click', $.proxy(function() {
                 this.chooseImage();
             }, this));
+            dom.find('.contentblocks-field-image-url').on('click', $.proxy(function() {
+                this.promptImage();
+            }, this));
 
             this.initUpload();
+            this.initDropReceiver();
         };
 
         input.loadTinyRTE = function() {

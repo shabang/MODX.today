@@ -6,6 +6,7 @@ if (file_exists($loaderPath)) {
     require_once $loaderPath;
 }
 else {
+    global $modx;
     $modx->log(modX::LOG_LEVEL_ERROR, 'UNABLE TO INSTANTIATE MOREGALLERY SERVICE CLASS due to missing autoloader, expected in ' . $loaderPath . ' - make sure Alpacka is installed and up to date.');
     class moreGallery {
         public function __toString()
@@ -48,7 +49,7 @@ class moreGallery extends \modmore\Alpacka\Alpacka {
      */
     public function __construct($instance, array $config = array()) {
         parent::__construct($instance, $config);
-        $this->setVersion(1, 5, 5, 'pl');
+        $this->setVersion(1, 5, 8, 'pl');
 
         if (isset($config['resource']) && is_numeric($config['resource']))
         {
@@ -105,16 +106,21 @@ class moreGallery extends \modmore\Alpacka\Alpacka {
         if ($this->_imagine) {
             return $this->_imagine;
         }
-        
+
+        $classes = array('\Imagine\Imagick\Imagine', 'Imagine\Gd\Imagine');
+        if ($this->modx->getOption('moregallery.imagine_prefer_gd', null, false)) {
+            $classes = array_reverse($classes);
+        }
+
         $imagine = false;
-        try {
-            $imagine = new \Imagine\Imagick\Imagine();
-        } catch (\Imagine\Exception\RuntimeException $e) {
-            $this->modx->log(modX::LOG_LEVEL_WARN, '[MoreGallery] Unable of loading Imagick driver for Imagine because ' . $e->getMessage() . '; falling back to GD.');
+        foreach ($classes as $class) {
             try {
-                $imagine = new \Imagine\Gd\Imagine();
+                $imagine = new $class();
             } catch (\Imagine\Exception\RuntimeException $e) {
-                $this->modx->log(modX::LOG_LEVEL_ERROR, '[MoreGallery] Unable of loading an Imagine instance for handling thumbnails, neither Imagick or GD extensions are available in the proper versions.');
+                $this->modx->log(modX::LOG_LEVEL_WARN, '[MoreGallery] Unable of instantiating ' . $class . ' Imagine driver ' . $e->getMessage() . '.');
+            }
+            if ($imagine instanceof \Imagine\Image\ImagineInterface) {
+                break;
             }
         }
 
@@ -123,6 +129,7 @@ class moreGallery extends \modmore\Alpacka\Alpacka {
             return $this->_imagine;
         }
 
+        $this->modx->log(modX::LOG_LEVEL_ERROR, '[MoreGallery] Unable of loading an Imagine instance for handling thumbnails, neither Imagick or GD extensions are available in the proper versions.');
         return false;
     }
 
@@ -266,6 +273,12 @@ HTML;
         if (empty($tagNames)) {
             $tagNames = array();
             foreach ($this->modx->getIterator('mgTag') as $tag) {
+                $display = $tag->get('display');
+                $display = trim($display);
+                if ($display === '') {
+                    $tag->remove();
+                    continue;
+                }
                 /** @var mgTag $tag */
                 $tagNames[$tag->get('id')] = $tag->get('display');
             }

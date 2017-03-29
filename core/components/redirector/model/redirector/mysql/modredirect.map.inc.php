@@ -1,4 +1,7 @@
 <?php
+/**
+ * @package redirector
+ */
 $xpdo_meta_map['modRedirect']= array (
   'package' => 'redirector',
   'version' => '1.0',

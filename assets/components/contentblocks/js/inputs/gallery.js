@@ -23,6 +23,19 @@
             dom.find('.contentblocks-field-gallery-choose').on('click', $.proxy(function() {
                 this.chooseImage();
             }, this));
+            dom.find('.contentblocks-field-gallery-url').on('click', $.proxy(function() {
+                this.promptImage();
+            }, this));
+
+            // Dropping from the tree
+            MODx.load({
+                xtype: 'modx-treedrop'
+                ,target: dom
+                ,targetEl: dom.get(0)
+                ,onInsert: function(val) {
+                    input.addImageFromUrl(val);
+                }
+            });
 
             if ($.isArray(data.images)) {
                 $.each(data.images, function(idx, img) {
@@ -109,6 +122,70 @@
                 height: imageData.image_height,
                 extension: extension
             }, 'choose');
+        };
+
+        // Prompts the user to enter an image url directly.
+        input.promptImage = function() {
+            Ext.Msg.prompt(_('contentblocks.from_url_title'),
+                _('contentblocks.from_url_prompt'),
+                function(btn, url, prompt) {// The user cancelled
+                    if (btn !== 'ok') {
+                        return;
+                    }
+
+                    input.addImageFromUrl(url);
+                },
+                this
+            );
+        };
+
+        input.addImageFromUrl = function(url) {
+            if (!url || url.length < 3) {
+                ContentBlocks.alert('No URL provided.');
+                return;
+            }
+
+            dom.addClass('contentblocks-field-loading');
+            $.ajax({
+                dataType: 'json',
+                url: ContentBlocksConfig.connector_url,
+                type: "POST",
+                beforeSend:function(xhr, settings){
+                    if(!settings.crossDomain) {
+                        xhr.setRequestHeader('modAuth',MODx.siteId);
+                    }
+                },
+                data: {
+                    action: 'content/image/download',
+                    field: data.field,
+                    resource: ContentBlocksResource && ContentBlocksResource.id ? ContentBlocksResource.id : 0,
+                    url: url
+                },
+                context: this,
+                success: function(result) {
+                    dom.removeClass('contentblocks-field-loading');
+                    if (!result.success) {
+                        ContentBlocks.alert(result.message);
+                    }
+                    else {
+                        var urls = ContentBlocks.utilities.normaliseUrls(result.object.url);
+                        input.imageCount++;
+                        var imageId = dom.attr('id') + '-image' + input.imageCount;
+
+                        this.addImage({
+                            url: urls.cleanedSrc,
+                            title: result.object.filename,
+                            description: '',
+                            link: '',
+                            id: imageId,
+                            size: result.object.size,
+                            width: result.object.width,
+                            height: result.object.height,
+                            extension: result.object.extension
+                        }, 'choose');
+                    }
+                }
+            });
         };
 
         input.addImage = function(values, source) {

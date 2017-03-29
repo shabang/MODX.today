@@ -12,7 +12,11 @@ class mgImageTagCreateProcessor extends modObjectCreateProcessor {
      * @return bool
      */
     public function beforeSet() {
-        $tag = $this->getProperty('tag');
+        $tag = (string)$this->getProperty('tag', '');
+        $tag = trim($tag);
+        if ($tag === '') {
+            return $this->modx->lexicon('moregallery.tags.cant_be_empty');
+        }
         if (!is_numeric($tag)) {
             $tagObj = $this->modx->getObject('mgTag', array(
                 'display' => $tag

@@ -21,6 +21,6 @@
     </div>
 
     <div class="contentblocks-gallery-image-actions">
-        <a href="javascript:void(0);" class="contentblocks-field-button contentblocks-gallery-image-delete">&times; {%=_('contentblocks.delete')%}</a>
+        <a href="javascript:void(0);" class="contentblocks-field-button contentblocks-gallery-image-delete contentblocks-field-button-destructive">&times; {%=_('contentblocks.delete')%}</a>
     </div>
 </li>

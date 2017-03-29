@@ -15,7 +15,8 @@
                 url: ContentBlocksConfig.connectorUrl,
                 data: {
                     action: 'content/dropdown/getlist',
-                    field: input.fieldId
+                    field: input.fieldId,
+                    resource: MODx.request.id || 0
                 },
                 context: this,
                 beforeSend:function(xhr, settings){

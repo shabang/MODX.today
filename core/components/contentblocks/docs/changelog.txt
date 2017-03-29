@@ -1,3 +1,86 @@
+++ ContentBlocks 1.6.3-pl
+++ Released on 2017-03-07
+++++++++++++++++++++++++++
+- Fix selected resource title not being shown on link input types [#363]
+- Fix default template assignment based on context [#449]
+- Fix issue expanding/collapsing repeater (items) within a repeater [S10341]
+- Fix error when opening the template builder [S11314]
+- Fix invalid export filenames on windows due to : character
+- Make component alignment consistent with the rest of MODX [#454]
+
+++ ContentBlocks 1.6.2-pl
+++ Released on 2017-02-08
+++++++++++++++++++++++++++
+- Fix issue repeatedly opening the media browser on the file input type [S11088]
+- Make sure $modx->resource is available to a dropdown populating snippet [#445]
+
+++ ContentBlocks 1.6.1-pl
+++ Released on 2017-01-31
+++++++++++++++++++++++++++
+- Fix 401 unauthorized on the link typeahead prefetch [#447]
+- Fix rebuilding content not checking for a context-specific use_contentblocks setting [#11060]
+- Restore compatibility with PHP 5.3
+- Fix bug where unlimited-item repeaters (maxItems == 0) could not be sorted
+
+++ ContentBlocks 1.6.0-pl
+++ Released on 2017-01-19
+++++++++++++++++++++++++++
+- Remove stray console.log statement
+- Update Alpacka to 0.4.0
+
+++ ContentBlocks 1.6.0-rc2
+++ Released on 2017-01-03
+++++++++++++++++++++++++++
+Bug fixes:
+- Fix bug with repeater subfields not being found
+- Fix bug with getLayoutFields which resulted in incorrect fields being returned if a layout contained a nested layout field
+- Related to getLayoutFields bug fix, test if we're in a "repeat layout" event when adding layout fields; if so, don't show the "add layout" modal
+
+++ ContentBlocks 1.6.0-rc1
+++ Released on 2016-12-23
+++++++++++++++++++++++++++
+New features & improvements:
+- Add ability to insert images by providing a url; images are downloaded to the server [#351]
+- Hide Delete Item button on repeaters that have a fixed number of items [F392]
+- If repeaters are set to a fixed number of 1 item, the item collapse button is also hidden [F392]
+- Add checkered background for transparent images [S9968]
+- Add support for the gallery input type in &innerLimit property of the cbGetFieldContent snippet [S9985]
+- Ctrl/Cmd clicking a video search result will open it in a new tab
+- Attempting to delete the default layout or field will show an error [#436]
+- Ability to drag files from the file tree into image/gallery fields [#179]
+- Internal dependencies (jquery, file upload, typeahead libs) have been updated [#433]
+- Add defaults_allowed_inputs setting to manage which input types are available as field targets in default templates [S10491]
+- Add show_resource_option setting, disable it to hide the "Use ContentBlocks" option on resources [#280]
+- Show clear warning when layouts can not be found when generating the content to prevent broken pages [#405]
+
+Accessibility/usability-related improvements:
+- Fix missing focus styles on selects, text inputs and radio/checkbox [#429]
+- Hide "x" from screen readers when accompanied by a textual label, like "delete" [#425]
+- Add title/aria-label to close modal button [#425]
+- Add higher contrast hover/focus indication for "Add Content Here" button [#426]
+- Add title/aria-label to move layout up/down buttons [#424]
+- Add title/aria-label to "Add Content Here" button [#420]
+- Change button hover/focus styles to ensure enough contrast [#427]
+- Button hover/focus styles for destructive actions are now in red
+- Clean up formatting in tinyrte link modal
+- Clean up styling in add content/layout modal
+- Video search results can now be navigated with the keyboard [#390]
+
+Bug fixes:
+- Fix possible broken canvas caused by textarea field
+- Fix positioning of loading mask on fields
+- Prevent E_NOTICE for repeater subitems that have been removed [S10493]
+- Fix comma-separated select/radio setting values preselecting the wrong options [S9748]
+- Add missing contentblocks.file.upload_path setting [S10614]
+- Fix parsing issue in cbGetFieldContent where nested items don't get processed first
+- Fix paste cleanup in IE11
+- Fix default media sources working in multi-context setups [#434]
+
+++ ContentBlocks 1.5.2-pl
+++ Released on 2016-12-08
+++++++++++++++++++++++++++
+- Fix error where blank default settings would not display properly ("=Default")
+
 ++ ContentBlocks 1.5.1-pl
 ++ Released on 2016-09-23
 ++++++++++++++++++++++++++

@@ -64,6 +64,7 @@ $_lang['moregallery.error_upload_failed'] = 'the file could not be uploaded (Err
 // Tags related, for MoreGallery 1.1
 $_lang['moregallery.tags'] = 'Tags';
 $_lang['moregallery.tags.add'] = 'Add';
+$_lang['moregallery.tags.cant_be_empty'] = 'The tag can\'t be empty.';
 // Imports, also new in 1.1
 $_lang['moregallery.file_doesnt_exist'] = 'The file to be imported does not seem to exist or is not readable: [[+file]]';
 $_lang['moregallery.edit_crop'] = 'Edit Crop';
