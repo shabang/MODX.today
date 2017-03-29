@@ -2,4 +2,5 @@ id: 4
 internalKey: 4
 fullname: 'Marc Jenkins'
 email: marc@modmore.com
+failedlogincount: 1
 extended: '[]'
